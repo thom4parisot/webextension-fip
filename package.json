@@ -1,0 +1,31 @@
+{
+  "name": "chrome-fip",
+  "version": "0.1.0",
+  "description": "FIP Radio Chrome Extension for an in-browser listening and scrobbling experience.",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/oncletom/chrome-fip.git"
+  },
+  "keywords": [
+    "fip",
+    "radio",
+    "chrome",
+    "extension",
+    "audio",
+    "live",
+    "streaming",
+    "france"
+  ],
+  "author": "Thomas Parisot <thomas@oncle-tom.net>",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-crx": "~0.2.1",
+    "bower": "~0.8.6"
+  }
+}
