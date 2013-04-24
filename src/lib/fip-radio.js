@@ -14,6 +14,8 @@ function FIPRadio(){
    * @type {null}
    */
   this.audio = null;
+
+  this.state = 'paused';
 }
 
 /**
@@ -36,6 +38,14 @@ FIPRadio.prototype.configureAudio = function configureAudio(){
   this.audio = audio;
 };
 
+FIPRadio.prototype.isPlaying = function isPlaying(){
+  return this.state === 'playing';
+};
+
+FIPRadio.prototype.isPaused = function isPaused(){
+  return this.state === 'paused';
+};
+
 /**
  *
  */
@@ -45,6 +55,7 @@ FIPRadio.prototype.play = function play(){
   }
 
   this.audio.play();
+  this.state = 'playing';   //not really true, should be 'buffering' then async 'playing'
 };
 
 /**
@@ -52,5 +63,7 @@ FIPRadio.prototype.play = function play(){
  */
 FIPRadio.prototype.stop = function stop(){
   this.audio.pause();
+  this.state = 'paused';
 };
+
 FIPRadio.prototype.pause = FIPRadio.prototype.stop;
