@@ -53,6 +53,8 @@ FIPRadio.prototype.configureAudio = function configureAudio(){
   audio.addEventListener('waiting', FIPRadio.logEvent);
   audio.addEventListener('loadeddata', FIPRadio.logEvent);
   audio.addEventListener('canplay', FIPRadio.logEvent);
+  audio.addEventListener('canplaythrough', FIPRadio.logEvent);
+  audio.addEventListener('durationchange', FIPRadio.logEvent);
   audio.addEventListener('loadstart', FIPRadio.logEvent);
   audio.addEventListener('emptied', FIPRadio.logEvent);
   audio.addEventListener('play', FIPRadio.logEvent);
@@ -96,5 +98,5 @@ FIPRadio.prototype.stop = function stop(){
 FIPRadio.prototype.pause = FIPRadio.prototype.stop;
 
 FIPRadio.logEvent = function logEvent(event){
-  console.log("Audio Element State: ", event.type);
+  console.log("Audio Element State: %s", event.type);
 };
