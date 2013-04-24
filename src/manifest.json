@@ -1,7 +1,9 @@
 {
   "name": "FIP Live Radio",
+  "id": "dhkkecgfkmchjojnmbhagaikchhcjchn",
   "version": "0.1.0",
   "manifest_version": 2,
+  "minimum_chrome_version": "22",
   "offline_enabled": false,
   "background": {
     "scripts": ["lib/fip-radio.js", "controllers/background.js", "bootstraps/background.js"],
@@ -12,5 +14,10 @@
     "idle",
     "http://*.fipradio.fr/",
     "http://mp3.live.tv-radio.com/"
-  ]
+  ],
+  "icons": {
+    "16": "resources/fip.png",
+    "48": "resources/fip.png",
+    "128": "resources/fip.png"
+  }
 }
