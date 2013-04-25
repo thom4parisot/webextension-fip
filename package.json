@@ -23,6 +23,7 @@
   ],
   "author": "Thomas Parisot <thomas@oncle-tom.net>",
   "license": "MIT",
+  "readmeFilename": "README.md",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-crx": "~0.2.1",
