@@ -11,7 +11,8 @@ The goals of this extension are the following:
 ## Install
 
 If you just want to install the extension to use it:
-simply access the [Chrome Web Store extension page](#), review and install it.
+simply access the [Chrome Web Store extension page](https://chrome.google.com/webstore/detail/fip-live-radio/fnhlecpfnocgmmmghkjcipmhdpmpddii),
+review and install it.
 
 ## Contribute
 
