@@ -23,6 +23,7 @@ Feel free to complete existing issues or share your own idea the way you like.
 
 The project relies on JavaScript tools like `node.js` and `bower` to manage dependencies.
 Here is the first step to initialize a project locally:
+
 1. fork the repository and clone it on your machine
 1. `npm install` will install and prepare everything
 1. open Chrome/Chromium > Manage extensions > Active Developer Mode and *load unpacked extension*
