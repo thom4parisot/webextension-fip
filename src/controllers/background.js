@@ -1,3 +1,7 @@
+"use strict";
+
+/* global FIPRadio, chrome */
+
 function Background(){}
 
 Background.prototype.bootstrap = function bootstrap(){

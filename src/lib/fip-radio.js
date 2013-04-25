@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  *
  * @constructor
@@ -36,14 +38,16 @@ FIPRadio.prototype.configureAudio = function configureAudio(){
   audio.src = this.url;
 
   audio.addEventListener('error', function(e){
-    console.log("An error occured.")
+    /* jshint devel:true */
+    console.log("An error occured.");
     console.dir(e);
 
     self.stop();
   });
 
   audio.addEventListener('stalled', function(e){
-    console.log("An error occured (stall).")
+    /* jshint devel:true */
+    console.log("An error occured (stall).");
     console.dir(e);
 
     self.stop();
@@ -98,5 +102,6 @@ FIPRadio.prototype.stop = function stop(){
 FIPRadio.prototype.pause = FIPRadio.prototype.stop;
 
 FIPRadio.logEvent = function logEvent(event){
+  /* jshint devel:true */
   console.log("Audio Element State: %s", event.type);
 };
