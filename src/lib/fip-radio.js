@@ -17,7 +17,14 @@ function FIPRadio(){
    */
   this.audio = null;
 
-  this.state = 'paused';
+  /**
+   *
+   * @type {FIPRadio.states}
+   */
+  this.state = FIPRadio.states.PAUSED;
+
+  this._defineProperty("maxRetry", 3);
+  this._defineProperty("retryTimeout", 150);  //in milliseconds
 }
 
 /**
@@ -25,6 +32,14 @@ function FIPRadio(){
  */
 FIPRadio.prototype.bootstrap = function bootstrap(){
 
+};
+
+FIPRadio.prototype._defineProperty = function _defineProperty(property, returned_value){
+  Object.defineProperty(this, property, {
+    get: typeof returned_value === "function" ? returned_value.bind(this) : function(){
+      return returned_value;
+    }
+  });
 };
 
 /**
@@ -45,24 +60,8 @@ FIPRadio.prototype.configureAudio = function configureAudio(){
     self.stop();
   });
 
-  audio.addEventListener('stalled', function(e){
-    /* jshint devel:true */
-    console.log("An error occured (stall).");
-    console.dir(e);
-
-    self.stop();
-  });
-
-  audio.addEventListener('stalled', FIPRadio.logEvent);
-  audio.addEventListener('waiting', FIPRadio.logEvent);
-  audio.addEventListener('loadeddata', FIPRadio.logEvent);
-  audio.addEventListener('canplay', FIPRadio.logEvent);
-  audio.addEventListener('canplaythrough', FIPRadio.logEvent);
-  audio.addEventListener('durationchange', FIPRadio.logEvent);
-  audio.addEventListener('loadstart', FIPRadio.logEvent);
-  audio.addEventListener('emptied', FIPRadio.logEvent);
-  audio.addEventListener('play', FIPRadio.logEvent);
-  audio.addEventListener('pause', FIPRadio.logEvent);
+  ['error', 'stalled', 'waiting', 'loadeddata', 'canplay', 'canplaythrough'].forEach(FIPRadio.logEvent.bind(this));
+  ['durationchange', 'loadstart', 'emptied', 'play', 'pause'].forEach(FIPRadio.logEvent.bind(this));
 
   audio.load();
 
@@ -70,11 +69,11 @@ FIPRadio.prototype.configureAudio = function configureAudio(){
 };
 
 FIPRadio.prototype.isPlaying = function isPlaying(){
-  return this.state === 'playing';
+  return this.state === FIPRadio.states.PLAYING;
 };
 
 FIPRadio.prototype.isPaused = function isPaused(){
-  return this.state === 'paused';
+  return this.state === FIPRadio.states.PAUSED;
 };
 
 /**
@@ -87,7 +86,7 @@ FIPRadio.prototype.play = function play(){
 
   this.audio.src = this.url;
   this.audio.play();
-  this.state = 'playing';   //not really true, should be 'buffering' then async 'playing'
+  this.state = FIPRadio.states.PLAYING;   //not really true, should be 'buffering' then async 'playing'
 };
 
 /**
@@ -96,7 +95,7 @@ FIPRadio.prototype.play = function play(){
 FIPRadio.prototype.stop = function stop(){
   this.audio.pause();
   this.audio.src = '';
-  this.state = 'paused';
+  this.state = FIPRadio.states.PAUSED;
 };
 
 FIPRadio.prototype.pause = FIPRadio.prototype.stop;
@@ -104,4 +103,15 @@ FIPRadio.prototype.pause = FIPRadio.prototype.stop;
 FIPRadio.logEvent = function logEvent(event){
   /* jshint devel:true */
   console.log("Audio Element State: %s", event.type);
+};
+
+/**
+ *
+ * @enum {String}
+ */
+FIPRadio.states = {
+  "PAUSED": "paused",     //it should be stopped as we really stop the buffering
+  "PLAYING": "playing",
+  "ERROR": "error",
+  "BUFFERING": "buffering"
 };
