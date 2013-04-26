@@ -31,7 +31,7 @@ function FIPRadio(){
  *
  */
 FIPRadio.prototype.bootstrap = function bootstrap(){
-
+  this.configureAudio();
 };
 
 FIPRadio.prototype._defineProperty = function _defineProperty(property, returned_value){
@@ -49,8 +49,6 @@ FIPRadio.prototype.configureAudio = function configureAudio(){
   var audio = new Audio();
 
   audio.preload = "auto";
-  audio.src = this.url;
-  audio.load();
 
   this.audio = audio;
 };
@@ -67,12 +65,9 @@ FIPRadio.prototype.isPaused = function isPaused(){
  *
  */
 FIPRadio.prototype.play = function play(){
-  if (!this.audio){
-    this.configureAudio();
-  }
-
   this.connectEvents();
   this.audio.src = this.url;
+  this.audio.load();
 
   this.audio.play();
   this.state = FIPRadio.states.PLAYING;   //not really true, should be 'buffering' then async 'playing'
