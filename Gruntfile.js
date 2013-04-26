@@ -3,6 +3,7 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    manifest: grunt.file.readJSON('src/manifest.json'),
 
     jshint: {
       options: {
@@ -15,7 +16,7 @@ module.exports = function(grunt) {
       extension: {
         cwd: "src/",
         src: ["src/**/*"],
-        dest: "dist/chrome-fip.zip",
+        dest: "dist/chrome-fip-<%= manifest.version %>.zip",
         dot: false
       }
     }
