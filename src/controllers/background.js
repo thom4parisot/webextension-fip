@@ -13,7 +13,7 @@ Background.prototype.bootstrap = function bootstrap(){
 Background.prototype.registerEvents = function registerEvents(){
   var radio = this.radio;
 
-  // @todo decouple this part
+  // @todo decouple this part (listen to events emitted by the radio through an event emitter)
   chrome.browserAction.onClicked.addListener(function(){
     if (radio.isPlaying()){
       radio.stop();

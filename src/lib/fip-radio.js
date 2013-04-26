@@ -46,23 +46,10 @@ FIPRadio.prototype._defineProperty = function _defineProperty(property, returned
  *
  */
 FIPRadio.prototype.configureAudio = function configureAudio(){
-  var self = this;
   var audio = new Audio();
 
   audio.preload = "auto";
   audio.src = this.url;
-
-  audio.addEventListener('error', function(e){
-    /* jshint devel:true */
-    console.log("An error occured.");
-    console.dir(e);
-
-    self.stop();
-  });
-
-  ['error', 'stalled', 'waiting', 'loadeddata', 'canplay', 'canplaythrough'].forEach(FIPRadio.logEvent.bind(this));
-  ['durationchange', 'loadstart', 'emptied', 'play', 'pause'].forEach(FIPRadio.logEvent.bind(this));
-
   audio.load();
 
   this.audio = audio;
@@ -84,7 +71,9 @@ FIPRadio.prototype.play = function play(){
     this.configureAudio();
   }
 
+  this.connectEvents();
   this.audio.src = this.url;
+
   this.audio.play();
   this.state = FIPRadio.states.PLAYING;   //not really true, should be 'buffering' then async 'playing'
 };
@@ -93,16 +82,50 @@ FIPRadio.prototype.play = function play(){
  *
  */
 FIPRadio.prototype.stop = function stop(){
+  var self = this;
+
   this.audio.pause();
-  this.audio.src = '';
   this.state = FIPRadio.states.PAUSED;
+
+  setTimeout(function(){
+    self.disconnectEvents();
+    self.audio.src = '';
+  }, 100);
 };
 
 FIPRadio.prototype.pause = FIPRadio.prototype.stop;
 
-FIPRadio.logEvent = function logEvent(event){
+FIPRadio.prototype.stopOnError = function stopOnError(event){
+  /* jshint devel:true */
+
+  self.stop();
+};
+
+FIPRadio.prototype.logEvent = function logEvent(event){
   /* jshint devel:true */
   console.log("Audio Element State: %s", event.type);
+};
+
+FIPRadio.prototype.disconnectEvents = function disconnectEvents(){
+  var self = this;
+  var audio = self.audio;
+
+  audio.removeEventListener('error', self.stopOnError);
+
+  ['error', 'stalled', 'progress', 'waiting', 'loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough', 'durationchange', 'loadstart', 'emptied', 'play', 'pause'].forEach(function(type){
+    audio.removeEventListener(type, self.logEvent);
+  });
+};
+
+FIPRadio.prototype.connectEvents = function connectEvents(){
+  var self = this;
+  var audio = self.audio;
+
+  audio.addEventListener('error', self.stopOnError);
+
+  ['error', 'stalled', 'progress', 'waiting', 'loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough', 'durationchange', 'loadstart', 'emptied', 'play', 'pause'].forEach(function(type){
+    audio.addEventListener(type, self.logEvent);
+  });
 };
 
 /**
