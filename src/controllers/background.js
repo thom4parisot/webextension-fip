@@ -14,7 +14,7 @@ Background.prototype.bootstrap = function bootstrap(){
 Background.prototype.registerEvents = function registerEvents(){
   var radio = this.radio;
 
-  radio.audio.addEventListener("pause", function(event){
+  radio.audio.addEventListener("pause", function(){
     chrome.browserAction.setBadgeText({ text: '' });
   });
   radio.audio.addEventListener("canplaythrough", function(){

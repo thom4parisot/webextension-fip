@@ -90,10 +90,8 @@ FIPRadio.prototype.stop = function stop(){
 
 FIPRadio.prototype.pause = FIPRadio.prototype.stop;
 
-FIPRadio.prototype.stopOnError = function stopOnError(event){
-  /* jshint devel:true */
-
-  self.stop();
+FIPRadio.prototype.stopOnError = function stopOnError(){
+  this.stop();
 };
 
 FIPRadio.prototype.logEvent = function logEvent(event){
