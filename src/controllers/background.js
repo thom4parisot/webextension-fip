@@ -30,6 +30,10 @@ Background.prototype.registerEvents = function registerEvents(){
     chrome.browserAction.setBadgeText({ text: '~' });
   });
   radio.audio.addEventListener("error", function(){
+    if (radio.isPaused()){
+      return;
+    }
+
     chrome.browserAction.setBadgeBackgroundColor({ color: '#c00' });
     chrome.browserAction.setBadgeText({ text: '!' });
   });
