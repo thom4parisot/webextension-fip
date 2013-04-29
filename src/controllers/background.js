@@ -9,6 +9,7 @@ Background.prototype.bootstrap = function bootstrap(){
   this.radio.bootstrap();
 
   this.registerEvents();
+  chrome.browserAction.setBadgeText({ text: '' });
 };
 
 Background.prototype.registerEvents = function registerEvents(){
