@@ -1,10 +1,11 @@
 {
-  "name": "FIP Live Radio",
-  "version": "0.1.2",
-  "description": "FIP Radio live player. Featuring `What's playing` and last.fm scrobbling.",
+  "name": "__MSG_extension_name__",
+  "version": "0.1.3",
+  "description": "__MSG_extension_description__",
   "manifest_version": 2,
   "minimum_chrome_version": "22",
   "offline_enabled": false,
+  "default_locale": "fr",
   "background": {
     "scripts": ["lib/fip-radio.js", "controllers/background.js", "bootstraps/background.js"],
     "persistent": true
@@ -16,7 +17,8 @@
     "http://mp3.live.tv-radio.com/"
   ],
   "browser_action": {
-    "default_icon": "resources/fip.png"
+    "default_icon": "resources/fip.png",
+    "default_title": "__MSG_extension_name__"
   },
   "icons": {
     "16": "resources/fip.png",
