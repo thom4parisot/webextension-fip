@@ -2,54 +2,60 @@
 
 /* global Radio, chrome */
 
+/**
+ * Background process handling the radio stuff
+ *
+ * @constructor
+ */
 function Background(){}
 
+/**
+ * Bootstraping process
+ *
+ * @api
+ */
 Background.prototype.bootstrap = function bootstrap(){
   this.radio = new Radio();
-  this.radio.bootstrap();
 
   this.registerEvents();
-  chrome.browserAction.setBadgeText({ text: '' });
 };
 
+/**
+ * Event registration.
+ * Mostly to control the Chrome UI according to the state of the radio.
+ *
+ * @api
+ */
 Background.prototype.registerEvents = function registerEvents(){
   var radio = this.radio;
 
-  radio.audio.addEventListener("pause", function(){
+  radio.on('stopped', function(){
     chrome.browserAction.setBadgeText({ text: '' });
   });
-  radio.audio.addEventListener("canplaythrough", function(){
+
+  radio.on('playing', function(){
     chrome.browserAction.setBadgeBackgroundColor({ color: '#080' });
     chrome.browserAction.setBadgeText({ text: '▶' });
   });
-  radio.audio.addEventListener("play", function(){
-    chrome.browserAction.setBadgeBackgroundColor({ color: '#fc0' });
-    chrome.browserAction.setBadgeText({ text: '~' });
-  });
-  radio.audio.addEventListener("stalled", function(){
-    chrome.browserAction.setBadgeBackgroundColor({ color: '#fc0' });
-    chrome.browserAction.setBadgeText({ text: '~' });
-  });
-  radio.audio.addEventListener("error", function(){
-    if (radio.isPaused()){
-      return;
-    }
 
+  radio.on('buffering', function(){
+    chrome.browserAction.setBadgeBackgroundColor({ color: '#fc0' });
+    chrome.browserAction.setBadgeText({ text: '~' });
+  });
+
+  radio.on('errored', function(){
     chrome.browserAction.setBadgeBackgroundColor({ color: '#c00' });
     chrome.browserAction.setBadgeText({ text: '!' });
   });
 
-  // @todo do a toggle and let the radio determine what to do
-  chrome.browserAction.onClicked.addListener(function(){
-    if (radio.isPlaying()){
-      radio.stop();
-    }
-    else if (radio.isPaused()){
-      radio.play();
-    }
-  });
+  chrome.browserAction.onClicked.addListener( radio.toggle.bind(radio) );
 };
 
+/**
+ * Factory constructor to build and initialize the process in a single line.
+ *
+ * @returns {Background}
+ */
 Background.init = function init(){
   var instance = new Background();
 
