@@ -8,7 +8,7 @@
   "default_locale": "fr",
   "background": {
     "scripts": [
-      "vendor/lodash/lodash.js",
+      "vendor/lodash/dist/lodash.min.js",
       "vendor/machina.js/lib/machina.min.js",
       "lib/radio.js",
       "controllers/background.js",
