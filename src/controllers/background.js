@@ -27,28 +27,29 @@ Background.prototype.bootstrap = function bootstrap(){
  * @api
  */
 Background.prototype.registerEvents = function registerEvents(){
+  var self = this;
   var radio = this.radio;
 
-  radio.on('stopped', function(){
-    chrome.browserAction.setBadgeText({ text: '' });
-  });
-
-  radio.on('playing', function(){
-    chrome.browserAction.setBadgeBackgroundColor({ color: '#080' });
-    chrome.browserAction.setBadgeText({ text: '▶' });
-  });
-
-  radio.on('buffering', function(){
-    chrome.browserAction.setBadgeBackgroundColor({ color: '#fc0' });
-    chrome.browserAction.setBadgeText({ text: '~' });
-  });
-
-  radio.on('errored', function(){
-    chrome.browserAction.setBadgeBackgroundColor({ color: '#c00' });
-    chrome.browserAction.setBadgeText({ text: '!' });
-  });
+  radio.on('stopped', function(){     self.setBadge('');          });
+  radio.on('playing', function(){     self.setBadge('▶', '#080'); });
+  radio.on('buffering', function(){   self.setBadge('~', '#fc0'); });
+  radio.on('errored', function(){     self.setBadge('!', '#c00'); });
 
   chrome.browserAction.onClicked.addListener( radio.toggle.bind(radio) );
+};
+
+/**
+ * Change badge text and color, the easy way.
+ *
+ * @param {String} text
+ * @param {String|Array=} color
+ */
+Background.prototype.setBadge = function setBadge(text, color){
+  chrome.browserAction.setBadgeText({ text: text+'' });
+
+  if (color){
+    chrome.browserAction.setBadgeBackgroundColor({ color: color });
+  }
 };
 
 /**
