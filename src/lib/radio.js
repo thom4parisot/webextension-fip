@@ -20,8 +20,13 @@ var Radio = machina.Fsm.extend({
   // It should be fine since this point
   "playbackObject": null,
   "initialize": function(){
+    var self = this;
     var audio = new Audio();
     audio.preload = false;
+
+    audio.addEventListener('canplaythrough', function(){
+      self.transition('playing');
+    });
 
     this.playbackObject = audio;
   },
@@ -29,16 +34,33 @@ var Radio = machina.Fsm.extend({
   // States Transitionning
   "states": {
     "playing": {
-      stop: function(){}
+      stop: function(){
+        this.transition('stopped');
+
+        this.playbackObject.pause();
+      }
     },
     "stopped": {
-      play: function(){}
+      play: function(){
+        this.transition('buffering');
+
+        this.playbackObject.src = this.playbackUrl;
+        this.playbackObject.play();
+      }
     },
     "buffering": {
-      stop: function(){}
+      stop: function(){
+        this.transition('stopped');
+
+        this.playbackObject.pause();
+      }
     },
     "errored": {
-      play: function(){}
+      play: function(){
+        this.transition('buffering');
+
+        this.playbackObject.play();
+      }
     }
   },
 
