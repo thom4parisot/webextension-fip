@@ -1,14 +1,32 @@
 "use strict";
 
-var Radio = new machina.Fsm.extend({
+/* globals machina */
+
+/**
+ * Radio State Machine.
+ * Handles the transitions from a state to another in a very clean way.
+ *
+ * @type {Radio}
+ */
+//exported Radio
+var Radio = machina.Fsm.extend({
   "initialState": "stopped",
-  // behavior config
+
+  // Behavior config
   "playbackUrl": "http://mp3.live.tv-radio.com/fip/all/fiphautdebit.mp3",
   "maxRetry": 3,
   "retryTimeout": 150,
 
-  // it should be fine since this point
-  "playbackObject": new Audio(),
+  // It should be fine since this point
+  "playbackObject": null,
+  "initialize": function(){
+    var audio = new Audio();
+    audio.preload = false;
+
+    this.playbackObject = audio;
+  },
+
+  // States Transitionning
   "states": {
     "playing": {
       play: function(){},
@@ -26,6 +44,18 @@ var Radio = new machina.Fsm.extend({
       play: function(){},
       stop: function(){}
     }
+  },
+
+  // Public API
+  "play": function(){
+    this.handle('play');
+  },
+  "stop": function(){
+    this.handle('stop');
+  },
+  "toggle": function(){
+    //jshint expr:true
+    this.state !== 'stopped' ? this.handle('stop') : this.handle('play');
   }
 });
 
