@@ -1,11 +1,11 @@
 "use strict";
 
-/* global FIPRadio, chrome */
+/* global Radio, chrome */
 
 function Background(){}
 
 Background.prototype.bootstrap = function bootstrap(){
-  this.radio = new FIPRadio();
+  this.radio = new Radio();
   this.radio.bootstrap();
 
   this.registerEvents();

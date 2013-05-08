@@ -1,30 +1,40 @@
 "use strict";
 
+var Radio = new machina.Fsm.extend({
+  "initialState": "stopped",
+  // behavior config
+  "playbackUrl": "http://mp3.live.tv-radio.com/fip/all/fiphautdebit.mp3",
+  "maxRetry": 3,
+  "retryTimeout": 150,
+
+  // it should be fine since this point
+  "playbackObject": new Audio(),
+  "states": {
+    "playing": {
+      play: function(){},
+      stop: function(){}
+    },
+    "stopped": {
+      play: function(){},
+      stop: function(){}
+    },
+    "buffering": {
+      play: function(){},
+      stop: function(){}
+    },
+    "errored": {
+      play: function(){},
+      stop: function(){}
+    }
+  }
+});
+
 /**
  *
  * @constructor
  */
 function FIPRadio(){
-  /**
-   *
-   * @type {string}
-   */
-  this.url = "http://mp3.live.tv-radio.com/fip/all/fiphautdebit.mp3";
 
-  /**
-   *
-   * @type {null}
-   */
-  this.audio = null;
-
-  /**
-   *
-   * @type {FIPRadio.states}
-   */
-  this.state = FIPRadio.states.PAUSED;
-
-  this._defineProperty("maxRetry", 3);
-  this._defineProperty("retryTimeout", 150);  //in milliseconds
 }
 
 /**

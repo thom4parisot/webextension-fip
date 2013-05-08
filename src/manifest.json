@@ -7,7 +7,12 @@
   "offline_enabled": false,
   "default_locale": "fr",
   "background": {
-    "scripts": ["lib/fip-radio.js", "controllers/background.js", "bootstraps/background.js"],
+    "scripts": [
+      "vendor/lodash/lodash.js",
+      "vendor/machina.js/lib/machina.min.js",
+      "lib/radio.js",
+      "controllers/background.js",
+      "bootstraps/background.js"],
     "persistent": true
   },
   "permissions": [
