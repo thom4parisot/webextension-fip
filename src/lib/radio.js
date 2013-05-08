@@ -29,20 +29,16 @@ var Radio = machina.Fsm.extend({
   // States Transitionning
   "states": {
     "playing": {
-      play: function(){},
       stop: function(){}
     },
     "stopped": {
-      play: function(){},
-      stop: function(){}
+      play: function(){}
     },
     "buffering": {
-      play: function(){},
       stop: function(){}
     },
     "errored": {
-      play: function(){},
-      stop: function(){}
+      play: function(){}
     }
   },
 
