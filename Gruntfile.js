@@ -9,7 +9,7 @@ module.exports = function(grunt) {
       options: {
         jshintrc: '.jshintrc'
       },
-      extension: ['src/**/*.js']
+      extension: ['src/**/*.js', '!src/vendor/**']
     },
 
     zip: {
