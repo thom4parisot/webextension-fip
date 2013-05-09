@@ -14,8 +14,13 @@ module.exports = function(grunt) {
 
     zip: {
       extension: {
-        cwd: "src/",
-        src: ["src/**/*"],
+        cwd: 'src/',
+        src: [
+          'src/**/*',
+          '!src/vendor/**',
+          'src/vendor/lodash/dist/lodash.min.js',
+          'src/vendor/machina.js/lib/machina.min.js'
+        ],
         dest: "dist/chrome-fip-<%= manifest.version %>.zip",
         dot: false
       }
