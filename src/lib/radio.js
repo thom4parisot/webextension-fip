@@ -25,7 +25,9 @@ var Radio = machina.Fsm.extend({
     // publicly exposing audio states change
     self.on('transition', function transitionHandler(transition){
       if (transition.fromState !== transition.toState){
+        /* jshint devel:true */
         self.emit(transition.toState, transition);
+        console.log("State changed from '%s' to '%s'.", transition.fromState, transition.toState);
       }
     });
   },
@@ -58,7 +60,8 @@ var Radio = machina.Fsm.extend({
         this.playbackObject.pause();
       },
       "audio.error": "errored",
-      "audio.canplaythrough": "playing"
+      "audio.canplaythrough": "playing",
+      "audio.stalled": "buffering"
     },
     "errored": {
       play: function playOnErrored(){
