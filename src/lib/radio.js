@@ -33,7 +33,7 @@ var Radio = machina.Fsm.extend({
   // State transitioning
   "states": {
     "playing": {
-      stop: function(){
+      stop: function stopOnPlaying(){
         this.transition('stopped');
 
         this.playbackObject.pause();
@@ -42,7 +42,7 @@ var Radio = machina.Fsm.extend({
       error: "errored"
     },
     "stopped": {
-      play: function(){
+      play: function playOnStopped(){
         this.transition('buffering');
 
         this.preparePlaybackObject();
@@ -51,7 +51,7 @@ var Radio = machina.Fsm.extend({
       }
     },
     "buffering": {
-      stop: function(){
+      stop: function stopOnBuffering(){
         this.transition('stopped');
 
         this.playbackObject.pause();
@@ -59,7 +59,7 @@ var Radio = machina.Fsm.extend({
       error: "errored"
     },
     "errored": {
-      play: function(){
+      play: function playOnErrored(){
         this.transition('buffering');
 
         this.playbackObject.play();
