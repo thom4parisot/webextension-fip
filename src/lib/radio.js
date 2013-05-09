@@ -39,7 +39,8 @@ var Radio = machina.Fsm.extend({
         this.playbackObject.pause();
         this.playbackObject.src = '';
       },
-      error: "errored"
+      "audio.error": "errored",
+      "audio.stalled": "buffering"
     },
     "stopped": {
       play: function playOnStopped(){
@@ -56,7 +57,8 @@ var Radio = machina.Fsm.extend({
 
         this.playbackObject.pause();
       },
-      error: "errored"
+      "audio.error": "errored",
+      "audio.canplaythrough": "playing"
     },
     "errored": {
       play: function playOnErrored(){
@@ -107,22 +109,9 @@ var Radio = machina.Fsm.extend({
       return;
     }
 
-    audio.addEventListener('canplaythrough', function(){
-      self.transition('playing');
-    });
-
-    audio.addEventListener('stalled', function(){
-      self.handle('buffer');
-    });
-
-    audio.addEventListener('error', function(){
-      self.handle('error');
-    });
-
-    ['error', 'stalled', 'waiting', 'loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough', 'durationchange', 'loadstart', 'emptied', 'play', 'pause'].forEach(function(type){
+    ['error', 'stalled', 'progress', 'waiting', 'loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough', 'durationchange', 'loadstart', 'emptied'].forEach(function(type){
       audio.addEventListener(type, function logEvent(event){
-        /* jshint devel:true */
-        console.log("Audio Element State: %s", event.type);
+        self.handle('audio.'+event.type);
       });
     });
 
