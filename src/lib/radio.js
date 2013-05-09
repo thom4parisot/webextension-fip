@@ -42,14 +42,14 @@ var Radio = machina.Fsm.extend({
         this.playbackObject.src = '';
       },
       "audio.error": "errored",
-      "audio.stalled": "buffering"
+      "audio.stalled": "buffering",
+      "network.offline": "buffering"
     },
     "stopped": {
       play: function playOnStopped(){
         this.transition('buffering');
 
         this.preparePlaybackObject();
-
         this.playbackObject.play();
       }
     },
@@ -61,14 +61,17 @@ var Radio = machina.Fsm.extend({
       },
       "audio.error": "errored",
       "audio.canplaythrough": "playing",
-      "audio.stalled": "buffering"
+      "audio.stalled": "buffering",
+      "network.offline": "buffering"
     },
     "errored": {
       play: function playOnErrored(){
         this.transition('buffering');
 
         this.playbackObject.play();
-      }
+      },
+      "stop": "stopped",
+      "network.offline": "stopped"
     }
   },
 

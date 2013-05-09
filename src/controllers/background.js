@@ -35,6 +35,13 @@ Background.prototype.registerEvents = function registerEvents(){
   radio.on('buffering', function(){   self.setBadge('~', '#fc0'); });
   radio.on('errored', function(){     self.setBadge('!', '#c00'); });
 
+  // Handling `network.online` or `network.offline` states
+  ['online', 'offline'].forEach(function(eventType){
+    window.addEventListener(eventType, function handleNetworkEvent(event){
+      radio.handle('network.' + event.type);
+    });
+  });
+
   chrome.browserAction.onClicked.addListener( radio.toggle.bind(radio) );
 };
 
