@@ -11,8 +11,8 @@
       "vendor/lodash/dist/lodash.min.js",
       "vendor/machina.js/lib/machina.min.js",
       "lib/radio.js",
-      "controllers/background.js",
-      "bootstraps/background.js"],
+      "background/controller.js",
+      "background/bootstrap.js"],
     "persistent": true
   },
   "permissions": [
