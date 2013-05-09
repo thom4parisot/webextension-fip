@@ -29,6 +29,12 @@ var Radio = machina.Fsm.extend({
     });
 
     this.playbackObject = audio;
+
+    this.on('transition', function(transition){
+      if (transition.fromState !== transition.toState){
+        self.emit(transition.toState, transition);
+      }
+    });
   },
 
   // States Transitionning
