@@ -1,6 +1,7 @@
 "use strict";
 
 /* globals machina */
+/* exported Radio */
 
 /**
  * Radio State Machine.
@@ -8,7 +9,6 @@
  *
  * @type {Radio}
  */
-//exported Radio
 var Radio = machina.Fsm.extend({
   "initialState": "stopped",
 
@@ -22,14 +22,15 @@ var Radio = machina.Fsm.extend({
   "initialize": function(){
     var self = this;
 
-    this.on('transition', function(transition){
+    // publicly exposing audio states change
+    self.on('transition', function transitionHandler(transition){
       if (transition.fromState !== transition.toState){
         self.emit(transition.toState, transition);
       }
     });
   },
 
-  // States Transitionning
+  // State transitioning
   "states": {
     "playing": {
       stop: function(){
@@ -66,17 +67,34 @@ var Radio = machina.Fsm.extend({
     }
   },
 
-  // Public API
+  /**
+   * Play the radio
+   * @api
+   */
   "play": function(){
     this.handle('play');
   },
+  /**
+   * Stop the radio
+   * @api
+   */
   "stop": function(){
     this.handle('stop');
   },
+  /**
+   * Blindly play or pause the audio
+   * @api
+   */
   "toggle": function(){
     //jshint expr:true
     this.state !== 'stopped' ? this.handle('stop') : this.handle('play');
   },
+  /**
+   * Prepare the audio object to be played.
+   * Also plugs events to drive the State Machine according to its internal events.
+   *
+   * @api
+   */
   "preparePlaybackObject": function(){
     var self = this;
     var audio = self.playbackObject || new Audio();
@@ -84,10 +102,10 @@ var Radio = machina.Fsm.extend({
     audio.src = self.playbackUrl;
     audio.preload = false;
 
+    // the audio object is already constructed; don't need to go further
     if (self.playbackObject){
       return;
     }
-
 
     audio.addEventListener('canplaythrough', function(){
       self.transition('playing');
