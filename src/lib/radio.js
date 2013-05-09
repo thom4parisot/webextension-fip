@@ -18,17 +18,9 @@ var Radio = machina.Fsm.extend({
   "retryTimeout": 150,
 
   // It should be fine since this point
-  "playbackObject": null,
+  "playbackObject": '',
   "initialize": function(){
     var self = this;
-    var audio = new Audio();
-    audio.preload = false;
-
-    audio.addEventListener('canplaythrough', function(){
-      self.transition('playing');
-    });
-
-    this.playbackObject = audio;
 
     this.on('transition', function(transition){
       if (transition.fromState !== transition.toState){
@@ -44,13 +36,16 @@ var Radio = machina.Fsm.extend({
         this.transition('stopped');
 
         this.playbackObject.pause();
-      }
+        this.playbackObject.src = '';
+      },
+      error: "errored"
     },
     "stopped": {
       play: function(){
         this.transition('buffering');
 
-        this.playbackObject.src = this.playbackUrl;
+        this.preparePlaybackObject();
+
         this.playbackObject.play();
       }
     },
@@ -59,7 +54,8 @@ var Radio = machina.Fsm.extend({
         this.transition('stopped');
 
         this.playbackObject.pause();
-      }
+      },
+      error: "errored"
     },
     "errored": {
       play: function(){
@@ -80,118 +76,38 @@ var Radio = machina.Fsm.extend({
   "toggle": function(){
     //jshint expr:true
     this.state !== 'stopped' ? this.handle('stop') : this.handle('play');
+  },
+  "preparePlaybackObject": function(){
+    var self = this;
+    var audio = self.playbackObject || new Audio();
+
+    audio.src = self.playbackUrl;
+    audio.preload = false;
+
+    if (self.playbackObject){
+      return;
+    }
+
+
+    audio.addEventListener('canplaythrough', function(){
+      self.transition('playing');
+    });
+
+    audio.addEventListener('stalled', function(){
+      self.handle('buffer');
+    });
+
+    audio.addEventListener('error', function(){
+      self.handle('error');
+    });
+
+    ['error', 'stalled', 'waiting', 'loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough', 'durationchange', 'loadstart', 'emptied', 'play', 'pause'].forEach(function(type){
+      audio.addEventListener(type, function logEvent(event){
+        /* jshint devel:true */
+        console.log("Audio Element State: %s", event.type);
+      });
+    });
+
+    self.playbackObject = audio;
   }
 });
-
-/**
- *
- * @constructor
- */
-function FIPRadio(){
-
-}
-
-/**
- *
- */
-FIPRadio.prototype.bootstrap = function bootstrap(){
-  this.configureAudio();
-};
-
-FIPRadio.prototype._defineProperty = function _defineProperty(property, returned_value){
-  Object.defineProperty(this, property, {
-    get: typeof returned_value === "function" ? returned_value.bind(this) : function(){
-      return returned_value;
-    }
-  });
-};
-
-/**
- *
- */
-FIPRadio.prototype.configureAudio = function configureAudio(){
-  var audio = new Audio();
-
-  audio.preload = "auto";
-
-  this.audio = audio;
-};
-
-FIPRadio.prototype.isPlaying = function isPlaying(){
-  return this.state === FIPRadio.states.PLAYING;
-};
-
-FIPRadio.prototype.isPaused = function isPaused(){
-  return this.state === FIPRadio.states.PAUSED;
-};
-
-/**
- *
- */
-FIPRadio.prototype.play = function play(){
-  this.connectEvents();
-  this.audio.src = this.url;
-  this.audio.load();
-
-  this.audio.play();
-  this.state = FIPRadio.states.PLAYING;   //not really true, should be 'buffering' then async 'playing'
-};
-
-/**
- *
- */
-FIPRadio.prototype.stop = function stop(){
-  var self = this;
-
-  this.audio.pause();
-  this.state = FIPRadio.states.PAUSED;
-
-  setTimeout(function(){
-    self.disconnectEvents();
-    self.audio.src = '';
-  }, 100);
-};
-
-FIPRadio.prototype.pause = FIPRadio.prototype.stop;
-
-FIPRadio.prototype.stopOnError = function stopOnError(){
-  this.stop();
-};
-
-FIPRadio.prototype.logEvent = function logEvent(event){
-  /* jshint devel:true */
-  console.log("Audio Element State: %s", event.type);
-};
-
-FIPRadio.prototype.disconnectEvents = function disconnectEvents(){
-  var self = this;
-  var audio = self.audio;
-
-  audio.removeEventListener('error', self.stopOnError);
-
-  ['error', 'stalled', 'progress', 'waiting', 'loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough', 'durationchange', 'loadstart', 'emptied', 'play', 'pause'].forEach(function(type){
-    audio.removeEventListener(type, self.logEvent);
-  });
-};
-
-FIPRadio.prototype.connectEvents = function connectEvents(){
-  var self = this;
-  var audio = self.audio;
-
-  audio.addEventListener('error', self.stopOnError);
-
-  ['error', 'stalled', 'progress', 'waiting', 'loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough', 'durationchange', 'loadstart', 'emptied', 'play', 'pause'].forEach(function(type){
-    audio.addEventListener(type, self.logEvent);
-  });
-};
-
-/**
- *
- * @enum {String}
- */
-FIPRadio.states = {
-  "PAUSED": "paused",     //it should be stopped as we really stop the buffering
-  "PLAYING": "playing",
-  "ERROR": "error",
-  "BUFFERING": "buffering"
-};
