@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app ng-csp>
 <head>
   <title>{{title}}</title>
   <link rel="stylesheet" href="popup.css"/>
@@ -10,7 +10,7 @@
 
 <main ng-controller="NowPlayingController">
   <aside class="panel" id="cover">
-    <img src="{{broadast.cover}}" class="album-cover" alt="{{broadast.title}} from {{broadast.artist}}"/>
+    <img ng-src="{{broadast.cover}}" class="album-cover" alt="{{broadast.title}} from {{broadast.artist}}"/>
   </aside>
 
   <article class="panel" id="content">
