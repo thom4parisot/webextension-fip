@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html ng-app>
 <head>
   <title>What's on air on FIP Radio</title>
+  <link rel="stylesheet" href="on-air.css"/>
 </head>
 <body>
 
+<h1>FIP Radio – Live</h1>
+
+<main>
+  <aside class="panel" id="cover">
+    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs" class="album-cover" alt="L'Insomnie from Morro"/>
+  </aside>
+
+  <article class="panel" id="content">
+    <h2 class="title">L'Insomnie</h2>
+
+    <p><strong>Date de sortie :</strong> <date>2012</date></p>
+    <p class="author"><strong>Artiste :</strong> Morro</p>
+    <p class="album"><strong>Album :</strong> La Danse qui Pense (cd Promo)</p>
+  </article>
+</main>
 
 <script src="../vendor/angular/angular.min.js"></script>
 <script src="../vendor/lodash/dist/lodash.min.js"></script>

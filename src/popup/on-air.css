@@ -1,0 +1,45 @@
+body{
+  background: #fafafa;
+  font-family: "Helvetica Nueue", "Trebuchet MS", Trebuchet, sans-serif;
+  margin: 0;
+  padding: 0;
+  width: 425px;
+}
+
+h1{
+  background: #E2007A;
+  color: #f5f5f5;
+  font-weight: normal;
+  margin: 0 0 .5em;
+  padding: .5em;
+}
+
+h2{
+  margin: 0 0 .5em;
+}
+
+main{
+  display: table-row;
+}
+
+aside{
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  width: 125px;
+}
+  .album-cover{
+    border: 3px solid #E2007A;
+    box-shadow: 0 0 2px rgba(0,0,0,.3);
+    height: 100px;
+    width: 100px;
+  }
+
+article{
+  display: table-cell;
+  width: 300px;
+}
+
+  article p{
+    margin: 0 0 .5em;
+  }
