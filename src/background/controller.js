@@ -18,9 +18,6 @@ Background.prototype.bootstrap = function bootstrap(){
   this.radio = new Radio();
 
   this.registerEvents();
-
-  //temporary to test out the now-playing
-  chrome.browserAction.setPopup({ popup: 'now-playing/popup.html' });
 };
 
 /**
@@ -44,8 +41,6 @@ Background.prototype.registerEvents = function registerEvents(){
       radio.handle('network.' + event.type);
     });
   });
-
-  chrome.browserAction.onClicked.addListener( radio.toggle.bind(radio) );
 };
 
 /**
