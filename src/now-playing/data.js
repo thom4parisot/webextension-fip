@@ -8,10 +8,10 @@ angular.module('NowPlayingService', [])
      * Parses the remote service response.
      * Deals with complicated stuff to update the UI.
      *
-     * @param {ng.}httpResponse
+     * @param {{html: String}} responseData
      */
-    function parseHtmlResponse(httpResponse){
-      var tags = $compile(httpResponse.data.html)({});
+    function parseHtmlResponse(responseData){
+      var tags = $compile(responseData.html)({});
       var data = {};
 
       Array.prototype.slice.call(tags).some(function(tag){
@@ -70,7 +70,7 @@ angular.module('NowPlayingService', [])
     Broadcast.get = function(){
       return $http.get(Broadcast.defaultUri, {date: Date.now()})
         .then(function(response){
-          return new Broadcast(parseHtmlResponse(response));
+          return new Broadcast(parseHtmlResponse(response.data));
         });
     };
 
