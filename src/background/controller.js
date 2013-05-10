@@ -18,6 +18,9 @@ Background.prototype.bootstrap = function bootstrap(){
   this.radio = new Radio();
 
   this.registerEvents();
+
+  //temporary to test out the popup
+  chrome.browserAction.setPopup({ popup: 'popup/on-air.html' });
 };
 
 /**
