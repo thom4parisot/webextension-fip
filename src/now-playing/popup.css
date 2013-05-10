@@ -10,11 +10,12 @@ h1{
   background: #E2007A;
   color: #f5f5f5;
   font-weight: normal;
-  margin: 0 0 .5em;
+  margin: 0;
   padding: .5em;
 }
 
 h2{
+  line-height: .9;
   margin: 0 0 .5em;
 }
 
@@ -25,8 +26,8 @@ main{
 aside{
   display: table-cell;
   text-align: center;
-  vertical-align: middle;
-  width: 125px;
+  vertical-align: top;
+  width: 106px;
 }
   .album-cover{
     border: 3px solid #E2007A;
@@ -43,3 +44,7 @@ article{
   article p{
     margin: 0 0 .5em;
   }
+
+aside, article{
+  padding: 10px 0 10px 10px;
+}
