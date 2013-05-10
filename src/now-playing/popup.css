@@ -19,8 +19,13 @@ h2{
   margin: 0 0 .5em;
 }
 
+
 main{
   display: table-row;
+}
+
+aside, article{
+  padding: 10px 0 10px 10px;
 }
 
 aside{
@@ -41,10 +46,14 @@ article{
   width: 300px;
 }
 
+  date{
+    font-style: italic;
+  }
   article p{
     margin: 0 0 .5em;
   }
 
-aside, article{
-  padding: 10px 0 10px 10px;
-}
+  .label{
+    text-transform: capitalize;
+  }
+

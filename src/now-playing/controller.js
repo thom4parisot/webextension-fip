@@ -18,7 +18,12 @@ function NowPlayingController($scope, $rootScope){
   };
 
   // Trick to update the title outside the scope (avoids the controller to be global)
-  $rootScope.$root.title = chrome.i18n.getMessage('extension_name');
+  $rootScope.title = chrome.i18n.getMessage('extension_name');
+  $rootScope.label = {
+    album: chrome.i18n.getMessage('album'),
+    artist: chrome.i18n.getMessage('artist')
+  };
+
 }
 
 // And now deal with minification!

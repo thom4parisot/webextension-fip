@@ -16,9 +16,14 @@
   <article class="panel" id="content">
     <h2 class="title">{{broadcast.title}}</h2>
 
-    <p><strong>Date de sortie :</strong> <date>{{broadcast.date}}</date></p>
-    <p class="author"><strong>Artiste :</strong> {{broadcast.artist}}</p>
-    <p class="album"><strong>Album :</strong> {{broadcast.album}}</p>
+    <p class="album">
+      <strong class="label">{{$root.label.album}} :</strong>
+      {{broadcast.album}} (<date>{{broadcast.date}}</date>)
+    </p>
+
+    <p class="author">
+      <strong class="label">{{$root.label.artist}} :</strong>
+      {{broadcast.artist}}</p>
   </article>
 </main>
 

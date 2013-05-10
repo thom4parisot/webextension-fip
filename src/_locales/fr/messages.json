@@ -4,5 +4,11 @@
   },
   "extension_description": {
     "message": "Lecteur audio pour écouter FIP Radio. Incluera prochainement `À l'écoute` et le scrobbling last.fm."
+  },
+  "artist": {
+    "message": "artiste"
+  },
+  "album": {
+    "message": "album"
   }
 }
