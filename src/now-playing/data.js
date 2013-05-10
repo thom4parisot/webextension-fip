@@ -9,16 +9,35 @@ angular.module('NowPlayingService', [])
      * @param {ng.}httpResponse
      */
     function parseHtmlResponse(httpResponse){
-      var data = $compile(httpResponse.data.html)({});
+      var tags = $compile(httpResponse.data.html)({});
+      var data = {};
 
-      console.log(data);
+      Array.prototype.slice.call(tags).some(function(tag){
+        var current = tag.querySelector('.direct-current');
 
-      return {};
+        if (current){
+          try{
+            data.artist = current.querySelector('.artiste').textContent;
+            data.title = current.querySelector('.titre').textContent;
+            data.album = current.querySelector('.album').textContent;
+            data.date = current.querySelector('.annee').textContent.replace(/[\(\)]/g, '');
+            data.cover = current.querySelector('img').src;
+          }
+          catch(e){
+            console.error("Parsing error", data);
+          }
+
+          return true;
+        }
+      });
+
+      return data;
     };
 
     /**
+     * Broadcast object constructor.
      *
-     * @param data
+     * @param {Object=} data
      * @constructor
      */
     var Broadcast = function(data){
@@ -32,13 +51,21 @@ angular.module('NowPlayingService', [])
     };
 
     /**
+     * Service Uri config.
+     * Enables to monkey patch for testing purpose.
+     *
+     * @type {string}
+     */
+    Broadcast.defaultUri = 'http://www.fipradio.fr/sites/default/files/direct-large.json?_=:date';
+
+    /**
      * Returns a new Broadcast from the remote service.
      *
      * @api
      * @returns {Broadcast}
      */
     Broadcast.get = function(){
-      return $http.get('http://www.fipradio.fr/sites/default/files/direct-large.json?_=:date', {date: Date.now()})
+      return $http.get(Broadcast.defaultUri, {date: Date.now()})
         .then(function(response){
           return new Broadcast(parseHtmlResponse(response));
         });
