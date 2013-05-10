@@ -3,7 +3,7 @@
 /* globals angular, chrome */
 
 angular.module('NowPlayingService', [])
-  .factory('Broadcast', function($http, $compile){
+  .factory('Broadcast', function broadcastFactory($http, $compile){
     /**
      * Parses the remote service response.
      * Deals with complicated stuff to update the UI.
@@ -14,7 +14,7 @@ angular.module('NowPlayingService', [])
       var tags = $compile(responseData.html)({});
       var data = {};
 
-      Array.prototype.slice.call(tags).some(function(tag){
+      Array.prototype.slice.call(tags).some(function tagParser(tag){
         var current = tag.querySelector('.direct-current');
 
         if (current){
@@ -24,6 +24,10 @@ angular.module('NowPlayingService', [])
             data.album = current.querySelector('.album').textContent;
             data.date = current.querySelector('.annee').textContent.replace(/[\(\)]/g, '');
             data.cover = current.querySelector('img').src;
+
+            if (!/http/.test(data.cover)){
+              delete data.cover;
+            }
           }
           catch(e){
             /* jshint devel:true */
@@ -67,9 +71,9 @@ angular.module('NowPlayingService', [])
      * @api
      * @returns {Broadcast}
      */
-    Broadcast.get = function(){
+    Broadcast.get = function broadcastGet(){
       return $http.get(Broadcast.defaultUri, {date: Date.now()})
-        .then(function(response){
+        .then(function broadcastHttpGetSuccess(response){
           return new Broadcast(parseHtmlResponse(response.data));
         });
     };
@@ -78,7 +82,7 @@ angular.module('NowPlayingService', [])
      * Returns a stub broadcast example.
      * @returns {Broadcast}
      */
-    Broadcast.stub = function(){
+    Broadcast.stub = function broadcastStub(){
       return new Broadcast({
         date: "2012",
         artist: "La Danse qui Pense (cd Promo)",

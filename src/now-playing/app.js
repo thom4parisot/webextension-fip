@@ -7,7 +7,7 @@
  * Used to cleanly configure the popup.
  */
 angular.module('now-playing', ['NowPlayingService'])
-  .run(function($rootScope){
+  .run(function appRun($rootScope){
     $rootScope.title = chrome.i18n.getMessage('extension_name');
 
     $rootScope.label = {
