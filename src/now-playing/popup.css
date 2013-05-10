@@ -35,8 +35,8 @@ aside{
   width: 106px;
 }
   .album-cover{
-    border: 3px solid #E2007A;
-    box-shadow: 0 0 2px rgba(0,0,0,.3);
+    background: #E2007A;
+    border: 3px solid #000;
     height: 100px;
     width: 100px;
   }

@@ -10,5 +10,8 @@
   },
   "album": {
     "message": "album"
+  },
+  "no_information": {
+    "message": "Pas d'information"
   }
 }
