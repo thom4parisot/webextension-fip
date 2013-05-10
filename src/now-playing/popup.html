@@ -10,15 +10,15 @@
 
 <main ng-controller="NowPlayingController">
   <aside class="panel" id="cover">
-    <img ng-src="{{broadast.cover}}" class="album-cover" alt="{{broadast.title}} from {{broadast.artist}}"/>
+    <img ng-src="{{broadcast.cover}}" class="album-cover" alt="{{broadcast.title}} from {{broadcast.artist}}"/>
   </aside>
 
   <article class="panel" id="content">
-    <h2 class="title">{{broadast.title}}</h2>
+    <h2 class="title">{{broadcast.title}}</h2>
 
-    <p><strong>Date de sortie :</strong> <date>{{broadast.date}}</date></p>
-    <p class="author"><strong>Artiste :</strong> {{broadast.artist}}</p>
-    <p class="album"><strong>Album :</strong> {{broadast.album}}</p>
+    <p><strong>Date de sortie :</strong> <date>{{broadcast.date}}</date></p>
+    <p class="author"><strong>Artiste :</strong> {{broadcast.artist}}</p>
+    <p class="album"><strong>Album :</strong> {{broadcast.album}}</p>
   </article>
 </main>
 
