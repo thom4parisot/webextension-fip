@@ -1,5 +1,7 @@
 "use strict";
 
+/* globals angular, chrome */
+
 angular.module('NowPlayingService', [])
   .factory('Broadcast', function($http, $compile){
     /**
@@ -24,6 +26,7 @@ angular.module('NowPlayingService', [])
             data.cover = current.querySelector('img').src;
           }
           catch(e){
+            /* jshint devel:true */
             console.error("Parsing error", data);
           }
 
@@ -32,7 +35,7 @@ angular.module('NowPlayingService', [])
       });
 
       return data;
-    };
+    }
 
     /**
      * Broadcast object constructor.

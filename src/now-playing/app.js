@@ -1,5 +1,7 @@
 "use strict";
 
+/* globals angular, chrome */
+
 /**
  * Now Playing App module.
  * Used to cleanly configure the popup.
