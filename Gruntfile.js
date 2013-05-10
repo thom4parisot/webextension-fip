@@ -19,7 +19,8 @@ module.exports = function(grunt) {
           'src/**/*',
           '!src/vendor/**',
           'src/vendor/lodash/dist/lodash.min.js',
-          'src/vendor/machina.js/lib/machina.min.js'
+          'src/vendor/machina.js/lib/machina.min.js',
+          'src/vendor/angular/angular.min.js'
         ],
         dest: "dist/chrome-fip-<%= manifest.version %>.zip",
         dot: false
