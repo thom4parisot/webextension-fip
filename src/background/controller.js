@@ -19,8 +19,8 @@ Background.prototype.bootstrap = function bootstrap(){
 
   this.registerEvents();
 
-  //temporary to test out the popup
-  chrome.browserAction.setPopup({ popup: 'popup/on-air.html' });
+  //temporary to test out the now-playing
+  chrome.browserAction.setPopup({ popup: 'now-playing/popup.html' });
 };
 
 /**

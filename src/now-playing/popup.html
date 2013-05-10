@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="popup.css"/>
+</head>
+<body>
+
+<h1>{{title}}</h1>
+
+<main ng-controller="NowPlayingController">
+  <aside class="panel" id="cover">
+    <img src="{{broadast.cover}}" class="album-cover" alt="{{broadast.title}} from {{broadast.artist}}"/>
+  </aside>
+
+  <article class="panel" id="content">
+    <h2 class="title">{{broadast.title}}</h2>
+
+    <p><strong>Date de sortie :</strong> <date>{{broadast.date}}</date></p>
+    <p class="author"><strong>Artiste :</strong> {{broadast.artist}}</p>
+    <p class="album"><strong>Album :</strong> {{broadast.album}}</p>
+  </article>
+</main>
+
+<script src="../vendor/angular/angular.min.js"></script>
+<script src="../vendor/lodash/dist/lodash.min.js"></script>
+<script src="controller.js"></script>
+</body>
+</html>
