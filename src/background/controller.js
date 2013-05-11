@@ -31,10 +31,9 @@ Background.prototype.registerEvents = function registerEvents(){
   var self = this;
   var radio = this.radio;
 
-  radio.on('stopped', function(){     self.setBadge('');          });
-  radio.on('playing', function(){     self.setBadge('▶', '#080'); });
-  radio.on('buffering', function(){   self.setBadge('~', '#fc0'); });
-  radio.on('errored', function(){     self.setBadge('!', '#c00'); });
+  // Listening to radio events and dispatch them through the app
+  radio.on('*', self.dispatchRadioState.bind(self));
+  chrome.runtime.onMessage.addListener(self.radioStateBadgeHandler.bind(self));
 
   // Handling `network.online` or `network.offline` states
   ['online', 'offline'].forEach(function(eventType){
@@ -58,6 +57,31 @@ Background.prototype.registerNowPlayingPopup = function registerNowPlayingPopup(
   chrome.browserAction.onClicked.addListener(function(){
     chrome.browserAction.setPopup({ popup: 'now-playing/popup.html' });
   });
+};
+
+/**
+ * Spread a radio status through the app.
+ *
+ * @api
+ * @param {String} radioState
+ */
+Background.prototype.dispatchRadioState = function dispatchRadioState(radioState){
+  chrome.runtime.sendMessage({ state: radioState });
+};
+
+/**
+ * Handles an app message and changes the badge accordingly.
+ *
+ * @api
+ * @param {Object} message
+ */
+Background.prototype.radioStateBadgeHandler = function radioStateBadgeHandler(message){
+  switch(message.state){
+    case 'stopped':   this.setBadge(''); break;
+    case 'playing':   this.setBadge('▶', '#080'); break;
+    case 'buffering': this.setBadge('~', '#fc0'); break;
+    case 'errored':   this.setBadge('!', '#c00'); break;
+  }
 };
 
 /**
