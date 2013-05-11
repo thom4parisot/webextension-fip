@@ -6,7 +6,10 @@
 </head>
 <body>
 
-<h1>{{title}}</h1>
+<h1>
+    {{title}}
+    <button type="button" id="player-control" data-play-icon="▶" data-pause-icon="❙❙">❙❙</button>
+</h1>
 
 <main ng-controller="NowPlayingController">
   <aside class="panel" id="cover">
