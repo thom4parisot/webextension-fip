@@ -9,7 +9,7 @@
   "background": {
     "scripts": [
       "vendor/lodash/dist/lodash.min.js",
-      "vendor/machina.js/lib/machina.min.js",
+      "vendor/machina/lib/machina.min.js",
       "lib/radio.js",
       "background/controller.js",
       "background/bootstrap.js"],
