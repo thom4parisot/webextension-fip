@@ -39,11 +39,20 @@ h2{
   #player-control:active{
     color: #ccc;
     text-shadow: 0 0 20px rgba(255,255,255,.5);
-    -webkit-transform: translateY(2px);
-    transform: translateY(2px);
     -webkit-transition: all .1s;
     transition: all .1s;
   }
+
+  #player-control.stopped::after,
+  #player-control.errored::after{
+    content: "\25B6";              /* ▶ */
+  }
+
+  #player-control.playing::after,
+  #player-control.buffering::after{
+    content: "\2759\2759";    /* ❙❙ */
+  }
+
 
 
 main{

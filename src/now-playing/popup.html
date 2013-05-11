@@ -8,7 +8,7 @@
 
 <h1 ng-controller="RadioController">
     {{title}}
-    <button type="button" id="player-control" data-play-icon="▶" data-pause-icon="❙❙" ng-click="toggle()">❙❙</button>
+    <button type="button" id="player-control" ng-click="toggle()" ng-class="status"></button>
 </h1>
 
 <main ng-controller="NowPlayingController">

@@ -34,8 +34,10 @@ function NowPlayingController($scope, Broadcast){
  * @constructor
  */
 function RadioController($scope){
+  $scope.status = chrome.extension.getBackgroundPage().process.radio.state;
+
   $scope.toggle = function toggleRadioControl(){
-    chrome.runtime.sendMessage({command: "toggle"});
+    chrome.extension.getBackgroundPage().process.radio.toggle();
   };
 
   chrome.runtime.onMessage.addListener(function(request){
@@ -43,7 +45,8 @@ function RadioController($scope){
       return;
     }
 
-    console.log(request.state);
+    $scope.status = request.state;
+    $scope.$apply('');
   });
 }
 
