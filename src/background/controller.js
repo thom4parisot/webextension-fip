@@ -32,7 +32,7 @@ Background.prototype.registerEvents = function registerEvents(){
   var radio = this.radio;
 
   // Listening to radio events and dispatch them through the app
-  radio.on('*', self.dispatchRadioState.bind(self));
+  radio.on('transition', self.dispatchRadioState.bind(self));
   chrome.runtime.onMessage.addListener(self.radioStateBadgeHandler.bind(self));
 
   // Handling `network.online` or `network.offline` states
@@ -65,8 +65,8 @@ Background.prototype.registerNowPlayingPopup = function registerNowPlayingPopup(
  * @api
  * @param {String} radioState
  */
-Background.prototype.dispatchRadioState = function dispatchRadioState(radioState){
-  chrome.runtime.sendMessage({ state: radioState });
+Background.prototype.dispatchRadioState = function dispatchRadioState(transition){
+  chrome.runtime.sendMessage({ state: transition.toState });
 };
 
 /**
