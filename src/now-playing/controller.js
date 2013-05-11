@@ -32,8 +32,10 @@ function NowPlayingController($scope, Broadcast){
  *
  * @param {ng.Scope} $scope
  * @constructor
+ * @todo use a chrome extension service
  */
 function RadioController($scope){
+  /* globals chrome */
   $scope.status = chrome.extension.getBackgroundPage().process.radio.state;
 
   $scope.toggle = function toggleRadioControl(){
