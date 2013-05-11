@@ -27,5 +27,26 @@ function NowPlayingController($scope, Broadcast){
   Broadcast.get().then(updateUI).then(throttleUpdates, throttleUpdates);
 }
 
+/**
+ * Radio Controller
+ *
+ * @param {ng.Scope} $scope
+ * @constructor
+ */
+function RadioController($scope){
+  $scope.toggle = function toggleRadioControl(){
+    chrome.runtime.sendMessage({command: "toggle"});
+  };
+
+  chrome.runtime.onMessage.addListener(function(request){
+    if (!request.state){
+      return;
+    }
+
+    console.log(request.state);
+  });
+}
+
 // And now deal with minification!
 NowPlayingController.$inject = ['$scope', 'Broadcast'];
+RadioController.$inject = ['$scope'];
