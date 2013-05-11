@@ -4,5 +4,14 @@
   },
   "extension_description": {
     "message": "FIP Radio live player. Will soon feature `What's playing` and last.fm scrobbling."
+  },
+  "artist": {
+    "message": "artist"
+  },
+  "album": {
+    "message": "record"
+  },
+  "no_information": {
+    "message": "No information"
   }
 }

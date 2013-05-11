@@ -41,8 +41,6 @@ Background.prototype.registerEvents = function registerEvents(){
       radio.handle('network.' + event.type);
     });
   });
-
-  chrome.browserAction.onClicked.addListener( radio.toggle.bind(radio) );
 };
 
 /**
