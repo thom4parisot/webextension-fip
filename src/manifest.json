@@ -23,7 +23,6 @@
   ],
   "browser_action": {
     "default_icon": "resources/fip.png",
-    "default_popup": "now-playing/popup.html",
     "default_title": "__MSG_extension_name__"
   },
   "icons": {

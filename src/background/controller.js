@@ -18,6 +18,7 @@ Background.prototype.bootstrap = function bootstrap(){
   this.radio = new Radio();
 
   this.registerEvents();
+  this.registerNowPlayingPopup();
 };
 
 /**
@@ -40,6 +41,22 @@ Background.prototype.registerEvents = function registerEvents(){
     window.addEventListener(eventType, function handleNetworkEvent(event){
       radio.handle('network.' + event.type);
     });
+  });
+};
+
+/**
+ * Handles the click on the browser action icon.
+ * By default, plays the radio, then displays the popup.
+ *
+ * The reason is because we first want to play the radio, not looking at what's on air.
+ *
+ * @api
+ */
+Background.prototype.registerNowPlayingPopup = function registerNowPlayingPopup(){
+  chrome.browserAction.onClicked.addListener(this.radio.play.bind(this.radio));
+
+  chrome.browserAction.onClicked.addListener(function(){
+    chrome.browserAction.setPopup({ popup: 'now-playing/popup.html' });
   });
 };
 
