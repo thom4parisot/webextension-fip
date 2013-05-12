@@ -18,24 +18,32 @@ review and install it.
 
 ## Contribute
 
-*Pull Request* is our best friend.
-Feel free to complete existing issues or share your own idea the way you like.
+Contributions are friendly welcomed, either they are code, ideas or bug reports.
+
+The developer toolchain relies on:
+- [Grunt](http://gruntjs.com/) for automation and build process;
+- [bower](http://bower.io/) for frontend components;
+- [Angular](http://angularjs.org/) for dynamic HTML templating;
+- [Machina.js](https://github.com/ifandelse/machina.js) for State Machine management;
+- [Chrome Extension API](http://developer.chrome.com/extensions/), obviously to glue the whole stuff in your browser :-)
+
+If you don't them perfectly… well it's a good occasion to learn!
 
 ### Checkout
 
-The project relies on JavaScript tools like `node.js` and `bower` to manage dependencies.
-Here is the first step to initialize a project locally:
-
 1. fork the repository and clone it on your machine
-1. `npm install` will install and prepare everything
+1. `npm install` in the project folder
 1. open Chrome/Chromium > Manage extensions > Active Developer Mode and *load unpacked extension*
 
-Then refer to the [Chrome Extension API documentation](http://developer.chrome.com/extensions/) to fill in the blanks.
+[Chrome Dev Tools](https://developers.google.com/chrome-developer-tools/) will
+help you debugging by displaying errors or the various state change of the playback.
 
 ### Testing
 
-Continuous Integration will be initiated in a near future.
+If you don't know anything about testing, [Travis CI](https://travis-ci.org/oncletom/chrome-fip)
+takes care about each commit to ensure the app won't break.
+
 Test should not break (but don't comment them to avoid failures...) and new features should be testable.
 
-If you don't know how to write tests, contribute, still. It's a good way to learn by looking at the tests I or someone
-else will add.
+Current status is pretty poor but the codebase is solid. More tests will be added soon to
+increase contribution safetey. As I'm using the extension everyday, I may be the first to notice any new issue ;-)
