@@ -53,10 +53,6 @@ Background.prototype.registerEvents = function registerEvents(){
  */
 Background.prototype.registerNowPlayingPopup = function registerNowPlayingPopup(){
   chrome.browserAction.onClicked.addListener(this.radio.play.bind(this.radio));
-
-  chrome.browserAction.onClicked.addListener(function(){
-    chrome.browserAction.setPopup({ popup: 'now-playing/popup.html' });
-  });
 };
 
 /**
@@ -76,12 +72,27 @@ Background.prototype.dispatchRadioState = function dispatchRadioState(transition
  * @param {Object} message
  */
 Background.prototype.radioStateBadgeHandler = function radioStateBadgeHandler(message){
-  switch(message.state){
-    case 'stopped':   this.setBadge(''); break;
-    case 'playing':   this.setBadge('▶', '#080'); break;
-    case 'buffering': this.setBadge('~', '#fc0'); break;
-    case 'errored':   this.setBadge('!', '#c00'); break;
+  if (!message.state){
+    return;
   }
+
+  var self = this;
+
+  Object.keys(Background.badgeStates).some(function(state){
+    if (message.state !== state){
+      return false;
+    }
+
+    var stateCase = Background.badgeStates[state];
+
+    chrome.browserAction.setPopup({
+      popup: (stateCase.popup === false) ? '' : 'now-playing/popup.html'
+    });
+
+    self.setBadge(stateCase.text, stateCase.color || '');
+
+    return true;
+  });
 };
 
 /**
@@ -109,4 +120,31 @@ Background.init = function init(){
   instance.bootstrap();
 
   return instance;
+};
+
+/**
+ * Badge appearance and behavior on click.
+ * Mainly tricking the fact the `onClicked` event is fired when no popup file is bound to the browserAction.
+ * We basically display the popup when it's needed, so during the radio playback.
+ *
+ * @type {Object} Items containing badge behavior data
+ */
+Background.badgeStates = {
+  'stopped': {
+    text: '',
+    popup: false
+  },
+  'playing': {
+    text: '▶',
+    color: '#080'
+  },
+  'buffering': {
+    text: '~',
+    color: '#fc0'
+  },
+  'errored': {
+    text: '!',
+    color: '#c00',
+    popup: false
+  }
 };
