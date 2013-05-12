@@ -3,7 +3,7 @@
     "message": "FIP Radio – Live Player"
   },
   "extension_description": {
-    "message": "FIP Radio live player. Will soon feature `What's playing` and last.fm scrobbling."
+    "message": "Unofficial FIP Radio player. One-click playback and 'now playing' informations display."
   },
   "artist": {
     "message": "artist"
