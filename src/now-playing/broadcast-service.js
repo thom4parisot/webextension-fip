@@ -2,7 +2,7 @@
 
 /* globals angular, chrome */
 
-angular.module('NowPlayingService', [])
+angular.module('BroadcastService', [])
   .factory('Broadcast', function broadcastFactory($http, $compile){
     /**
      * Parses the remote service response.

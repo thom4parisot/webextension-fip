@@ -11,7 +11,7 @@
     <button type="button" id="player-control" ng-click="toggle()" ng-class="status"></button>
 </h1>
 
-<main ng-controller="NowPlayingController">
+<main ng-controller="BroadcastController">
   <aside class="panel" id="cover">
     <img ng-src="{{broadcast.cover}}" class="album-cover" alt="{{broadcast.title}} from {{broadcast.artist}}"/>
   </aside>
@@ -31,9 +31,9 @@
 </main>
 
 <script src="../vendor/angular/angular.min.js"></script>
-<script src="../vendor/lodash/dist/lodash.min.js"></script>
 <script src="app.js"></script>
-<script src="data.js"></script>
-<script src="controller.js"></script>
+<script src="broadcast-service.js"></script>
+<script src="broadcast-controller.js"></script>
+<script src="radio-controller.js"></script>
 </body>
 </html>
