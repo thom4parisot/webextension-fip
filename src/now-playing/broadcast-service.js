@@ -1,9 +1,9 @@
 "use strict";
 
-/* globals angular, chrome */
+/* globals angular */
 
-angular.module('BroadcastService', [])
-  .factory('Broadcast', function broadcastFactory($http, $compile){
+angular.module('BroadcastService', ['ChromeService'])
+  .factory('Broadcast', function broadcastFactory($http, $compile, translate){
     /**
      * Parses the remote service response.
      * Deals with complicated stuff to update the UI.
@@ -51,7 +51,7 @@ angular.module('BroadcastService', [])
       this.date = "";
       this.artist = "";
       this.album = "";
-      this.title = chrome.i18n.getMessage('no_information');
+      this.title = translate('no_information');
       this.cover = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
 
       angular.extend(this, data);

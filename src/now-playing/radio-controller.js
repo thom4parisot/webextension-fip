@@ -2,18 +2,17 @@
  * Radio Controller
  *
  * @param {ng.Scope} $scope
+ * @param {Object} chrome
  * @constructor
- * @todo use a chrome extension service
  */
-function RadioController($scope){
-  /* globals chrome */
-  $scope.status = chrome.extension.getBackgroundPage().process.radio.state;
+function RadioController($scope, chrome){
+  $scope.status = chrome.process.radio.state;
 
   $scope.toggle = function toggleRadioControl(){
-    chrome.extension.getBackgroundPage().process.radio.toggle();
+    chrome.process.radio.toggle();
   };
 
-  chrome.runtime.onMessage.addListener(function(request){
+  chrome.addListener(function(request){
     if (!request.state){
       return;
     }
@@ -23,4 +22,4 @@ function RadioController($scope){
   });
 }
 
-RadioController.$inject = ['$scope'];
+RadioController.$inject = ['$scope', 'chrome'];

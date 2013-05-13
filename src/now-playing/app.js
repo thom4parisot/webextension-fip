@@ -1,17 +1,17 @@
 "use strict";
 
-/* globals angular, chrome */
+/* globals angular */
 
 /**
  * Now Playing App module.
  * Used to cleanly configure the popup.
  */
-angular.module('now-playing', ['BroadcastService'])
-  .run(function appRun($rootScope){
-    $rootScope.title = chrome.i18n.getMessage('extension_name');
+angular.module('now-playing', ['BroadcastService', 'ChromeService'])
+  .run(function appRun($rootScope, translate){
+    $rootScope.title = translate('extension_name');
 
     $rootScope.label = {
-      album: chrome.i18n.getMessage('album'),
-      artist: chrome.i18n.getMessage('artist')
+      album: translate('album'),
+      artist: translate('artist')
     };
   });
