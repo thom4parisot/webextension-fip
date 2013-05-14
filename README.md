@@ -31,9 +31,9 @@ If you don't them perfectly… well it's a good occasion to learn!
 
 ### Checkout
 
-1. fork the repository and clone it on your machine
+1. `git clone` your fork of the repository
 1. `npm install` in the project folder
-1. open Chrome/Chromium > Manage extensions > Active Developer Mode and *load unpacked extension*
+1. [load the unpacked extension](http://developer.chrome.com/extensions/getstarted.html#unpacked) in Chrome/Chromium
 
 [Chrome Dev Tools](https://developers.google.com/chrome-developer-tools/) will
 help you debugging by displaying errors or the various state change of the playback.
