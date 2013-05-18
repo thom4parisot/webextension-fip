@@ -12,14 +12,13 @@ module.exports = function(grunt) {
       extension: ['src/**/*.js', '!src/vendor/**']
     },
 
-    mochaTest: {
-      extension: ['test/unit/**/*.js']
-    },
-    mochaTestConfig: {
-      extension: {
-	options: {
-	  ui: 'tdd'
-	}
+    mocha: {
+      all: {
+        src: ['test/*.html'],
+        options: {
+          ui: 'tdd',
+          run: true
+        }
       }
     },
 
@@ -39,14 +38,11 @@ module.exports = function(grunt) {
     }
   });
 
-  //grunt.loadNpmTasks('grunt-contrib-concat');
-  //grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-mocha-test');
+  grunt.loadNpmTasks('grunt-mocha');
   grunt.loadNpmTasks('grunt-zip');
-  //grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.registerTask('default', ['jshint', 'mochaTest']);
-  grunt.registerTask('build', ['jshint', 'zip']);
-
+  grunt.registerTask('default', ['test']);
+  grunt.registerTask('test', ['jshint', 'mocha']);
+  grunt.registerTask('build', ['test', 'zip']);
 };
