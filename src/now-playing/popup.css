@@ -89,6 +89,17 @@ article{
   }
 
   .label{
-    text-transform: capitalize;
-  }
 
+  }
+[data-label]::before{
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+html[lang] [data-label]::before,
+html[lang^="en"] [data-label]::before{
+  content: attr(data-label)  ":";
+}
+html[lang^="fr"] [data-label]::before{
+  content: attr(data-label)  " :";
+}

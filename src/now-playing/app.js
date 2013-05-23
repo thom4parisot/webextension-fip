@@ -14,4 +14,6 @@ angular.module('now-playing', ['BroadcastService', 'ChromeService'])
       album: translate('album'),
       artist: translate('artist')
     };
+
+    document.documentElement.setAttribute('lang', navigator.language);
   });
