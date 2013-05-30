@@ -6,10 +6,11 @@
 </head>
 <body>
 
-<h1 ng-controller="RadioController">
-    {{title}}
-    <button type="button" id="player-control" ng-click="toggle()" ng-class="status"></button>
-</h1>
+<header ng-controller="RadioController">
+  <h1>{{title}}</h1>
+
+  <button type="button" id="player-control" ng-click="toggle()" ng-class="status"></button>
+</header>
 
 <main ng-controller="BroadcastController">
   <aside class="panel" id="cover">
@@ -28,6 +29,16 @@
     </p>
   </article>
 </main>
+
+<footer class="alternate">
+  <nav>
+    <ul>
+      <li class="main">
+        <a href="http://www.fipradio.fr/archives-antenne" class="iconify" target="_blank">{{$root.label.archives}}</a>
+      </li>
+    </ul>
+  </nav>
+</footer>
 
 <script src="../vendor/angular/angular.min.js"></script>
 <script src="app.js"></script>

@@ -12,7 +12,8 @@ angular.module('now-playing', ['BroadcastService', 'ChromeService'])
 
     $rootScope.label = {
       album: translate('album'),
-      artist: translate('artist')
+      artist: translate('artist'),
+      archives: translate('archives')
     };
 
     document.documentElement.setAttribute('lang', navigator.language);
