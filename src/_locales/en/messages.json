@@ -13,5 +13,8 @@
   },
   "no_information": {
     "message": "No information"
+  },
+  "archives": {
+    "message": "Archives"
   }
 }
