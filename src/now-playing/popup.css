@@ -80,6 +80,15 @@ article{
   display: table-cell;
   width: 300px;
 }
+  article a{
+    color: #000;
+    text-decoration: none;
+  }
+  article a:focus,
+  article a:hover{
+    color: #E2007A;
+    text-decoration: underline;
+  }
 
   date{
     font-style: italic;
@@ -99,6 +108,7 @@ article{
 html[lang] [data-label]::before,
 html[lang^="en"] [data-label]::before{
   content: attr(data-label)  ":";
+  margin-right: .2em;
 }
 html[lang^="fr"] [data-label]::before{
   content: attr(data-label)  " :";

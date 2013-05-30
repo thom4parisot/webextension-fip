@@ -17,14 +17,16 @@
   </aside>
 
   <article class="panel" id="content">
-    <h2 class="title">{{broadcast.title}}</h2>
+    <h2 class="title">
+      <a href="http://www.last.fm/search?q={{broadcast.title}}+{{broadcast.artist}}" target="_blank">{{broadcast.title}}</a>
+    </h2>
 
     <p class="album" ng-show="broadcast.album" data-label="{{$root.label.album}}">
-      {{broadcast.album}} (<date>{{broadcast.date}}</date>)
+      <a href="http://www.last.fm/search?q={{broadcast.album}}+{{broadcast.artist}}&amp;type=album" target="_blank">{{broadcast.album}}</a> (<date>{{broadcast.date}}</date>)
     </p>
 
     <p class="author" ng-show="broadcast.artist" data-label="{{$root.label.artist}}">
-      {{broadcast.artist}}
+      <a href="http://www.last.fm/search?q={{broadcast.artist}}&amp;type=artist" target="_blank">{{broadcast.artist}}</a>
     </p>
   </article>
 </main>
