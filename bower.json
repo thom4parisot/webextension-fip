@@ -1,6 +1,6 @@
 {
   "name": "chrome-fip",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "dependencies": {
     "machina": "~0.3.4",
     "lodash": "~1.2.1",
