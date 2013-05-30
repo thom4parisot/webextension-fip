@@ -6,10 +6,11 @@
 </head>
 <body>
 
-<h1 ng-controller="RadioController">
-    {{title}}
-    <button type="button" id="player-control" ng-click="toggle()" ng-class="status"></button>
-</h1>
+<header ng-controller="RadioController">
+  <h1>{{title}}</h1>
+
+  <button type="button" id="player-control" ng-click="toggle()" ng-class="status"></button>
+</header>
 
 <main ng-controller="BroadcastController">
   <aside class="panel" id="cover">
