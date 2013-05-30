@@ -37,6 +37,23 @@ footer a{
   color: #fff;
 }
 
+header.alternate, footer.alternate{
+  background: #fff;
+  border: #E2007A solid 0;
+  color: #333;
+  opacity: .3;
+  -webkit-transition: opacity .3s ease-out;
+}
+footer.alternate{
+  border-top-width: 3px;
+}
+.alternate:focus, .alternate:hover{
+  opacity: 1;
+}
+.alternate a{
+  color: #E2007A;
+}
+
 #player-control{
   background: transparent;
   border: none;
@@ -77,6 +94,9 @@ footer a{
 /**
  * Popup Footer
  */
+footer{
+  margin-top: 1em;
+}
 footer nav ul{
   display: -webkit-flex;
   display: flex;
@@ -144,4 +164,21 @@ html[lang^="en"] [data-label]::before{
 }
 html[lang^="fr"] [data-label]::before{
   content: attr(data-label)  " :";
+}
+
+/**
+ * Iconification
+ */
+.iconify::before{
+  background: transparent no-repeat center center;
+  background-size: cover;
+  content: "";
+  display: inline-block;
+  height: 1em;
+  margin-right: .3em;
+  vertical-align: middle;
+  width: 1em;
+}
+[href*="fipradio.fr"].iconify::before{
+  background-image: url('../resources/fip-128x128.png');
 }
