@@ -38,8 +38,9 @@ TextCleaner.doAlbumTitle = function doAlbumTitle(text){
  * @returns {String}
  */
 TextCleaner.doTrackTitle = function doTrackTitle(text){
+  text = text.replace(/\([^\)]+(?!\))$/g, '');
 
-  return text;
+  return text.trim();
 };
 
 /**
