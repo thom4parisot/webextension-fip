@@ -43,6 +43,31 @@ TextCleaner.doTrackTitle = function doTrackTitle(text){
 };
 
 /**
+ * Extract artist names from a string
+ *
+ * @param {String} text
+ * @returns {Array.<{{name:String, role:String}}>}
+ */
+TextCleaner.extractArtistNames = function getArtistNames(text){
+  var artists = [];
+
+  //checking if the data structure allows securely splitting it
+  if (/^([^\/]+(\/|$))+$/.test(text)){
+    text.replace(/([\w]{3} )?([^\/]+)(\/|$)/g, function(m, position, name){
+      artists.push({
+        name: name.trim(),
+        position: position ? position.trim() : null
+      });
+    });
+  }
+  else{
+    artists.push({ name: text.trim() });
+  }
+
+  return artists;
+};
+
+/**
  * Clean the artist name.
  *
  * Basically:
@@ -53,8 +78,9 @@ TextCleaner.doTrackTitle = function doTrackTitle(text){
  * @returns {String}
  */
 TextCleaner.doArtistName = function doArtistName(text){
-
-  return text;
+  return TextCleaner.extractArtistNames(text).map(function(artist){
+    return artist.name;
+  }).join(', ');
 };
 
 /**
@@ -70,6 +96,5 @@ TextCleaner.doArtistName = function doArtistName(text){
  * @returns {String}
  */
 TextCleaner.getMainArtistName = function getMainArtistName(text){
-
-  return text;
+  return TextCleaner.extractArtistNames(text)[0].name;
 };
