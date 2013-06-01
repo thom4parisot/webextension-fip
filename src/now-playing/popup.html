@@ -19,18 +19,18 @@
 
   <article class="panel" id="content">
     <h2 class="title" ng-show="broadcast.artist && broadcast.album">
-      <a href="http://www.last.fm/search?q={{broadcast.title}}+{{broadcast.artist}}" target="_blank">{{broadcast.title}}</a>
+      <a href="http://www.last.fm/search?q={{broadcast.title | track}}+{{broadcast.artist | mainArtist}}" target="_blank">{{broadcast.title | track}}</a>
     </h2>
 
     <h2 class="title" ng-show="!broadcast.artist || !broadcast.album">{{broadcast.title}}</h2>
 
     <p class="album" ng-show="broadcast.album" data-label="{{$root.label.album}}">
-      <a href="http://www.last.fm/search?q={{broadcast.album}}+{{broadcast.artist}}&amp;type=album" target="_blank">{{broadcast.album}}</a>
+      <a href="http://www.last.fm/search?q={{broadcast.album | album}}+{{broadcast.artist | mainArtist}}&amp;type=album" target="_blank">{{broadcast.album | album}}</a>
         <span ng-show="broadcast.date">(<date>{{broadcast.date}}</date>)</span>
     </p>
 
     <p class="author" ng-show="broadcast.artist" data-label="{{$root.label.artist}}">
-      <a href="http://www.last.fm/search?q={{broadcast.artist}}&amp;type=artist" target="_blank">{{broadcast.artist}}</a>
+      <a href="http://www.last.fm/search?q={{broadcast.artist | mainArtist}}&amp;type=artist" target="_blank">{{broadcast.artist | artist}}</a>
     </p>
   </article>
 </main>
@@ -46,6 +46,8 @@
 </footer>
 
 <script src="../vendor/angular/angular.min.js"></script>
+<script src="../lib/text-cleaner.js"></script>
+<script src="../lib/text-cleaner-service.js"></script>
 <script src="app.js"></script>
 <script src="chrome-service.js"></script>
 <script src="broadcast-service.js"></script>

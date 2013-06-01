@@ -6,7 +6,7 @@
  * Now Playing App module.
  * Used to cleanly configure the popup.
  */
-angular.module('now-playing', ['BroadcastService', 'ChromeService'])
+angular.module('now-playing', ['BroadcastService', 'ChromeService', 'TextCleanerFilters'])
   .run(function appRun($rootScope, translate){
     $rootScope.title = translate('extension_name');
 
