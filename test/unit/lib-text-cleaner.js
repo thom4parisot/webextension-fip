@@ -26,7 +26,9 @@ suite('Text Cleaner', function(){
   test('Cleaning artist names', function(){
     expect(TextCleaner.doArtistName('Musica Nuda/voi Peträ Magoni/ctb Ferruccio Spinetti/vib Daniele Di Gregorio/bat Balafon')).to.be('Musica Nuda, Peträ Magoni, Ferruccio Spinetti, Daniele Di Gregorio, Balafon');
     expect(TextCleaner.doArtistName('Musica Nuda/Petra Magoni/Ferruccio Spinetti/ Daniele Di Gregorio/Balafon')).to.be('Musica Nuda, Petra Magoni, Ferruccio Spinetti, Daniele Di Gregorio, Balafon');
-    expect(TextCleaner.doArtistName('Medeski/martin/wood')).to.be('Medeski, martin, wood');
+    expect(TextCleaner.doArtistName(' Musica Nuda/Petra Magoni/Ferruccio Spinetti/ Daniele Di Gregorio/Balafon ')).to.be('Musica Nuda, Petra Magoni, Ferruccio Spinetti, Daniele Di Gregorio, Balafon');
+    expect(TextCleaner.doArtistName('Medeski/martin/wood ')).to.be('Medeski, martin, wood');
+    expect(TextCleaner.doArtistName(' Mark///Lion ')).to.be('Mark///Lion');
     expect(TextCleaner.doArtistName('Mark///Lion')).to.be('Mark///Lion');
     expect(TextCleaner.doArtistName('Nick///Bärtsch/Ronin')).to.be('Nick///Bärtsch/Ronin');
   });
