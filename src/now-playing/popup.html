@@ -23,7 +23,8 @@
     </h2>
 
     <p class="album" ng-show="broadcast.album" data-label="{{$root.label.album}}">
-      <a href="http://www.last.fm/search?q={{broadcast.album}}+{{broadcast.artist}}&amp;type=album" target="_blank">{{broadcast.album}}</a> (<date>{{broadcast.date}}</date>)
+      <a href="http://www.last.fm/search?q={{broadcast.album}}+{{broadcast.artist}}&amp;type=album" target="_blank">{{broadcast.album}}</a>
+        <span ng-show="broadcast.date">(<date>{{broadcast.date}}</date>)</span>
     </p>
 
     <p class="author" ng-show="broadcast.artist" data-label="{{$root.label.artist}}">
