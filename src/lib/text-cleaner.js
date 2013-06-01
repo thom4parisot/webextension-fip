@@ -21,8 +21,9 @@ function TextCleaner(){}
  * @returns {String}
  */
 TextCleaner.doAlbumTitle = function doAlbumTitle(text){
+  text = text.replace(/\(?\s*(cd|single|ep|lp) promo( fip)?\s*\)?/i, '');
 
-  return text;
+  return text.trim();
 };
 
 /**
