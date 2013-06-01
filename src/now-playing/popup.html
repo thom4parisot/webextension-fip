@@ -18,9 +18,11 @@
   </aside>
 
   <article class="panel" id="content">
-    <h2 class="title">
+    <h2 class="title" ng-show="broadcast.artist && broadcast.album">
       <a href="http://www.last.fm/search?q={{broadcast.title}}+{{broadcast.artist}}" target="_blank">{{broadcast.title}}</a>
     </h2>
+
+    <h2 class="title" ng-show="!broadcast.artist || !broadcast.album">{{broadcast.title}}</h2>
 
     <p class="album" ng-show="broadcast.album" data-label="{{$root.label.album}}">
       <a href="http://www.last.fm/search?q={{broadcast.album}}+{{broadcast.artist}}&amp;type=album" target="_blank">{{broadcast.album}}</a>

@@ -4,6 +4,12 @@
 
 angular.module('BroadcastService', ['ChromeService'])
   .factory('Broadcast', function broadcastFactory($http, $compile, translate){
+    function getNodeValue(container, selector, attribute){
+      var node = container.querySelector(selector);
+
+      return node ? node[attribute || 'textContent'] : null;
+    }
+
     /**
      * Parses the remote service response.
      * Deals with complicated stuff to update the UI.
@@ -19,11 +25,11 @@ angular.module('BroadcastService', ['ChromeService'])
 
         if (current){
           try{
-            data.artist = current.querySelector('.artiste').textContent;
-            data.title = current.querySelector('.titre').textContent;
-            data.album = current.querySelector('.album').textContent;
-            data.date = current.querySelector('.annee').textContent.replace(/[\(\)]/g, '');
-            data.cover = current.querySelector('img').src;
+            data.artist = getNodeValue(current, '.artiste');
+            data.title = getNodeValue(current, '.titre');
+            data.album = getNodeValue(current, '.album');
+            data.date = getNodeValue(current, '.annee')+''.replace(/[\(\)]/g, '');
+            data.cover = getNodeValue(current, 'img', 'src');
 
             if (!/http/.test(data.cover)){
               delete data.cover;
