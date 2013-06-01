@@ -1,6 +1,6 @@
 "use strict";
 
-/* globals angular */
+/* globals angular, TextCleaner */
 
 angular.module('TextCleanerFilters', [])
   .filter('album', function(){
