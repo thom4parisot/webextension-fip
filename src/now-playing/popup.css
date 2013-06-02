@@ -86,6 +86,10 @@ footer.alternate{
     content: "\25B6";              /* ▶ */
   }
 
+  #player-control.playing,
+  #player-control.buffering{
+    margin-top: -.9em;   /* because it has a different char height than stop state */
+  }
   #player-control.playing::after,
   #player-control.buffering::after{
     content: "\2759\2759";    /* ❙❙ */
