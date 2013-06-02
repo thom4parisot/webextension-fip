@@ -48,13 +48,14 @@ TextCleaner.doTrackTitle = function doTrackTitle(text){
  * Extract artist names from a string
  *
  * @param {String} text
- * @returns {Array.<{{name:String, role:String}}>}
+ * @returns {Array.<{name:String,role:String}>}
  */
 TextCleaner.extractArtistNames = function getArtistNames(text){
   var artists = [];
 
   //checking if the data structure allows securely splitting it
-  if (/^([^\/]+(\/|$))+$/.test(text)){
+  //"Lou Reed" is a good example of single artist with a first name possibly recognizable as a 'position' in a band
+  if (~text.indexOf('/') && /^([^\/]+(\/|$))+$/.test(text)){
     text.replace(/([\w]{3} )?([^\/]+)(\/|$)/g, function(m, position, name){
       artists.push({
         name: name.trim(),
@@ -63,7 +64,7 @@ TextCleaner.extractArtistNames = function getArtistNames(text){
     });
   }
   else{
-    artists.push({ name: text.trim() });
+    artists.push({ name: text.trim(), role: null });
   }
 
   return artists;
