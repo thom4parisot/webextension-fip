@@ -16,8 +16,8 @@ h1{
 }
 
 h2{
-  line-height: .9;
-  margin: 0 0 .5em;
+  line-height: 0.9;
+  margin: 0 0 0.5em;
 }
 
 
@@ -41,8 +41,8 @@ header.alternate, footer.alternate{
   background: #fff;
   border: #E2007A solid 0;
   color: #333;
-  opacity: .3;
-  -webkit-transition: opacity .3s ease-out;
+  opacity: 0.3;
+  -webkit-transition: opacity 0.3s ease-out;
 }
 footer.alternate{
   border-top-width: 3px;
@@ -60,9 +60,9 @@ footer.alternate{
   color: #fff;
   cursor: pointer;
   font-size: 1em;
-  letter-spacing: .1em;
-  line-height: .9;
-  margin-top: -.8em;
+  letter-spacing: 0.1em;
+  line-height: 0.9;
+  margin-top: -0.8em;
   padding: 0;
   position: absolute;
   top: 50%;
@@ -73,9 +73,9 @@ footer.alternate{
   }
   #player-control:active{
     color: #ccc;
-    text-shadow: 0 0 20px rgba(255,255,255,.5);
-    -webkit-transition: all .1s;
-    transition: all .1s;
+    text-shadow: 0 0 20px rgba(255,255,255,0.5);
+    -webkit-transition: all 0.1s;
+    transition: all 0.1s;
   }
 
   #player-control::after{
@@ -88,7 +88,7 @@ footer.alternate{
 
   #player-control.playing,
   #player-control.buffering{
-    margin-top: -.9em;   /* because it has a different char height than stop state */
+    margin-top: -0.9em;   /* because it has a different char height than stop state */
   }
   #player-control.playing::after,
   #player-control.buffering::after{
@@ -160,7 +160,7 @@ article{
     font-style: italic;
   }
   article p{
-    margin: 0 0 .5em;
+    margin: 0 0 0.5em;
   }
 
   .label{
@@ -174,7 +174,7 @@ article{
 html[lang] [data-label]::before,
 html[lang^="en"] [data-label]::before{
   content: attr(data-label)  ":";
-  margin-right: .2em;
+  margin-right: 0.2em;
 }
 html[lang^="fr"] [data-label]::before{
   content: attr(data-label)  " :";
@@ -189,7 +189,7 @@ html[lang^="fr"] [data-label]::before{
   content: "";
   display: inline-block;
   height: 1em;
-  margin-right: .3em;
+  margin-right: 0.3em;
   vertical-align: middle;
   width: 1em;
 }
