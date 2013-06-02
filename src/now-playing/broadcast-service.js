@@ -7,7 +7,7 @@ angular.module('BroadcastService', ['ChromeService'])
     function getNodeValue(container, selector, attribute){
       var node = container.querySelector(selector);
 
-      return node ? node[attribute || 'textContent'] : null;
+      return node ? node[attribute || 'textContent'] : '';
     }
 
     /**
@@ -28,12 +28,14 @@ angular.module('BroadcastService', ['ChromeService'])
             data.artist = getNodeValue(current, '.artiste');
             data.title = getNodeValue(current, '.titre');
             data.album = getNodeValue(current, '.album');
-            data.date = getNodeValue(current, '.annee')+''.replace(/[\(\)]/g, '');
+            data.date = getNodeValue(current, '.annee').replace(/[\(\)]/g, '');
             data.cover = getNodeValue(current, 'img', 'src');
 
             if (!/http/.test(data.cover)){
               delete data.cover;
             }
+
+            console.log(data);
           }
           catch(e){
             /* jshint devel:true */
