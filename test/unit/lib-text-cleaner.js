@@ -30,6 +30,7 @@ suite('Text Cleaner', function(){
     expect(TextCleaner.doArtistName('Medeski/martin/wood ')).to.be('Medeski, martin, wood');
     expect(TextCleaner.doArtistName(' Mark///Lion ')).to.be('Mark///Lion');
     expect(TextCleaner.doArtistName('Mark///Lion')).to.be('Mark///Lion');
+    expect(TextCleaner.doArtistName('Lou Reed')).to.be('Lou Reed');
     expect(TextCleaner.doArtistName('Nick///Bärtsch/Ronin')).to.be('Nick///Bärtsch/Ronin');
   });
 
@@ -39,6 +40,7 @@ suite('Text Cleaner', function(){
     expect(TextCleaner.getMainArtistName('Musica Nuda/Petra Magoni/Ferruccio Spinetti/ Daniele Di Gregorio/Balafon')).to.be('Musica Nuda');
     expect(TextCleaner.getMainArtistName('Medeski/martin/wood')).to.be('Medeski');
     expect(TextCleaner.getMainArtistName('Mark///Lion')).to.be('Mark///Lion');
+    expect(TextCleaner.getMainArtistName('Lou Reed')).to.be('Lou Reed');
     expect(TextCleaner.getMainArtistName('Nick///Bärtsch/Ronin')).to.be('Nick///Bärtsch/Ronin');
   });
 });

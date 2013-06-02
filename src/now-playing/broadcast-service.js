@@ -34,8 +34,6 @@ angular.module('BroadcastService', ['ChromeService'])
             if (!/http/.test(data.cover)){
               delete data.cover;
             }
-
-            console.log(data);
           }
           catch(e){
             /* jshint devel:true */
