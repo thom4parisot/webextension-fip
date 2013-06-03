@@ -33,6 +33,8 @@ suite('Text Cleaner', function(){
     expect(TextCleaner.doArtistName('Lou Reed')).to.be('Lou Reed');
     expect(TextCleaner.doArtistName('Nick///Bärtsch/Ronin')).to.be('Nick///Bärtsch/Ronin');
     expect(TextCleaner.doArtistName('Serge Prokofiev/dir Lorin Maazel/orchestre National De France')).to.be('Serge Prokofiev, Lorin Maazel, orchestre National De France');
+    expect(TextCleaner.doArtistName('Diego Jode de Salazar/dir Leonardo Garcia Alarcon/Cappella Mediterranea/sop Mariana Flores/hc Fabian Schofrin/tn Fernando Guimaraes/bas Matteo Bellotto')).to.be('Diego Jode de Salazar, Leonardo Garcia Alarcon, Cappella Mediterranea, Mariana Flores, Fabian Schofrin, Fernando Guimaraes, Matteo Bellotto');
+    expect(TextCleaner.doArtistName('Ji Mob/gui Matthieu Ouaki/bat Nico Rajao/bas Toskano Jeanniard/fl Ji Dru')).to.be('Ji Mob, Matthieu Ouaki, Nico Rajao, Toskano Jeanniard, Ji Dru');
   });
 
   //@see https://github.com/oncletom/chrome-fip/issues/25
