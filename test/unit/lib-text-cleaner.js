@@ -32,6 +32,7 @@ suite('Text Cleaner', function(){
     expect(TextCleaner.doArtistName('Mark///Lion')).to.be('Mark///Lion');
     expect(TextCleaner.doArtistName('Lou Reed')).to.be('Lou Reed');
     expect(TextCleaner.doArtistName('Nick///Bärtsch/Ronin')).to.be('Nick///Bärtsch/Ronin');
+    expect(TextCleaner.doArtistName('Serge Prokofiev/dir Lorin Maazel/orchestre National De France')).to.be('Serge Prokofiev, Lorin Maazel, orchestre National De France');
   });
 
   //@see https://github.com/oncletom/chrome-fip/issues/25
@@ -42,5 +43,6 @@ suite('Text Cleaner', function(){
     expect(TextCleaner.getMainArtistName('Mark///Lion')).to.be('Mark///Lion');
     expect(TextCleaner.getMainArtistName('Lou Reed')).to.be('Lou Reed');
     expect(TextCleaner.getMainArtistName('Nick///Bärtsch/Ronin')).to.be('Nick///Bärtsch/Ronin');
+    expect(TextCleaner.getMainArtistName('Serge Prokofiev/dir Lorin Maazel/orchestre National De France')).to.be('Serge Prokofiev');
   });
 });
