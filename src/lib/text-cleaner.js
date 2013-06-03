@@ -56,7 +56,7 @@ TextCleaner.extractArtistNames = function getArtistNames(text){
   //checking if the data structure allows securely splitting it
   //"Lou Reed" is a good example of single artist with a first name possibly recognizable as a 'position' in a band
   if (~text.indexOf('/') && /^([^\/]+(\/|$))+$/.test(text)){
-    text.replace(/([\w]{3} )?([^\/]+)(\/|$)/g, function(m, position, name){
+    text.replace(/([a-z]{2,3} )?([^\/]+)(\/|$)/g, function(m, position, name){
       artists.push({
         name: name.trim(),
         position: position ? position.trim() : null
