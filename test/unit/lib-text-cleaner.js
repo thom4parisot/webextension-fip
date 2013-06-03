@@ -12,7 +12,7 @@ suite('Text Cleaner', function(){
     expect(TextCleaner.doAlbumTitle('magical title (single promo) ')).to.be('magical title');
     expect(TextCleaner.doAlbumTitle('magical title single promo fip ')).to.be('magical title');
     expect(TextCleaner.doAlbumTitle('magical promo single ')).to.be('magical promo single');
-    expect(TextCleaner.doAlbumTitle('Pour Une Ame Souveraine (a Dedication To Nina Simone) (cd Promo)').to.be('Pour Une Ame Souveraine (a Dedication To Nina Simone)');
+    expect(TextCleaner.doAlbumTitle('Pour Une Ame Souveraine (a Dedication To Nina Simone) (cd Promo)')).to.be('Pour Une Ame Souveraine (a Dedication To Nina Simone)');
   });
 
   //@see https://github.com/oncletom/chrome-fip/issues/26
