@@ -1,13 +1,15 @@
 "use strict";
 
-/* global Radio, chrome */
+/* global Radio, chrome, _ */
 
 /**
  * Background process handling the radio stuff
  *
  * @constructor
  */
-function Background(){}
+function Background(){
+  this.channel = "stable";
+}
 
 /**
  * Bootstraping process
@@ -17,6 +19,7 @@ function Background(){}
 Background.prototype.bootstrap = function bootstrap(){
   this.radio = new Radio();
 
+  this.setupChannel();
   this.registerEvents();
   this.registerNowPlayingPopup();
 };
@@ -107,6 +110,37 @@ Background.prototype.setBadge = function setBadge(text, color){
   if (color){
     chrome.browserAction.setBadgeBackgroundColor({ color: color });
   }
+};
+
+/**
+ * Setting up channel data
+ * Used only to distinguish stable extension from development.
+ *
+ * Basically it tries to load a file present only when we are not using the extension loading from the Store.
+ */
+Background.prototype.setupChannel = function setupChannel(){
+  var self = this;
+  var request = new XMLHttpRequest();
+
+  request.open("GET", chrome.extension.getURL("channel.json"));
+  request.addEventListener("load", function(event){
+    try{
+      _.assign(self, JSON.parse(event.target.responseText));
+
+      self.setupChannelBadge();
+    }
+    catch(e){}
+  });
+
+  request.send();
+};
+
+Background.prototype.setupChannelBadge = function setupChannelBadge(){
+  var src = "resources/fip-%channel%.png".replace("%channel%", this.channel).replace("-stable", "");
+
+  chrome.browserAction.setIcon({
+    "path": chrome.extension.getURL(src)
+  });
 };
 
 /**

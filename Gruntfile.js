@@ -27,6 +27,7 @@ module.exports = function(grunt) {
         cwd: 'src/',
         src: [
           'src/**/*',
+          '!src/channel.json',
           '!src/vendor/**',
           'src/vendor/lodash/dist/lodash.min.js',
           'src/vendor/machina/lib/machina.min.js',
