@@ -9,17 +9,11 @@
  * @constructor
  */
 function BroadcastController($scope, Broadcasts){
-  $scope.broadcast = new Broadcast();
+  var stubs = [new Broadcast()]
+  $scope.broadcasts = stubs;
 
   function updateUI(broadcasts){
-    $scope.broadcasts = broadcasts;
-
-    broadcasts.some(function(broadcast){
-      if (broadcast.isCurrent){
-        $scope.broadcast = broadcast;
-        return true;
-      }
-    });
+    $scope.broadcasts = broadcasts.length ? broadcasts : stubs;
   }
 
   function throttleUpdates(){
