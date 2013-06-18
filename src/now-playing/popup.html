@@ -17,7 +17,7 @@
 </header>
 
 <main ng-controller="BroadcastController">
-  <section ng-repeat="broadcast in broadcasts">
+  <section ng-repeat="broadcast in broadcasts" ng-class="{current: broadcast.isCurrent}">
     <aside class="panel" id="cover">
       <img ng-src="{{broadcast.cover}}" class="album-cover" alt="{{broadcast.title}} from {{broadcast.artist}}"/>
     </aside>

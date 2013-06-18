@@ -195,7 +195,15 @@ footer{
  * Popup Content
  */
 main{
-  display: table-row;
+  overflow: hidden;
+  position: relative;
+  width: 3000px;
+}
+
+section{
+  display: table;
+  float: left;
+  width: 425px;
 }
 
 aside,
