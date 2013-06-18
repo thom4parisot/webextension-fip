@@ -62,37 +62,37 @@ footer.alternate{
   font-size: 1em;
   letter-spacing: 0.1em;
   line-height: 0.9;
-  margin-top: -0.8em;
+  margin-top: -1em;
   padding: 0;
   position: absolute;
   top: 50%;
-  right: 10px;
+  right: 0;
 }
+  #player-control:hover{
+    opacity: 0.9;
+  }
+
   #player-control:focus{
     outline: none;
   }
   #player-control:active{
-    color: #ccc;
-    text-shadow: 0 0 20px rgba(255,255,255,0.5);
+    font-size: 0.95em;
+    opacity: 1;
     -webkit-transition: all 0.1s;
     transition: all 0.1s;
   }
 
-  #player-control::after{
+  #player-control::before{
     font-size: 2em;
   }
-  #player-control.stopped::after,
-  #player-control.errored::after{
-    content: "\25B6";              /* ▶ */
+  #player-control.stopped::before,
+  #player-control.errored::before{
+    content: "\e801";
   }
 
-  #player-control.playing,
-  #player-control.buffering{
-    margin-top: -0.9em;   /* because it has a different char height than stop state */
-  }
-  #player-control.playing::after,
-  #player-control.buffering::after{
-    content: "\2759\2759";    /* ❙❙ */
+  #player-control.playing::before,
+  #player-control.buffering::before{
+    content: "\e802";
   }
 
 /**
