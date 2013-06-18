@@ -3,13 +3,14 @@
 <head>
   <title>{{title}}</title>
   <link rel="stylesheet" href="popup.css"/>
+  <link rel="stylesheet" href="../resources/icons/css/fontello-embedded.css"/>
 </head>
 <body>
 
 <header ng-controller="RadioController">
   <h1>{{title}}</h1>
 
-  <button type="button" id="player-control" ng-click="toggle()" ng-class="status"></button>
+  <button type="button" id="player-control" class="icon-state" ng-click="toggle()" ng-class="status"></button>
 </header>
 
 <main ng-controller="BroadcastController">
