@@ -29,6 +29,7 @@ suite('Broadcast', function(){
   });
 
   test('#parseHtmlResponse', function(){
-
+    expect(Broadcast.parseHtmlResponse(document.querySelectorAll("#empty-list div"))).to.be.empty();
+    expect(Broadcast.parseHtmlResponse(document.querySelectorAll("#empty-response div"))).to.be.empty();
   });
 });
