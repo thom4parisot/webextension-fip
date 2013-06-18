@@ -3,6 +3,11 @@
 /* globals angular */
 
 angular.module('BroadcastService', ['ChromeService'])
-  .factory('Broadcast', function broadcastFactory($http, $compile, translate){
-    return Broadcast;
+  .factory('Broadcasts', function broadcastFactory($http, $compile){
+    return $http.get(Broadcast.defaultUri, {date: Date.now()})
+      .then(function broadcastHttpGetSuccess(response){
+        var nodes = $compile(response.data.html)({});
+
+        return Broadcast.parseHtmlResponse(nodes.find("div"));
+      });
   });
