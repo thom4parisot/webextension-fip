@@ -1,5 +1,7 @@
 "use strict";
 
+/* globals Broadcast */
+
 /**
  * Now Playing Controller.
  * Handles bi-directional updates of the popup.
@@ -9,7 +11,8 @@
  * @constructor
  */
 function BroadcastController($scope, Broadcasts){
-  var stubs = [new Broadcast()]
+  var stubs = [new Broadcast()];
+
   $scope.broadcasts = stubs;
 
   function updateUI(broadcasts){

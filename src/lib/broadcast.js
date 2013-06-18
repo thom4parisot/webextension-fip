@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Broadcast object constructor.
  *
@@ -50,7 +52,7 @@ Broadcast.createNodeSelector = function createNodeSelector(container){
     var node = container.querySelector(selector);
 
     return node ? node[attribute || 'textContent'] : '';
-  }
+  };
 };
 
 /**
@@ -89,4 +91,4 @@ Broadcast.parseHtmlResponse = function parseHtmlResponse(nodes){
 	return null;
       }
     });
-}
+};

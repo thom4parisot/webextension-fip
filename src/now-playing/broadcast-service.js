@@ -1,6 +1,6 @@
 "use strict";
 
-/* globals angular */
+/* globals angular, Broadcast */
 
 angular.module('BroadcastService', ['ChromeService'])
   .factory('Broadcasts', function broadcastFactory($http, $compile){
