@@ -4,7 +4,7 @@
 
 angular.module('BroadcastService', ['ChromeService'])
   .factory('Broadcasts', function broadcastFactory($http, $compile){
-    return $http.get(Broadcast.defaultUri, {date: Date.now()})
+    return $http.get(Broadcast.defaultUri, {params:{_: Date.now()}})
       .then(function broadcastHttpGetSuccess(response){
         var nodes = $compile(response.data.html)({});
 

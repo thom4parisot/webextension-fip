@@ -39,7 +39,8 @@ Broadcast.extend = function extend(object, data){
  *
  * @type {string}
  */
-Broadcast.defaultUri = 'http://www.fipradio.fr/sites/default/files/direct-large.json?_=:date';
+//Broadcast.defaultUri = "http://localhost:3000/test/fixtures/working.json";
+Broadcast.defaultUri = 'http://www.fipradio.fr/sites/default/files/direct-large.json';
 
 /**
  * Shorthand to create a node DOM selector value.
@@ -77,7 +78,7 @@ Broadcast.parseHtmlResponse = function parseHtmlResponse(nodes){
 	data.album = select('.album');
 	data.date = select('.annee').replace(/[\(\)]/g, '');
 	data.cover = select('img', 'src');
-	data.isCurrent = node.classList.contains('current');
+	data.isCurrent = node.classList.contains('current') || node.id === "direct-0";
 
 	if (!/http/.test(data.cover)){
 	  delete data.cover;
