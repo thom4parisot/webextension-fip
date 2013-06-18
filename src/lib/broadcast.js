@@ -65,7 +65,7 @@ Broadcast.createNodeSelector = function createNodeSelector(container){
 Broadcast.parseHtmlResponse = function parseHtmlResponse(nodes){
   return Array.prototype.slice.call(nodes)
     .filter(function nodeFilter(node){
-      return node.classList.contains('direct-item');
+      return node.classList.contains('direct-item-zoomed');
     })
     .map(function nodeToBroadcastMapper(node){
       var data = {};
