@@ -10,7 +10,10 @@
 <header ng-controller="RadioController">
   <h1>{{title}}</h1>
 
-  <button type="button" id="player-control" class="icon-state" ng-click="toggle()" ng-class="status"></button>
+  <div id="player-controls">
+    <input type="range" from="0" to="100" data-value />
+    <button type="button" id="playback-button" class="icon-state" ng-click="toggle()" ng-class="status"></button>
+  </div>
 </header>
 
 <main ng-controller="BroadcastController">

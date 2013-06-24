@@ -54,7 +54,21 @@ footer.alternate{
   color: #E2007A;
 }
 
-#player-control{
+#player-controls{
+  background: #E2007A;
+  clip: rect(0, 210px, 50px, 160px);
+  padding: 10px 0 10px 15px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  -webkit-transition: clip 0.1s ease;
+  transition: clip 0.2s ease;
+}
+  #player-controls:hover{
+    clip: rect(0, 250px, 50px, 0);
+  }
+
+#playback-button{
   background: transparent;
   border: none;
   color: #fff;
@@ -62,36 +76,32 @@ footer.alternate{
   font-size: 1em;
   letter-spacing: 0.1em;
   line-height: 0.9;
-  margin-top: -1em;
   padding: 0;
-  position: absolute;
-  top: 50%;
-  right: 0;
 }
-  #player-control:hover{
+  #playback-button:hover{
     opacity: 0.9;
   }
 
-  #player-control:focus{
+  #playback-button:focus{
     outline: none;
   }
-  #player-control:active{
+  #playback-button:active{
     font-size: 0.95em;
     opacity: 1;
     -webkit-transition: all 0.1s;
     transition: all 0.1s;
   }
 
-  #player-control::before{
+  #playback-button::before{
     font-size: 2em;
   }
-  #player-control.stopped::before,
-  #player-control.errored::before{
+  #playback-button.stopped::before,
+  #playback-button.errored::before{
     content: "\e801";
   }
 
-  #player-control.playing::before,
-  #player-control.buffering::before{
+  #playback-button.playing::before,
+  #playback-button.buffering::before{
     content: "\e802";
   }
 
