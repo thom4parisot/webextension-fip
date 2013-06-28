@@ -1,4 +1,4 @@
-/* line 5, popup.scss */
+/* line 4, popup.scss */
 body {
   background: #fafafa;
   font-family: "Helvetica Nueue", "Trebuchet MS", Trebuchet, sans-serif;
@@ -7,18 +7,18 @@ body {
   width: 425px;
 }
 
-/* line 13, popup.scss */
+/* line 12, popup.scss */
 a:focus, a:hover {
   text-decoration: none;
 }
 
-/* line 17, popup.scss */
+/* line 16, popup.scss */
 h1 {
   font-weight: normal;
   margin: 0;
 }
 
-/* line 22, popup.scss */
+/* line 21, popup.scss */
 h2 {
   line-height: 0.9;
   margin: 0 0 10px;
@@ -27,7 +27,7 @@ h2 {
 /**
  * Popup Header
  */
-/* line 31, popup.scss */
+/* line 30, popup.scss */
 header, footer {
   background: #e2007a;
   clear: both;
@@ -35,11 +35,11 @@ header, footer {
   padding: 10px;
   position: relative;
 }
-/* line 38, popup.scss */
+/* line 37, popup.scss */
 header a, footer a {
   color: #fafafa;
 }
-/* line 42, popup.scss */
+/* line 41, popup.scss */
 header.alternate, footer.alternate {
   background: transparent;
   border: #e2007a solid 0;
@@ -51,21 +51,21 @@ header.alternate, footer.alternate {
   transition: opacity 0.3s ease-out;
 }
 
-/* line 52, popup.scss */
+/* line 51, popup.scss */
 .alternate:focus, .alternate:hover {
   opacity: 1;
 }
-/* line 56, popup.scss */
+/* line 55, popup.scss */
 .alternate a {
   color: #e2007a;
 }
 
-/* line 61, popup.scss */
+/* line 60, popup.scss */
 footer.alternate {
   border-top-width: 3px;
 }
 
-/* line 65, popup.scss */
+/* line 64, popup.scss */
 #player-controls {
   background: #e2007a;
   clip: rect(0, 210px, 50px, 160px);
@@ -78,30 +78,30 @@ footer.alternate {
   -o-transition: clip 0.1s ease-out;
   transition: clip 0.1s ease-out;
 }
-/* line 74, popup.scss */
+/* line 73, popup.scss */
 #player-controls:hover {
   clip: rect(0, 250px, 50px, 0);
 }
 
-/* line 80, popup.scss */
+/* line 79, popup.scss */
 .volume-control {
   margin-top: -5px;
   vertical-align: super;
 }
-/* line 84, popup.scss */
+/* line 83, popup.scss */
 .volume-control::-webkit-slider-runnable-track {
   -webkit-appearance: none;
   background: rgba(255, 255, 255, 0.9);
   border-radius: 10px;
   height: 4px;
 }
-/* line 91, popup.scss */
+/* line 90, popup.scss */
 .volume-control::-webkit-slider-thumb {
   -webkit-appearance: none;
   cursor: ew-resize;
   margin-top: -7px;
 }
-/* line 96, popup.scss */
+/* line 95, popup.scss */
 .volume-control::-webkit-slider-thumb:after {
   background: #fafafa;
   border-radius: 50%;
@@ -117,16 +117,16 @@ footer.alternate {
   vertical-align: top;
   width: 20px;
 }
-/* line 113, popup.scss */
+/* line 112, popup.scss */
 .volume-control.level-high::-webkit-slider-thumb:after {
   content: "\e807";
 }
-/* line 116, popup.scss */
+/* line 115, popup.scss */
 .volume-control.level-low::-webkit-slider-thumb:after {
   content: "\e805";
 }
 
-/* line 122, popup.scss */
+/* line 121, popup.scss */
 #playback-button {
   background: transparent;
   border: none;
@@ -142,27 +142,27 @@ footer.alternate {
   -o-transition: opacity 0.3s ease-out;
   transition: opacity 0.3s ease-out;
 }
-/* line 135, popup.scss */
+/* line 134, popup.scss */
 #playback-button:hover {
   opacity: 0.8;
 }
-/* line 139, popup.scss */
+/* line 138, popup.scss */
 #playback-button:focus {
   outline: none;
 }
-/* line 143, popup.scss */
+/* line 142, popup.scss */
 #playback-button:active {
   opacity: 1;
 }
-/* line 147, popup.scss */
+/* line 146, popup.scss */
 #playback-button:before {
   font-size: 2em;
 }
-/* line 152, popup.scss */
+/* line 151, popup.scss */
 #playback-button.stopped::before, #playback-button.errored::before {
   content: "\e801";
 }
-/* line 157, popup.scss */
+/* line 156, popup.scss */
 #playback-button.playing::before, #playback-button.buffering::before {
   content: "\e802";
 }
@@ -170,11 +170,11 @@ footer.alternate {
 /**
  * Popup Footer
  */
-/* line 167, popup.scss */
+/* line 166, popup.scss */
 footer {
   margin-top: 15px;
 }
-/* line 171, popup.scss */
+/* line 170, popup.scss */
 footer nav ul {
   display: -webkit-flex;
   display: flex;
@@ -182,12 +182,12 @@ footer nav ul {
   margin: 0;
   padding: 0;
 }
-/* line 179, popup.scss */
+/* line 178, popup.scss */
 footer nav li {
   -webkit-flex: 1;
   flex: 1;
 }
-/* line 184, popup.scss */
+/* line 183, popup.scss */
 footer nav li.main {
   -webkit-flex: 2;
   flex: 2;
@@ -196,17 +196,17 @@ footer nav li.main {
 /**
  * Popup Content
  */
-/* line 194, popup.scss */
+/* line 193, popup.scss */
 main {
   display: table-row;
 }
 
-/* line 198, popup.scss */
+/* line 197, popup.scss */
 aside, article {
   padding: 10px 0 10px 10px;
 }
 
-/* line 202, popup.scss */
+/* line 201, popup.scss */
 aside {
   display: table-cell;
   text-align: center;
@@ -214,7 +214,7 @@ aside {
   width: 106px;
 }
 
-/* line 208, popup.scss */
+/* line 207, popup.scss */
 .album-cover {
   background: #e2007a;
   border: 3px solid #111111;
@@ -222,24 +222,24 @@ aside {
   width: 100px;
 }
 
-/* line 215, popup.scss */
+/* line 214, popup.scss */
 article {
   display: table-cell;
   padding-right: 10px;
   width: 300px;
 }
-/* line 220, popup.scss */
+/* line 219, popup.scss */
 article a {
   color: #111111;
   text-decoration: none;
 }
-/* line 225, popup.scss */
+/* line 224, popup.scss */
 article a:focus, article a:hover {
   color: #E2007A;
   text-decoration: underline;
 }
 
-/* line 233, popup.scss */
+/* line 232, popup.scss */
 .metadata {
   display: -webkit-flex;
   display: flex;
@@ -249,20 +249,20 @@ article a:focus, article a:hover {
   margin: 0;
   padding: 0;
 }
-/* line 242, popup.scss */
+/* line 241, popup.scss */
 .metadata > li {
   -webkit-flex: auto;
   flex: auto;
   margin-bottom: 0 0 0.5em;
 }
-/* line 248, popup.scss */
+/* line 247, popup.scss */
 .metadata > .album-date {
   -webkit-flex: 1;
   flex: 1;
   min-width: 60px;
   text-align: right;
 }
-/* line 254, popup.scss */
+/* line 253, popup.scss */
 .metadata > .artist {
   margin-top: 0.5em;
   width: 100%;
@@ -271,7 +271,7 @@ article a:focus, article a:hover {
 /**
  * Iconification
  */
-/* line 264, popup.scss */
+/* line 263, popup.scss */
 .iconify::before {
   background: transparent no-repeat center center;
   background-size: cover;
@@ -283,7 +283,7 @@ article a:focus, article a:hover {
   width: 1em;
 }
 
-/* line 274, popup.scss */
+/* line 273, popup.scss */
 [href*="fipradio.fr"].iconify::before {
   background-image: url("../resources/fip-128x128.png");
 }
