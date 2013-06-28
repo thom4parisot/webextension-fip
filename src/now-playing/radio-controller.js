@@ -10,6 +10,12 @@
 function RadioController($scope, chrome){
   $scope.status = chrome.process.radio.state;
 
+  $scope.volume = chrome.getPreference("player.volume");
+
+  $scope.$watch("volume", function(value){
+    chrome.setPreference("player.volume", value);
+  });
+
   $scope.toggle = function toggleRadioControl(){
     chrome.process.radio.toggle();
   };
