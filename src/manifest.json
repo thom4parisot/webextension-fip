@@ -11,6 +11,7 @@
       "vendor/lodash/dist/lodash.min.js",
       "vendor/machina/lib/machina.min.js",
       "lib/radio.js",
+      "lib/preferences.js",
       "background/controller.js",
       "background/bootstrap.js"],
     "persistent": true
