@@ -9,7 +9,7 @@
  * @constructor
  */
 function BroadcastController($scope, Broadcast){
-  $scope.broadcast = Broadcast.stub();
+  $scope.broadcast = new Broadcast();
 
   function updateUI(broadcast){
     /* jshint devel:true */

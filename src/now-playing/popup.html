@@ -28,14 +28,17 @@
 
     <h2 class="title" ng-show="!broadcast.artist || !broadcast.album">{{broadcast.title}}</h2>
 
-    <p class="album" ng-show="broadcast.album" data-label="{{$root.label.album}}">
-      <a href="http://www.last.fm/search?q={{broadcast.album | album}}+{{broadcast.artist | mainArtist}}&amp;type=album" target="_blank">{{broadcast.album | album}}</a>
-        <span ng-show="broadcast.date">(<date>{{broadcast.date}}</date>)</span>
-    </p>
-
-    <p class="author" ng-show="broadcast.artist" data-label="{{$root.label.artist}}">
-      <a href="http://www.last.fm/search?q={{broadcast.artist | mainArtist}}&amp;type=artist" target="_blank">{{broadcast.artist | artist}}</a>
-    </p>
+    <ul class="metadata">
+      <li class="album-title icon-cd" ng-show="broadcast.album">
+        <a href="http://www.last.fm/search?q={{broadcast.album | album}}+{{broadcast.artist | mainArtist}}&amp;type=album" target="_blank">{{broadcast.album | album}}</a>
+      </li>
+      <li class="album-date icon-calendar" ng-show="broadcast.album && broadcast.date">
+        <date>{{broadcast.date}}</date>
+      </li>
+      <li class="artist icon-user" ng-show="broadcast.artist">
+        <a href="http://www.last.fm/search?q={{broadcast.artist | mainArtist}}&amp;type=artist" target="_blank">{{broadcast.artist | artist}}</a>
+      </li>
+    </ul>
   </article>
 </main>
 

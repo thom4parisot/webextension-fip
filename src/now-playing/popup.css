@@ -205,29 +205,28 @@ article{
     text-decoration: underline;
   }
 
-  date{
-    font-style: italic;
+  .metadata{
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
-  article p{
-    margin: 0 0 0.5em;
-  }
-
-  .label{
-
-  }
-[data-label]::before{
-  font-weight: bold;
-  text-transform: capitalize;
-}
-
-html[lang] [data-label]::before,
-html[lang^="en"] [data-label]::before{
-  content: attr(data-label)  ":";
-  margin-right: 0.2em;
-}
-html[lang^="fr"] [data-label]::before{
-  content: attr(data-label)  " :";
-}
+    .metadata > li{
+      flex: auto;
+      margin-bottom: 0 0 0.5em;
+    }
+    .metadata > .album-date{
+      flex: 1;
+      min-width: 60px;
+      text-align: right;
+    }
+    .metadata > .album-title{
+    }
+    .metadata > .artist{
+      margin-top: 0.5em;
+      width: 100%;
+    }
 
 /**
  * Iconification
