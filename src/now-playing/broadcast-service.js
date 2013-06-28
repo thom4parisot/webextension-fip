@@ -84,18 +84,5 @@ angular.module('BroadcastService', ['ChromeService'])
         });
     };
 
-    /**
-     * Returns a stub broadcast example.
-     * @returns {Broadcast}
-     */
-    Broadcast.stub = function broadcastStub(){
-      return new Broadcast({
-        date: "2012",
-        artist: "La Danse qui Pense (cd Promo)",
-        album: "Morro",
-        title: "L'insomnie"
-      });
-    };
-
     return Broadcast;
   });
