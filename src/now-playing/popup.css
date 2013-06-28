@@ -218,6 +218,7 @@ article{
     }
     .metadata > .album-date{
       flex: 1;
+      min-width: 60px;
       text-align: right;
     }
     .metadata > .album-title{
