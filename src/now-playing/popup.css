@@ -88,18 +88,20 @@ footer.alternate{
     vertical-align: top;
     width: 20px;
   }
-    .volume-control::-webkit-slider-thumb:after,
-    .volume-control.level-high::-webkit-slider-thumb:after{
+    .volume-control::-webkit-slider-thumb:after{
       color: #E2007A;
-      content: "\e807";
+      content: "\e806";
       font-family: fontello;
       font-size: 1.3em;
       line-height: 1.5;
       text-align: center;
     }
-    .volume-control.level-low::-webkit-slider-thumb:after{
-      content: "\e806";
-    }
+  .volume-control.level-high::-webkit-slider-thumb:after{
+    content: "\e807";
+  }
+  .volume-control.level-low::-webkit-slider-thumb:after{
+    content: "\e805";
+  }
   .volume-control::-webkit-slider-runnable-track{
     -webkit-appearance: none;
     background: rgba(255, 255, 255, 0.9);

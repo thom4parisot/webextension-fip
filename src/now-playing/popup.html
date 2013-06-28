@@ -11,7 +11,7 @@
   <h1>{{title}}</h1>
 
   <div id="player-controls">
-    <input type="range" from="0" to="100" ng-model="volume" ng-class="{'level-low': volume < 50}" class="volume-control" />
+    <input type="range" from="0" to="100" ng-model="volume" ng-class="{'level-low': volume < 33, 'level-high': volume > 66}" class="volume-control" />
     <button type="button" id="playback-button" class="icon-state" ng-click="toggle()" ng-class="status"></button>
   </div>
 </header>
