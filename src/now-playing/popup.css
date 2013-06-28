@@ -193,6 +193,7 @@ aside{
 
 article{
   display: table-cell;
+  padding-right: 10px;
   width: 300px;
 }
   article a{
