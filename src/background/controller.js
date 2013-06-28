@@ -1,6 +1,6 @@
 "use strict";
 
-/* global Radio, chrome, _ */
+/* global Radio, chrome, _, Preferences */
 
 /**
  * Background process handling the radio stuff
@@ -9,6 +9,7 @@
  */
 function Background(){
   this.channel = "stable";
+  this.preferences = new Preferences("localStorage");
 }
 
 /**
@@ -21,6 +22,7 @@ Background.prototype.bootstrap = function bootstrap(){
 
   this.setupChannel();
   this.registerEvents();
+  this.registerPreferencesHandler();
   this.registerNowPlayingPopup();
 };
 
@@ -37,6 +39,7 @@ Background.prototype.registerEvents = function registerEvents(){
   // Listening to radio events and dispatch them through the app
   radio.on('transition', self.dispatchRadioState.bind(self));
   chrome.runtime.onMessage.addListener(self.radioStateBadgeHandler.bind(self));
+  chrome.runtime.onMessage.addListener(self.radioVolumeHandler.bind(self));
 
   // Handling `network.online` or `network.offline` states
   ['online', 'offline'].forEach(function(eventType){
@@ -56,6 +59,16 @@ Background.prototype.registerEvents = function registerEvents(){
  */
 Background.prototype.registerNowPlayingPopup = function registerNowPlayingPopup(){
   chrome.browserAction.onClicked.addListener(this.radio.play.bind(this.radio));
+};
+
+Background.prototype.registerPreferencesHandler = function registerPreferencesHandler(){
+  var self = this;
+
+  chrome.runtime.onMessage.addListener(function(request){
+    if (request.channel === "preferences"){
+      self.preferences.set(request.data.key, request.data.value);
+    }
+  });
 };
 
 /**
@@ -96,6 +109,20 @@ Background.prototype.radioStateBadgeHandler = function radioStateBadgeHandler(me
 
     return true;
   });
+};
+
+/**
+ * Handles an app message and changes the badge accordingly.
+ *
+ * @api
+ * @param {Object} message
+ */
+Background.prototype.radioVolumeHandler = function radioVolumeHandler(message){
+  if (message.channel !== "preferences" && message.data.key !== "player.volume"){
+    return;
+  }
+
+  this.radio.playbackObject.volume = message.data.value / 100;
 };
 
 /**

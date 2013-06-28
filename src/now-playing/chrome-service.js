@@ -13,6 +13,9 @@ angular.module('ChromeService', [])
   .factory('chrome', function(){
     return {
       process: chrome.extension.getBackgroundPage().process,
+      message: function sendMessage(channel, values){
+        chrome.runtime.sendMessage({ "channel": channel, "data": values });
+      },
       addListener: chrome.runtime.onMessage.addListener.bind(chrome.runtime.onMessage),
       getPreference: function getPreference(key, default_value){
         var value = localStorage.getItem(key);
