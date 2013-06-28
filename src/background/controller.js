@@ -61,6 +61,9 @@ Background.prototype.registerNowPlayingPopup = function registerNowPlayingPopup(
   chrome.browserAction.onClicked.addListener(this.radio.play.bind(this.radio));
 };
 
+/**
+ * Handle any preferences request changes.
+ */
 Background.prototype.registerPreferencesHandler = function registerPreferencesHandler(){
   var self = this;
 
@@ -112,7 +115,7 @@ Background.prototype.radioStateBadgeHandler = function radioStateBadgeHandler(me
 };
 
 /**
- * Handles an app message and changes the badge accordingly.
+ * Handles any volume change request and adjust it accordingly.
  *
  * @api
  * @param {Object} message

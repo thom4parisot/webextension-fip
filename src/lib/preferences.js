@@ -1,8 +1,9 @@
 "use strict";
 
 /**
+ * Strategy storage manager.
  *
- * @param strategy
+ * @param {String} strategy
  * @constructor
  */
 function Preferences(strategy){
@@ -10,35 +11,36 @@ function Preferences(strategy){
 }
 
 /**
+ * Retrieve any stored data, or returns the default value.
  *
- * @param key
- * @param default_value
- * @returns {*}
+ * @param {String} key
+ * @param {Mixed=} default_value
+ * @returns {String|Mixed}
  */
 Preferences.prototype.get = function get(key, default_value){
   return this.strategy.get(key, default_value);
 };
 
 /**
+ * Persis a value; overwriting if already existing.
  *
- * @param key
- * @param value
+ * @param {String} key
+ * @param {Mixed} value (will be casted to String with some storage strategies like `localStorage`)
  */
 Preferences.prototype.set = function set(key, value){
   this.strategy.set(key, value);
 };
 
 /**
+ * Provided strategies to persist data across user session.
  *
- * @type {{localStorage: {get: Function, set: Function}}}
+ * @static
+ * @type {Object}
  */
 Preferences.strategies = {
   "localStorage": {
     /**
-     *
-     * @param key
-     * @param default_value
-     * @returns {*}
+     * @see Preferences.prototype.get
      */
     "get": function getPreference(key, default_value){
       var value = localStorage.getItem(key);
@@ -46,9 +48,7 @@ Preferences.strategies = {
       return typeof value !== undefined && value !== null ? value : (default_value || null);
     },
     /**
-     *
-     * @param key
-     * @param value
+     * @see Preferences.prototype.set
      */
     "set": function setPreference(key, value){
       localStorage.setItem(key, value);
