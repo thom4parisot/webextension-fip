@@ -32,6 +32,8 @@ module.exports = function(grunt) {
           'src/vendor/lodash/dist/lodash.min.js',
           'src/vendor/machina/lib/machina.min.js',
           'src/vendor/angular/angular.min.js',
+          '!src/resources/fip-tile-*',
+          '!src/resources/showcase.png',
           '!src/resources/icons/font/*',
           '!src/resources/icons/css/animation.css',
           '!src/resources/icons/css/fontello.css',
