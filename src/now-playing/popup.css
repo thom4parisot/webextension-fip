@@ -64,8 +64,47 @@ footer.alternate{
   -webkit-transition: clip 0.1s ease;
   transition: clip 0.2s ease;
 }
-  #player-controls:hover{
+  #player-controls:hover,
+  #player-controls.hover{
     clip: rect(0, 250px, 50px, 0);
+  }
+
+  .volume-control{
+    margin-top: -5px;
+    vertical-align: super;
+  }
+  .volume-control::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    cursor: ew-resize;
+    margin-top: -7px;
+  }
+  .volume-control::-webkit-slider-thumb:after{
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3), -1px -1px 1px rgba(0, 0, 0, 0.2);
+    content: "";
+    display: block;
+    height: 20px;
+    vertical-align: top;
+    width: 20px;
+  }
+    .volume-control::-webkit-slider-thumb:after,
+    .volume-control.level-high::-webkit-slider-thumb:after{
+      color: #E2007A;
+      content: "\e807";
+      font-family: fontello;
+      font-size: 1.3em;
+      line-height: 1.5;
+      text-align: center;
+    }
+    .volume-control.level-low::-webkit-slider-thumb:after{
+      content: "\e806";
+    }
+  .volume-control::-webkit-slider-runnable-track{
+    -webkit-appearance: none;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    height: 4px;
   }
 
 #playback-button{

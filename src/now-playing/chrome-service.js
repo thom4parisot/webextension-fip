@@ -13,6 +13,12 @@ angular.module('ChromeService', [])
   .factory('chrome', function(){
     return {
       process: chrome.extension.getBackgroundPage().process,
-      addListener: chrome.runtime.onMessage.addListener.bind(chrome.runtime.onMessage)
+      addListener: chrome.runtime.onMessage.addListener.bind(chrome.runtime.onMessage),
+      getPreference: function getPreference(key){
+        return 100;
+      },
+      setPreference: function setPreference(key, value){
+
+      }
     };
   });
