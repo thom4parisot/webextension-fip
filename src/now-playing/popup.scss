@@ -1,0 +1,276 @@
+@import "base";
+@import "mixins";
+@import "compass/css3/transition";
+
+body{
+  background: $background-color;
+  font-family: "Helvetica Nueue", "Trebuchet MS", Trebuchet, sans-serif;
+  margin: 0;
+  padding: 0;
+  width: 425px;
+}
+
+a:focus, a:hover{
+  text-decoration: none;
+}
+
+h1{
+  font-weight: normal;
+  margin: 0;
+}
+
+h2{
+  line-height: 0.9;
+  margin: 0 0 $gutter-width;
+}
+
+
+/**
+ * Popup Header
+ */
+header, footer{
+  background: $foreground-color;
+  clear: both;
+  color: $background-color;
+  padding: $gutter-width;
+  position: relative;
+
+  a{
+    color: $background-color;
+  }
+
+  &.alternate{
+    background: transparent;
+    border: $foreground-color solid 0;
+    color: $text-color;
+    opacity: 0.3;
+    @include single-transition(opacity);
+  }
+}
+
+.alternate{
+  &:focus, &:hover{
+    opacity: 1;
+  }
+
+  a{
+    color: $foreground-color;
+  }
+}
+
+footer.alternate{
+  border-top-width: 3px;
+}
+
+#player-controls{
+  background: $foreground-color;
+  clip: rect(0, 210px, 50px, 160px);
+  padding: $gutter-width 0 $gutter-width $gutter-width*1.5;
+  position: absolute;
+  right: 0;
+  top: 0;
+  @include single-transition(clip, 0.1s);
+
+  &:hover{
+    clip: rect(0, 250px, 50px, 0);
+  }
+}
+
+
+.volume-control{
+  margin-top: -5px;
+  vertical-align: super;
+
+  &::-webkit-slider-runnable-track{
+    -webkit-appearance: none;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    height: 4px;
+  }
+
+  &::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    cursor: ew-resize;
+    margin-top: -7px;
+
+    &:after{
+      background: $background-color;
+      border-radius: 50%;
+      box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3), -1px -1px 1px rgba(0, 0, 0, 0.2);
+      color: $foreground-color;
+      content: "\e806";
+      display: block;
+      font-family: fontello;
+      font-size: 1.3em;
+      height: 20px;
+      line-height: 1.5;
+      text-align: center;
+      vertical-align: top;
+      width: 20px;
+    }
+  }
+
+  &.level-high::-webkit-slider-thumb:after{
+    content: "\e807";
+  }
+  &.level-low::-webkit-slider-thumb:after{
+    content: "\e805";
+  }
+}
+
+
+#playback-button{
+  background: transparent;
+  border: none;
+  color: $background-color;
+  cursor: pointer;
+  font-size: 1em;
+  letter-spacing: 0.1em;
+  line-height: 0.9;
+  opacity: 1;
+  padding: 0;
+  @include single-transition(opacity);
+
+
+  &:hover{
+    opacity: 0.8;
+  }
+
+  &:focus{
+    outline: none;
+  }
+
+  &:active{
+    opacity: 1;
+  }
+
+  &:before{
+    font-size: 2em;
+  }
+
+  &.stopped::before,
+  &.errored::before{
+    content: "\e801";
+  }
+
+  &.playing::before,
+  &.buffering::before{
+    content: "\e802";
+  }
+}
+
+
+
+/**
+ * Popup Footer
+ */
+footer{
+  margin-top: $gutter-width*1.5;
+
+  nav{
+    ul{
+      display: -webkit-flex;
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    li{
+      -webkit-flex: 1;
+      flex: 1;
+    }
+
+    li.main{
+      -webkit-flex: 2;
+      flex: 2;
+    }
+  }
+}
+
+/**
+ * Popup Content
+ */
+main{
+  display: table-row;
+}
+
+aside, article{
+  padding: $gutter-width 0 $gutter-width $gutter-width;
+}
+
+aside{
+  display: table-cell;
+  text-align: center;
+  vertical-align: top;
+  width: 106px;
+}
+  .album-cover{
+    background: $foreground-color;
+    border: 3px solid $text-color;
+    height: 100px;
+    width: 100px;
+  }
+
+article{
+  display: table-cell;
+  padding-right: $gutter-width;
+  width: 300px;
+
+  a{
+    color: $text-color;
+    text-decoration: none;
+
+    &:focus,
+    &:hover{
+      color: #E2007A;
+      text-decoration: underline;
+    }
+  }
+}
+
+
+.metadata{
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  > li{
+    -webkit-flex: auto;
+    flex: auto;
+    margin-bottom: 0 0 0.5em;
+  }
+
+  > .album-date{
+    -webkit-flex: 1;
+    flex: 1;
+    min-width: 60px;
+    text-align: right;
+  }
+  > .artist{
+    margin-top: 0.5em;
+    width: 100%;
+  }
+}
+
+
+/**
+ * Iconification
+ */
+.iconify::before{
+  background: transparent no-repeat center center;
+  background-size: cover;
+  content: "";
+  display: inline-block;
+  height: 1em;
+  margin-right: 0.3em;
+  vertical-align: middle;
+  width: 1em;
+}
+[href*="fipradio.fr"].iconify::before{
+  background-image: url('../resources/fip-128x128.png');
+}

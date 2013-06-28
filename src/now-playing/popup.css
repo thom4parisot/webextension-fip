@@ -1,4 +1,5 @@
-body{
+/* line 5, popup.scss */
+body {
   background: #fafafa;
   font-family: "Helvetica Nueue", "Trebuchet MS", Trebuchet, sans-serif;
   margin: 0;
@@ -6,165 +7,188 @@ body{
   width: 425px;
 }
 
-a:focus, a:hover{
+/* line 13, popup.scss */
+a:focus, a:hover {
   text-decoration: none;
 }
 
-h1{
+/* line 17, popup.scss */
+h1 {
   font-weight: normal;
   margin: 0;
 }
 
-h2{
+/* line 22, popup.scss */
+h2 {
   line-height: 0.9;
-  margin: 0 0 0.5em;
+  margin: 0 0 10px;
 }
-
 
 /**
  * Popup Header
  */
-
-header, footer{
-  background: #E2007A;
+/* line 31, popup.scss */
+header, footer {
+  background: #e2007a;
   clear: both;
-  color: #f5f5f5;
+  color: #fafafa;
   padding: 10px;
   position: relative;
 }
-header a,
-footer a{
-  color: #fff;
+/* line 38, popup.scss */
+header a, footer a {
+  color: #fafafa;
 }
-
-header.alternate, footer.alternate{
-  background: #fff;
-  border: #E2007A solid 0;
-  color: #333;
+/* line 42, popup.scss */
+header.alternate, footer.alternate {
+  background: transparent;
+  border: #e2007a solid 0;
+  color: #111111;
   opacity: 0.3;
   -webkit-transition: opacity 0.3s ease-out;
-}
-footer.alternate{
-  border-top-width: 3px;
-}
-.alternate:focus, .alternate:hover{
-  opacity: 1;
-}
-.alternate a{
-  color: #E2007A;
+  -moz-transition: opacity 0.3s ease-out;
+  -o-transition: opacity 0.3s ease-out;
+  transition: opacity 0.3s ease-out;
 }
 
-#player-controls{
-  background: #E2007A;
+/* line 52, popup.scss */
+.alternate:focus, .alternate:hover {
+  opacity: 1;
+}
+/* line 56, popup.scss */
+.alternate a {
+  color: #e2007a;
+}
+
+/* line 61, popup.scss */
+footer.alternate {
+  border-top-width: 3px;
+}
+
+/* line 65, popup.scss */
+#player-controls {
+  background: #e2007a;
   clip: rect(0, 210px, 50px, 160px);
   padding: 10px 0 10px 15px;
   position: absolute;
   right: 0;
   top: 0;
-  -webkit-transition: clip 0.1s ease;
-  transition: clip 0.2s ease;
+  -webkit-transition: clip 0.1s ease-out;
+  -moz-transition: clip 0.1s ease-out;
+  -o-transition: clip 0.1s ease-out;
+  transition: clip 0.1s ease-out;
 }
-  #player-controls:hover,
-  #player-controls.hover{
-    clip: rect(0, 250px, 50px, 0);
-  }
+/* line 74, popup.scss */
+#player-controls:hover {
+  clip: rect(0, 250px, 50px, 0);
+}
 
-  .volume-control{
-    margin-top: -5px;
-    vertical-align: super;
-  }
-  .volume-control::-webkit-slider-thumb{
-    -webkit-appearance: none;
-    cursor: ew-resize;
-    margin-top: -7px;
-  }
-  .volume-control::-webkit-slider-thumb:after{
-    background: #fff;
-    border-radius: 50%;
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3), -1px -1px 1px rgba(0, 0, 0, 0.2);
-    content: "";
-    display: block;
-    height: 20px;
-    vertical-align: top;
-    width: 20px;
-  }
-    .volume-control::-webkit-slider-thumb:after{
-      color: #E2007A;
-      content: "\e806";
-      font-family: fontello;
-      font-size: 1.3em;
-      line-height: 1.5;
-      text-align: center;
-    }
-  .volume-control.level-high::-webkit-slider-thumb:after{
-    content: "\e807";
-  }
-  .volume-control.level-low::-webkit-slider-thumb:after{
-    content: "\e805";
-  }
-  .volume-control::-webkit-slider-runnable-track{
-    -webkit-appearance: none;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
-    height: 4px;
-  }
+/* line 80, popup.scss */
+.volume-control {
+  margin-top: -5px;
+  vertical-align: super;
+}
+/* line 84, popup.scss */
+.volume-control::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  height: 4px;
+}
+/* line 91, popup.scss */
+.volume-control::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  cursor: ew-resize;
+  margin-top: -7px;
+}
+/* line 96, popup.scss */
+.volume-control::-webkit-slider-thumb:after {
+  background: #fafafa;
+  border-radius: 50%;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3), -1px -1px 1px rgba(0, 0, 0, 0.2);
+  color: #e2007a;
+  content: "\e806";
+  display: block;
+  font-family: fontello;
+  font-size: 1.3em;
+  height: 20px;
+  line-height: 1.5;
+  text-align: center;
+  vertical-align: top;
+  width: 20px;
+}
+/* line 113, popup.scss */
+.volume-control.level-high::-webkit-slider-thumb:after {
+  content: "\e807";
+}
+/* line 116, popup.scss */
+.volume-control.level-low::-webkit-slider-thumb:after {
+  content: "\e805";
+}
 
-#playback-button{
+/* line 122, popup.scss */
+#playback-button {
   background: transparent;
   border: none;
-  color: #fff;
+  color: #fafafa;
   cursor: pointer;
   font-size: 1em;
   letter-spacing: 0.1em;
   line-height: 0.9;
+  opacity: 1;
   padding: 0;
+  -webkit-transition: opacity 0.3s ease-out;
+  -moz-transition: opacity 0.3s ease-out;
+  -o-transition: opacity 0.3s ease-out;
+  transition: opacity 0.3s ease-out;
 }
-  #playback-button:hover{
-    opacity: 0.9;
-  }
-
-  #playback-button:focus{
-    outline: none;
-  }
-  #playback-button:active{
-    font-size: 0.95em;
-    opacity: 1;
-    -webkit-transition: all 0.1s;
-    transition: all 0.1s;
-  }
-
-  #playback-button::before{
-    font-size: 2em;
-  }
-  #playback-button.stopped::before,
-  #playback-button.errored::before{
-    content: "\e801";
-  }
-
-  #playback-button.playing::before,
-  #playback-button.buffering::before{
-    content: "\e802";
-  }
+/* line 135, popup.scss */
+#playback-button:hover {
+  opacity: 0.8;
+}
+/* line 139, popup.scss */
+#playback-button:focus {
+  outline: none;
+}
+/* line 143, popup.scss */
+#playback-button:active {
+  opacity: 1;
+}
+/* line 147, popup.scss */
+#playback-button:before {
+  font-size: 2em;
+}
+/* line 152, popup.scss */
+#playback-button.stopped::before, #playback-button.errored::before {
+  content: "\e801";
+}
+/* line 157, popup.scss */
+#playback-button.playing::before, #playback-button.buffering::before {
+  content: "\e802";
+}
 
 /**
  * Popup Footer
  */
-footer{
-  margin-top: 1em;
+/* line 167, popup.scss */
+footer {
+  margin-top: 15px;
 }
-footer nav ul{
+/* line 171, popup.scss */
+footer nav ul {
   display: -webkit-flex;
   display: flex;
   list-style: none;
   margin: 0;
   padding: 0;
 }
-
-footer nav li{
+/* line 179, popup.scss */
+footer nav li {
   -webkit-flex: 1;
   flex: 1;
 }
-footer nav li.main{
+/* line 184, popup.scss */
+footer nav li.main {
   -webkit-flex: 2;
   flex: 2;
 }
@@ -172,71 +196,83 @@ footer nav li.main{
 /**
  * Popup Content
  */
-main{
+/* line 194, popup.scss */
+main {
   display: table-row;
 }
 
-aside, article{
+/* line 198, popup.scss */
+aside, article {
   padding: 10px 0 10px 10px;
 }
 
-aside{
+/* line 202, popup.scss */
+aside {
   display: table-cell;
   text-align: center;
   vertical-align: top;
   width: 106px;
 }
-  .album-cover{
-    background: #E2007A;
-    border: 3px solid #000;
-    height: 100px;
-    width: 100px;
-  }
 
-article{
+/* line 208, popup.scss */
+.album-cover {
+  background: #e2007a;
+  border: 3px solid #111111;
+  height: 100px;
+  width: 100px;
+}
+
+/* line 215, popup.scss */
+article {
   display: table-cell;
   padding-right: 10px;
   width: 300px;
 }
-  article a{
-    color: #000;
-    text-decoration: none;
-  }
-  article a:focus,
-  article a:hover{
-    color: #E2007A;
-    text-decoration: underline;
-  }
+/* line 220, popup.scss */
+article a {
+  color: #111111;
+  text-decoration: none;
+}
+/* line 225, popup.scss */
+article a:focus, article a:hover {
+  color: #E2007A;
+  text-decoration: underline;
+}
 
-  .metadata{
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-flow: row wrap;
-    flex-flow: row wrap;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-    .metadata > li{
-      -webkit-flex: auto;
-      flex: auto;
-      margin-bottom: 0 0 0.5em;
-    }
-    .metadata > .album-date{
-      -webkit-flex: 1;
-      flex: 1;
-      min-width: 60px;
-      text-align: right;
-    }
-    .metadata > .artist{
-      margin-top: 0.5em;
-      width: 100%;
-    }
+/* line 233, popup.scss */
+.metadata {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+/* line 242, popup.scss */
+.metadata > li {
+  -webkit-flex: auto;
+  flex: auto;
+  margin-bottom: 0 0 0.5em;
+}
+/* line 248, popup.scss */
+.metadata > .album-date {
+  -webkit-flex: 1;
+  flex: 1;
+  min-width: 60px;
+  text-align: right;
+}
+/* line 254, popup.scss */
+.metadata > .artist {
+  margin-top: 0.5em;
+  width: 100%;
+}
 
 /**
  * Iconification
  */
-.iconify::before{
+/* line 264, popup.scss */
+.iconify::before {
   background: transparent no-repeat center center;
   background-size: cover;
   content: "";
@@ -246,6 +282,8 @@ article{
   vertical-align: middle;
   width: 1em;
 }
-[href*="fipradio.fr"].iconify::before{
-  background-image: url('../resources/fip-128x128.png');
+
+/* line 274, popup.scss */
+[href*="fipradio.fr"].iconify::before {
+  background-image: url("../resources/fip-128x128.png");
 }

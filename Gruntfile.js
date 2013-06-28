@@ -22,6 +22,18 @@ module.exports = function(grunt) {
       }
     },
 
+    compass: {
+      "now-playing": {
+        options: {
+          sassDir: "src/now-playing",
+          cssDir: "src/now-playing"
+        }
+      },
+      options: {
+        importPath: "src/resources/sass"
+      }
+    },
+
     zip: {
       extension: {
         cwd: 'src/',
@@ -42,14 +54,25 @@ module.exports = function(grunt) {
         dest: "dist/chrome-fip-<%= manifest.version %>.zip",
         dot: false
       }
+    },
+
+    watch: {
+      "now-playing": {
+        files: ['src/**/*.scss'],
+        tasks: ['compass']
+      }
     }
   });
 
+  grunt.loadNpmTasks('grunt-contrib-compass');
+  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-mocha');
   grunt.loadNpmTasks('grunt-zip');
 
   grunt.registerTask('default', ['test']);
+  //
   grunt.registerTask('test', ['jshint', 'mocha']);
-  grunt.registerTask('build', ['test', 'zip']);
+  grunt.registerTask('build-assets', ['compass']);
+  grunt.registerTask('build', ['build-assets', 'test', 'zip']);
 };
