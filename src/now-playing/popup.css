@@ -209,22 +209,24 @@ article{
   }
 
   .metadata{
+    display: -webkit-flex;
     display: flex;
     -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
     list-style: none;
     margin: 0;
     padding: 0;
   }
     .metadata > li{
+      -webkit-flex: auto;
       flex: auto;
       margin-bottom: 0 0 0.5em;
     }
     .metadata > .album-date{
+      -webkit-flex: 1;
       flex: 1;
       min-width: 60px;
       text-align: right;
-    }
-    .metadata > .album-title{
     }
     .metadata > .artist{
       margin-top: 0.5em;
