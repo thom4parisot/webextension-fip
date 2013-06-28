@@ -1,13 +1,15 @@
-# FIP Live Radio – Chrome Extension [![Build Status](https://travis-ci.org/oncletom/chrome-fip.png?branch=master)](https://travis-ci.org/oncletom/chrome-fip)
+# FIP Live Radio
+
+[![Build Status](https://travis-ci.org/oncletom/chrome-fip.png?branch=master)](https://travis-ci.org/oncletom/chrome-fip)
 
 ![Extension Showcase](src/resources/showcase.png)
 
-This Chrome extension is dedicated to people who want to listen to
+[This Chrome extension](https://chrome.google.com/webstore/detail/fip-live-radio/fnhlecpfnocgmmmghkjcipmhdpmpddii) is dedicated to people who want to listen to
 [FIP Radio](http://www.fipradio.fr/) in a very easy way, from their browser.
 
 The goals of this extension are the following:
 - recover from loss of network connection or FIP hickups;
-- accessing the *Currently playing* within a single click
+- accessing the *Now Playing* info screen within a single click
 - scrobbling to last.fm or libre.fm
 
 ## Install
