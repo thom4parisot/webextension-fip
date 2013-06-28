@@ -14,11 +14,13 @@ angular.module('ChromeService', [])
     return {
       process: chrome.extension.getBackgroundPage().process,
       addListener: chrome.runtime.onMessage.addListener.bind(chrome.runtime.onMessage),
-      getPreference: function getPreference(key){
-        return 100;
+      getPreference: function getPreference(key, default_value){
+        var value = localStorage.getItem(key);
+
+        return typeof value !== undefined && value !== null ? value : (default_value || null);
       },
       setPreference: function setPreference(key, value){
-
+        localStorage.setItem(key, value);
       }
     };
   });
