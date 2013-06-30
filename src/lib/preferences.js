@@ -7,8 +7,25 @@
  * @constructor
  */
 function Preferences(strategy){
+  /**
+   * Instance storage key prefix.
+   * @type {string}
+   */
+  this.namespace = Preferences.NAMESPACE;
+
+  /**
+   * Strategy used to persist and access data.
+   * @type {Object}
+   */
   this.strategy = Preferences.strategies[strategy] || Preferences.strategies.localStorage;
 }
+
+/**
+ * Preference key prefix
+ *
+ * @type {string}
+ */
+Preferences.NAMESPACE = "";
 
 /**
  * Retrieve any stored data, or returns the default value.
@@ -18,7 +35,9 @@ function Preferences(strategy){
  * @returns {String|Mixed}
  */
 Preferences.prototype.get = function get(key, default_value){
-  return this.strategy.get(key, default_value);
+  var value = this.strategy.get(this.namespace + key, default_value);
+
+  return typeof value !== undefined && value !== null ? value : (default_value || null);
 };
 
 /**
@@ -28,7 +47,7 @@ Preferences.prototype.get = function get(key, default_value){
  * @param {Mixed} value (will be casted to String with some storage strategies like `localStorage`)
  */
 Preferences.prototype.set = function set(key, value){
-  this.strategy.set(key, value);
+  this.strategy.set(this.namespace + key, value);
 };
 
 /**
@@ -42,16 +61,14 @@ Preferences.strategies = {
     /**
      * @see Preferences.prototype.get
      */
-    "get": function getPreference(key, default_value){
-      var value = localStorage.getItem(key);
-
-      return typeof value !== undefined && value !== null ? value : (default_value || null);
+    "get": function getPreference(key){
+      return JSON.parse(localStorage.getItem(key));
     },
     /**
      * @see Preferences.prototype.set
      */
     "set": function setPreference(key, value){
-      localStorage.setItem(key, value);
+      localStorage.setItem(key, JSON.stringify(value));
     }
   }
 };
