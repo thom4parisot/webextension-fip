@@ -100,7 +100,7 @@ var Radio = machina.Fsm.extend({
    * Volume management
    */
   "volume": function (value){
-    if (value !== undefined){
+    if (value !== undefined && !isNaN(parseInt(value, 10))){
       this.playbackVolume = parseInt(value, 10);
 
       if (this.audio){
