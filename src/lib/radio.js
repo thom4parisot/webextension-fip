@@ -14,8 +14,7 @@ var Radio = machina.Fsm.extend({
 
   // Behavior config
   "playbackUrl": "http://mp3.live.tv-radio.com/fip/all/fiphautdebit.mp3",
-  "maxRetry": 3,
-  "retryTimeout": 150,
+  "playbackVolume": 100,
 
   // It should be fine since this point
   "playbackObject": '',
@@ -98,6 +97,21 @@ var Radio = machina.Fsm.extend({
     this.state !== 'stopped' ? this.handle('stop') : this.handle('play');
   },
   /**
+   * Volume management
+   */
+  "volume": function (value){
+    if (value !== undefined && !isNaN(parseInt(value, 10))){
+      this.playbackVolume = parseInt(value, 10);
+
+      if (this.audio){
+        this.audio.volume = this.playbackVolume / 100;
+      }
+    }
+
+    return this.playbackVolume;
+  },
+
+  /**
    * Prepare the audio object to be played.
    * Also plugs events to drive the State Machine according to its internal events.
    *
@@ -109,6 +123,7 @@ var Radio = machina.Fsm.extend({
 
     audio.src = self.playbackUrl;
     audio.preload = false;
+    audio.volume = self.playbackVolume / 100;
 
     // the audio object is already constructed; don't need to go further
     if (self.playbackObject){
