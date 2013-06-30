@@ -18,7 +18,9 @@ function Preferences(strategy){
  * @returns {String|Mixed}
  */
 Preferences.prototype.get = function get(key, default_value){
-  return this.strategy.get(key, default_value);
+  var value = this.strategy.get(key, default_value);
+
+  return typeof value !== undefined && value !== null ? value : (default_value || null);
 };
 
 /**
@@ -42,16 +44,14 @@ Preferences.strategies = {
     /**
      * @see Preferences.prototype.get
      */
-    "get": function getPreference(key, default_value){
-      var value = localStorage.getItem(key);
-
-      return typeof value !== undefined && value !== null ? value : (default_value || null);
+    "get": function getPreference(key){
+      return JSON.parse(localStorage.getItem(key));
     },
     /**
      * @see Preferences.prototype.set
      */
     "set": function setPreference(key, value){
-      localStorage.setItem(key, value);
+      localStorage.setItem(key, JSON.stringify(value));
     }
   }
 };

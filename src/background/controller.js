@@ -19,7 +19,7 @@ function Background(){
  */
 Background.prototype.bootstrap = function bootstrap(){
   this.radio = new Radio();
-  this.radio.volume(this.preferences.get("player.volume"));
+  this.radio.volume(this.preferences.get("player.volume", 100));
 
   this.setupChannel();
   this.registerEvents();

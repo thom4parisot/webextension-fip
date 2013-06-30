@@ -101,7 +101,6 @@ var Radio = machina.Fsm.extend({
    */
   "volume": function (value){
     if (value !== undefined){
-
       this.playbackVolume = parseInt(value, 10);
 
       if (this.audio){
