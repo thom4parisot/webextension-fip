@@ -19,6 +19,7 @@ function Background(){
  */
 Background.prototype.bootstrap = function bootstrap(){
   this.radio = new Radio();
+  this.radio.volume(this.preferences.get("player.volume"));
 
   this.setupChannel();
   this.registerEvents();
@@ -121,11 +122,11 @@ Background.prototype.radioStateBadgeHandler = function radioStateBadgeHandler(me
  * @param {Object} message
  */
 Background.prototype.radioVolumeHandler = function radioVolumeHandler(message){
-  if (message.channel !== "preferences" && message.data.key !== "player.volume"){
+  if (!message.data || (message.channel !== "preferences" && message.data.key !== "player.volume")){
     return;
   }
 
-  this.radio.playbackObject.volume = message.data.value / 100;
+  this.radio.volume(message.data.value);
 };
 
 /**
