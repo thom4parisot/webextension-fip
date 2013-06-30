@@ -103,8 +103,8 @@ var Radio = machina.Fsm.extend({
     if (value !== undefined && !isNaN(parseInt(value, 10))){
       this.playbackVolume = parseInt(value, 10);
 
-      if (this.audio){
-        this.audio.volume = this.playbackVolume / 100;
+      if (this.playbackObject){
+        this.playbackObject.volume = this.playbackVolume / 100;
       }
     }
 
