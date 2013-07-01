@@ -178,11 +178,12 @@ footer{
     li{
       -webkit-flex: 1;
       flex: 1;
-    }
 
-    li.main{
-      -webkit-flex: 2;
-      flex: 2;
+      //Expanding any main row to use the whole width
+      &.main{
+        -webkit-flex: 2;
+        flex: 2;
+      }
     }
   }
 }
