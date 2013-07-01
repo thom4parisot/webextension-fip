@@ -27,7 +27,8 @@ h2{
 /**
  * Popup Header
  */
-header, footer{
+header,
+footer{
   background: $foreground-color;
   clear: both;
   color: $background-color;
@@ -195,7 +196,8 @@ main{
   display: table-row;
 }
 
-aside, article{
+aside,
+article{
   padding: $gutter-width 0 $gutter-width $gutter-width;
 }
 
