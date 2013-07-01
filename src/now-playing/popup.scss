@@ -9,7 +9,8 @@ body{
   width: 425px;
 }
 
-a:focus, a:hover{
+a:focus,
+a:hover{
   text-decoration: none;
 }
 
@@ -49,7 +50,8 @@ footer{
 }
 
 .alternate{
-  &:focus, &:hover{
+  &:focus,
+  &:hover{
     opacity: 1;
   }
 
