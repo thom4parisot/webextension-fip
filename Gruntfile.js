@@ -26,7 +26,10 @@ module.exports = function(grunt) {
       "now-playing": {
         options: {
           sassDir: "src/now-playing",
-          cssDir: "src/now-playing"
+          cssDir: "src/now-playing",
+          imagesDir: "src/resources",
+          httpPath: "../",
+          httpImagesPath: "../resources"
         }
       },
       options: {
