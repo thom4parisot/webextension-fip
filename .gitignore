@@ -1,2 +1,4 @@
 src/vendor
 src/now-playing/*.css
+
+src/*/*.map

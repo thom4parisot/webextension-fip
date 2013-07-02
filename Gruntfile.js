@@ -22,22 +22,18 @@ module.exports = function(grunt) {
       }
     },
 
-    compass: {
+    sass: {
       "now-playing": {
-        options: {
-          sassDir: "src/now-playing",
-          cssDir: "src/now-playing",
-          imagesDir: "src/resources",
-          httpPath: "../",
-          httpImagesPath: "../resources",
-          raw: [
-            "sass_options = { :sourcemap => true, :debug_info => false }",
-            "enable_sourcemaps = true"
-          ].join("\n")
+        files: {
+          "src/now-playing/popup.css": [
+            "src/now-playing/popup.scss"
+          ]
         }
       },
       options: {
-        importPath: "src/resources/sass"
+        compass: true,
+        sourcemap: true,
+        loadPath: "src/resources/sass"
       }
     },
 
@@ -66,12 +62,12 @@ module.exports = function(grunt) {
     watch: {
       "now-playing": {
         files: ['src/**/*.scss'],
-        tasks: ['compass']
+        tasks: ['build-assets']
       }
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-compass');
+  grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-mocha');
@@ -80,6 +76,6 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['test']);
   //
   grunt.registerTask('test', ['jshint', 'mocha']);
-  grunt.registerTask('build-assets', ['compass']);
+  grunt.registerTask('build-assets', ['sass']);
   grunt.registerTask('build', ['build-assets', 'test', 'zip']);
 };
