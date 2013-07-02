@@ -29,7 +29,11 @@ module.exports = function(grunt) {
           cssDir: "src/now-playing",
           imagesDir: "src/resources",
           httpPath: "../",
-          httpImagesPath: "../resources"
+          httpImagesPath: "../resources",
+          raw: [
+            "sass_options = { :sourcemap => true, :debug_info => false }",
+            "enable_sourcemaps = true"
+          ].join("\n")
         }
       },
       options: {
