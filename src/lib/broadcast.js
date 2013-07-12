@@ -14,10 +14,14 @@ function Broadcast(data) {
   this.album = "";
   this.title = "";
   this.cover = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
-  this.isCurrent = false;
+  this.status = null;
 
   Broadcast.extend(self, data);
 }
+
+Broadcast.STATUS_CURRENT = 'current';
+Broadcast.STATUS_PAST = 'past';
+Broadcast.STATUS_FUTURE = 'future';
 
 /**
  * Extends a base object with new values
@@ -64,6 +68,8 @@ Broadcast.createNodeSelector = function createNodeSelector(container) {
  * @return {Array.<Broadcast>}
  */
 Broadcast.parseHtmlResponse = function parseHtmlResponse(nodes) {
+  var currentBroadcastIndex = null;
+
   return Array.prototype.slice.call(nodes)
     .filter(function nodeFilter(node) {
       return node.classList.contains('direct-item-zoomed');
@@ -78,7 +84,10 @@ Broadcast.parseHtmlResponse = function parseHtmlResponse(nodes) {
         data.album = select('.album');
         data.date = select('.annee').replace(/[\(\)]/g, '');
         data.cover = select('img', 'src');
-        data.isCurrent = node.classList.contains('current') || node.id === "direct-0";
+
+        if (node.classList.contains('current') || node.id === "direct-0"){
+          data.status = Broadcast.STATUS_CURRENT;
+        }
 
         if (!/http/.test(data.cover)) {
           delete data.cover;

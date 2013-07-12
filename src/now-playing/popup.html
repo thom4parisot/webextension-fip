@@ -18,9 +18,11 @@
 
 <main ng-controller="BroadcastController">
   <div class="tiles" data-current-index="{{current_index}}">
-    <section ng-repeat="broadcast in broadcasts" ng-class="{current: broadcast.isCurrent}">
+    <section ng-repeat="broadcast in broadcasts">
       <aside class="panel" id="cover">
         <img ng-src="{{broadcast.cover}}" class="album-cover" alt="{{broadcast.title}} from {{broadcast.artist}}"/>
+
+        <span class="status" data-status="{{broadcast.status}}"></span>
       </aside>
 
       <article class="panel" id="content">

@@ -25,7 +25,7 @@ function BroadcastController($scope, Broadcasts){
 
     //elect the active slide
     broadcasts.some(function(b, index){
-      if (b.isCurrent && (index !== previous.position || $scope.current_index === null || previous.size !== broadcasts.length)){
+      if (b.status === 'current' && (index !== previous.position || $scope.current_index === null || previous.size !== broadcasts.length)){
         $scope.current_index = previous.position = index;
       }
     });
