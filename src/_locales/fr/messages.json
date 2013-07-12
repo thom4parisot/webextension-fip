@@ -16,5 +16,14 @@
   },
   "archives": {
     "message": "Archives"
+  },
+  "status_previous": {
+    "message": "Récemment"
+  },
+  "status_current": {
+    "message": "À l'antenne"
+  },
+  "status_next": {
+    "message": "À venir"
   }
 }

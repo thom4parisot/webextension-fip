@@ -1,4 +1,5 @@
 @import "base";
+@import "statuses";
 @import "compass/css3/transition";
 
 body{
@@ -233,6 +234,7 @@ aside{
     background: $foreground-color;
     border: 3px solid $text-color;
     height: 100px;
+    margin-bottom: $gutter-width / 2;
     width: 100px;
   }
 

@@ -20,8 +20,8 @@ function Broadcast(data) {
 }
 
 Broadcast.STATUS_CURRENT = 'current';
-Broadcast.STATUS_PAST = 'past';
-Broadcast.STATUS_FUTURE = 'future';
+Broadcast.STATUS_PREVIOUS = 'previous';
+Broadcast.STATUS_NEXT = 'next';
 
 /**
  * Extends a base object with new values
@@ -100,5 +100,15 @@ Broadcast.parseHtmlResponse = function parseHtmlResponse(nodes) {
         console.error("Parsing error", data);
         return null;
       }
+    })
+    .map(function(broadcast, index){
+      if (broadcast.status === null){
+        broadcast.status = (currentBroadcastIndex === null) ? Broadcast.STATUS_PREVIOUS : Broadcast.STATUS_NEXT;
+      }
+      else if(broadcast.status === Broadcast.STATUS_CURRENT){
+        currentBroadcastIndex = index;
+      }
+
+      return broadcast;
     });
 };
