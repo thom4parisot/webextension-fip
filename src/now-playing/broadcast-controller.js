@@ -14,6 +14,7 @@ function BroadcastController($scope, Broadcasts){
   var stubs = [new Broadcast()];
 
   $scope.broadcasts = stubs;
+  $scope.current_index = 0;
 
   function updateUI(broadcasts){
     $scope.broadcasts = broadcasts.length ? broadcasts : stubs;
@@ -21,12 +22,12 @@ function BroadcastController($scope, Broadcasts){
 
   function throttleUpdates(){
     setInterval(function nowPlayingIntervalUpdater(){
-      Broadcasts.then(updateUI);
+      Broadcasts.get().then(updateUI);
     }, 30000);
   }
 
   // Update data and throttle updates if someone gaze at the bubble the whole day
-  Broadcasts.then(updateUI).then(throttleUpdates, throttleUpdates);
+  Broadcasts.get().then(updateUI).then(throttleUpdates, throttleUpdates);
 }
 
 // And now deal with minification!
