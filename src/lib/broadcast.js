@@ -112,3 +112,37 @@ Broadcast.parseHtmlResponse = function parseHtmlResponse(nodes) {
       return broadcast;
     });
 };
+
+/**
+ * Generates a position tracker for a broadcast.
+ * Enables to returns the position to activate in a visual carousel for example.
+ *
+ * @returns {Function}
+ */
+Broadcast.getPositionTracker = function getPositionTracker(){
+  var previous = {
+    "size": 0,
+    "position": null
+  };
+
+  /**
+   * Broadcast position generator.
+   *
+   * @param {Array.<Broadcast>} A list of broadcasts
+   * @param {Integer|null} Index of the actually hightlighted Broadcast
+   * @returns {Integer} The new position to highlight
+   */
+  return function positionTracker(broadcasts, current_index){
+    var new_index = current_index;
+
+    broadcasts.some(function(b, index){
+      if (b.status === Broadcast.STATUS_CURRENT && (index !== previous.position || current_index === null || previous.size !== broadcasts.length)){
+        new_index = previous.position = index;
+      }
+    });
+
+    previous.size = broadcasts.length;
+
+    return new_index;
+  };
+};
