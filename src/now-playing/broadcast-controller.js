@@ -17,6 +17,18 @@ function BroadcastController($scope, Broadcasts){
   $scope.broadcasts = stubs;
   $scope.current_index = null;
 
+  $scope.previous = function previousBroadcast(){
+    if ($scope.current_index > 0){
+      $scope.current_index--;
+    }
+  };
+
+  $scope.next = function nextBroadcast(){
+    if ($scope.current_index < $scope.broadcasts.length - 1){
+      $scope.current_index++;
+    }
+  };
+
   function updateUI(broadcasts){
     $scope.broadcasts = broadcasts.length ? broadcasts : stubs;
     $scope.current_index = getPosition(broadcasts, $scope.current_index);

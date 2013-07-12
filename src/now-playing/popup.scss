@@ -1,6 +1,7 @@
 @import "base";
 @import "statuses";
 @import "compass/css3/transition";
+@import "compass/utilities/lists/horizontal-list";
 
 body{
   background: $background-color;
@@ -168,8 +169,6 @@ footer.alternate{
  * Popup Footer
  */
 footer{
-  margin-top: $gutter-width*1.5;
-
   nav{
     ul{
       display: -webkit-flex;
@@ -197,8 +196,37 @@ footer{
  */
 main{
   overflow: hidden;
+  padding-bottom: $gutter-width * 2;
   position: relative;
   width: 100%;
+
+  nav{
+    bottom: $gutter-width / 2;
+    opacity: 0.5;
+    position: absolute;
+    right: 0;
+
+    &:hover{
+      opacity: 1;
+      @include single-transition(opacity);
+    }
+
+    > ul{
+      @include horizontal-list();
+
+      li{
+        padding-right: 0;
+      }
+    }
+
+    &, a{
+      color: $foreground-color;
+    }
+
+    .label{
+      display: none;
+    }
+  }
 }
 
 .tiles{
