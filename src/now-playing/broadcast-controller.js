@@ -12,12 +12,25 @@
  */
 function BroadcastController($scope, Broadcasts){
   var stubs = [new Broadcast()];
+  var previous = {
+    "size": 0,
+    "position": null
+  };
 
   $scope.broadcasts = stubs;
-  $scope.current_index = 0;
+  $scope.current_index = null;
 
   function updateUI(broadcasts){
     $scope.broadcasts = broadcasts.length ? broadcasts : stubs;
+
+    //elect the active slide
+    broadcasts.some(function(b, index){
+      if (b.isCurrent && (index !== previous.position || $scope.current_index === null || previous.size !== broadcasts.length)){
+        $scope.current_index = previous.position = index;
+      }
+    });
+
+    previous.size = broadcasts.length;
   }
 
   function throttleUpdates(){
