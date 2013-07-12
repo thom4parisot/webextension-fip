@@ -133,8 +133,6 @@ footer.alternate{
   line-height: 0.9;
   opacity: 1;
   padding: 0;
-  @include single-transition(opacity);
-
 
   &:hover{
     opacity: 0.8;
@@ -208,7 +206,6 @@ main{
 
     &:hover{
       opacity: 1;
-      @include single-transition(opacity);
     }
 
     > ul{
