@@ -10,8 +10,9 @@ angular.module('BroadcastService', ['ChromeService'])
           .then(function broadcastHttpGetSuccess(response){
             var nodes, html;
 
+            //removing the default assets call (typically, the default album cover)
             html = response.data.html;
-            html = html.replace(/\/sites\/all\/modules\/fip\/fip_direct\/images\/direct_default_cover.png/mg, "");
+            html = html.replace(/\/sites\/[^"]+\.(png|jpe?g|gif)/mg, "");
 
             nodes = $compile(html)({});
 
