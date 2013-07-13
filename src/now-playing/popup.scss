@@ -82,8 +82,8 @@ footer.alternate{
 
 
 .volume-control{
-  margin-top: -5px;
-  vertical-align: super;
+  position: relative;
+  top: -8px;
 
   &::-webkit-slider-runnable-track{
     -webkit-appearance: none;
@@ -129,8 +129,6 @@ footer.alternate{
   color: $background-color;
   cursor: pointer;
   font-size: 1em;
-  letter-spacing: 0.1em;
-  line-height: 0.9;
   opacity: 1;
   padding: 0;
 
