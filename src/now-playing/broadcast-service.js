@@ -8,7 +8,12 @@ angular.module('BroadcastService', ['ChromeService'])
       "get": function(){
         return $http.get(Broadcast.defaultUri, {params:{_: Date.now()}})
           .then(function broadcastHttpGetSuccess(response){
-            var nodes = $compile(response.data.html)({});
+            var nodes, html;
+
+            html = response.data.html;
+            html = html.replace(/\/sites\/all\/modules\/fip\/fip_direct\/images\/direct_default_cover.png/mg, "");
+
+            nodes = $compile(html)({});
 
             return Broadcast.parseHtmlResponse(nodes.find("div"));
           });
