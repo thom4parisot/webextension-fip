@@ -13,7 +13,8 @@ angular.module('now-playing', ['BroadcastService', 'ChromeService', 'TextCleaner
     $rootScope.label = {
       album: translate('album'),
       artist: translate('artist'),
-      archives: translate('archives')
+      archives: translate('archives'),
+      no_information: translate('no_information')
     };
 
     document.documentElement.setAttribute('lang', navigator.language);
