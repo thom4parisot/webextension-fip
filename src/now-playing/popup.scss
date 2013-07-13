@@ -282,29 +282,29 @@ article{
 
 
 .metadata{
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-flow: row wrap;
-  flex-flow: row wrap;
   list-style: none;
   margin: 0;
   padding: 0;
 
   > li{
-    -webkit-flex: auto;
-    flex: auto;
-    margin-bottom: 0 0 0.5em;
+    margin-bottom: $gutter-width;
   }
 
+  > .album-date,
+  > .album-title{
+    float: left;
+  }
+
+  > .album-title{
+    width: 76%;
+  }
   > .album-date{
-    -webkit-flex: 1;
-    flex: 1;
-    min-width: 65px;
+    width: 24%;
     text-align: right;
   }
   > .artist{
+    clear: both;
     margin-top: 0.5em;
-    width: 100%;
   }
 }
 
