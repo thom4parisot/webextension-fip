@@ -16,5 +16,14 @@
   },
   "archives": {
     "message": "Archives"
+  },
+  "status_previous": {
+    "message": "Recently"
+  },
+  "status_current": {
+    "message": "On Now"
+  },
+  "status_next": {
+    "message": "On Next"
   }
 }

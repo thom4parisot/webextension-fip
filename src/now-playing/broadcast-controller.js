@@ -1,5 +1,7 @@
 "use strict";
 
+/* globals Broadcast */
+
 /**
  * Now Playing Controller.
  * Handles bi-directional updates of the popup.
@@ -8,24 +10,39 @@
  * @param {Broadcast} Broadcast
  * @constructor
  */
-function BroadcastController($scope, Broadcast){
-  $scope.broadcast = new Broadcast();
+function BroadcastController($scope, Broadcasts){
+  var getPosition = Broadcast.getPositionTracker();
+  var stubs = [new Broadcast()];
 
-  function updateUI(broadcast){
-    /* jshint devel:true */
-    console.log(broadcast);
-    $scope.broadcast = broadcast;
+  $scope.broadcasts = stubs;
+  $scope.current_index = null;
+
+  $scope.previous = function previousBroadcast(){
+    if ($scope.current_index > 0){
+      $scope.current_index--;
+    }
+  };
+
+  $scope.next = function nextBroadcast(){
+    if ($scope.current_index < $scope.broadcasts.length - 1){
+      $scope.current_index++;
+    }
+  };
+
+  function updateUI(broadcasts){
+    $scope.broadcasts = broadcasts.length ? broadcasts : stubs;
+    $scope.current_index = getPosition(broadcasts, $scope.current_index);
   }
 
   function throttleUpdates(){
     setInterval(function nowPlayingIntervalUpdater(){
-      Broadcast.get().then(updateUI);
+      Broadcasts.get().then(updateUI);
     }, 30000);
   }
 
   // Update data and throttle updates if someone gaze at the bubble the whole day
-  Broadcast.get().then(updateUI).then(throttleUpdates, throttleUpdates);
+  Broadcasts.get().then(updateUI).then(throttleUpdates, throttleUpdates);
 }
 
 // And now deal with minification!
-BroadcastController.$inject = ['$scope', 'Broadcast'];
+BroadcastController.$inject = ['$scope', 'Broadcasts'];

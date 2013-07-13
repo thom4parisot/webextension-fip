@@ -17,29 +17,42 @@
 </header>
 
 <main ng-controller="BroadcastController">
-  <aside class="panel" id="cover">
-    <img ng-src="{{broadcast.cover}}" class="album-cover" alt="{{broadcast.title}} from {{broadcast.artist}}"/>
-  </aside>
+  <div class="tiles" data-current-index="{{current_index}}">
+    <section ng-repeat="broadcast in broadcasts" class="status-{{broadcast.status}}">
+      <aside class="panel" id="cover">
+        <img ng-src="{{broadcast.cover}}" class="album-cover" alt="{{broadcast.title}} from {{broadcast.artist}}"/>
 
-  <article class="panel" id="content">
-    <h2 class="title" ng-show="broadcast.artist && broadcast.album">
-      <a href="http://www.last.fm/search?q={{broadcast.title | track}}+{{broadcast.artist | mainArtist}}" target="_blank">{{broadcast.title | track}}</a>
-    </h2>
+        <span class="status" data-status="{{broadcast.status}}"></span>
+      </aside>
 
-    <h2 class="title" ng-show="!broadcast.artist || !broadcast.album">{{broadcast.title}}</h2>
+      <article class="panel" id="content">
+        <h2 class="title" ng-show="broadcast.title && broadcast.artist">
+          <a href="http://www.last.fm/search?q={{broadcast.title | track}}+{{broadcast.artist | mainArtist}}" target="_blank">{{broadcast.title | track}}</a>
+        </h2>
 
-    <ul class="metadata">
-      <li class="album-title icon-cd" ng-show="broadcast.album">
-        <a href="http://www.last.fm/search?q={{broadcast.album | album}}+{{broadcast.artist | mainArtist}}&amp;type=album" target="_blank">{{broadcast.album | album}}</a>
-      </li>
-      <li class="album-date icon-calendar" ng-show="broadcast.album && broadcast.date">
-        <date>{{broadcast.date}}</date>
-      </li>
-      <li class="artist icon-user" ng-show="broadcast.artist">
-        <a href="http://www.last.fm/search?q={{broadcast.artist | mainArtist}}&amp;type=artist" target="_blank">{{broadcast.artist | artist}}</a>
-      </li>
+        <h2 class="title" ng-show="!broadcast.artist">{{broadcast.title || $root.label.no_information}}</h2>
+
+        <ul class="metadata">
+          <li class="album-title icon-cd" ng-show="broadcast.album">
+            <a href="http://www.last.fm/search?q={{broadcast.album | album}}+{{broadcast.artist | mainArtist}}&amp;type=album" target="_blank">{{broadcast.album | album}}</a>
+          </li>
+          <li class="album-date icon-calendar" ng-show="broadcast.album && broadcast.date">
+            <date>{{broadcast.date}}</date>
+          </li>
+          <li class="artist icon-user" ng-show="broadcast.artist">
+            <a href="http://www.last.fm/search?q={{broadcast.artist | mainArtist}}&amp;type=artist" target="_blank">{{broadcast.artist | artist}}</a>
+          </li>
+        </ul>
+      </article>
+    </section>
+  </div>
+
+  <nav ng-show="broadcasts.length > 1">
+    <ul>
+      <li><a href="#" ng-click="previous()"><span class="icon-left-open"></span> <span class="label">Previous</span></a></li>
+      <li><a href="#" ng-click="next()"><span class="label">Next</span> <span class="icon-right-open"></span></a></li>
     </ul>
-  </article>
+  </nav>
 </main>
 
 <footer class="alternate">
@@ -55,6 +68,7 @@
 <script src="../vendor/angular/angular.min.js"></script>
 <script src="../lib/text-cleaner.js"></script>
 <script src="../lib/text-cleaner-service.js"></script>
+<script src="../lib/broadcast.js"></script>
 <script src="app.js"></script>
 <script src="chrome-service.js"></script>
 <script src="broadcast-service.js"></script>

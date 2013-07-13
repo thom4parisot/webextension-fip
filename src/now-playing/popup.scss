@@ -1,5 +1,7 @@
 @import "base";
+@import "statuses";
 @import "compass/css3/transition";
+@import "compass/typography/lists/horizontal-list";
 
 body{
   background: $background-color;
@@ -80,8 +82,8 @@ footer.alternate{
 
 
 .volume-control{
-  margin-top: -5px;
-  vertical-align: super;
+  position: relative;
+  top: -8px;
 
   &::-webkit-slider-runnable-track{
     -webkit-appearance: none;
@@ -127,12 +129,8 @@ footer.alternate{
   color: $background-color;
   cursor: pointer;
   font-size: 1em;
-  letter-spacing: 0.1em;
-  line-height: 0.9;
   opacity: 1;
   padding: 0;
-  @include single-transition(opacity);
-
 
   &:hover{
     opacity: 0.8;
@@ -167,8 +165,6 @@ footer.alternate{
  * Popup Footer
  */
 footer{
-  margin-top: $gutter-width*1.5;
-
   nav{
     ul{
       display: -webkit-flex;
@@ -195,7 +191,55 @@ footer{
  * Popup Content
  */
 main{
-  display: table-row;
+  overflow: hidden;
+  padding-bottom: $gutter-width * 2;
+  position: relative;
+  width: 100%;
+
+  nav{
+    bottom: $gutter-width / 2;
+    opacity: 0.5;
+    position: absolute;
+    right: 0;
+
+    &:hover{
+      opacity: 1;
+    }
+
+    > ul{
+      @include horizontal-list();
+
+      li{
+        padding-right: 0;
+      }
+    }
+
+    &, a{
+      color: $foreground-color;
+    }
+
+    .label{
+      display: none;
+    }
+  }
+}
+
+.tiles{
+  margin-left: 0;
+  @include single-transition(margin-left);
+  width: 500%;
+
+  @for $index from 0 to 10{
+    &[data-current-index="#{$index}"]{
+      margin-left: -$index * 425px;
+    }
+  }
+}
+
+section{
+  display: table;
+  float: left;
+  width: 425px;
 }
 
 aside,
@@ -213,6 +257,7 @@ aside{
     background: $foreground-color;
     border: 3px solid $text-color;
     height: 100px;
+    margin-bottom: $gutter-width / 2;
     width: 100px;
   }
 
@@ -235,29 +280,29 @@ article{
 
 
 .metadata{
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-flow: row wrap;
-  flex-flow: row wrap;
   list-style: none;
   margin: 0;
   padding: 0;
 
   > li{
-    -webkit-flex: auto;
-    flex: auto;
-    margin-bottom: 0 0 0.5em;
+    margin-bottom: $gutter-width;
   }
 
+  > .album-date,
+  > .album-title{
+    float: left;
+  }
+
+  > .album-title{
+    width: 76%;
+  }
   > .album-date{
-    -webkit-flex: 1;
-    flex: 1;
-    min-width: 60px;
+    width: 24%;
     text-align: right;
   }
   > .artist{
+    clear: both;
     margin-top: 0.5em;
-    width: 100%;
   }
 }
 
