@@ -2,10 +2,10 @@
 
 /* globals md5 */
 
-function LastfmAPI(){
+function LastfmAPI(token){
   this.secret = "5bfff253b047941723be093331809c12";
   this.api_key = "5c12c1ed71a519ee5a4ddb140d28f55b";
-  this.session_key = "";
+  this.session_key = token || null;
   this.api_url = "https://ws.audioscrobbler.com/2.0/";
 }
 

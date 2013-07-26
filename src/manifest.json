@@ -12,7 +12,9 @@
       "vendor/machina/lib/machina.min.js",
       "lib/radio.js",
       "lib/preferences.js",
+      "lib/lastfm.js",
       "background/controller.js",
+      "lastfm/controller.js",
       "background/bootstrap.js"],
     "persistent": true
   },
