@@ -1,5 +1,7 @@
 "use strict";
 
+/* globals md5 */
+
 function LastfmAPI(){
   this.secret = "5bfff253b047941723be093331809c12";
   this.api_key = "5c12c1ed71a519ee5a4ddb140d28f55b";
@@ -35,7 +37,7 @@ LastfmAPI.prototype.sendRequest = function sendRequest(data, done){
   this.applySignature(data);
 
   Object.keys(data).forEach(function(key){
-    form.append(key, data[key])
+    form.append(key, data[key]);
   });
 
   if (typeof done === "function"){
@@ -91,7 +93,7 @@ LastfmAPI.prototype.nowPlaying = function nowPlaying(params, done){
 LastfmAPI.prototype.applySignature = function applySignature(params){
   delete params.api_sig;
 
-  params.api_sig = LastfmAPI.generateSignature(params, this.secret)
+  params.api_sig = LastfmAPI.generateSignature(params, this.secret);
 };
 
 /**
