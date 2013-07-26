@@ -26,6 +26,8 @@ Background.prototype.bootstrap = function bootstrap(){
   this.registerPreferencesHandler();
   this.registerBroadcastsCollection();
   this.registerNowPlayingPopup();
+
+  chrome.alarms.create("broadcasts", { periodInMinutes: 0.2 });
 };
 
 /**
@@ -49,6 +51,8 @@ Background.prototype.registerEvents = function registerEvents(){
       radio.handle('network.' + event.type);
     });
   });
+
+  chrome.alarms.onAlarm.addListener(self.broadcastsUpdaterHandler.bind(self));
 };
 
 /**
@@ -63,30 +67,28 @@ Background.prototype.registerNowPlayingPopup = function registerNowPlayingPopup(
   chrome.browserAction.onClicked.addListener(this.radio.play.bind(this.radio));
 };
 
-Background.prototype.registerBroadcastsCollection = function registerBroadcastsCollection(){
-  var self = this;
+Background.prototype.broadcastsUpdaterHandler = function broadcastsUpdaterHandler(alarm){
+  var self = this, xhr;
 
-  setInterval(function collectBroadcasts(){
-    if (self.radio.state !== "playing"){
-      return;
-    }
+  if (alarm.name !== "broadcasts" || self.radio.state !== "playing"){
+    return;
+  }
 
-    var xhr = new XMLHttpRequest();
-    xhr.addEventListener("load", function broadcastHttpGetSuccess(response){
-      var nodes, html, parser = new DOMParser();
+  xhr = new XMLHttpRequest();
+  xhr.addEventListener("load", function broadcastHttpGetSuccess(response){
+    var nodes, html, parser = new DOMParser();
 
-      //removing the default assets call (typically, the default album cover)
-      html = JSON.parse(response.target.responseText).html;
-      html = html.replace(/\/sites\/[^"]+\.(png|jpe?g|gif)/mg, "");
+    //removing the default assets call (typically, the default album cover)
+    html = JSON.parse(response.target.responseText).html;
+    html = html.replace(/\/sites\/[^"]+\.(png|jpe?g|gif)/mg, "");
 
-      nodes = parser.parseFromString(html,"text/xml");
+    nodes = parser.parseFromString(html, "text/xml");
 
-      self.dispatchBroadcasts(Broadcast.parseHtmlResponse(nodes.querySelectorAll("div")));
-    });
+    self.dispatchBroadcasts(Broadcast.parseHtmlResponse(nodes.querySelectorAll("div")));
+  });
 
-    xhr.open("GET", Broadcast.defaultUri+"?_="+Date.now())
-    xhr.send();
-  }, 5000/*30000*/);
+  xhr.open("GET", Broadcast.defaultUri+"?_="+Date.now());
+  xhr.send();
 };
 
 /**
