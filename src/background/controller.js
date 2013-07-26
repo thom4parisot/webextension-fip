@@ -24,6 +24,7 @@ Background.prototype.bootstrap = function bootstrap(){
   this.setupChannel();
   this.registerEvents();
   this.registerPreferencesHandler();
+  this.registerBroadcastsCollection();
   this.registerNowPlayingPopup();
 };
 
@@ -62,6 +63,32 @@ Background.prototype.registerNowPlayingPopup = function registerNowPlayingPopup(
   chrome.browserAction.onClicked.addListener(this.radio.play.bind(this.radio));
 };
 
+Background.prototype.registerBroadcastsCollection = function registerBroadcastsCollection(){
+  var self = this;
+
+  setInterval(function collectBroadcasts(){
+    if (self.radio.state !== "playing"){
+      return;
+    }
+
+    var xhr = new XMLHttpRequest();
+    xhr.addEventListener("load", function broadcastHttpGetSuccess(response){
+      var nodes, html, parser = new DOMParser();
+
+      //removing the default assets call (typically, the default album cover)
+      html = JSON.parse(response.target.responseText).html;
+      html = html.replace(/\/sites\/[^"]+\.(png|jpe?g|gif)/mg, "");
+
+      nodes = parser.parseFromString(html,"text/xml");
+
+      self.dispatchBroadcasts(Broadcast.parseHtmlResponse(nodes.querySelectorAll("div")));
+    });
+
+    xhr.open("GET", Broadcast.defaultUri+"?_="+Date.now())
+    xhr.send();
+  }, 5000/*30000*/);
+};
+
 /**
  * Handle any preferences request changes.
  */
@@ -83,6 +110,10 @@ Background.prototype.registerPreferencesHandler = function registerPreferencesHa
  */
 Background.prototype.dispatchRadioState = function dispatchRadioState(transition){
   chrome.runtime.sendMessage({ state: transition.toState });
+};
+
+Background.prototype.dispatchBroadcasts = function dispatchRadioState(broadcasts){
+  chrome.runtime.sendMessage({ channel: "broadcasts", data: broadcasts });
 };
 
 /**

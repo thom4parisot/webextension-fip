@@ -12,6 +12,13 @@ angular.module('ChromeService', [])
   })
   .factory('chrome', function(){
     return {
+      on: function onMessage(channel, callback){
+        chrome.runtime.onMessage.addListener(function chromeServiceOnMessage(message){
+          if (message.channel === channel){
+            callback(message.data);
+          }
+        });
+      },
       process: chrome.extension.getBackgroundPage().process,
       message: function sendMessage(channel, values){
         chrome.runtime.sendMessage({ "channel": channel, "data": values });
