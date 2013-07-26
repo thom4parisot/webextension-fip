@@ -68,7 +68,7 @@ Preferences.strategies = {
      * @see Preferences.prototype.set
      */
     "set": function setPreference(key, value){
-      localStorage.setItem(key, JSON.stringify(value));
+      localStorage.setItem(key, typeof value === "string" ? value : JSON.stringify(value));
     }
   }
 };
