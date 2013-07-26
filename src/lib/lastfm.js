@@ -69,7 +69,7 @@ LastfmAPI.prototype.scrobble = function scrobble(params, done){
     method: 'track.scrobble',
     "artist[0]": params.artist,
     "track[0]": params.track,
-    "timestamp[0]": parseInt(new Date().getTime() / 1000, 10),
+    "timestamp[0]": parseInt((params.when || Date.now()) / 1000, 10),
     "chosenByUser[0]": false
   };
 

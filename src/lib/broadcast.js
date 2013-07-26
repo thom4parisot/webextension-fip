@@ -113,6 +113,19 @@ Broadcast.parseHtmlResponse = function parseHtmlResponse(nodes) {
     });
 };
 
+Broadcast.getCurrent = function getCurrent(broadcasts){
+  var current = null;
+
+  broadcasts.some(function(broadcast){
+    if (broadcast.status === Broadcast.STATUS_CURRENT){
+      current = broadcast;
+      return true;
+    }
+  });
+
+  return current;
+};
+
 /**
  * Generates a position tracker for a broadcast.
  * Enables to returns the position to activate in a visual carousel for example.

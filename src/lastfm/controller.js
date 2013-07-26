@@ -3,6 +3,8 @@
 /* globals chrome, LastfmAPI */
 
 function ScrobblingController(process){
+  this.previousBroadcast = null;
+
   this.setupClient();
   this.setupEvents(process);
 }
@@ -26,22 +28,42 @@ ScrobblingController.prototype.setupClient = function setupClient(){
 };
 
 ScrobblingController.prototype.setupEvents = function setupClient(process){
-  process.radio.on("playing", this.startScrobbling.bind(this));
-  process.radio.on("stopped", this.stopScrobbling.bind(this));
+  var self = this;
+
+  chrome.runtime.onMessage.addListener(function(request){
+    if (request.channel === "broadcasts" && process.radio.state === "playing"){
+      var current = Broadcast.getCurrent(broadcasts);
+
+      self.processNowPlaying(current);
+      self.processScrobbling(current);
+
+      if (current.title !== self.previousBroadcast.title){
+        self.previousBroadcast = current;
+      }
+    }
+  });
 };
 
-ScrobblingController.prototype.startScrobbling = function startScrobbling(){
-  if (!this.client.isConfigured()){
+ScrobblingController.prototype.processNowPlaying = function processNowPlaying(current){
+  if (!this.client.isConfigured() || !current instanceof Broadcast){
     return;
   }
 
-  console.log("start scrobbling");
+  if (current && current.artist && current.title !== previous.title && current.artist !== previous.artist){
+    this.client.nowPlaying({ artist: current.artist, track: current.title });
+  }
 };
 
-ScrobblingController.prototype.stopScrobbling = function startScrobbling(){
-  if (!this.client.isConfigured()){
+ScrobblingController.prototype.processScrobbling = function processScrobbling(current){
+  if (!this.client.isConfigured() || !current instanceof Broadcast){
     return;
   }
 
-  console.log("stop scrobbling");
+  if (previous && previous.artist && current.title !== previous.title && current.artist !== previous.artist){
+    this.client.scrobble({
+      artist: previous.artist,
+      track: previous.title,
+      when: Date.now() - 120*1000 // let's pretend we listened to it 2 minutes ago
+    });
+  }
 };
