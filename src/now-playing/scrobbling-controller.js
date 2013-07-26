@@ -6,6 +6,12 @@ function ScrobblingController($scope, chrome){
   $scope.$watch("scrobblingEnabled", function(value){
     chrome.message("preferences", {"key": "lastfm.scrobbling", "value": value});
   });
+
+  $scope.$watch("scrobblingEnabled", function(value){
+    if (value && !chrome.getPreference("lastfm.token")){
+      chrome.newTab("http://www.last.fm/api/auth/?api_key=5c12c1ed71a519ee5a4ddb140d28f55b&cb="+chrome.getUrl("../last.fm/auth.html"));
+    }
+  });
 }
 
 ScrobblingController.$inject = ['$scope', 'chrome'];

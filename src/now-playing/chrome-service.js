@@ -24,6 +24,15 @@ angular.module('ChromeService', [])
       },
       setPreference: function setPreference(key, value){
         localStorage.setItem(key, value);
+      },
+      getUrl: function getUrl(path){
+        return chrome.extension.getURL(path);
+      },
+      newTab: function newTab(url){
+        chrome.tabs.create({
+          url: url,
+          active: true
+        });
       }
     };
   });
