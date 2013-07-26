@@ -22,6 +22,15 @@ LastfmAPI.methods = {
 };
 
 /**
+ * Indicate if we have the permission to use the API.
+ *
+ * @returns {Boolean}
+ */
+LastfmAPI.prototype.isConfigured = function isConfigured(){
+  return this.secret && this.api_key && this.session_key;
+};
+
+/**
  * Send a raw HTTP request to Last.fm.
  * Also applies some signature magic.
  *

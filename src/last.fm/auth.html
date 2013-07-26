@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="lastfm-auth" ng-csp>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Last.fm Configuration</title>
+  <link rel="stylesheet" href="../now-playing/popup.css"/>
+  <link rel="stylesheet" href="../resources/icons/css/fontello-embedded.css"/>
+  <link rel="stylesheet" href="popup.css"/>
+</head>
+<body>
+<header>
+  <h1 class="icon-lastfm-rect">Last.fm</h1>
+</header>
+
+<main ng-controller="AuthController">
+  <h2 ng-show="hasToken"><span class="success">✓</span> Configuration Done!</h2>
+  <h2 ng-show="!hasToken"><span class="error icon-attention"></span> Sorry, something went wrong…</h2>
+</main>
+
+<footer class="alternate">
+  <nav>
+    <ul>
+      <li class="main icon-right-open">
+        <a href="../now-playing/popup.html">Bring me back to <em>Now Playing</em> screen</a>
+      </li>
+    </ul>
+  </nav>
+</footer>
+
+
+<script src="../vendor/angular/angular.min.js"></script>
+<script src="app.js"></script>
+<script src="auth-controller.js"></script>
+</body>
+</html>
