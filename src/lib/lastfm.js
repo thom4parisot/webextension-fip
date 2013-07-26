@@ -1,0 +1,111 @@
+"use strict";
+
+function LastfmAPI(){
+  this.secret = "5bfff253b047941723be093331809c12";
+  this.api_key = "5c12c1ed71a519ee5a4ddb140d28f55b";
+  this.session_key = "";
+  this.api_url = "https://ws.audioscrobbler.com/2.0/";
+}
+
+/**
+ * Supported API Methods.
+ * Enables `sendRequest` autoconf.
+ *
+ * @type {Object}
+ */
+LastfmAPI.methods = {
+  "track.scrobble": "POST",
+  "track.updateNowPlaying": "POST",
+  "track.love": "POST"
+};
+
+/**
+ * Send a raw HTTP request to Last.fm.
+ * Also applies some signature magic.
+ *
+ * @param {Object} data
+ * @param {Function=} done
+ */
+LastfmAPI.prototype.sendRequest = function sendRequest(data, done){
+  var xhr = new XMLHttpRequest();
+  var form = new FormData();
+
+  data.api_key = this.api_key;
+  data.sk = this.session_key;
+  this.applySignature(data);
+
+  Object.keys(data).forEach(function(key){
+    form.append(key, data[key])
+  });
+
+  if (typeof done === "function"){
+    xhr.addEventListener("load", done);
+  }
+
+  xhr.open(LastfmAPI.methods[data.method], this.api_url);
+  xhr.send(form);
+};
+
+/**
+ * Track the listening of a song.
+ *
+ * @see http://www.last.fm/api/show/track.updateNowPlaying
+ * @param {{artist: String, track: String}} params
+ * @param {Function=} done Success callback
+ */
+LastfmAPI.prototype.scrobble = function scrobble(params, done){
+  var data = {
+    method: 'track.scrobble',
+    "artist[0]": params.artist,
+    "track[0]": params.track,
+    "timestamp[0]": parseInt(new Date().getTime() / 1000, 10),
+    "chosenByUser[0]": false
+  };
+
+  this.sendRequest(data, done);
+};
+
+/**
+ * Update the "Now Playing" status.
+ *
+ * @see http://www.last.fm/api/show/track.updateNowPlaying
+ * @param {{artist: String, track: String}} params
+ * @param {Function=} done Success callback
+ */
+LastfmAPI.prototype.nowPlaying = function nowPlaying(params, done){
+  var data = {
+    method: 'track.updateNowPlaying',
+    "artist": params.artist,
+    "track": params.track
+  };
+
+  this.sendRequest(data, done);
+};
+
+/**
+ * Mutate the parameters with a signature argument.
+ *
+ * @see http://www.last.fm/api/authspec#8
+ * @param {Object} params Objects to sign
+ */
+LastfmAPI.prototype.applySignature = function applySignature(params){
+  delete params.api_sig;
+
+  params.api_sig = LastfmAPI.generateSignature(params, this.secret)
+};
+
+/**
+ * Generate a signature for the HTTP Call
+ *
+ * @see http://www.last.fm/api/authspec#8
+ * @param {Object} params Objects to sign
+ * @param {String} secret
+ * @returns {String}
+ */
+LastfmAPI.generateSignature = function generateSignature(params, secret){
+  var signature = Object.keys(params).sort().reduce(function(previous, key){
+    return previous + key + params[key];
+  }, "");
+
+  return md5(signature + secret);
+};
