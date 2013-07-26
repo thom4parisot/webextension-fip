@@ -62,8 +62,8 @@
       <li class="main">
         <a href="http://www.fipradio.fr/archives-antenne" class="iconify" target="_blank">{{$root.label.archives}}</a>
       </li>
-      <li>
-        <input type="checkbox" checked id="scrobbling-switch">
+      <li ng-controller="ScrobblingController">
+        <input type="checkbox" ng-model="scrobblingEnabled" ng-true-value="true" id="scrobbling-switch">
         <label for="scrobbling-switch">Scrobbling?</label>
       </li>
     </ul>
@@ -79,5 +79,6 @@
 <script src="broadcast-service.js"></script>
 <script src="broadcast-controller.js"></script>
 <script src="radio-controller.js"></script>
+<script src="scrobbling-controller.js"></script>
 </body>
 </html>
