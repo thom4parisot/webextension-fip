@@ -62,13 +62,13 @@ Preferences.strategies = {
      * @see Preferences.prototype.get
      */
     "get": function getPreference(key){
-      return JSON.parse(localStorage.getItem(key));
+      return localStorage.getItem(key);
     },
     /**
      * @see Preferences.prototype.set
      */
     "set": function setPreference(key, value){
-      localStorage.setItem(key, typeof value === "string" ? value : JSON.stringify(value));
+      localStorage.setItem(key, value);
     }
   }
 };
