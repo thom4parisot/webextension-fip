@@ -79,15 +79,7 @@ Background.prototype.broadcastsUpdaterHandler = function broadcastsUpdaterHandle
 
   xhr = new XMLHttpRequest();
   xhr.addEventListener("load", function broadcastHttpGetSuccess(response){
-    var nodes, html, parser = new DOMParser();
-
-    //removing the default assets call (typically, the default album cover)
-    html = JSON.parse(response.target.responseText).html;
-    html = html.replace(/\/sites\/[^"]+\.(png|jpe?g|gif)/mg, "");
-
-    nodes = parser.parseFromString('<!DOCTYPE html><html><head></head><body>'+html+'</body></html>', "text/xml");
-
-    self.dispatchBroadcasts(Broadcast.parseHtmlResponse(nodes.querySelectorAll("div")));
+    Broadcast.parseResponse(response.target.responseText, self.dispatchBroadcasts.bind(self));
   });
 
   xhr.open("GET", Broadcast.defaultUri+"?_="+Date.now());
