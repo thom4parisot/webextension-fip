@@ -10,19 +10,22 @@
     "scripts": [
       "vendor/lodash/dist/lodash.min.js",
       "vendor/machina/lib/machina.min.js",
+      "vendor/js-md5/js/md5.min.js",
       "lib/radio.js",
       "lib/broadcast.js",
       "lib/preferences.js",
       "lib/lastfm.js",
       "background/controller.js",
       "lastfm/controller.js",
-      "background/bootstrap.js"],
+      "background/bootstrap.js"
+    ],
     "persistent": true
   },
   "permissions": [
     "background",
     "idle",
     "alarms",
+    "https://ws.audioscrobbler.com/",
     "http://*.fipradio.fr/",
     "http://mp3.live.tv-radio.com/"
   ],

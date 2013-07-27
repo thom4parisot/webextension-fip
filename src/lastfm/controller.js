@@ -3,7 +3,7 @@
 /* globals chrome, LastfmAPI, Broadcast */
 
 function ScrobblingController(process){
-  this.previousBroadcast = null;
+  this.previousBroadcast = new Broadcast();
 
   this.setupClient(process);
   this.setupEvents(process);
@@ -37,7 +37,7 @@ ScrobblingController.prototype.setupEvents = function setupClient(process){
       self.processNowPlaying(current);
       self.processScrobbling(current);
 
-      if (current && (!self.previousBroadcast || current.title !== self.previousBroadcast.title)){
+      if (current && current.title !== self.previousBroadcast.title){
         self.previousBroadcast = current;
       }
     }
@@ -63,7 +63,7 @@ ScrobblingController.prototype.processScrobbling = function processScrobbling(cu
 
   var previous = this.previousBroadcast;
 
-  if (previous && previous.artist && current.title !== previous.title && current.artist !== previous.artist){
+  if (previous.artist && current.title !== previous.title && current.artist !== previous.artist){
     this.client.scrobble({
       artist: previous.artist,
       track: previous.title,
