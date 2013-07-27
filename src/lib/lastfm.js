@@ -18,7 +18,8 @@ function LastfmAPI(token){
 LastfmAPI.methods = {
   "track.scrobble": "POST",
   "track.updateNowPlaying": "POST",
-  "track.love": "POST"
+  "track.love": "POST",
+  "auth.getSession": "GET"
 };
 
 /**
@@ -39,22 +40,43 @@ LastfmAPI.prototype.isConfigured = function isConfigured(){
  */
 LastfmAPI.prototype.sendRequest = function sendRequest(data, done){
   var xhr = new XMLHttpRequest();
-  var form = new FormData();
+  var method = LastfmAPI.methods[data.method];
+  var url = this.api_url;
+  var querydata;
 
   data.api_key = this.api_key;
-  data.sk = this.session_key;
+
+  if (this.session_key){
+    data.sk = this.session_key;
+  }
+
   this.applySignature(data);
 
-  Object.keys(data).forEach(function(key){
-    form.append(key, data[key]);
-  });
+  if (method === "GET"){
+    url += Object.keys(data).reduce(function(previous, key){
+      return previous + [key, data[key]].join('=') + '&';
+    }, '?');
+  }
+  else if(method === "POST"){
+    querydata = new FormData();
+
+    Object.keys(data).forEach(function(key){
+      querydata.append(key, data[key]);
+    });
+  }
 
   if (typeof done === "function"){
     xhr.addEventListener("load", done);
   }
 
-  xhr.open(LastfmAPI.methods[data.method], this.api_url);
-  xhr.send(form);
+  xhr.open(method, url);
+  xhr.send(querydata instanceof FormData ? querydata : undefined);
+};
+
+LastfmAPI.prototype.getSessionKey = function getSessionKey(token, done){
+  this.sendRequest({ method: 'auth.getSession', token: token }, function(response){
+    done(response.target.responseXML.querySelector('key').textContent);
+  });
 };
 
 /**

@@ -61,14 +61,16 @@ Broadcast.createNodeSelector = function createNodeSelector(container) {
 };
 
 Broadcast.parseResponse = function parseTextResponse(responseText, done){
-  var nodes, html,  parser = new DOMParser();
+  var nodes, doc, html;
 
   //removing the default assets call (typically, the default album cover)
   html = JSON.parse(responseText).html;
   html = html.replace(/\/sites\/[^"]+\.(png|jpe?g|gif)/mg, "");
-  html = parser.parseFromString('<!DOCTYPE html><html><head></head><body>'+html+'</body></html>', "text/xml");
 
-  nodes = html.querySelectorAll(".direct-item-zoomed");
+  doc = document.implementation.createHTMLDocument('');
+  doc.documentElement.innerHTML = html;
+
+  nodes = doc.querySelectorAll(".direct-item-zoomed");
 
   done(Broadcast.parseHtmlResponse(nodes));
 };
