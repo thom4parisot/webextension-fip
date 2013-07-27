@@ -24,10 +24,7 @@ Background.prototype.bootstrap = function bootstrap(){
   this.setupChannel();
   this.registerEvents();
   this.registerPreferencesHandler();
-  this.registerBroadcastsCollection();
   this.registerNowPlayingPopup();
-
-  chrome.alarms.create("broadcasts", { periodInMinutes: 0.2 });
 };
 
 /**
@@ -42,6 +39,10 @@ Background.prototype.registerEvents = function registerEvents(){
 
   // Listening to radio events and dispatch them through the app
   radio.on('transition', self.dispatchRadioState.bind(self));
+  radio.on('playing', function(){
+    self.broadcastsUpdaterHandler();
+    chrome.alarms.create("broadcasts", { periodInMinutes: 0.5 });
+  });
   chrome.runtime.onMessage.addListener(self.radioStateBadgeHandler.bind(self));
   chrome.runtime.onMessage.addListener(self.radioVolumeHandler.bind(self));
 
@@ -52,7 +53,13 @@ Background.prototype.registerEvents = function registerEvents(){
     });
   });
 
-  chrome.alarms.onAlarm.addListener(self.broadcastsUpdaterHandler.bind(self));
+  chrome.alarms.onAlarm.addListener(function(alarm){
+    if (alarm.name !== "broadcasts" || self.radio.state !== "playing"){
+      return;
+    }
+
+    self.broadcastsUpdaterHandler();
+  });
 };
 
 /**
@@ -67,12 +74,8 @@ Background.prototype.registerNowPlayingPopup = function registerNowPlayingPopup(
   chrome.browserAction.onClicked.addListener(this.radio.play.bind(this.radio));
 };
 
-Background.prototype.broadcastsUpdaterHandler = function broadcastsUpdaterHandler(alarm){
+Background.prototype.broadcastsUpdaterHandler = function broadcastsUpdaterHandler(){
   var self = this, xhr;
-
-  if (alarm.name !== "broadcasts" || self.radio.state !== "playing"){
-    return;
-  }
 
   xhr = new XMLHttpRequest();
   xhr.addEventListener("load", function broadcastHttpGetSuccess(response){

@@ -32,12 +32,12 @@ ScrobblingController.prototype.setupEvents = function setupClient(process){
 
   chrome.runtime.onMessage.addListener(function(request){
     if (request.channel === "broadcasts" && process.radio.state === "playing"){
-      var current = Broadcast.getCurrent(broadcasts);
+      var current = Broadcast.getCurrent(request.data);
 
       self.processNowPlaying(current);
       self.processScrobbling(current);
 
-      if (current.title !== self.previousBroadcast.title){
+      if (current && (!self.previousBroadcast || current.title !== self.previousBroadcast.title)){
         self.previousBroadcast = current;
       }
     }
