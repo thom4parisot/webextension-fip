@@ -1,11 +1,11 @@
 "use strict";
 
-/* globals chrome, LastfmAPI */
+/* globals chrome, LastfmAPI, Broadcast */
 
 function ScrobblingController(process){
   this.previousBroadcast = null;
 
-  this.setupClient();
+  this.setupClient(process);
   this.setupEvents(process);
 }
 
@@ -15,7 +15,7 @@ ScrobblingController.init = function init(process){
   return instance;
 };
 
-ScrobblingController.prototype.setupClient = function setupClient(){
+ScrobblingController.prototype.setupClient = function setupClient(process){
   var self = this;
 
   this.client = new LastfmAPI(process.preferences.get("lastfm.token"));
@@ -49,6 +49,8 @@ ScrobblingController.prototype.processNowPlaying = function processNowPlaying(cu
     return;
   }
 
+  var previous = this.previousBroadcast;
+
   if (current && current.artist && current.title !== previous.title && current.artist !== previous.artist){
     this.client.nowPlaying({ artist: current.artist, track: current.title });
   }
@@ -58,6 +60,8 @@ ScrobblingController.prototype.processScrobbling = function processScrobbling(cu
   if (!this.client.isConfigured() || !current instanceof Broadcast){
     return;
   }
+
+  var previous = this.previousBroadcast;
 
   if (previous && previous.artist && current.title !== previous.title && current.artist !== previous.artist){
     this.client.scrobble({

@@ -10,7 +10,7 @@
  * @param {Broadcast} Broadcast
  * @constructor
  */
-function BroadcastController($scope, Broadcasts, chrome){
+function BroadcastController($scope, chrome){
   var getPosition = Broadcast.getPositionTracker();
   var stubs = [new Broadcast()];
 
@@ -36,4 +36,4 @@ function BroadcastController($scope, Broadcasts, chrome){
 }
 
 // And now deal with minification!
-BroadcastController.$inject = ['$scope', 'Broadcasts', 'chrome'];
+BroadcastController.$inject = ['$scope', 'chrome'];

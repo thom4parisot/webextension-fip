@@ -1,6 +1,6 @@
 "use strict";
 
-/* global Radio, chrome, _, Preferences */
+/* global Radio, chrome, _, Preferences, Broadcast */
 
 /**
  * Background process handling the radio stuff
