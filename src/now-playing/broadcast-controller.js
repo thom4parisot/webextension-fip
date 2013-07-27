@@ -20,6 +20,7 @@ function BroadcastController($scope, chrome){
   chrome.on("broadcasts", function(broadcasts){
     $scope.broadcasts = broadcasts.length ? broadcasts : stubs;
     $scope.current_index = getPosition(broadcasts, $scope.current_index);
+    $scope.$apply("");
   });
 
   $scope.previous = function previousBroadcast(){

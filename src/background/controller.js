@@ -85,7 +85,7 @@ Background.prototype.broadcastsUpdaterHandler = function broadcastsUpdaterHandle
     html = JSON.parse(response.target.responseText).html;
     html = html.replace(/\/sites\/[^"]+\.(png|jpe?g|gif)/mg, "");
 
-    nodes = parser.parseFromString(html, "text/xml");
+    nodes = parser.parseFromString('<!DOCTYPE html><html><head></head><body>'+html+'</body></html>', "text/xml");
 
     self.dispatchBroadcasts(Broadcast.parseHtmlResponse(nodes.querySelectorAll("div")));
   });
