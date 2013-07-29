@@ -43,8 +43,8 @@ Broadcast.extend = function extend(object, data) {
  *
  * @type {string}
  */
-//Broadcast.defaultUri = "http://localhost:3000/test/fixtures/working.json";
 Broadcast.defaultUri = 'http://www.fipradio.fr/sites/default/files/direct-large.json';
+//Broadcast.defaultUri = "http://localhost:3000/test/fixtures/working-news.json";
 
 /**
  * Shorthand to create a node DOM selector value.
@@ -56,8 +56,23 @@ Broadcast.createNodeSelector = function createNodeSelector(container) {
   return function getNodeValue(selector, attribute) {
     var node = container.querySelector(selector);
 
-    return node ? node[attribute || 'textContent'] : '';
+    return node ? (attribute && node.getAttribute(attribute) || node.textContent) : '';
   };
+};
+
+Broadcast.parseResponse = function parseTextResponse(responseText, done){
+  var nodes, doc, html;
+
+  //removing the default assets call (typically, the default album cover)
+  html = JSON.parse(responseText).html;
+  html = html.replace(/\/sites\/[^"]+\.(png|jpe?g|gif)/mg, "");
+
+  doc = document.implementation.createHTMLDocument('');
+  doc.documentElement.innerHTML = html;
+
+  nodes = doc.querySelectorAll(".direct-item-zoomed");
+
+  done(Broadcast.parseHtmlResponse(nodes));
 };
 
 /**
@@ -85,7 +100,7 @@ Broadcast.parseHtmlResponse = function parseHtmlResponse(nodes) {
         data.date = select('.annee').replace(/[\(\)]/g, '');
         data.cover = select('img', 'src');
 
-        if (node.classList.contains('current') || node.id === "direct-0"){
+        if (node.classList.contains('current') || node.getAttribute("id") === "direct-0"){
           data.status = Broadcast.STATUS_CURRENT;
         }
 
@@ -111,6 +126,19 @@ Broadcast.parseHtmlResponse = function parseHtmlResponse(nodes) {
 
       return broadcast;
     });
+};
+
+Broadcast.getCurrent = function getCurrent(broadcasts){
+  var current = null;
+
+  broadcasts.some(function(broadcast){
+    if (broadcast.status === Broadcast.STATUS_CURRENT){
+      current = broadcast;
+      return true;
+    }
+  });
+
+  return current;
 };
 
 /**

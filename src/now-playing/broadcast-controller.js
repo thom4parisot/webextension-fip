@@ -10,12 +10,20 @@
  * @param {Broadcast} Broadcast
  * @constructor
  */
-function BroadcastController($scope, Broadcasts){
+function BroadcastController($scope, chrome){
   var getPosition = Broadcast.getPositionTracker();
   var stubs = [new Broadcast()];
 
   $scope.broadcasts = stubs;
   $scope.current_index = null;
+
+  chrome.on("broadcasts", function(broadcasts){
+    $scope.broadcasts = broadcasts.length ? broadcasts : stubs;
+    $scope.current_index = getPosition(broadcasts, $scope.current_index);
+    $scope.$apply("");
+  });
+
+  chrome.message("action", "enableBroadcastUpdates");
 
   $scope.previous = function previousBroadcast(){
     if ($scope.current_index > 0){
@@ -28,21 +36,7 @@ function BroadcastController($scope, Broadcasts){
       $scope.current_index++;
     }
   };
-
-  function updateUI(broadcasts){
-    $scope.broadcasts = broadcasts.length ? broadcasts : stubs;
-    $scope.current_index = getPosition(broadcasts, $scope.current_index);
-  }
-
-  function throttleUpdates(){
-    setInterval(function nowPlayingIntervalUpdater(){
-      Broadcasts.get().then(updateUI);
-    }, 30000);
-  }
-
-  // Update data and throttle updates if someone gaze at the bubble the whole day
-  Broadcasts.get().then(updateUI).then(throttleUpdates, throttleUpdates);
 }
 
 // And now deal with minification!
-BroadcastController.$inject = ['$scope', 'Broadcasts'];
+BroadcastController.$inject = ['$scope', 'chrome'];

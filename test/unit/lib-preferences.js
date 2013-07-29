@@ -34,7 +34,7 @@ suite('Preferences - localStorage', function(){
   test('#set', function(){
     expect(manager.get("future key")).to.equal(null);
     manager.set("future key", {foo: "bar"});
-    expect(manager.get("future key")).to.eql({foo: "bar"});
-    expect(localStorage.getItem(manager.namespace + "future key")).to.be(JSON.stringify({foo: "bar"}));
+    expect(manager.get("future key")).to.eql("[object Object]");
+    expect(localStorage.getItem(manager.namespace + "future key")).to.be(({foo: "bar"}).toString());
   });
 });

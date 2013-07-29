@@ -1,0 +1,18 @@
+body{
+  width: auto;
+}
+
+main{
+  box-sizing: border-box;
+  margin: 8em 0;
+  padding: 10px;
+}
+
+.container{
+  margin: 0 auto;
+  width: 950px;
+}
+
+.success{
+  color: darkgreen;
+}

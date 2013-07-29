@@ -1,11 +1,12 @@
 {
   "name": "chrome-fip",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "dependencies": {
     "machina": "~0.3.4",
     "lodash": "~1.2.1",
     "angular": "~1.0.6",
     "expect": "~0.2.0",
-    "mocha": "~1.9.0"
+    "mocha": "~1.9.0",
+    "js-md5": "~1.0.2"
   }
 }

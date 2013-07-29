@@ -7,11 +7,18 @@
  * Especially used to enables unit/function tests without relying on Chrome API direct access.
  */
 angular.module('ChromeService', [])
-  .factory('translate', function(){
+  .filter('i18n', function(){
     return chrome.i18n.getMessage.bind(chrome.i18n);
   })
   .factory('chrome', function(){
     return {
+      on: function onMessage(channel, callback){
+        chrome.runtime.onMessage.addListener(function chromeServiceOnMessage(message){
+          if (message.channel === channel){
+            callback(message.data);
+          }
+        });
+      },
       process: chrome.extension.getBackgroundPage().process,
       message: function sendMessage(channel, values){
         chrome.runtime.sendMessage({ "channel": channel, "data": values });
@@ -24,6 +31,15 @@ angular.module('ChromeService', [])
       },
       setPreference: function setPreference(key, value){
         localStorage.setItem(key, value);
+      },
+      getUrl: function getUrl(path){
+        return chrome.extension.getURL(path);
+      },
+      newTab: function newTab(url){
+        chrome.tabs.create({
+          url: url,
+          active: true
+        });
       }
     };
   });
