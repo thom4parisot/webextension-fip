@@ -25,10 +25,7 @@
   "permissions": [
     "background",
     "idle",
-    "alarms",
-    "https://ws.audioscrobbler.com/",
-    "http://*.fipradio.fr/",
-    "http://mp3.live.tv-radio.com/"
+    "alarms"
   ],
   "browser_action": {
     "default_icon": "resources/fip.png",
