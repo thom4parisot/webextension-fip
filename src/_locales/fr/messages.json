@@ -3,7 +3,7 @@
     "message": "FIP Radio – Direct"
   },
   "extension_description": {
-    "message": "Lecteur audio FIP Radio non-officiel. Écoute en 1-click et affichage des informations du direct."
+    "message": "Lecteur audio FIP Radio non-officiel. Écoute en 1-click, scrobbling automatique et affichage des informations du direct."
   },
   "artist": {
     "message": "artiste"

@@ -3,7 +3,7 @@
     "message": "FIP Radio – Live Player"
   },
   "extension_description": {
-    "message": "Unofficial FIP Radio player. One-click playback and 'now playing' informations display."
+    "message": "Unofficial FIP Radio player. One-click playback, automatic scrobbling and 'now playing' informations display."
   },
   "artist": {
     "message": "artist"
