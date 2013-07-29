@@ -11,6 +11,12 @@ body{
   width: 425px;
 }
 
+label,
+input[type="checkbox"],
+input[type="range"]{
+  cursor: pointer;
+}
+
 a:focus,
 a:hover{
   text-decoration: none;
@@ -177,12 +183,12 @@ footer{
     li{
       -webkit-flex: 1;
       flex: 1;
+      font-size: .8em;
       text-align: right;
 
       //Expanding any main row to use the whole width
       &.main{
-        -webkit-flex: 2;
-        flex: 2;
+        font-size: 1em;
         text-align: left;
       }
     }

@@ -7,15 +7,6 @@
  * Used to cleanly configure the popup.
  */
 angular.module('now-playing', ['ChromeService', 'TextCleanerFilters'])
-  .run(function appRun($rootScope, translate){
-    $rootScope.title = translate('extension_name');
-
-    $rootScope.label = {
-      album: translate('album'),
-      artist: translate('artist'),
-      archives: translate('archives'),
-      no_information: translate('no_information')
-    };
-
+  .run(function appRun(){
     document.documentElement.setAttribute('lang', navigator.language);
   });

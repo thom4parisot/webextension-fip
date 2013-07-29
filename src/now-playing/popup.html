@@ -2,14 +2,14 @@
 <html ng-app="now-playing" ng-csp>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title>{{title}}</title>
+  <title>{{'extension_name' | i18n}}</title>
   <link rel="stylesheet" href="popup.css"/>
   <link rel="stylesheet" href="../resources/icons/css/fontello-embedded.css"/>
 </head>
 <body>
 
 <header ng-controller="RadioController">
-  <h1>{{title}}</h1>
+  <h1>{{'extension_name' | i18n}}</h1>
 
   <div id="player-controls">
     <input type="range" from="0" to="100" ng-model="volume" ng-class="{'level-low': volume < 33, 'level-high': volume > 66}" class="volume-control" />
@@ -31,7 +31,7 @@
           <a href="http://www.last.fm/search?q={{broadcast.title | track}}+{{broadcast.artist | mainArtist}}" target="_blank">{{broadcast.title | track}}</a>
         </h2>
 
-        <h2 class="title" ng-show="!broadcast.artist">{{broadcast.title || $root.label.no_information}}</h2>
+        <h2 class="title" ng-show="!broadcast.artist">{{broadcast.title || 'no_information' | i18n}}</h2>
 
         <ul class="metadata">
           <li class="album-title icon-cd" ng-show="broadcast.album">
@@ -60,11 +60,11 @@
   <nav>
     <ul>
       <li class="main">
-        <a href="http://www.fipradio.fr/archives-antenne" class="iconify" target="_blank">{{$root.label.archives}}</a>
+        <a href="http://www.fipradio.fr/archives-antenne" class="iconify" target="_blank">{{'archives' | i18n}}</a>
       </li>
       <li ng-controller="ScrobblingController">
         <input type="checkbox" ng-model="scrobblingEnabled" ng-true-value="true" id="scrobbling-switch">
-        <label for="scrobbling-switch">Scrobbling?</label>
+        <label for="scrobbling-switch">{{'enable_scrobbling' | i18n}}</label>
       </li>
     </ul>
   </nav>

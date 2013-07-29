@@ -26,6 +26,9 @@
   "status_next": {
     "message": "À venir"
   },
+  "enable_scrobbling": {
+    "message": "Activer le scrobbling ?"
+  },
   "lastfm_configuration": {
     "message": "Configuration Last.fm"
   },

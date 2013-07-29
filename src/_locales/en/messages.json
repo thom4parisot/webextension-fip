@@ -29,6 +29,9 @@
   "lastfm_configuration": {
     "message": "Last.fm Configuration"
   },
+  "enable_scrobbling": {
+    "message": "Enable scrobbling?"
+  },
   "lastfm_auth_ok": {
     "message": "Configuration Done!"
   },
