@@ -43,8 +43,8 @@ Broadcast.extend = function extend(object, data) {
  *
  * @type {string}
  */
-//Broadcast.defaultUri = "http://localhost:3000/test/fixtures/working.json";
 Broadcast.defaultUri = 'http://www.fipradio.fr/sites/default/files/direct-large.json';
+//Broadcast.defaultUri = "http://localhost:3000/test/fixtures/working-news.json";
 
 /**
  * Shorthand to create a node DOM selector value.

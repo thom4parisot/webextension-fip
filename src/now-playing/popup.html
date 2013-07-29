@@ -31,7 +31,7 @@
           <a href="http://www.last.fm/search?q={{broadcast.title | track}}+{{broadcast.artist | mainArtist}}" target="_blank">{{broadcast.title | track}}</a>
         </h2>
 
-        <h2 class="title" ng-show="!broadcast.artist">{{broadcast.title || 'no_information' | i18n}}</h2>
+        <h2 class="title" ng-show="!broadcast.artist">{{broadcast.title || ('no_information' | i18n)}}</h2>
 
         <ul class="metadata">
           <li class="album-title icon-cd" ng-show="broadcast.album">
