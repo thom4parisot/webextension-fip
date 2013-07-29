@@ -25,5 +25,17 @@
   },
   "status_next": {
     "message": "À venir"
+  },
+  "lastfm_configuration": {
+    "message": "Configuration Last.fm"
+  },
+  "lastfm_auth_ok": {
+    "message": "Configuration réussie !"
+  },
+  "lastfm_auth_ko": {
+    "message": "Désolé, un hic s'est produit…"
+  },
+  "backto_now_playing": {
+    "message": "Retourner à l'écran <em>À l'antenne</em>"
   }
 }

@@ -2,7 +2,7 @@
 <html ng-app="lastfm-auth" ng-csp>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title>Last.fm Configuration</title>
+  <title>{{"lastfm_configuration" | i18n}}</title>
   <link rel="stylesheet" href="../now-playing/popup.css"/>
   <link rel="stylesheet" href="../resources/icons/css/fontello-embedded.css"/>
   <link rel="stylesheet" href="popup.css"/>
@@ -13,15 +13,15 @@
 </header>
 
 <main ng-controller="AuthController">
-  <h2 ng-show="hasToken"><span class="success">✓</span> Configuration Done!</h2>
-  <h2 ng-show="!hasToken"><span class="error icon-attention"></span> Sorry, something went wrong…</h2>
+  <h2 ng-show="hasToken"><span class="success">✓</span> <span ng-bind-html-unsafe="'lastfm_auth_ok' | i18n"></span></h2>
+  <h2 ng-show="!hasToken"><span class="error icon-attention"></span> <span ng-bind-html-unsafe="'lastfm_auth_ko' | i18n"></span></h2>
 </main>
 
 <footer class="alternate">
   <nav>
     <ul>
       <li class="main icon-right-open">
-        <a href="../now-playing/popup.html">Bring me back to <em>Now Playing</em> screen</a>
+        <a href="../now-playing/popup.html" ng-bind-html-unsafe="'backto_now_playing' | i18n"></a>
       </li>
     </ul>
   </nav>

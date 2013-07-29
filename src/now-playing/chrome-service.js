@@ -10,6 +10,9 @@ angular.module('ChromeService', [])
   .factory('translate', function(){
     return chrome.i18n.getMessage.bind(chrome.i18n);
   })
+  .filter('i18n', function(){
+    return chrome.i18n.getMessage.bind(chrome.i18n);
+  })
   .factory('chrome', function(){
     return {
       on: function onMessage(channel, callback){

@@ -25,5 +25,17 @@
   },
   "status_next": {
     "message": "On Next"
+  },
+  "lastfm_configuration": {
+    "message": "Last.fm Configuration"
+  },
+  "lastfm_auth_ok": {
+    "message": "Configuration Done!"
+  },
+  "lastfm_auth_ko": {
+    "message": "Sorry, something went wrong…"
+  },
+  "backto_now_playing": {
+    "message": "Bring me back to <em>Now Playing</em> screen"
   }
 }
