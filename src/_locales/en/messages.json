@@ -33,12 +33,15 @@
     "message": "Enable scrobbling?"
   },
   "lastfm_auth_ok": {
-    "message": "Configuration Done!"
+    "message": "Authentication Done!"
+  },
+  "lastfm_auth_ok_info": {
+    "message": "You are now able to scrobble what you listen on FIP Radio."
   },
   "lastfm_auth_ko": {
     "message": "Sorry, something went wrong…"
   },
-  "backto_now_playing": {
-    "message": "Bring me back to <em>Now Playing</em> screen"
+  "lastfm_window_close": {
+    "message": "You can now safely close this window."
   }
 }

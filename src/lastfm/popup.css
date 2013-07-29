@@ -1,10 +1,16 @@
+body{
+  width: auto;
+}
+
 main{
   box-sizing: border-box;
+  margin: 8em 0;
   padding: 10px;
 }
 
-h2{
-  margin: 30px 0;
+.container{
+  margin: 0 auto;
+  width: 950px;
 }
 
 .success{

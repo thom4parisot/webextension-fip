@@ -33,12 +33,15 @@
     "message": "Configuration Last.fm"
   },
   "lastfm_auth_ok": {
-    "message": "Configuration réussie !"
+    "message": "Connexion réussie !"
+  },
+  "lastfm_auth_ok_info": {
+    "message": "Vous pouvez désormais scrobbler ce que vous écoutez sur FIP."
   },
   "lastfm_auth_ko": {
     "message": "Désolé, un hic s'est produit…"
   },
-  "backto_now_playing": {
-    "message": "Retourner à l'écran <em>À l'antenne</em>"
+  "lastfm_window_close": {
+    "message": "Vous pouvez fermer cette fenêtre sans crainte."
   }
 }
