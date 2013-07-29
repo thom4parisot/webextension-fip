@@ -13,6 +13,15 @@ function Background(){
 }
 
 /**
+ * Whitelist of actions doable by messaging the "action" channel.
+ *
+ * @type {Array}
+ */
+Background.actions = [
+  "enableBroadcastUpdates"
+];
+
+/**
  * Bootstraping process
  *
  * @api
@@ -23,7 +32,6 @@ Background.prototype.bootstrap = function bootstrap(){
 
   this.setupChannel();
   this.registerEvents();
-  this.registerPreferencesHandler();
   this.registerNowPlayingPopup();
 };
 
@@ -39,12 +47,11 @@ Background.prototype.registerEvents = function registerEvents(){
 
   // Listening to radio events and dispatch them through the app
   radio.on('transition', self.dispatchRadioState.bind(self));
-  radio.on('playing', function(){
-    self.broadcastsUpdaterHandler();
-    chrome.alarms.create("broadcasts", { periodInMinutes: 0.5 });
-  });
+  radio.on('playing', self.enableBroadcastUpdates.bind(self));
   chrome.runtime.onMessage.addListener(self.radioStateBadgeHandler.bind(self));
   chrome.runtime.onMessage.addListener(self.radioVolumeHandler.bind(self));
+  chrome.runtime.onMessage.addListener(self.actionChannelHandler.bind(self));
+  chrome.runtime.onMessage.addListener(self.preferenceChannelHandler.bind(self));
 
   // Handling `network.online` or `network.offline` states
   ['online', 'offline'].forEach(function(eventType){
@@ -54,11 +61,11 @@ Background.prototype.registerEvents = function registerEvents(){
   });
 
   chrome.alarms.onAlarm.addListener(function(alarm){
-    if (alarm.name !== "broadcasts" || self.radio.state !== "playing"){
+    if (alarm.name !== "broadcasts"){
       return;
     }
 
-    self.broadcastsUpdaterHandler();
+    self.requestBroadcasts();
   });
 };
 
@@ -74,12 +81,20 @@ Background.prototype.registerNowPlayingPopup = function registerNowPlayingPopup(
   chrome.browserAction.onClicked.addListener(this.radio.play.bind(this.radio));
 };
 
-Background.prototype.broadcastsUpdaterHandler = function broadcastsUpdaterHandler(){
-  var self = this, xhr;
+/**
+ * Request broadcasts and do something afterwards.
+ * Generally broadcasting the values to let them bubble everywhere.
+ *
+ * @param {Function=} done If not defined, will trigger the data in the "broadcasts" channel
+ */
+Background.prototype.requestBroadcasts = function requestBroadcasts(done){
+  var xhr;
+
+  done = typeof done === "function" ? done : this.dispatchBroadcasts.bind(this);
 
   xhr = new XMLHttpRequest();
   xhr.addEventListener("load", function broadcastHttpGetSuccess(response){
-    Broadcast.parseResponse(response.target.responseText, self.dispatchBroadcasts.bind(self));
+    Broadcast.parseResponse(response.target.responseText, done);
   });
 
   xhr.open("GET", Broadcast.defaultUri+"?_="+Date.now());
@@ -88,15 +103,26 @@ Background.prototype.broadcastsUpdaterHandler = function broadcastsUpdaterHandle
 
 /**
  * Handle any preferences request changes.
+ *
+ * @api
+ * @param {Object} request
  */
-Background.prototype.registerPreferencesHandler = function registerPreferencesHandler(){
-  var self = this;
+Background.prototype.preferenceChannelHandler = function preferenceChannelHandler(request){
+  if (request.channel === "preferences"){
+    this.preferences.set(request.data.key, request.data.value);
+  }
+};
 
-  chrome.runtime.onMessage.addListener(function(request){
-    if (request.channel === "preferences"){
-      self.preferences.set(request.data.key, request.data.value);
-    }
-  });
+/**
+ * Execute a local method execution based on a remote call.
+ *
+ * @api
+ * @param {Object} request
+ */
+Background.prototype.actionChannelHandler = function actionChannelHandler(request){
+  if (request.channel === "action" && ~Background.actions.indexOf(request.data)){
+    this[request.data]();
+  }
 };
 
 /**
@@ -109,6 +135,30 @@ Background.prototype.dispatchRadioState = function dispatchRadioState(transition
   chrome.runtime.sendMessage({ state: transition.toState });
 };
 
+/**
+ * Enables broadcasting data collection.
+ * It might not only happen on play as we could eventually display a view without playing the radio.
+ *
+ * Part of whitelist actions.
+ */
+Background.prototype.enableBroadcastUpdates = function enableBroadcastUpdates(){
+  try{
+    //Will throw an exception if the alarm does not exist.
+    chrome.alarms.get("broadcasts", function(){});
+  }
+  catch(e){
+    chrome.alarms.create("broadcasts", { periodInMinutes: 0.5 });
+  }
+  finally{
+    this.requestBroadcasts();
+  }
+};
+
+/**
+ * Dispatch some broadcasts to the whole app.
+ *
+ * @param {Array.<Broadcast>} broadcasts
+ */
 Background.prototype.dispatchBroadcasts = function dispatchRadioState(broadcasts){
   chrome.runtime.sendMessage({ channel: "broadcasts", data: broadcasts });
 };

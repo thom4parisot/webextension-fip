@@ -23,6 +23,8 @@ function BroadcastController($scope, chrome){
     $scope.$apply("");
   });
 
+  chrome.message("action", "enableBroadcastUpdates");
+
   $scope.previous = function previousBroadcast(){
     if ($scope.current_index > 0){
       $scope.current_index--;
