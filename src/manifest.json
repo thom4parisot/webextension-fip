@@ -15,6 +15,7 @@
       "lib/broadcast.js",
       "lib/preferences.js",
       "lib/lastfm.js",
+      "lib/text-cleaner.js",
       "background/controller.js",
       "lastfm/controller.js",
       "background/bootstrap.js"

@@ -1,6 +1,6 @@
 "use strict";
 
-/* globals chrome, LastfmAPI, Broadcast */
+/* globals chrome, LastfmAPI, Broadcast, TextCleaner */
 
 function ScrobblingController(process) {
   this.previousBroadcast = new Broadcast();
@@ -57,7 +57,10 @@ ScrobblingController.prototype.processNowPlaying = function processNowPlaying(cu
   var previous = this.previousBroadcast;
 
   if (current && current.artist && current.title !== previous.title && current.artist !== previous.artist) {
-    this.client.nowPlaying({ artist: current.artist, track: current.title });
+    this.client.nowPlaying({
+      artist: TextCleaner.getMainArtistName(current.artist),
+      track: TextCleaner.doTrackTitle(current.title)
+    });
   }
 };
 
@@ -70,8 +73,8 @@ ScrobblingController.prototype.processScrobbling = function processScrobbling(cu
 
   if (previous.artist && current.title !== previous.title && current.artist !== previous.artist) {
     this.client.scrobble({
-      artist: previous.artist,
-      track: previous.title,
+      artist: TextCleaner.getMainArtistName(previous.artist),
+      track: TextCleaner.doTrackTitle(previous.title),
       when: Date.now() - 120 * 1000 // let's pretend we listened to it 2 minutes ago
     });
   }
