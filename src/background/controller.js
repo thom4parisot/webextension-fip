@@ -142,16 +142,22 @@ Background.prototype.dispatchRadioState = function dispatchRadioState(transition
  * Part of whitelist actions.
  */
 Background.prototype.enableBroadcastUpdates = function enableBroadcastUpdates(){
-  try{
-    //Will throw an exception if the alarm does not exist.
-    chrome.alarms.get("broadcasts", function(){});
-  }
-  catch(e){
-    chrome.alarms.create("broadcasts", { periodInMinutes: 0.5 });
-  }
-  finally{
-    this.requestBroadcasts();
-  }
+  var alarmName = "broadcasts";
+  var self = this;
+
+  //workaround due to the `chrome.alarms.get` uncatchable exception bug
+  //@see https://code.google.com/p/chromium/issues/detail?id=265800
+  chrome.alarms.getAll(function(alarms){
+    var exists = alarms.some(function(alarm){
+      return alarm.name === alarmName;
+    });
+
+    if (!exists){
+      chrome.alarms.create(alarmName, { periodInMinutes: 0.5 });
+    }
+
+    self.requestBroadcasts();
+  });
 };
 
 /**
