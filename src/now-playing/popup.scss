@@ -314,6 +314,23 @@ article{
   }
 }
 
+[ng-controller="ScrobblingController"]{
+  // authenticated
+  [for="scrobbling-switch"] span{
+    font-style: italic;
+  }
+
+  //not-authenticated
+  [ng-click]{
+    color: $foreground-color;
+    text-decoration: underline;
+
+    &:hover, &:focus{
+      text-decoration: none;
+    }
+  }
+}
+
 /**
  * Iconification
  */

@@ -31,7 +31,6 @@ angular.module('ChromeService', [])
       },
       getRedirectURL: chrome.identity.getRedirectURL.bind(chrome.identity),
       authenticate: function OAuthFlow(url, done){
-        console.log(url, done);
         chrome.identity.launchWebAuthFlow({
           interactive: true,
           url: url

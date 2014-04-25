@@ -26,22 +26,15 @@
   "status_next": {
     "message": "À venir"
   },
+  "scrobbling_as": {
+    "message": "Scrobble en tant que <span>$username$</span>",
+    "placeholders": {
+      "username": {
+        "content": "$1"
+      }
+    }
+  },
   "enable_scrobbling": {
-    "message": "Activer le scrobbling ?"
-  },
-  "lastfm_configuration": {
-    "message": "Configuration Last.fm"
-  },
-  "lastfm_auth_ok": {
-    "message": "Connexion réussie !"
-  },
-  "lastfm_auth_ok_info": {
-    "message": "Vous pouvez désormais scrobbler ce que vous écoutez sur FIP."
-  },
-  "lastfm_auth_ko": {
-    "message": "Désolé, un hic s'est produit…"
-  },
-  "lastfm_window_close": {
-    "message": "Vous pouvez fermer cette fenêtre sans crainte."
+    "message": "Connexion à last.fm"
   }
 }
