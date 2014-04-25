@@ -29,6 +29,13 @@ angular.module('ChromeService', [])
 
         return typeof value !== undefined && value !== null ? value : (default_value || null);
       },
+      getRedirectURL: chrome.identity.getRedirectURL.bind(chrome.identity),
+      authenticate: function OAuthFlow(url, done){
+        chrome.identity.launchWebAuthFlow({
+          interactive: true,
+          url: url
+        }, done);
+      },
       setPreference: function setPreference(key, value){
         localStorage.setItem(key, value);
       },

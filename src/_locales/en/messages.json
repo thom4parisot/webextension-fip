@@ -29,22 +29,15 @@
   "lastfm_configuration": {
     "message": "Last.fm Configuration"
   },
+  "scrobbling_as": {
+    "message": "Scrobbling as <span>$username$</span>",
+    "placeholders": {
+      "username": {
+        "content": "$1"
+      }
+    }
+  },
   "enable_scrobbling": {
-    "message": "Enable scrobbling?"
-  },
-  "lastfm_auth_ok": {
-    "message": "Authentication Done!"
-  },
-  "lastfm_auth_ok_info": {
-    "message": "You are now able to scrobble what you listen on FIP Radio."
-  },
-  "lastfm_auth_ko": {
-    "message": "Sorry, something went wrong…"
-  },
-  "lastfm_window_close": {
-    "message": "You can now safely close this window."
-  },
-  "lfm_bug_label": {
-    "message": "Temporarily disabled while an annoying scrobbling bug is fixed."
+    "message": "Connect to last.fm"
   }
 }
