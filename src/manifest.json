@@ -3,7 +3,7 @@
   "version": "0.7.3",
   "description": "__MSG_extension_description__",
   "manifest_version": 2,
-  "minimum_chrome_version": "22",
+  "minimum_chrome_version": "29",
   "offline_enabled": false,
   "default_locale": "fr",
   "background": {
@@ -25,7 +25,9 @@
   "permissions": [
     "background",
     "idle",
+    "identity",
     "alarms",
+    "http://www.last.fm/api/auth",
     "https://ws.audioscrobbler.com/",
     "http://*.fipradio.fr/"
   ],
