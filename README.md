@@ -1,11 +1,8 @@
-# FIP Live Radio
+# FIP Live Radio [![Build Status](https://travis-ci.org/oncletom/chrome-fip.png?branch=master)](https://travis-ci.org/oncletom/chrome-fip)
 
-[![Build Status](https://travis-ci.org/oncletom/chrome-fip.png?branch=master)](https://travis-ci.org/oncletom/chrome-fip)
+> `chrome-fip` is a [Chrome extension](https://chrome.google.com/webstore/detail/fip-live-radio/fnhlecpfnocgmmmghkjcipmhdpmpddii) providing a minimalistic UI to play the excellent [FIP Radio](http://www.fipradio.fr/) and scrobble at the same time.
 
 ![Extension Showcase](src/resources/showcase.png)
-
-[This Chrome extension](https://chrome.google.com/webstore/detail/fip-live-radio/fnhlecpfnocgmmmghkjcipmhdpmpddii) is dedicated to people who want to listen to
-[FIP Radio](http://www.fipradio.fr/) in a very easy way, from their browser.
 
 The goals of this extension are the following:
 - recover from loss of network connection or FIP hickups;
@@ -34,7 +31,7 @@ If you don't them perfectly… well it's a good occasion to learn!
 ### Checkout
 
 1. `git clone` your fork of the repository
-1. `npm install` in the project folder
+1. `npm install && bower install` in the project folder
 1. [load the unpacked extension](http://developer.chrome.com/extensions/getstarted.html#unpacked) in Chrome/Chromium
 
 [Chrome Dev Tools](https://developers.google.com/chrome-developer-tools/) will
