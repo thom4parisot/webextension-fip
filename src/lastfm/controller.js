@@ -22,11 +22,12 @@ ScrobblingController.prototype.setupClient = function setupClient(process) {
 
   chrome.runtime.onMessage.addListener(function (request) {
     if (request.data && request.data.key === "lastfm.token") {
-
       self.client.getSessionKey(request.data.value, function (data) {
         self.client.session_key = data.sessionKey;
         process.preferences.set("lastfm.token", data.sessionKey);
         process.preferences.set("lastfm.username", data.userName);
+
+        chrome.runtime.sendMessage({ "channel": "lastfm.auth.success", "data": data });
       });
     }
   });
