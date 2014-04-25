@@ -314,6 +314,20 @@ article{
   }
 }
 
+label[for="scrobbling-switch"] {
+  text-decoration: line-through;
+
+  &:hover::before{
+    background: #ffcc00;
+    bottom: 2.3em;
+    content: attr(data-message);
+    padding: .3em;
+    right: .3em;
+    text-decoration: none;
+    position: absolute;
+    width: 33%;
+  }
+}
 
 /**
  * Iconification

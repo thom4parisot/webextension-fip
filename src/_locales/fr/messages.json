@@ -43,5 +43,8 @@
   },
   "lastfm_window_close": {
     "message": "Vous pouvez fermer cette fenêtre sans crainte."
+  },
+  "lfm_bug_label": {
+    "message": "Temporairement désactivé le temps de résoudre un bug last.fm gênant."
   }
 }
