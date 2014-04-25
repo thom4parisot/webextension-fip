@@ -37,4 +37,10 @@ suite('Preferences - localStorage', function(){
     expect(manager.get("future key")).to.eql("[object Object]");
     expect(localStorage.getItem(manager.namespace + "future key")).to.be(({foo: "bar"}).toString());
   });
+
+  test('#del', function(){
+    manager.set("future key", {foo: "bar"});
+    manager.del("future key");
+    expect(manager.get("future key")).to.eql(null);
+  });
 });
