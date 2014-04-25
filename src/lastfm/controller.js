@@ -12,10 +12,6 @@ function ScrobblingController(process) {
 ScrobblingController.init = function init(process) {
   var instance = new ScrobblingController(process);
 
-  process.preferences.del("lastfm.token");
-  process.preferences.del("lastfm.username");
-  process.preferences.set("lastfm.scrobbling", false);
-
   return instance;
 };
 

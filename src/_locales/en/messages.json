@@ -43,8 +43,5 @@
   },
   "lastfm_window_close": {
     "message": "You can now safely close this window."
-  },
-  "lfm_bug_label": {
-    "message": "Temporarily disabled while an annoying scrobbling bug is fixed."
   }
 }
