@@ -8,8 +8,7 @@
     "node": "0.10.x"
   },
   "scripts": {
-    "test": "grunt default",
-    "postinstall": "bower install && grunt build"
+    "test": "grunt default"
   },
   "repository": {
     "type": "git",
@@ -31,7 +30,6 @@
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-crx": "~0.2.1",
-    "bower": "~1.0.0",
     "grunt-zip": "~0.9.0",
     "grunt-contrib-jshint": "~0.4.3",
     "expect.js": "~0.2.0",

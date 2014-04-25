@@ -2,6 +2,8 @@ language: node_js
 node_js:
   - 0.10
 before_install:
-  - npm install -g grunt-cli
+  - npm install -g grunt-cli bower
+  - bower install
   - gem install compass
   - gem install sass --version "3.3.0.alpha.144"
+  - grunt build
