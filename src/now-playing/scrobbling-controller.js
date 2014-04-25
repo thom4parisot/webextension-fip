@@ -34,7 +34,9 @@ ScrobblingController.checkToken = function checkAuthToken(chrome, responseUrl){
     chrome.message("preferences", {"key": "lastfm.token", "value": token});
   }
   else {
+    /* jshint devel: true */
     console.error('No Auth Token came back from %s', responseUrl);
+    /* jshint devel: false */
   }
 };
 
