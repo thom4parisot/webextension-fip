@@ -41,13 +41,28 @@ Preferences.prototype.get = function get(key, default_value){
 };
 
 /**
- * Persis a value; overwriting if already existing.
+ * Persist a value; overwriting if already existing.
  *
  * @param {String} key
  * @param {Mixed} value (will be casted to String with some storage strategies like `localStorage`)
  */
 Preferences.prototype.set = function set(key, value){
-  this.strategy.set(this.namespace + key, value);
+  if (value === null) {
+    this.del(key);
+  }
+  else {
+    this.strategy.set(this.namespace + key, value);
+  }
+};
+
+/**
+ * Delete a value.
+ *
+ * @param {String} key
+ * @param {Mixed} value (will be casted to String with some storage strategies like `localStorage`)
+ */
+Preferences.prototype.del = function set(key){
+  this.strategy.del(this.namespace + key);
 };
 
 /**
@@ -69,6 +84,12 @@ Preferences.strategies = {
      */
     "set": function setPreference(key, value){
       localStorage.setItem(key, value);
+    },
+    /**
+     * @see Preferences.prototype.delete
+     */
+    "del": function deletePreference(key){
+      localStorage.removeItem(key);
     }
   }
 };
