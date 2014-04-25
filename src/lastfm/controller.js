@@ -16,20 +16,20 @@ ScrobblingController.init = function init(process) {
 };
 
 ScrobblingController.prototype.setupClient = function setupClient(process) {
+  this.client = new LastfmAPI(process.preferences.get("lastfm.token"));
+};
+
+ScrobblingController.prototype.updateUserInfos = function updateUserInfos(process, token){
   var self = this;
 
-  this.client = new LastfmAPI(process.preferences.get("lastfm.token"));
+  this.client.getSessionKey(token, function (data) {
+    self.client.session_key = data.sessionKey;
 
-  chrome.runtime.onMessage.addListener(function (request) {
-    if (request.data && request.data.key === "lastfm.token") {
-      self.client.getSessionKey(request.data.value, function (data) {
-        self.client.session_key = data.sessionKey;
-        process.preferences.set("lastfm.token", data.sessionKey);
-        process.preferences.set("lastfm.username", data.userName);
+    process.preferences.set("lastfm.token", data.sessionKey);
+    process.preferences.set("lastfm.username", data.userName);
+    process.preferences.set("lastfm.scrobbling", true);
 
-        chrome.runtime.sendMessage({ "channel": "lastfm.auth.success", "data": data });
-      });
-    }
+    chrome.runtime.sendMessage({ "channel": "lastfm.auth.success", "data": data });
   });
 };
 
@@ -48,6 +48,41 @@ ScrobblingController.prototype.setupEvents = function setupClient(process) {
       }
     }
   });
+
+  chrome.runtime.onMessage.addListener(function(request){
+    if (request.channel === "lastfm.auth.response" && request.data){
+      var token = null;
+
+      request.data.replace(/token=([a-z0-9]{32})/, function(m, value){
+        token = value;
+      });
+
+      if (token){
+        self.updateUserInfos(process, token);
+      }
+    }
+  });
+
+  chrome.runtime.onMessage.addListener(function(request){
+    if (request.channel === "lastfm.auth.request" && request.data) {
+      chrome.identity.launchWebAuthFlow({
+        interactive: true,
+        url: request.data
+      }, self.handleAuthResponse.bind(self, process));
+    }
+  });
+};
+
+ScrobblingController.prototype.handleAuthResponse = function(process, url){
+  var token = null;
+
+  url.replace(/token=([a-z0-9]{32})/, function(m, value){
+    token = value;
+  });
+
+  if (token){
+    this.updateUserInfos(process, token);
+  }
 };
 
 ScrobblingController.prototype.processNowPlaying = function processNowPlaying(current) {
@@ -72,7 +107,7 @@ ScrobblingController.prototype.processScrobbling = function processScrobbling(cu
 
   var previous = this.previousBroadcast;
 
-  if (previous.artist && current.title !== previous.title && current.artist !== previous.artist) {
+  if (current && previous.artist && current.title !== previous.title && current.artist !== previous.artist) {
     this.client.scrobble({
       artist: TextCleaner.getMainArtistName(previous.artist),
       track: TextCleaner.doTrackTitle(previous.title),
