@@ -1,6 +1,6 @@
-# FIP Live Radio [![Build Status](https://travis-ci.org/oncletom/chrome-fip.png?branch=master)](https://travis-ci.org/oncletom/chrome-fip)
+# FIP Radio for Chrome [![Build Status](https://travis-ci.org/oncletom/chrome-fip.png?branch=master)](https://travis-ci.org/oncletom/chrome-fip)
 
-> `chrome-fip` is a [Chrome extension](https://chrome.google.com/webstore/detail/fip-live-radio/fnhlecpfnocgmmmghkjcipmhdpmpddii) providing a minimalistic UI to play the excellent [FIP Radio](http://www.fipradio.fr/) and scrobble at the same time.
+> *FIP Radio for Chrome* is a [Chrome extension](https://chrome.google.com/webstore/detail/fnhlecpfnocgmmmghkjcipmhdpmpddii) providing a minimalistic UI to play the excellent [FIP Radio](http://www.fipradio.fr/) and to scrobble at the same time.
 
 ![Extension Showcase](src/resources/showcase.png)
 
@@ -12,7 +12,7 @@ The goals of this extension are the following:
 ## Install
 
 If you just want to install the extension to use it:
-simply access the [Chrome Web Store extension page](https://chrome.google.com/webstore/detail/fip-live-radio/fnhlecpfnocgmmmghkjcipmhdpmpddii),
+simply access the [Chrome Web Store extension page](https://chrome.google.com/webstore/detail/fnhlecpfnocgmmmghkjcipmhdpmpddii),
 review and install it.
 
 ## Contribute
@@ -31,7 +31,7 @@ If you don't them perfectly… well it's a good occasion to learn!
 ### Checkout
 
 1. `git clone` your fork of the repository
-1. `npm install && bower install` in the project folder
+1. `npm install && bower install && bundle install` in the project folder
 1. [load the unpacked extension](http://developer.chrome.com/extensions/getstarted.html#unpacked) in Chrome/Chromium
 
 [Chrome Dev Tools](https://developers.google.com/chrome-developer-tools/) will
