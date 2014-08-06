@@ -2,6 +2,8 @@
 // Generated on Wed Aug 06 2014 18:11:10 GMT+0100 (BST)
 
 module.exports = function(config) {
+  var isCI = Boolean(process.env.CI);
+
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -63,11 +65,11 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: isCI ? ['PhantomJS', 'Firefox'] : ['Chrome'],
 
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false
+    singleRun: isCI
   });
 };

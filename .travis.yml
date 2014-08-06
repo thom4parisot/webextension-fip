@@ -7,6 +7,8 @@ before_install:
   - npm install --global --production grunt-cli bower
   - bower install --production
   - bundle install
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
 
 before_script:
   - grunt build
