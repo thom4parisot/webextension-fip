@@ -87,17 +87,18 @@ Background.prototype.registerNowPlayingPopup = function registerNowPlayingPopup(
  *
  * @param {Function=} done If not defined, will trigger the data in the "broadcasts" channel
  */
-Background.prototype.requestBroadcasts = function requestBroadcasts(done){
-  var xhr;
+Background.prototype.requestBroadcasts = function requestBroadcasts(){
+  var self = this;
 
-  done = typeof done === "function" ? done : this.dispatchBroadcasts.bind(this);
-
-  xhr = new XMLHttpRequest();
+  var xhr = new XMLHttpRequest();
+  xhr.responseType = 'json';
   xhr.addEventListener("load", function broadcastHttpGetSuccess(response){
-    Broadcast.parseResponse(response.target.responseText, done);
+    var broadcasts = Broadcast.parseResponse(response.target.response);
+
+    self.dispatchBroadcasts(broadcasts);
   });
 
-  xhr.open("GET", Broadcast.defaultUri+"?_="+Date.now());
+  xhr.open("GET", Broadcast.defaultUri + "?_=" + Date.now());
   xhr.send();
 };
 
