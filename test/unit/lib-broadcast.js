@@ -26,7 +26,7 @@ describe('Broadcast', function(){
     it('it should parse a valid JSON response', function(){
       var results = Broadcast.parseResponse(window.__fixtures__['test/fixtures/working']);
 
-      expect(results[0]).to.deep.equal({
+      expect(results[2]).to.deep.equal({
         "date": "1996",
         "artist": "PAOLO CONTE",
         "link": "https://itunes.apple.com/fr/album/come-di/id212024925?i=212025067&uo=4",

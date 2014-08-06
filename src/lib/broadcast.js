@@ -85,6 +85,10 @@ Broadcast.parseResponse = function parseResponse(jsonResponse) {
       }
 
       return data.title ? new Broadcast(data) : null;
+    })
+    .filter(function(b){ return b; })
+    .sort(function sortByStartTime(a, b){
+      return a.startTime - b.startTime;
     });
 };
 
