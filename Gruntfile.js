@@ -5,13 +5,6 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     manifest: grunt.file.readJSON('src/manifest.json'),
 
-    jshint: {
-      options: {
-        jshintrc: '.jshintrc'
-      },
-      extension: ['src/**/*.js', '!src/vendor/**']
-    },
-
     sass: {
       "now-playing": {
         files: {
