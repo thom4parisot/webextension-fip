@@ -65,6 +65,5 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', ['build']);
   //
-  grunt.registerTask('build-assets', ['sass']);
-  grunt.registerTask('build', ['build-assets', 'test', 'zip']);
+  grunt.registerTask('build', ['sass', 'zip']);
 };

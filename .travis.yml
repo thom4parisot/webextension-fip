@@ -1,9 +1,12 @@
 language: node_js
 node_js: "0.10"
+
 rvm: "2.0.0"
+
 before_install:
-  - npm install -g grunt-cli bower
-  - bower install
+  - npm install --global --production grunt-cli bower
+  - bower install --production
   - bundle install
+
 before_script:
   - grunt build
