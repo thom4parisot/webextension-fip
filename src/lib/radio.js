@@ -13,7 +13,8 @@ var Radio = machina.Fsm.extend({
   "initialState": "stopped",
 
   // Behavior config
-  "playbackUrl": "http://mp3.live.tv-radio.com/fip/all/fiphautdebit.mp3",
+  "playbackUrl": "http://mp3lg.tdf-cdn.com/fip/all/fiphautdebit.mp3",
+  //"playbackUrl": "http://mp3.live.tv-radio.com/fip/all/fiphautdebit.mp3",
   "playbackVolume": 100,
 
   // It should be fine since this point

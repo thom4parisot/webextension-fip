@@ -1,39 +1,52 @@
 "use strict";
 
-suite('Broadcast', function(){
-  test('new Broadcast', function(){
-    expect(new Broadcast()).to.only.have.keys("title", "album", "artist", "cover", "status", "date");
-    expect(new Broadcast({ title: "test"}).title).to.equal("test");
+describe('Broadcast', function(){
+  it('new Broadcast', function(){
+    expect(function(){ new Broadcast() }).to.not.throw();
   });
 
-  test('#extend', function(){
-    var result;
+  describe('#extend', function(){
 
-    result = {test: true};
-    Broadcast.extend(result);
-    expect(result).to.only.have.keys("test");
+    it('should return an identical object if the second argument is empty', function(){
+      var result = {test: true};
 
-    result = {test: true};
-    Broadcast.extend(result, {test:false, mamie: "nova"});
-    expect(result).to.only.have.keys("test");
-    expect(result.test).to.equal(false);
+      Broadcast.extend(result);
+      expect(result).to.deep.equal({ test: true });
+    });
+
+    it('should update only the test value', function(){
+      var result = {test: true};
+
+      Broadcast.extend(result, {test:false, mamie: "nova"});
+      expect(result).to.deep.equal({ test: false });
+    });
   });
 
-  test('#createNodeSelector', function(){
-    var select = Broadcast.createNodeSelector(document.querySelector("#node-selector"));
+  describe('#parseResponse', function(){
+    it('it should parse a valid JSON response', function(){
+      var results = Broadcast.parseResponse(window.__fixtures__['test/fixtures/working']);
 
-    expect(select(".album")).to.equal("");
-    expect(select(".title")).to.equal("I Never Came");
-    expect(select(".fake")).to.equal("");
-    expect(select("body")).to.equal("");
+      expect(results[2]).to.deep.equal({
+        "date": "1996",
+        "artist": "PAOLO CONTE",
+        "link": "https://itunes.apple.com/fr/album/come-di/id212024925?i=212025067&uo=4",
+        "startTime": 1407343605,
+        "endTime": 1407343842,
+        "title": "COME DI",
+        "album": "THE BEST OF",
+        "cover": "http://a1.mzstatic.com/us/r30/Music/c7/97/bb/mzi.iqpykysk.100x100-75.jpg",
+        "status": Broadcast.STATUS_CURRENT
+      });
+    });
+
+    it('it should parse a valid empty JSON response', function(){
+      var results = Broadcast.parseResponse(window.__fixtures__['test/fixtures/empty-list']);
+
+      expect(results).to.be.an('array').and.to.be.empty;
+    });
   });
 
-  test('#parseHtmlResponse', function(){
-    expect(Broadcast.parseHtmlResponse(document.querySelectorAll("#empty-list div"))).to.be.empty();
-    expect(Broadcast.parseHtmlResponse(document.querySelectorAll("#empty-response div"))).to.be.empty();
-  });
-
-  test('#getPositionTracker', function(){
+  it('#getPositionTracker', function(){
     var broadcasts = [new Broadcast(), new Broadcast(), new Broadcast(), new Broadcast({status: Broadcast.STATUS_CURRENT})];
     var tracker = Broadcast.getPositionTracker();
 

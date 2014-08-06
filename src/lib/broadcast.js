@@ -16,6 +16,11 @@ function Broadcast(data) {
   this.cover = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
   this.status = null;
 
+  // new since July 2014
+  this.link = "";
+  this.startTime = 0;
+  this.endTime = 0;
+
   Broadcast.extend(self, data);
 }
 
@@ -43,88 +48,47 @@ Broadcast.extend = function extend(object, data) {
  *
  * @type {string}
  */
-Broadcast.defaultUri = 'http://www.fipradio.fr/sites/default/files/direct-large.json';
-//Broadcast.defaultUri = "http://localhost:3000/test/fixtures/working-news.json";
-
-/**
- * Shorthand to create a node DOM selector value.
- *
- * @param {HTMLElement} container
- * @returns {Function}
- */
-Broadcast.createNodeSelector = function createNodeSelector(container) {
-  return function getNodeValue(selector, attribute) {
-    var node = container.querySelector(selector);
-
-    return node ? (attribute && node.getAttribute(attribute) || node.textContent) : '';
-  };
-};
-
-Broadcast.parseResponse = function parseTextResponse(responseText, done){
-  var nodes, doc, html;
-
-  //removing the default assets call (typically, the default album cover)
-  html = JSON.parse(responseText).html;
-  html = html.replace(/\/sites\/[^"]+\.(png|jpe?g|gif)/mg, "");
-
-  doc = document.implementation.createHTMLDocument('');
-  doc.documentElement.innerHTML = html;
-
-  nodes = doc.querySelectorAll(".direct-item-zoomed");
-
-  done(Broadcast.parseHtmlResponse(nodes));
-};
+Broadcast.defaultUri = 'http://www.fipradio.fr/sites/default/files/import_si/si_titre_antenne/FIP_player_current.json';
+//Broadcast.defaultUri = "http://localhost:3000/test/fixtures/working.json";
 
 /**
  * Parses the remote service response.
  * Deals with complicated stuff to update the UI.
  *
- * @param {{html: String}} responseData
+ * @param {Object} jsonResponse
  * @return {Array.<Broadcast>}
  */
-Broadcast.parseHtmlResponse = function parseHtmlResponse(nodes) {
-  var currentBroadcastIndex = null;
-
-  return Array.prototype.slice.call(nodes)
-    .filter(function nodeFilter(node) {
-      return node.classList.contains('direct-item-zoomed');
-    })
-    .map(function nodeToBroadcastMapper(node) {
+Broadcast.parseResponse = function parseResponse(jsonResponse) {
+  return Object.keys(jsonResponse)
+    .map(function nodeToBroadcastMapper(key) {
       var data = {};
-      var select = Broadcast.createNodeSelector(node);
+      var songData = jsonResponse[key].song || {};
 
-      try {
-        data.artist = select('.artiste');
-        data.title = select('.titre');
-        data.album = select('.album');
-        data.date = select('.annee').replace(/[\(\)]/g, '');
-        data.cover = select('img', 'src');
+      data.artist = songData.interpreteMorceau;
+      data.title = songData.titre;
+      data.album = songData.titreAlbum;
+      data.date = songData.anneeEditionMusique;
+      data.cover = songData.visuel && songData.visuel.small;
 
-        if (node.classList.contains('current') || node.getAttribute("id") === "direct-0"){
-          data.status = Broadcast.STATUS_CURRENT;
-        }
+      data.startTime = songData.startTime;
+      data.endTime = songData.endTime;
+      data.link = songData.lien;
 
-        if (!/http/.test(data.cover)) {
-          delete data.cover;
-        }
-
-        return data.title ? new Broadcast(data) : null;
+      if (key === 'current') {
+        data.status = Broadcast.STATUS_CURRENT;
       }
-      catch (e) {
-        /* jshint devel:true */
-        console.error("Parsing error", data);
-        return null;
+      else if (key.match(/^next/)) {
+        data.status = Broadcast.STATUS_NEXT;
       }
+      else if (key.match(/^previous/)){
+        data.status = Broadcast.STATUS_PREVIOUS;
+      }
+
+      return data.title ? new Broadcast(data) : null;
     })
-    .map(function(broadcast, index){
-      if (broadcast.status === null){
-        broadcast.status = (currentBroadcastIndex === null) ? Broadcast.STATUS_PREVIOUS : Broadcast.STATUS_NEXT;
-      }
-      else if(broadcast.status === Broadcast.STATUS_CURRENT){
-        currentBroadcastIndex = index;
-      }
-
-      return broadcast;
+    .filter(function(b){ return b; })
+    .sort(function sortByStartTime(a, b){
+      return a.startTime - b.startTime;
     });
 };
 
