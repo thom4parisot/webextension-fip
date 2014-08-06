@@ -23,18 +23,24 @@ describe('Broadcast', function(){
   });
 
   describe('#parseResponse', function(){
-    var fixtures;
+    it('it should parse a valid JSON response', function(){
+      var results = Broadcast.parseResponse(window.__fixtures__['test/fixtures/working']);
 
-    beforeEach(function(){
-      fixtures = window.__fixtures__['test/fixtures/working'];
+      expect(results[0]).to.deep.equal({
+        "date": "1996",
+        "artist": "PAOLO CONTE",
+        "link": "https://itunes.apple.com/fr/album/come-di/id212024925?i=212025067&uo=4",
+        "startTime": 1407343605,
+        "endTime": 1407343842,
+        "title": "COME DI",
+        "album": "THE BEST OF",
+        "cover": "http://a1.mzstatic.com/us/r30/Music/c7/97/bb/mzi.iqpykysk.100x100-75.jpg",
+        "status": Broadcast.STATUS_CURRENT
+      });
     });
 
-    it('it should parse a valid JSON response', function(){
-      var results = Broadcast.parseResponse(fixtures);
-    });
-
-    it('it should parse a valid JSON response', function(){
-      var results = Broadcast.parseResponse(fixtures);
+    it('it should parse a valid empty JSON response', function(){
+      var results = Broadcast.parseResponse(window.__fixtures__['test/fixtures/empty-list']);
 
       expect(results).to.be.an('array').and.to.be.empty;
     });
