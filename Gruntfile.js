@@ -12,16 +12,6 @@ module.exports = function(grunt) {
       extension: ['src/**/*.js', '!src/vendor/**']
     },
 
-    mocha: {
-      all: {
-        src: ['test/*.html'],
-        options: {
-          ui: 'tdd',
-          run: true
-        }
-      }
-    },
-
     sass: {
       "now-playing": {
         files: {
@@ -71,13 +61,10 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-mocha');
   grunt.loadNpmTasks('grunt-zip');
 
-  grunt.registerTask('default', ['test']);
+  grunt.registerTask('default', ['build']);
   //
-  grunt.registerTask('test', ['jshint', 'mocha']);
   grunt.registerTask('build-assets', ['sass']);
   grunt.registerTask('build', ['build-assets', 'test', 'zip']);
 };

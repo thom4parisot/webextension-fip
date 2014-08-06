@@ -43,8 +43,8 @@ Broadcast.extend = function extend(object, data) {
  *
  * @type {string}
  */
-Broadcast.defaultUri = 'http://www.fipradio.fr/sites/default/files/direct-large.json';
-//Broadcast.defaultUri = "http://localhost:3000/test/fixtures/working-news.json";
+//Broadcast.defaultUri = 'http://www.fipradio.fr/sites/default/files/import_si/si_titre_antenne/FIP_player_current.json';
+Broadcast.defaultUri = "http://localhost:3000/test/fixtures/working.json";
 
 /**
  * Shorthand to create a node DOM selector value.
@@ -60,21 +60,6 @@ Broadcast.createNodeSelector = function createNodeSelector(container) {
   };
 };
 
-Broadcast.parseResponse = function parseTextResponse(responseText, done){
-  var nodes, doc, html;
-
-  //removing the default assets call (typically, the default album cover)
-  html = JSON.parse(responseText).html;
-  html = html.replace(/\/sites\/[^"]+\.(png|jpe?g|gif)/mg, "");
-
-  doc = document.implementation.createHTMLDocument('');
-  doc.documentElement.innerHTML = html;
-
-  nodes = doc.querySelectorAll(".direct-item-zoomed");
-
-  done(Broadcast.parseHtmlResponse(nodes));
-};
-
 /**
  * Parses the remote service response.
  * Deals with complicated stuff to update the UI.
@@ -82,7 +67,7 @@ Broadcast.parseResponse = function parseTextResponse(responseText, done){
  * @param {{html: String}} responseData
  * @return {Array.<Broadcast>}
  */
-Broadcast.parseHtmlResponse = function parseHtmlResponse(nodes) {
+Broadcast.parseResponse = function parseResponse(nodes) {
   var currentBroadcastIndex = null;
 
   return Array.prototype.slice.call(nodes)
