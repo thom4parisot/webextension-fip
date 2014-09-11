@@ -1,4 +1,4 @@
-# FIP Radio for Chrome [![Build Status](https://travis-ci.org/oncletom/chrome-fip.png?branch=master)](https://travis-ci.org/oncletom/chrome-fip)
+# FIP Radio for Chrome [![Build Status](https://travis-ci.org/oncletom/chrome-fip.svg?branch=master)](https://travis-ci.org/oncletom/chrome-fip)
 
 > *FIP Radio for Chrome* is a [Chrome extension](https://chrome.google.com/webstore/detail/fnhlecpfnocgmmmghkjcipmhdpmpddii) providing a minimalistic UI to play the excellent [FIP Radio](http://www.fipradio.fr/) and to scrobble at the same time.
 
