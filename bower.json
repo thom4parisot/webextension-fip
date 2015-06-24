@@ -1,6 +1,5 @@
 {
   "name": "chrome-fip",
-  "version": "0.7.5",
   "dependencies": {
     "machina": "~0.3.4",
     "angular": "~1.0.6",
