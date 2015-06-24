@@ -20,8 +20,9 @@ module.exports = function(grunt) {
       }
     },
 
-    crx: {
+    zip: {
       extension: {
+        cwd: 'src/',
         src: [
           'src/**/*',
           '!src/**/*.map',
@@ -38,8 +39,8 @@ module.exports = function(grunt) {
           '!src/resources/icons/css/fontello.css',
           '!src/resources/icons/*'
         ],
-        dest: "dist/chrome-fip-<%= manifest.version %>.crx",
-        zipDest: "dist/chrome-fip-<%= manifest.version %>.zip"
+        dest: "dist/chrome-fip-<%= manifest.version %>.zip",
+        dot: false
       }
     },
 
@@ -53,9 +54,9 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-crx');
+  grunt.loadNpmTasks('grunt-zip');
 
   grunt.registerTask('default', ['build']);
   //
-  grunt.registerTask('build', ['sass', 'crx']);
+  grunt.registerTask('build', ['sass', 'zip']);
 };
