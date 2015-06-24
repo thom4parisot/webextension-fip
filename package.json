@@ -31,19 +31,19 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-contrib-sass": "~0.4.0",
-    "grunt-contrib-watch": "~0.4.4",
-    "grunt-crx": "~0.2.1",
-    "grunt-zip": "~0.9.0",
-    "jshint": "~2.5.2",
-    "karma": "~0.12.21",
-    "karma-chrome-launcher": "~0.1.4",
-    "karma-firefox-launcher": "~0.1.3",
-    "karma-json-fixtures-preprocessor": "0.0.0",
-    "karma-mocha": "~0.1.6",
-    "karma-phantomjs-launcher": "~0.1.4",
-    "karma-sinon-chai": "~0.2.0",
-    "mocha": "~1.21.3"
+    "grunt": "^0.4.1",
+    "grunt-contrib-sass": "^0.4.0",
+    "grunt-contrib-watch": "^0.4.4",
+    "grunt-crx": "^1.0.0",
+    "grunt-zip": "^0.16.2",
+    "jshint": "^2.5.2",
+    "karma": "^0.12.21",
+    "karma-chrome-launcher": "^0.1.4",
+    "karma-firefox-launcher": "^0.1.3",
+    "karma-json-fixtures-preprocessor": "^0.0.0",
+    "karma-mocha": "^0.1.6",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-sinon-chai": "^0.2.0",
+    "mocha": "^1.21.3"
   }
 }

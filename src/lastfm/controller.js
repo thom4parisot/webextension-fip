@@ -86,7 +86,7 @@ ScrobblingController.prototype.handleAuthResponse = function(process, url){
 };
 
 ScrobblingController.prototype.processNowPlaying = function processNowPlaying(current) {
-  if (!this.client.isConfigured() || !current instanceof Broadcast) {
+  if (!this.client.isConfigured() || !(current instanceof Broadcast)) {
     return;
   }
 
@@ -101,7 +101,7 @@ ScrobblingController.prototype.processNowPlaying = function processNowPlaying(cu
 };
 
 ScrobblingController.prototype.processScrobbling = function processScrobbling(current) {
-  if (!this.client.isConfigured() || !current instanceof Broadcast) {
+  if (!this.client.isConfigured() || !(current instanceof Broadcast)) {
     return;
   }
 
