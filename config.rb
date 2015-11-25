@@ -1,5 +1,0 @@
-sass_dir = "src/now-playing"
-css_dir = "src/now-playing"
-images_dir = "src/resources"
-http_path = "../"
-http_images_path = "../resources"

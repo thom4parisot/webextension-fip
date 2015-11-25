@@ -1,0 +1,15 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "globals": {
+    "chrome": true,
+    "process": true
+  },
+  "rules": {
+    "semi": 1,
+    "no-undef": 2
+  }
+}

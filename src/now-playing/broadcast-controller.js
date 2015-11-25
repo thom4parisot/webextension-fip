@@ -1,6 +1,4 @@
-"use strict";
-
-/* globals Broadcast */
+import Broadcast from '../lib/broadcast';
 
 /**
  * Now Playing Controller.
@@ -10,9 +8,9 @@
  * @param {Broadcast} Broadcast
  * @constructor
  */
-function BroadcastController($scope, chrome){
-  var getPosition = Broadcast.getPositionTracker();
-  var stubs = [new Broadcast()];
+export default function BroadcastController($scope, chrome){
+  const getPosition = Broadcast.getPositionTracker();
+  const stubs = [new Broadcast()];
 
   $scope.broadcasts = stubs;
   $scope.current_index = null;
@@ -38,5 +36,4 @@ function BroadcastController($scope, chrome){
   };
 }
 
-// And now deal with minification!
 BroadcastController.$inject = ['$scope', 'chrome'];

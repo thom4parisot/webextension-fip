@@ -1,8 +1,7 @@
-"use strict";
+import angular from 'angular';
+import * as TextCleaner from './text-cleaner';
 
-/* globals angular, TextCleaner */
-
-angular.module('TextCleanerFilters', [])
+export default angular.module('TextCleanerFilters', [])
   .filter('album', function(){
     return TextCleaner.doAlbumTitle.bind(TextCleaner);
   })

@@ -1,6 +1,4 @@
-"use strict";
-
-function ScrobblingController($scope, chrome){
+export default function ScrobblingController($scope, chrome){
   $scope.scrobblingEnabled = chrome.getPreference("lastfm.scrobbling");
 
   $scope.lastfmUsername = chrome.getPreference("lastfm.username");

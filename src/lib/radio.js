@@ -1,7 +1,6 @@
 "use strict";
 
-/* globals machina */
-/* exported Radio */
+import machina from 'machina';
 
 /**
  * Radio State Machine.
@@ -9,7 +8,7 @@
  *
  * @type {Radio}
  */
-var Radio = machina.Fsm.extend({
+const Radio = machina.Fsm.extend({
   "initialState": "stopped",
 
   // Behavior config
@@ -21,13 +20,11 @@ var Radio = machina.Fsm.extend({
   // It should be fine since this point
   "playbackObject": '',
   "initialize": function(){
-    var self = this;
-
     // publicly exposing audio states change
-    self.on('transition', function transitionHandler(transition){
+    this.on('transition', transition => {
       if (transition.fromState !== transition.toState){
         /* jshint devel:true */
-        self.emit(transition.toState, transition);
+        this.emit(transition.toState, transition);
         console.log("State changed from '%s' to '%s'.", transition.fromState, transition.toState);
       }
     });
@@ -120,24 +117,23 @@ var Radio = machina.Fsm.extend({
    * @api
    */
   "preparePlaybackObject": function(){
-    var self = this;
-    var audio = self.playbackObject || new Audio();
+    const audio = this.playbackObject || new Audio();
 
-    audio.src = self.playbackUrl;
+    audio.src = this.playbackUrl;
     audio.preload = false;
-    audio.volume = self.playbackVolume / 100;
+    audio.volume = this.playbackVolume / 100;
 
     // the audio object is already constructed; don't need to go further
-    if (self.playbackObject){
+    if (this.playbackObject){
       return;
     }
 
-    ['error', 'stalled', 'progress', 'waiting', 'loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough', 'durationchange', 'loadstart', 'emptied'].forEach(function(type){
-      audio.addEventListener(type, function logEvent(event){
-        self.handle('audio.'+event.type);
-      });
+    ['error', 'stalled', 'progress', 'waiting', 'loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough', 'durationchange', 'loadstart', 'emptied'].forEach(type => {
+      audio.addEventListener(type, event => this.handle('audio.'+event.type));
     });
 
-    self.playbackObject = audio;
+    this.playbackObject = audio;
   }
 });
+
+export default Radio;
