@@ -1,4 +1,4 @@
-"use strict";
+import * as TextCleaner from '../../src/lib/text-cleaner';
 
 describe('Text Cleaner', function(){
 

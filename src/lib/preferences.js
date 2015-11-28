@@ -6,6 +6,9 @@
  */
 const STORAGE_STRATEGIES = {
   "localStorage": {
+    get name () {
+      return 'localStorage';
+    },
     /**
      * @see Preferences.prototype.get
      */

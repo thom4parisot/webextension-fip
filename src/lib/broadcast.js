@@ -48,7 +48,7 @@ export default class Broadcast {
    * @returns {Function}
    */
   static getPositionTracker(){
-    var previous = {
+    const previous = {
       "size": 0,
       "position": null
     };
@@ -61,7 +61,7 @@ export default class Broadcast {
      * @returns {Integer} The new position to highlight
      */
     return function positionTracker(broadcasts, current_index){
-      var new_index = current_index;
+      let new_index = current_index;
 
       broadcasts.some(function(b, index){
         if (b.status === STATUS_CURRENT && (index !== previous.position || current_index === null || previous.size !== broadcasts.length)){
