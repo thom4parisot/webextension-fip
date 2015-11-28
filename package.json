@@ -12,13 +12,16 @@
     "test": "NODE_ENV=test ./node_modules/karma/bin/karma start",
     "posttest": "eslint --ignore-pattern '**/bundle.js' ./src",
     "build": "npm-run-all --parallel 'build:*'",
-    "build:now-playing": "browserify -e ./src/now-playing/app.js -o ./src/now-playing/bundle.js",
+    "build:now-playing": "browserify -e ./src/now-playing/app.js -p [ parcelify -o ./src/now-playing/bundle.css ] -o ./src/now-playing/bundle.js",
     "build:background": "browserify -e ./src/background/app.js -o ./src/background/bundle.js",
     "start": "static -H ${npm_package_http_headers} --gzip -p ${PORT:-3000} .",
     "watch": "BUILD_CHANNEL=dev npm-run-all --parallel 'watch:*' start",
     "watch:background": "watchify -v -e ./src/background/app.js -o ./src/background/bundle.js",
-    "watch:now-playing": "watchify -v -e ./src/now-playing/app.js -o ./src/now-playing/bundle.js"
+    "watch:now-playing": "watchify -v -e ./src/now-playing/app.js -p [ parcelify -wo ./src/now-playing/bundle.css ] -o ./src/now-playing/bundle.js"
   },
+  "style": [
+    "src/now-playing/*.scss"
+  ],
   "http": {
     "headers": "{\"Access-Control-Allow-Origin\":\"*\",\"Access-Control-Allow-Methods\":\"GET\",\"Access-Control-Allow-Headers\":\"Content-Type\"}"
   },
@@ -39,14 +42,11 @@
   "author": "Thomas Parisot (https://oncletom.io)",
   "license": "MIT",
   "readmeFilename": "README.md",
+  "transforms": [
+    "sass-css-stream"
+  ],
   "browserify": {
     "transform": [
-      [
-        "sassify",
-        {
-          "auto-inject": true
-        }
-      ],
       [
         "babelify",
         {
@@ -81,6 +81,7 @@
     "envify": "^3.4.0",
     "lodash": "^3.10.1",
     "machina": "^1.1.2",
-    "sassify": "^0.9.1"
+    "parcelify": "^2.1.0",
+    "sass-css-stream": "^0.1.6"
   }
 }

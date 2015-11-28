@@ -1,6 +1,7 @@
 src/*/*.map
 
 src/background/bundle.js
+src/now-playing/bundle.css
 src/now-playing/bundle.js
 
 .sass-cache

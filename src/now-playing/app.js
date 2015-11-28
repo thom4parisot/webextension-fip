@@ -8,8 +8,6 @@ import BroadcastController from './broadcast-controller';
 import RadioController from './radio-controller';
 import ScrobblingController from './scrobbling-controller';
 
-import * as css from './popup.scss';
-
 /**
  * Now Playing App module.
  * Used to cleanly configure the popup.
