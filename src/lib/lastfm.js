@@ -1,4 +1,4 @@
-import md5 from 'blueimp-md5';
+import { md5 } from 'blueimp-md5';
 
 /**
  * Supported API Methods.
@@ -22,7 +22,7 @@ const LAST_FM_API_METHODS = {
  * @returns {String}
  */
 function generateSignature(params, secret) {
-  const signature = Object.keys(params).sort().reduce(function (previous, key) {
+  const signature = Object.keys(params).sort().reduce((previous, key) => {
     return previous + key + params[key];
   }, "");
 
@@ -31,10 +31,18 @@ function generateSignature(params, secret) {
 
 export default class LastfmAPI {
   constructor(token) {
-    this.secret = process.env.LAST_FM_SECRET || "5bfff253b047941723be093331809c12";
-    this.api_key = process.env.LAST_FM_KEY || "5c12c1ed71a519ee5a4ddb140d28f55b";
+    this.secret = process.env.LAST_FM_SECRET;
+    this.api_key = process.env.LAST_FM_KEY;
     this.session_key = token || null;
     this.api_url = "https://ws.audioscrobbler.com/2.0/";
+
+    if (!this.api_key) {
+      throw new Error('No Last.fm API key was provided');
+    }
+
+    if (!this.secret) {
+      throw new Error('No Last.fm secret key was provided');
+    }
   }
 
   /**
@@ -54,10 +62,10 @@ export default class LastfmAPI {
    * @param {Function=} done
    */
   sendRequest(data, done) {
-    var xhr = new XMLHttpRequest();
-    var method = LAST_FM_API_METHODS[data.method];
-    var url = this.api_url;
-    var querydata;
+    const xhr = new XMLHttpRequest();
+    const method = LAST_FM_API_METHODS[data.method];
+    let url = this.api_url;
+    let querydata;
 
     data.api_key = this.api_key;
 
@@ -65,7 +73,7 @@ export default class LastfmAPI {
       data.sk = this.session_key;
     }
 
-    this.applySignature(data);
+    data.api_sig = this.applySignature(data);
 
     if (method === "GET") {
       url += Object.keys(data).reduce(function (previous, key) {
@@ -75,7 +83,7 @@ export default class LastfmAPI {
     else if (method === "POST") {
       querydata = new FormData();
 
-      Object.keys(data).forEach(function (key) {
+      Object.keys(data).forEach(key => {
         querydata.append(key, data[key]);
       });
     }
@@ -95,7 +103,7 @@ export default class LastfmAPI {
    * @param {function({sessionKey: String, userName: String})} done
    */
   getSessionKey(token, done) {
-    this.sendRequest({ method: 'auth.getSession', token: token }, function (response) {
+    this.sendRequest({ method: 'auth.getSession', token: token }, response => {
       var doc = response.target.responseXML;
 
       done({
@@ -115,10 +123,10 @@ export default class LastfmAPI {
   scrobble(params, done) {
     const data = {
       "method": 'track.scrobble',
-      "artist[0]": params.artist,
-      "track[0]": params.track,
-      "timestamp[0]": parseInt((params.when || Date.now()) / 1000, 10),
-      "chosenByUser[0]": false
+      "artist": params.artist,
+      "track": params.track,
+      "timestamp": parseInt((params.when || Date.now()) / 1000, 10),
+      "chosenByUser": 0
     };
 
     this.sendRequest(data, done);
@@ -150,7 +158,7 @@ export default class LastfmAPI {
   applySignature(params) {
     delete params.api_sig;
 
-    params.api_sig = generateSignature(params, this.secret);
+    return generateSignature(params, this.secret);
   }
 }
 

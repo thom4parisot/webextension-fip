@@ -63,7 +63,7 @@ export default class Broadcast {
     return function positionTracker(broadcasts, current_index){
       let new_index = current_index;
 
-      broadcasts.some(function(b, index){
+      broadcasts.some((b, index) => {
         if (b.status === STATUS_CURRENT && (index !== previous.position || current_index === null || previous.size !== broadcasts.length)){
           new_index = previous.position = index;
         }
@@ -76,11 +76,11 @@ export default class Broadcast {
   }
 
   static getCurrent(broadcasts){
-    var current = null;
+    let current = null;
 
-    broadcasts.some(function(broadcast){
+    broadcasts.some(broadcast => {
       if (broadcast.status === STATUS_CURRENT){
-        current = broadcast;
+        current = new Broadcast(broadcast);
         return true;
       }
     });
@@ -123,7 +123,7 @@ export default class Broadcast {
 
         return data.title ? new Broadcast(data) : null;
       })
-      .filter(function(b){ return b; })
+      .filter(b => b)
       .sort(function sortByStartTime(a, b){
         return a.startTime - b.startTime;
       });
