@@ -9,7 +9,6 @@ export default function RadioController($scope, chrome){
   chrome.message("radio.get", {}, radio => {
     $scope.status = radio.state;
     $scope.volume = radio.volume;
-console.log(radio);
     $scope.$apply('');
   });
 

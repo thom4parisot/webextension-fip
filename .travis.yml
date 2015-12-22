@@ -1,10 +1,12 @@
 language: node_js
 node_js: v4
 sudo: false
-
 addons:
-  firefox: "36.0"
-
+  firefox: '36.0'
 before_install:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+env:
+  global:
+  - secure: M1LN50Mt/UWrrng0yDY2BeWGrbe0HA4wfSoojyJ/MT0AAHmKYQVsuDnG8CqcRmK5g/xDja8+LH2QQcGbkHWFboRrAql8/iooVzqxhAICyiO6ju2F+bnymjMfgT2+hV8yUda9qGvV8PiaqUA5Rvcy8S6GXO/8JDGJRQN3t+1VIFg=
+  - secure: FMf+FEwbGx3Rr0jUW7LypFnMn4fuicAaBMvylw/h3VACIc1gHg0aZrQ13VPpEB4XfW8igqRjbUxwDqKhKr7vOMqezYWenUbq+Xcs2Zr6ZxV7t9mYqqFqHOhW+1WUN8HvnBMu7shVaeQwqm95YhX1HLsSngKCc5Cgs8V60+Nh0Hg=

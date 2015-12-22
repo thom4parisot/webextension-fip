@@ -1,4 +1,10 @@
-import { md5 } from 'blueimp-md5';
+const crypto = require('crypto');
+
+/*
+ Securely provided by .travis.yml + envify transform
+ */
+const LAST_FM_KEY = process.env.LAST_FM_KEY;
+const LAST_FM_SECRET = process.env.LAST_FM_SECRET;
 
 /**
  * Supported API Methods.
@@ -21,26 +27,36 @@ const LAST_FM_API_METHODS = {
  * @param {String} secret
  * @returns {String}
  */
-function generateSignature(params, secret) {
+function generateSignature(params, secret = LAST_FM_SECRET) {
+  delete params.api_sig;
+
+  params.api_key = LAST_FM_KEY;
+
   const signature = Object.keys(params).sort().reduce((previous, key) => {
     return previous + key + params[key];
   }, "");
 
-  return md5(signature + secret);
+  /*
+  api_key5c12c1ed71a519ee5a4ddb140d28f55b
+  artistBERTRAND BURGALAT
+  methodtrack.updateNowPlaying
+  sk3547a06bd97193d3b8980b1edb381dc9
+  trackRAGLE GUMM
+  */
+
+  return crypto.createHash('md5').update(signature + secret).digest('hex');
 }
 
 export default class LastfmAPI {
   constructor(token) {
-    this.secret = process.env.LAST_FM_SECRET;
-    this.api_key = process.env.LAST_FM_KEY;
     this.session_key = token || null;
     this.api_url = "https://ws.audioscrobbler.com/2.0/";
 
-    if (!this.api_key) {
+    if (!LAST_FM_KEY) {
       throw new Error('No Last.fm API key was provided');
     }
 
-    if (!this.secret) {
+    if (!LAST_FM_SECRET) {
       throw new Error('No Last.fm secret key was provided');
     }
   }
@@ -51,7 +67,7 @@ export default class LastfmAPI {
    * @returns {Boolean}
    */
   isConfigured() {
-    return this.secret && this.api_key && this.session_key;
+    return LAST_FM_SECRET && LAST_FM_KEY && this.session_key;
   };
 
   /**
@@ -67,13 +83,11 @@ export default class LastfmAPI {
     let url = this.api_url;
     let querydata;
 
-    data.api_key = this.api_key;
-
     if (this.session_key) {
       data.sk = this.session_key;
     }
 
-    data.api_sig = this.applySignature(data);
+    data.api_sig = generateSignature(data);
 
     if (method === "GET") {
       url += Object.keys(data).reduce(function (previous, key) {
@@ -148,18 +162,6 @@ export default class LastfmAPI {
 
     this.sendRequest(data, done);
   };
-
-  /**
-   * Mutate the parameters with a signature argument.
-   *
-   * @see http://www.last.fm/api/authspec#8
-   * @param {Object} params Objects to sign
-   */
-  applySignature(params) {
-    delete params.api_sig;
-
-    return generateSignature(params, this.secret);
-  }
 }
 
 
