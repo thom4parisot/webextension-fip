@@ -1,13 +1,3 @@
-"use strict";
-
-/**
- * Text Cleaner library
- * It helps cleaning some remote value to improve user experience.
- *
- * @constructor
- */
-function TextCleaner(){}
-
 /**
  * Clean the album title.
  *
@@ -20,11 +10,9 @@ function TextCleaner(){}
  * @param {String} text
  * @returns {String}
  */
-TextCleaner.doAlbumTitle = function doAlbumTitle(text){
-  text = text.replace(/\(?\s*(cd|single|ep|lp) promo( fip)?\s*\)?/i, '');
-
-  return text.trim();
-};
+export function doAlbumTitle(text) {
+  return text.replace(/\(?\s*(cd|single|ep|lp) promo( fip)?\s*\)?/i, '').trim();
+}
 
 /**
  * Clean the track title.
@@ -38,11 +26,9 @@ TextCleaner.doAlbumTitle = function doAlbumTitle(text){
  * @param {String} text
  * @returns {String}
  */
-TextCleaner.doTrackTitle = function doTrackTitle(text){
-  text = text.replace(/\([^\)]+(?!\))$/g, '');
-
-  return text.trim();
-};
+export function doTrackTitle(text) {
+  return text.replace(/\([^\)]+(?!\))$/g, '').trim();
+}
 
 /**
  * Extract artist names from a string
@@ -50,12 +36,12 @@ TextCleaner.doTrackTitle = function doTrackTitle(text){
  * @param {String} text
  * @returns {Array.<{name:String,role:String}>}
  */
-TextCleaner.extractArtistNames = function getArtistNames(text){
-  var artists = [];
+export function getArtistNames(text){
+  const artists = [];
 
   //checking if the data structure allows securely splitting it
   //"Lou Reed" is a good example of single artist with a first name possibly recognizable as a 'position' in a band
-  if (~text.indexOf('/') && /^([^\/]+(\/|$))+$/.test(text)){
+  if (text.indexOf('/') !== -1 && /^([^\/]+(\/|$))+$/.test(text)){
     text.replace(/([a-z]{2,3} )?([^\/]+)(\/|$)/g, function(m, position, name){
       artists.push({
         name: name.trim(),
@@ -68,7 +54,7 @@ TextCleaner.extractArtistNames = function getArtistNames(text){
   }
 
   return artists;
-};
+}
 
 /**
  * Clean the artist name.
@@ -80,11 +66,9 @@ TextCleaner.extractArtistNames = function getArtistNames(text){
  * @param {String} text
  * @returns {String}
  */
-TextCleaner.doArtistName = function doArtistName(text){
-  return TextCleaner.extractArtistNames(text).map(function(artist){
-    return artist.name;
-  }).join(', ');
-};
+export function doArtistName(text){
+  return getArtistNames(text).map(artist => artist.name).join(', ');
+}
 
 /**
  * Extract a simple artist name.
@@ -98,6 +82,6 @@ TextCleaner.doArtistName = function doArtistName(text){
  * @param {String} text
  * @returns {String}
  */
-TextCleaner.getMainArtistName = function getMainArtistName(text){
-  return TextCleaner.extractArtistNames(text)[0].name;
-};
+export function getMainArtistName(text){
+  return getArtistNames(text)[0].name;
+}

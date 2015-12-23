@@ -1,35 +1,21 @@
 {
   "name": "__MSG_extension_name__",
-  "version": "0.7.7",
+  "version": "0.8.0",
   "description": "__MSG_extension_description__",
   "manifest_version": 2,
-  "minimum_chrome_version": "29",
+  "minimum_chrome_version": "42",
   "offline_enabled": false,
   "default_locale": "fr",
   "background": {
     "scripts": [
-      "vendor/lodash/dist/lodash.min.js",
-      "vendor/machina/lib/machina.min.js",
-      "vendor/js-md5/js/md5.min.js",
-      "lib/radio.js",
-      "lib/broadcast.js",
-      "lib/preferences.js",
-      "lib/lastfm.js",
-      "lib/text-cleaner.js",
-      "background/controller.js",
-      "lastfm/controller.js",
-      "background/bootstrap.js"
+      "background/bundle.js"
     ],
-    "persistent": true
+    "persistent": false
   },
   "permissions": [
-    "background",
-    "idle",
-    "identity",
     "alarms",
-    "http://www.last.fm/api/auth",
-    "https://ws.audioscrobbler.com/",
-    "http://*.fipradio.fr/"
+    "identity",
+    "http://www.fipradio.fr/sites/default/files/import_si/si_titre_antenne/FIP_player_current.json"
   ],
   "browser_action": {
     "default_icon": "resources/fip.png",

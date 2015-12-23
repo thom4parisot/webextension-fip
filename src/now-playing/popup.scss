@@ -1,7 +1,5 @@
-@import "base";
-@import "statuses";
-@import "compass/css3/transition";
-@import "compass/typography/lists/horizontal-list";
+@import "../resources/sass/base";
+@import "../resources/sass/statuses";
 
 body{
   background: $background-color;
@@ -9,6 +7,10 @@ body{
   margin: 0;
   padding: 0;
   width: 425px;
+}
+
+.ng-hide {
+  display: none;
 }
 
 label,
@@ -53,7 +55,7 @@ footer{
     border: $foreground-color solid 0;
     color: $text-color;
     opacity: 0.3;
-    @include single-transition(opacity);
+    transition: opacity .5s;
   }
 }
 
@@ -74,12 +76,12 @@ footer.alternate{
 
 #player-controls{
   background: $foreground-color;
-  clip: rect(0, 210px, 50px, 160px);
+  clip: rect(0, 210px, 50px, 150px);
   padding: $gutter-width 0 $gutter-width $gutter-width*1.5;
   position: absolute;
   right: 0;
   top: 0;
-  @include single-transition(clip, 0.1s);
+  transition: clip, 0.1s;
 
   &:hover{
     clip: rect(0, 250px, 50px, 0);
@@ -215,10 +217,13 @@ main{
     }
 
     > ul{
-      @include horizontal-list();
+      list-style: none;
 
       li{
+        float: left;
+        margin-left: 0;
         padding-right: 0;
+        white-space: nowrap;
       }
     }
 
@@ -234,7 +239,7 @@ main{
 
 .tiles{
   margin-left: 0;
-  @include single-transition(margin-left);
+  transition: margin-left .5s;
   width: 500%;
 
   @for $index from 0 to 10{
@@ -345,5 +350,5 @@ article{
   width: 1em;
 }
 [href*="fipradio.fr"].iconify::before{
-  background-image: image-url('fip-128x128.png');
+  background-image: url('../resources/fip-128x128.png');
 }

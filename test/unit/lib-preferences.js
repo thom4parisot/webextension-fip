@@ -1,11 +1,12 @@
-"use strict";
+import Preferences from '../../src/lib/preferences';
+
+process.env.PREFERENCES_NAMESPACE = Symbol('test').toString();
 
 describe('Preferences - localStorage', function(){
   var manager;
 
   beforeEach(function(){
     manager = new Preferences();
-    manager.namespace = "test_";    //@todo in the future, use a Symbol
   });
 
   afterEach(function(){
@@ -19,16 +20,12 @@ describe('Preferences - localStorage', function(){
   });
 
   describe('#constructor', function(){
-    it('should have a blank default namespace', function(){
-      expect(Preferences.NAMESPACE).to.equal("");
-    });
-
     it('it should have switched over a new test namespace', function(){
-      expect(manager.namespace).to.not.equal(Preferences.NAMESPACE);
+      expect(manager.namespace).to.equal(process.env.PREFERENCES_NAMESPACE);
     });
 
     it('should have localStorage as a default  strategy', function(){
-      expect(manager.strategy).to.equal(Preferences.strategies.localStorage);
+      expect(manager.strategy.name).to.equal('localStorage');
     });
   });
 

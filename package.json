@@ -5,13 +5,25 @@
   "main": "index.js",
   "private": true,
   "engines": {
-    "node": "0.10.x"
+    "node": ">=4.0.0"
   },
   "scripts": {
-    "test": "npm run lint && npm run karma",
-    "build": "CI=1 npm run test && grunt build",
-    "lint": "jshint --exclude src/vendor src/ ",
-    "karma": "./node_modules/karma/bin/karma start"
+    "package": "cd src && ls manifest.json _locales/**/*.json background/bundle.* now-playing/bundle.{css,js} now-playing/*.html resources/*.png resources/icons/css/*embedded.css | zip -9 -@ ../dist/${npm_package_name}-${npm_package_version}.zip",
+    "test": "NODE_ENV=test ./node_modules/karma/bin/karma start",
+    "posttest": "eslint --ignore-pattern '**/bundle.js' ./src",
+    "build": "npm-run-all --parallel 'build:*'",
+    "build:now-playing": "browserify -e ./src/now-playing/app.js -p [ parcelify -o ./src/now-playing/bundle.css ] -o ./src/now-playing/bundle.js",
+    "build:background": "browserify -e ./src/background/app.js -o ./src/background/bundle.js",
+    "start": "static -H ${npm_package_http_headers} --gzip -p ${PORT:-3000} .",
+    "watch": "BUILD_CHANNEL=dev npm-run-all --parallel 'watch:*' start",
+    "watch:background": "watchify -dv -e ./src/background/app.js -o ./src/background/bundle.js",
+    "watch:now-playing": "watchify -dv -e ./src/now-playing/app.js -p [ parcelify -wo ./src/now-playing/bundle.css ] -o ./src/now-playing/bundle.js"
+  },
+  "style": [
+    "src/now-playing/*.scss"
+  ],
+  "http": {
+    "headers": "{\"Access-Control-Allow-Origin\":\"*\",\"Access-Control-Allow-Methods\":\"GET\",\"Access-Control-Allow-Headers\":\"Content-Type\"}"
   },
   "repository": {
     "type": "git",
@@ -27,23 +39,48 @@
     "streaming",
     "france"
   ],
-  "author": "Thomas Parisot <hi@oncletom.io> (https://oncletom.io)",
+  "author": "Thomas Parisot (https://oncletom.io)",
   "license": "MIT",
   "readmeFilename": "README.md",
+  "transforms": [
+    "sass-css-stream"
+  ],
+  "browserify": {
+    "transform": [
+      [
+        "babelify",
+        {
+          "presets": [
+            "es2015"
+          ]
+        }
+      ],
+      "envify"
+    ]
+  },
   "devDependencies": {
-    "grunt": "^0.4.1",
-    "grunt-contrib-sass": "^0.4.0",
-    "grunt-contrib-watch": "^0.4.4",
-    "grunt-crx": "^1.0.0",
-    "grunt-zip": "^0.16.2",
-    "jshint": "^2.5.2",
-    "karma": "^0.12.21",
-    "karma-chrome-launcher": "^0.1.4",
-    "karma-firefox-launcher": "^0.1.3",
-    "karma-json-fixtures-preprocessor": "^0.0.0",
-    "karma-mocha": "^0.1.6",
-    "karma-phantomjs-launcher": "^0.1.4",
-    "karma-sinon-chai": "^0.2.0",
-    "mocha": "^1.21.3"
+    "babel-eslint": "^4.1.6",
+    "babel-preset-es2015": "^6.3.13",
+    "browserify": "^12.0.1",
+    "eslint": "^1.10.1",
+    "karma": "^0.13.0",
+    "karma-browserify": "^4.4.0",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-firefox-launcher": "^0.1.7",
+    "karma-mocha": "^0.2.0",
+    "karma-sinon-chai": "^1.0.0",
+    "mocha": "^2.0.0",
+    "node-static": "^0.7.7",
+    "npm-run-all": "^1.3.2"
+  },
+  "dependencies": {
+    "angular": "^1.4.0",
+    "babelify": "^7.2.0",
+    "envify": "^3.4.0",
+    "lodash": "^3.10.1",
+    "machina": "^1.1.2",
+    "parcelify": "^2.1.0",
+    "sass-css-stream": "^0.1.6",
+    "superagent": "^1.6.1"
   }
 }

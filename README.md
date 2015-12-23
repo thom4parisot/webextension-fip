@@ -5,6 +5,7 @@
 ![Extension Showcase](src/resources/showcase.png)
 
 The goals of this extension are the following:
+
 - recover from loss of network connection or FIP hickups;
 - accessing the *Now Playing* info screen within a single click
 - scrobbling to last.fm or libre.fm
@@ -20,18 +21,16 @@ review and install it.
 Contributions are friendly welcomed, either they are code, ideas or bug reports.
 
 The developer toolchain relies on:
-- [Grunt](http://gruntjs.com/) for automation and build process;
-- [bower](http://bower.io/) for frontend components;
 - [Angular](http://angularjs.org/) for dynamic HTML templating;
 - [Machina.js](https://github.com/ifandelse/machina.js) for State Machine management;
 - [Chrome Extension API](http://developer.chrome.com/extensions/), obviously to glue the whole stuff in your browser :-)
 
-If you don't them perfectly… well it's a good occasion to learn!
+If you don't know them much… well it's a good occasion to learn!
 
 ### Checkout
 
 1. `git clone` your fork of the repository
-1. `npm install && bower install && bundle install` in the project folder
+1. `npm install` in the project folder
 1. [load the unpacked extension](http://developer.chrome.com/extensions/getstarted.html#unpacked) in Chrome/Chromium
 
 [Chrome Dev Tools](https://developers.google.com/chrome-developer-tools/) will

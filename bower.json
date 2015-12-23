@@ -1,8 +1,0 @@
-{
-  "name": "chrome-fip",
-  "dependencies": {
-    "machina": "~0.3.4",
-    "angular": "~1.0.6",
-    "js-md5": "~1.0.2"
-  }
-}

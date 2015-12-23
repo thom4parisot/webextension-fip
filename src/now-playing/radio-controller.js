@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Radio Controller
  *
@@ -7,16 +5,19 @@
  * @param {Object} chrome
  * @constructor
  */
-function RadioController($scope, chrome){
-  $scope.status = chrome.process.radio.state;
-  $scope.volume = chrome.process.radio.volume();
+export default function RadioController($scope, chrome){
+  chrome.message("radio.get", {}, radio => {
+    $scope.status = radio.state;
+    $scope.volume = radio.volume;
+    $scope.$apply('');
+  });
 
   $scope.$watch("volume", function(value){
     chrome.message("preferences", {"key": "player.volume", "value": value});
   });
 
   $scope.toggle = function toggleRadioControl(){
-    chrome.process.radio.toggle();
+    chrome.message("radio.toggle");
   };
 
   chrome.addListener(function(request){

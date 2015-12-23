@@ -12,19 +12,12 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha', 'sinon-chai'],
+    frameworks: ['browserify', 'mocha', 'sinon-chai'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      'src/vendor/lodash/dist/lodash.min.js',
-      'src/vendor/machina/lib/machina.min.js',
-      'src/lib/broadcast.js',
-      'src/lib/text-cleaner.js',
-      'src/lib/preferences.js',
-      'src/lib/radio.js',
-      'test/unit/**/*.js',
-      'test/fixtures/*.json'
+      'test/unit/**/*.js'
     ],
 
 
@@ -36,9 +29,12 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      '**/*.json': ['json_fixtures']
+      'test/unit/**/*.js': [ 'browserify' ]
     },
 
+    browserify: {
+      debug: true
+    },
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
@@ -65,11 +61,11 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: isCI ? ['PhantomJS', 'Firefox'] : ['Chrome'],
+    browsers: isCI ? ['Firefox'] : ['Chrome'],
 
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: isCI
+    singleRun: true
   });
 };

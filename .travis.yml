@@ -1,14 +1,24 @@
 language: node_js
-node_js: "0.10"
-
-rvm: "2.0.0"
-
+node_js: v4
+sudo: false
+addons:
+  firefox: latest
 before_install:
-  - npm install --global --production grunt-cli bower
-  - bower install --production
-  - bundle install
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-
-before_script:
-  - grunt build
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+- mkdir -p dist
+env:
+  global:
+  - secure: M1LN50Mt/UWrrng0yDY2BeWGrbe0HA4wfSoojyJ/MT0AAHmKYQVsuDnG8CqcRmK5g/xDja8+LH2QQcGbkHWFboRrAql8/iooVzqxhAICyiO6ju2F+bnymjMfgT2+hV8yUda9qGvV8PiaqUA5Rvcy8S6GXO/8JDGJRQN3t+1VIFg=
+  - secure: FMf+FEwbGx3Rr0jUW7LypFnMn4fuicAaBMvylw/h3VACIc1gHg0aZrQ13VPpEB4XfW8igqRjbUxwDqKhKr7vOMqezYWenUbq+Xcs2Zr6ZxV7t9mYqqFqHOhW+1WUN8HvnBMu7shVaeQwqm95YhX1HLsSngKCc5Cgs8V60+Nh0Hg=
+deploy:
+  provider: s3
+  bucket: 'chrome-fip'
+  region: eu-central-1
+  local_dir: dist
+  secret_access_key:
+    secure: ROg4wkDlSoOW0aOzAYepNa3UEVx1KTXxc4cOIX2xRxam6faQjhlk+q4cuDXtQ1xYQz9WN8KWWEucs68vPlCz6muy3OlhJV0MmX+DueMZ/BvpIm3Ror61BC60px0e5csh7sbvt7A+625I7MxcPvQG6syxGlfUCnpLlPYi9xAASgw=
+  access_key_id:
+    secure: Sg+B5vTZpUdckgbkPLTrOUIiJMq58/4K3rsTIpapBX1X5LHpHxQ67BJSUIPZOJd2xFMF/m3fDd1o0nzavTRJA1f8p9DGX7rU9Uk399QOZp1LTN9Mu0ET6gr1vZGBrpdJc+mtLn5+dAurqKMcQ6UefoaTG0sEnCAM669QAa4N+ac=
+  on:
+    tags: true

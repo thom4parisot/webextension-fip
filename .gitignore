@@ -1,6 +1,5 @@
-src/vendor
-src/now-playing/*.css
-
 src/*/*.map
 
-.sass-cache
+src/background/bundle.js
+src/now-playing/bundle.js
+src/now-playing/*.css
