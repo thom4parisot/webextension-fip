@@ -6,7 +6,9 @@ addons:
 before_install:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
+after_success:
 - mkdir -p dist
+- npm run package
 env:
   global:
   - secure: M1LN50Mt/UWrrng0yDY2BeWGrbe0HA4wfSoojyJ/MT0AAHmKYQVsuDnG8CqcRmK5g/xDja8+LH2QQcGbkHWFboRrAql8/iooVzqxhAICyiO6ju2F+bnymjMfgT2+hV8yUda9qGvV8PiaqUA5Rvcy8S6GXO/8JDGJRQN3t+1VIFg=
