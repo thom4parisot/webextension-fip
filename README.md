@@ -2,7 +2,7 @@
 
 > *FIP Radio for Chrome* is a [Chrome extension](https://chrome.google.com/webstore/detail/fnhlecpfnocgmmmghkjcipmhdpmpddii) providing a minimalistic UI to play the excellent [FIP Radio](http://www.fipradio.fr/) and to scrobble at the same time.
 
-![Extension Showcase](src/resources/showcase.png)
+![Extension Showcase](resources/showcase.png)
 
 The goals of this extension are the following:
 
