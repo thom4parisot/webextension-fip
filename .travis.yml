@@ -2,7 +2,7 @@ language: node_js
 node_js: v4
 sudo: false
 addons:
-  firefox: '42.0'
+  firefox: latest
 before_install:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
