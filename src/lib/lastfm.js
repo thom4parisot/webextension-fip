@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const request = require('superagent');
 
 /*
  Securely provided by .travis.yml + envify transform
@@ -34,15 +35,7 @@ function generateSignature(params, secret = LAST_FM_SECRET) {
 
   const signature = Object.keys(params).sort().reduce((previous, key) => {
     return previous + key + params[key];
-  }, "");
-
-  /*
-  api_key5c12c1ed71a519ee5a4ddb140d28f55b
-  artistBERTRAND BURGALAT
-  methodtrack.updateNowPlaying
-  sk3547a06bd97193d3b8980b1edb381dc9
-  trackRAGLE GUMM
-  */
+  }, '');
 
   return crypto.createHash('md5').update(signature + secret).digest('hex');
 }
@@ -78,53 +71,45 @@ export default class LastfmAPI {
    * @param {Function=} done
    */
   sendRequest(data, done) {
-    const xhr = new XMLHttpRequest();
     const method = LAST_FM_API_METHODS[data.method];
-    let url = this.api_url;
-    let querydata;
 
     if (this.session_key) {
       data.sk = this.session_key;
     }
 
-    data.api_sig = generateSignature(data);
-
-    if (method === "GET") {
-      url += Object.keys(data).reduce(function (previous, key) {
-        return previous + [key, data[key]].join('=') + '&';
-      }, '?');
-    }
-    else if (method === "POST") {
-      querydata = new FormData();
-
-      Object.keys(data).forEach(key => {
-        querydata.append(key, data[key]);
+    return new Promise((resolve, reject) => {
+      const payload = Object.assign({}, data, {
+        format: 'json',
+        api_sig: generateSignature(data)
       });
-    }
 
-    if (typeof done === "function") {
-      xhr.addEventListener("load", done);
-    }
+      request(method, this.api_url)
+        .type('form')
+        .query(method === 'GET' ? payload : {})
+        .send(method === 'POST' ? payload : null)
+        .end((err, response) => {
+          if (err) {
+            return reject(err);
+          }
 
-    xhr.open(method, url);
-    xhr.send(querydata instanceof FormData ? querydata : undefined);
+          resolve(response.body);
+        });
+    });
   };
 
   /**
    * Retrieve the session key after a user authentication.
    *
    * @param {string} token
-   * @param {function({sessionKey: String, userName: String})} done
    */
-  getSessionKey(token, done) {
-    this.sendRequest({ method: 'auth.getSession', token: token }, response => {
-      var doc = response.target.responseXML;
-
-      done({
-        sessionKey: doc.querySelector('key').textContent,
-        userName: doc.querySelector('name').textContent
+  getSessionKey(token) {
+    return this.sendRequest({ method: 'auth.getSession', token: token })
+      .then(response => {
+        return {
+          sessionKey: response.session.key,
+          userName: response.session.name
+        };
       });
-    });
   };
 
   /**
@@ -132,9 +117,8 @@ export default class LastfmAPI {
    *
    * @see http://www.last.fm/api/show/track.updateNowPlaying
    * @param {{artist: String, track: String}} params
-   * @param {Function=} done Success callback
    */
-  scrobble(params, done) {
+  scrobble(params) {
     const data = {
       "method": 'track.scrobble',
       "artist": params.artist,
@@ -143,7 +127,7 @@ export default class LastfmAPI {
       "chosenByUser": 0
     };
 
-    this.sendRequest(data, done);
+    return this.sendRequest(data);
   };
 
   /**
@@ -153,14 +137,14 @@ export default class LastfmAPI {
    * @param {{artist: String, track: String}} params
    * @param {Function=} done Success callback
    */
-  nowPlaying(params, done) {
-    var data = {
+  nowPlaying(params) {
+    const data = {
       "method": 'track.updateNowPlaying',
       "artist": params.artist,
       "track": params.track
     };
 
-    this.sendRequest(data, done);
+    return this.sendRequest(data);
   };
 }
 

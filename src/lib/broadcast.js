@@ -96,20 +96,20 @@ export default class Broadcast {
    * @return {Array.<Broadcast>}
    */
   static parseResponse(jsonResponse) {
-    return Object.keys(jsonResponse)
-      .map(function nodeToBroadcastMapper(key) {
-        var data = {};
-        var songData = jsonResponse[key].song || {};
+    return Object.keys(jsonResponse).map(key => {
+        const songData = jsonResponse[key].song || {};
 
-        data.artist = songData.interpreteMorceau;
-        data.title = songData.titre;
-        data.album = songData.titreAlbum;
-        data.date = songData.anneeEditionMusique;
-        data.cover = songData.visuel && songData.visuel.small;
+        const data = {
+          artist: songData.interpreteMorceau,
+          title: songData.titre,
+          album: songData.titreAlbum,
+          date: songData.anneeEditionMusique,
+          cover: songData.visuel && songData.visuel.small,
 
-        data.startTime = songData.startTime;
-        data.endTime = songData.endTime;
-        data.link = songData.lien;
+          startTime: songData.startTime,
+          endTime: songData.endTime,
+          link: songData.lien
+        };
 
         if (key === 'current') {
           data.status = STATUS_CURRENT;

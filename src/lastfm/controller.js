@@ -19,7 +19,7 @@ export default class ScrobblingController {
   };
 
   updateUserInfos(process, token){
-    this.client.getSessionKey(token, data => {
+    this.client.getSessionKey(token).then(data => {
       this.client.session_key = data.sessionKey;
 
       process.preferences.set("lastfm.token", data.sessionKey);
@@ -71,7 +71,7 @@ export default class ScrobblingController {
   handleAuthResponse(process, url) {
     let token = null;
 
-    url.replace(/token=([a-z0-9]{32})/, function(m, value){
+    url.replace(/token=([a-z0-9]{32})/, (m, value) => {
       token = value;
     });
 
