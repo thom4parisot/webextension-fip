@@ -3,7 +3,7 @@
     "message": "FIP Radio"
   },
   "extension_description": {
-    "message": "Unofficial FIP Radio player. One-click playback, automatic scrobbling and 'now playing' informations display."
+    "message": "Unofficial FIP Radio player. One-click playback, Last.fm scrobbling and 'now playing' informations display."
   },
   "artist": {
     "message": "artist"

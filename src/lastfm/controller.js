@@ -2,6 +2,8 @@ import * as TextCleaner from '../lib/text-cleaner';
 import Broadcast from '../lib/broadcast';
 import LastfmAPI from '../lib/lastfm';
 
+const LAST_FM_KEY = process.env.LAST_FM_KEY;
+
 export default class ScrobblingController {
   constructor (process) {
     this.previousBroadcast = new Broadcast();
@@ -62,7 +64,7 @@ export default class ScrobblingController {
       if (request.channel === "lastfm.auth.request" && request.data) {
         chrome.identity.launchWebAuthFlow({
           interactive: true,
-          url: request.data
+          url: request.data + `&api_key=${LAST_FM_KEY}`
         }, this.handleAuthResponse.bind(this, process));
       }
     });

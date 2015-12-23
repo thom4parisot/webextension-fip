@@ -1,5 +1,5 @@
-const crypto = require('crypto');
-const request = require('superagent');
+import crypto from 'crypto';
+import request from 'superagent';
 
 /*
  Securely provided by .travis.yml + envify transform
