@@ -12,9 +12,15 @@ const Radio = machina.Fsm.extend({
   "initialState": "stopped",
 
   // Behavior config
-  "playbackUrl": "http://audio.scdn.arkena.com/11016/fip-midfi128.mp3",
-  //"playbackUrl": "http://mp3lg.tdf-cdn.com/fip/all/fiphautdebit.mp3",
-  //"playbackUrl": "http://mp3.live.tv-radio.com/fip/all/fiphautdebit.mp3",
+  "playbackUrl": "https://direct.fipradio.fr/live/fip-midfi.mp3",
+  //"playbackUrl": "https://direct.fipradio.fr/live/fip-lofi.mp3",
+  //"playbackUrl": "https://direct.fipradio.fr/live/fip-webradio1.mp3",
+  //"playbackUrl": "https://direct.fipradio.fr/live/fip-webradio2.mp3",
+  //"playbackUrl": "https://direct.fipradio.fr/live/fip-webradio3.mp3",
+  //"playbackUrl": "https://direct.fipradio.fr/live/fip-webradio4.mp3",
+  //"playbackUrl": "https://direct.fipradio.fr/live/fip-webradio5.mp3",
+  //"playbackUrl": "https://direct.fipradio.fr/live/fip-webradio6.mp3",
+  //"playbackUrl": "https://direct.fipradio.fr/live/fip-webradio8.mp3",
   "playbackVolume": 100,
 
   // It should be fine since this point
