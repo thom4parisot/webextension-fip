@@ -81,7 +81,7 @@ export default class Broadcast {
     broadcasts.some(broadcast => {
       if (broadcast.status === STATUS_CURRENT){
         current = new Broadcast(broadcast);
-        return true;
+        //return true;
       }
     });
 

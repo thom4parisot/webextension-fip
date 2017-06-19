@@ -147,5 +147,3 @@ export default class LastfmAPI {
     return this.sendRequest(data);
   };
 }
-
-

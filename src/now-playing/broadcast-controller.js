@@ -15,13 +15,16 @@ export default function BroadcastController($scope, chrome){
   $scope.broadcasts = stubs;
   $scope.current_index = null;
 
+  chrome.addListener(data => {
+    console.log(data);
+  })
+
   chrome.on("broadcasts", function(broadcasts){
+    console.log(broadcasts);
     $scope.broadcasts = broadcasts.length ? broadcasts : stubs;
     $scope.current_index = getPosition(broadcasts, $scope.current_index);
     $scope.$apply("");
   });
-
-  chrome.message("action", "enableBroadcastUpdates");
 
   $scope.previous = function previousBroadcast(){
     if ($scope.current_index > 0){

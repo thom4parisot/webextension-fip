@@ -1,7 +1,11 @@
 {
   "env": {
     "browser": true,
-    "es6": true
+    "es6": true,
+    "webextensions": true
+  },
+  "parserOptions": {
+    "sourceType": "module"
   },
   "globals": {
     "chrome": true,

@@ -1,4 +1,5 @@
 import angular from 'angular';
+import browser from 'webextension-polyfill';
 
 /**
  * Chrome API Abstraction.
@@ -6,35 +7,48 @@ import angular from 'angular';
  */
 export default angular.module('ChromeService', [])
   .filter('i18n', function(){
-    return chrome.i18n.getMessage.bind(chrome.i18n);
+    return browser.i18n.getMessage.bind(chrome.i18n);
   })
   .factory('chrome', function(){
+
     return {
-      on: function onMessage(channel, callback){
-        chrome.runtime.onMessage.addListener(function chromeServiceOnMessage(message){
-          if (message.channel === channel){
-            callback(message.data);
-          }
+      on: (channel, callback) => {
+        console.log('chrome.on.' + channel);
+
+        browser.runtime.onConnect.addListener(port => {
+          port.onMessage.addListener(message => {
+            console.log('chrome.on.' + channel, message);
+
+            if (message.channel === channel){
+              callback(message.data);
+            }
+          });
         });
       },
-      message: function sendMessage(channel, values, done){
-        chrome.runtime.sendMessage({ "channel": channel, "data": values }, done);
+      message: (channel, data) => {
+        const port = browser.runtime.connect(browser.runtime.id);
+
+        port.postMessage({ channel, data });
       },
-      addListener: chrome.runtime.onMessage.addListener.bind(chrome.runtime.onMessage),
+      addListener: done => {
+        browser.runtime.onConnect.addListener(port => {
+          port.onMessage.addListener(message => done(message));
+        });
+      },
       getPreference: function getPreference(key, default_value){
         var value = localStorage.getItem(key);
 
         return typeof value !== undefined && value !== null ? value : (default_value || null);
       },
-      getRedirectURL: chrome.identity.getRedirectURL.bind(chrome.identity),
+      getRedirectURL: browser.identity.getRedirectURL.bind(browser.identity),
       setPreference: function setPreference(key, value){
         localStorage.setItem(key, value);
       },
       getUrl: function getUrl(path){
-        return chrome.runtime.getURL(path);
+        return browser.runtime.getURL(path);
       },
       newTab: function newTab(url){
-        chrome.tabs.create({
+        browser.tabs.create({
           url: url,
           active: true
         });

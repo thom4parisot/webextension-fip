@@ -6,11 +6,11 @@
  * @constructor
  */
 export default function RadioController($scope, chrome){
-  chrome.message("radio.get", {}, radio => {
-    $scope.status = radio.state;
-    $scope.volume = radio.volume;
-    $scope.$apply('');
-  });
+  // chrome.message("radio.get", {}, radio => {
+  //   $scope.status = radio.state;
+  //   $scope.volume = radio.volume;
+  //   $scope.$apply('');
+  // });
 
   $scope.$watch("volume", function(value){
     chrome.message("preferences", {"key": "player.volume", "value": value});

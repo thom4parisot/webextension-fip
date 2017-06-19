@@ -54,7 +54,7 @@ const Radio = machina.Fsm.extend({
         this.transition('buffering');
 
         this.preparePlaybackObject();
-        this.playbackObject.play();
+        //this.playbackObject.play();
       }
     },
     "buffering": {
@@ -72,7 +72,7 @@ const Radio = machina.Fsm.extend({
       play: function playOnErrored(){
         this.transition('buffering');
 
-        this.playbackObject.play();
+        //this.playbackObject.play();
       },
       "stop": "stopped",
       "network.offline": "stopped"
@@ -135,7 +135,7 @@ const Radio = machina.Fsm.extend({
     }
 
     ['error', 'stalled', 'progress', 'waiting', 'loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough', 'durationchange', 'loadstart', 'emptied'].forEach(type => {
-      audio.addEventListener(type, event => this.handle('audio.'+event.type));
+      audio.addEventListener(type, event => this.handle(`audio.${event.type}`));
     });
 
     this.playbackObject = audio;
