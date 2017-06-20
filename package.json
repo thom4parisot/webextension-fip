@@ -57,7 +57,8 @@
             "transform-es2015-modules-commonjs"
           ]
         }
-      ]    ]
+      ]
+    ]
   },
   "devDependencies": {
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
