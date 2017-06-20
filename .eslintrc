@@ -8,7 +8,6 @@
     "sourceType": "module"
   },
   "globals": {
-    "chrome": true,
     "process": true
   },
   "rules": {
