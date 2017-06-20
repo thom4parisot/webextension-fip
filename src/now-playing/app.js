@@ -12,11 +12,12 @@ import ScrobblingController from './scrobbling-controller';
  * Now Playing App module.
  * Used to cleanly configure the popup.
  */
-const App = angular.module('now-playing', ['ChromeService', 'TextCleanerFilters']).run(function appRun(){
+const App = angular.module('now-playing', ['ChromeService', 'TextCleanerFilters']).run(chrome => {
   document.documentElement.setAttribute('lang', navigator.language);
+  chrome.notify('radio.play');
 });
 
-App.filter('unsafe', function($sce) { return $sce.trustAsHtml; });
+App.filter('unsafe', $sce => $sce.trustAsHtml);
 
 App.controller('BroadcastController', BroadcastController);
 App.controller('RadioController', RadioController);

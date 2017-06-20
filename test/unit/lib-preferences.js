@@ -38,8 +38,8 @@ describe('Preferences - localStorage', function(){
   it('#set', function(){
     expect(manager.get("future key")).to.equal(null);
     manager.set("future key", {foo: "bar"});
-    expect(manager.get("future key")).to.eql("[object Object]");
-    expect(localStorage.getItem(manager.namespace + "future key")).to.equal(({foo: "bar"}).toString());
+    expect(manager.get("future key")).to.eql({foo: "bar"});
+    expect(localStorage.getItem(manager.namespace + "future key")).to.equal(JSON.stringify({foo: "bar"}));
   });
 
   it('#del', function(){

@@ -76,58 +76,10 @@ footer.alternate{
 
 #player-controls{
   background: $foreground-color;
-  clip: rect(0, 210px, 50px, 150px);
   padding: $gutter-width 0 $gutter-width $gutter-width*1.5;
   position: absolute;
   right: 0;
   top: 0;
-  transition: clip, 0.1s;
-
-  &:hover{
-    clip: rect(0, 250px, 50px, 0);
-  }
-}
-
-
-.volume-control{
-  position: relative;
-  top: -8px;
-
-  &::-webkit-slider-runnable-track{
-    -webkit-appearance: none;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
-    height: 4px;
-  }
-
-  &::-webkit-slider-thumb{
-    -webkit-appearance: none;
-    cursor: ew-resize;
-    margin-top: -7px;
-
-    &:after{
-      background: $background-color;
-      border-radius: 50%;
-      box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3), -1px -1px 1px rgba(0, 0, 0, 0.2);
-      color: $foreground-color;
-      content: "\e806";
-      display: block;
-      font-family: fontello;
-      font-size: 1.3em;
-      height: 20px;
-      line-height: 1.5;
-      text-align: center;
-      vertical-align: top;
-      width: 20px;
-    }
-  }
-
-  &.level-high::-webkit-slider-thumb:after{
-    content: "\e807";
-  }
-  &.level-low::-webkit-slider-thumb:after{
-    content: "\e805";
-  }
 }
 
 
@@ -148,7 +100,8 @@ footer.alternate{
     outline: none;
   }
 
-  &:active{
+  &:active,
+  &:focus{
     opacity: 1;
   }
 
@@ -350,5 +303,5 @@ article{
   width: 1em;
 }
 [href*="fipradio.fr"].iconify::before{
-  background-image: url('../resources/fip-128x128.png');
+  background-image: url('../resources/fip.png');
 }

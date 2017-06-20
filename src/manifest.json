@@ -7,9 +7,7 @@
   "offline_enabled": false,
   "default_locale": "fr",
   "background": {
-    "scripts": [
-      "background/bundle.js"
-    ],
+    "page": "background/index.html",
     "persistent": false
   },
   "permissions": [
@@ -19,7 +17,8 @@
   ],
   "browser_action": {
     "default_icon": "resources/fip.png",
-    "default_title": "__MSG_extension_name__"
+    "default_title": "__MSG_extension_name__",
+    "default_popup": "now-playing/index.html"
   },
   "icons": {
     "16": "resources/fip.png",

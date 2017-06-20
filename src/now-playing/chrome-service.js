@@ -1,4 +1,6 @@
 import angular from 'angular';
+import browser from 'webextension-polyfill';
+import Preferences from '../lib/preferences.js';
 
 /**
  * Chrome API Abstraction.
@@ -6,38 +8,32 @@ import angular from 'angular';
  */
 export default angular.module('ChromeService', [])
   .filter('i18n', function(){
-    return chrome.i18n.getMessage.bind(chrome.i18n);
+    return browser.i18n.getMessage.bind(browser.i18n);
   })
+  .factory('preferences', () => new Preferences("localStorage"))
   .factory('chrome', function(){
     return {
-      on: function onMessage(channel, callback){
-        chrome.runtime.onMessage.addListener(function chromeServiceOnMessage(message){
-          if (message.channel === channel){
-            callback(message.data);
-          }
+      on: (channel, callback) => {
+        browser.runtime.onConnect.addListener(port => {
+          port.onMessage.addListener(message => {
+            if (message.channel === channel){
+              console.log('chrome.on#' + channel, message);
+              callback(message.data);
+            }
+          });
         });
       },
-      message: function sendMessage(channel, values, done){
-        chrome.runtime.sendMessage({ "channel": channel, "data": values }, done);
+      notify: (channel, data = null) => {
+        const port = browser.runtime.connect();
+        port.postMessage({ [channel]: data });
       },
-      addListener: chrome.runtime.onMessage.addListener.bind(chrome.runtime.onMessage),
-      getPreference: function getPreference(key, default_value){
-        var value = localStorage.getItem(key);
-
-        return typeof value !== undefined && value !== null ? value : (default_value || null);
-      },
-      getRedirectURL: chrome.identity.getRedirectURL.bind(chrome.identity),
-      setPreference: function setPreference(key, value){
-        localStorage.setItem(key, value);
-      },
-      getUrl: function getUrl(path){
-        return chrome.runtime.getURL(path);
-      },
-      newTab: function newTab(url){
-        chrome.tabs.create({
-          url: url,
-          active: true
+      addListener: done => {
+        browser.runtime.onConnect.addListener(port => {
+          port.onMessage.addListener(message => done(message));
         });
-      }
+      },
+      getRedirectURL: browser.identity.getRedirectURL.bind(browser.identity),
+      getUrl: path => browser.runtime.getURL(path),
+      newTab: url => browser.tabs.create({ url, active: true }),
     };
   });

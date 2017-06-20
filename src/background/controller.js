@@ -1,15 +1,8 @@
+import browser from 'webextension-polyfill';
+
 import Radio from '../lib/radio';
 import Broadcast from '../lib/broadcast';
 import Preferences from '../lib/preferences';
-
-/**
- * Whitelist of actions doable by messaging the "action" channel.
- *
- * @type {Array}
- */
-const BACKGROUND_ACTIONS = [
-  "enableBroadcastUpdates"
-];
 
 /**
  * Badge appearance and behavior on click.
@@ -20,21 +13,20 @@ const BACKGROUND_ACTIONS = [
  */
 const BADGE_STATES = {
   'stopped': {
-    text: "",
-    popup: false
+    text: '',
+    color: '#080'
   },
   'playing': {
-    text: ":-)",
+    text: ">",
     color: '#080'
   },
   'buffering': {
-    text: '...',
+    text: '~',
     color: '#fc0'
   },
   'errored': {
-    text: ':-/',
+    text: '!',
     color: '#c00',
-    popup: false
   }
 };
 
@@ -69,11 +61,10 @@ export default class Background {
    */
   bootstrap() {
     this.radio = new Radio();
-    this.radio.volume(this.preferences.get("player.volume", 100));
 
     this.setupChannelBadge();
     this.registerEvents();
-    this.registerNowPlayingPopup();
+    this.enableBroadcastUpdates();
   };
 
   /**
@@ -86,39 +77,27 @@ export default class Background {
     const { radio } = this;
 
     // Listening to radio events and dispatch them through the app
-    radio.on('transition', this.dispatchRadioState.bind(this));
-    radio.on('playing', this.enableBroadcastUpdates.bind(this));
-    chrome.runtime.onMessage.addListener(this.radioStateBadgeHandler.bind(this));
-    chrome.runtime.onMessage.addListener(this.radioVolumeHandler.bind(this));
-    chrome.runtime.onMessage.addListener(this.radioStateHandler.bind(this));
-    chrome.runtime.onMessage.addListener(this.radioToggleStateHandler.bind(this));
-    chrome.runtime.onMessage.addListener(this.actionChannelHandler.bind(this));
-    chrome.runtime.onMessage.addListener(this.preferenceChannelHandler.bind(this));
+    radio.on('transition', transition => {
+      this.dispatchRadioState(transition);
+    });
+
+    // Debug Messages
+    browser.runtime.onConnect.addListener(port => {
+      port.onMessage.addListener(message => {
+        this.radioStateHandler(message);
+      });
+    });
 
     // Handling `network.online` or `network.offline` states
     ['online', 'offline'].forEach(eventType => {
       window.addEventListener(eventType, event => radio.handle('network.' + event.type));
     });
 
-    chrome.alarms.onAlarm.addListener(alarm => {
-      if (alarm.name !== "broadcasts"){
-        return;
+    browser.alarms.onAlarm.addListener(alarm => {
+      if (alarm.name === "broadcasts"){
+        this.requestBroadcasts();
       }
-
-      this.requestBroadcasts();
     });
-  }
-
-  /**
-   * Handles the click on the browser action icon.
-   * By default, plays the radio, then displays the popup.
-   *
-   * The reason is because we first want to play the radio, not looking at what's on air.
-   *
-   * @api
-   */
-  registerNowPlayingPopup() {
-    chrome.browserAction.onClicked.addListener(this.radio.play.bind(this.radio));
   }
 
   /**
@@ -128,40 +107,13 @@ export default class Background {
    * @param {Function=} done If not defined, will trigger the data in the "broadcasts" channel
    */
   requestBroadcasts() {
-    const xhr = new XMLHttpRequest();
-    xhr.responseType = 'json';
-    xhr.addEventListener("load", response => {
-      const broadcasts = Broadcast.parseResponse(response.target.response);
+    fetch(`${Broadcast.getUri()}?_=${Date.now()}`)
+      .then(response => response.json())
+      .then(response => {
+        const broadcasts = Broadcast.parseResponse(response);
 
-      this.dispatchBroadcasts(broadcasts);
-    });
-
-    xhr.open("GET", Broadcast.getUri() + "?_=" + Date.now());
-    xhr.send();
-  }
-
-  /**
-   * Handle any preferences request changes.
-   *
-   * @api
-   * @param {Object} request
-   */
-  preferenceChannelHandler(request) {
-    if (request.channel === "preferences"){
-      this.preferences.set(request.data.key, request.data.value);
-    }
-  }
-
-  /**
-   * Execute a local method execution based on a remote call.
-   *
-   * @api
-   * @param {Object} request
-   */
-  actionChannelHandler(request) {
-    if (request.channel === "action" && BACKGROUND_ACTIONS.indexOf(request.data) !== -1){
-      this[request.data]();
-    }
+        this.dispatchBroadcasts(broadcasts);
+      });
   }
 
   /**
@@ -171,7 +123,13 @@ export default class Background {
    * @param {String} radioState
    */
   dispatchRadioState(transition) {
-    chrome.runtime.sendMessage({ state: transition.toState });
+    const bus = browser.runtime.connect();
+    const {preferences} = this;
+    const state = transition.toState;
+
+    preferences.set('radio.state', state);
+    this.radioStateBadgeHandler(state);
+    bus.postMessage({ state });
   }
 
   /**
@@ -183,13 +141,13 @@ export default class Background {
   enableBroadcastUpdates() {
     const alarmName = "broadcasts";
 
-    //workaround due to the `chrome.alarms.get` uncatchable exception bug
+    //workaround due to the `browser.alarms.get` uncatchable exception bug
     //@see https://code.google.com/p/chromium/issues/detail?id=265800
-    chrome.alarms.getAll(alarms => {
+    browser.alarms.getAll().then(alarms => {
       const exists = alarms.some(alarm => alarm.name === alarmName);
 
       if (!exists){
-        chrome.alarms.create(alarmName, { periodInMinutes: 0.5 });
+        browser.alarms.create(alarmName, { periodInMinutes: 0.5 });
       }
 
       this.requestBroadcasts();
@@ -202,7 +160,11 @@ export default class Background {
    * @param {Array.<Broadcast>} broadcasts
    */
   dispatchBroadcasts(broadcasts) {
-    chrome.runtime.sendMessage({ channel: "broadcasts", data: broadcasts });
+    const {preferences} = this;
+    const bus = browser.runtime.connect();
+
+    preferences.set('broadcasts', broadcasts);
+    bus.postMessage({ broadcasts });
   }
 
   /**
@@ -211,21 +173,13 @@ export default class Background {
    * @api
    * @param {Object} message
    */
-  radioStateBadgeHandler(message) {
-    if (!message.state){
-      return;
-    }
-
+  radioStateBadgeHandler(newState) {
     Object.keys(BADGE_STATES).some(state => {
-      if (message.state !== state){
+      if (newState !== state){
         return false;
       }
 
       const stateCase = BADGE_STATES[state];
-
-      chrome.browserAction.setPopup({
-        popup: (stateCase.popup === false) ? '' : 'now-playing/popup.html'
-      });
 
       this.setBadge(stateCase.text, stateCase.color || '');
 
@@ -234,44 +188,19 @@ export default class Background {
   }
 
   /**
-   * Returns relevant informations about the state of the current radio playback
-   *
-   * @api
-   * @param {Object} message
-   */
-  radioStateHandler(message, sender, sendResponse) {
-    if (message.channel === "radio.get"){
-      sendResponse({
-        volume: this.radio.volume(),
-        state: this.radio.state
-      });
-    }
-  }
-
-  /**
    * Toggle the radio on or off
    *
    * @api
    * @param {Object} message
    */
-  radioToggleStateHandler(message) {
-    if (message.channel === "radio.toggle"){
+  radioStateHandler(message) {
+    if ('radio.toggle' in message){
       this.radio.toggle();
     }
-  }
 
-  /**
-   * Handles any volume change request and adjust it accordingly.
-   *
-   * @api
-   * @param {Object} message
-   */
-  radioVolumeHandler(message) {
-    if (!message.data || (message.channel !== "preferences" && message.data.key !== "player.volume")){
-      return;
+    if ('radio.play' in message){
+      this.radio.play();
     }
-
-    this.radio.volume(message.data.value);
   }
 
   /**
@@ -281,10 +210,10 @@ export default class Background {
    * @param {String|Array=} color
    */
   setBadge(text, color) {
-    chrome.browserAction.setBadgeText({ text: text+'' });
+    browser.browserAction.setBadgeText({ text: String(text) });
 
     if (color){
-      chrome.browserAction.setBadgeBackgroundColor({ color });
+      browser.browserAction.setBadgeBackgroundColor({ color });
     }
   }
 
@@ -297,9 +226,9 @@ export default class Background {
 
   setupChannelBadge (){
     const iconName = `fip-${this.channel}`.replace('-stable', '');
-    const path = chrome.runtime.getURL(`resources/${iconName}.png`);
+    const path = `/resources/${iconName}.png`;
 
-    chrome.browserAction.setIcon({ path });
+    browser.browserAction.setIcon({ path });
     this.setBadge('');
   }
 }

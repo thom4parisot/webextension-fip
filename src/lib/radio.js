@@ -21,7 +21,6 @@ const Radio = machina.Fsm.extend({
   //"playbackUrl": "https://direct.fipradio.fr/live/fip-webradio5.mp3",
   //"playbackUrl": "https://direct.fipradio.fr/live/fip-webradio6.mp3",
   //"playbackUrl": "https://direct.fipradio.fr/live/fip-webradio8.mp3",
-  "playbackVolume": 100,
 
   // It should be fine since this point
   "playbackObject": '',
@@ -101,20 +100,6 @@ const Radio = machina.Fsm.extend({
     //jshint expr:true
     this.state !== 'stopped' ? this.handle('stop') : this.handle('play');
   },
-  /**
-   * Volume management
-   */
-  "volume": function (value){
-    if (value !== undefined && !isNaN(parseInt(value, 10))){
-      this.playbackVolume = parseInt(value, 10);
-
-      if (this.playbackObject){
-        this.playbackObject.volume = this.playbackVolume / 100;
-      }
-    }
-
-    return this.playbackVolume;
-  },
 
   /**
    * Prepare the audio object to be played.
@@ -127,7 +112,7 @@ const Radio = machina.Fsm.extend({
 
     audio.src = this.playbackUrl;
     audio.preload = false;
-    audio.volume = this.playbackVolume / 100;
+    audio.volume = 1;
 
     // the audio object is already constructed; don't need to go further
     if (this.playbackObject){
@@ -135,7 +120,7 @@ const Radio = machina.Fsm.extend({
     }
 
     ['error', 'stalled', 'progress', 'waiting', 'loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough', 'durationchange', 'loadstart', 'emptied'].forEach(type => {
-      audio.addEventListener(type, event => this.handle('audio.'+event.type));
+      audio.addEventListener(type, event => this.handle(`audio.${event.type}`));
     });
 
     this.playbackObject = audio;

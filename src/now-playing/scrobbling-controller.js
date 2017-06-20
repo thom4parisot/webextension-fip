@@ -1,10 +1,9 @@
-export default function ScrobblingController($scope, chrome){
-  $scope.scrobblingEnabled = chrome.getPreference("lastfm.scrobbling");
-
-  $scope.lastfmUsername = chrome.getPreference("lastfm.username");
+export default function ScrobblingController($scope, chrome, preferences){
+  $scope.scrobblingEnabled = preferences.get("lastfm.scrobbling");
+  $scope.lastfmUsername = preferences.get("lastfm.username");
 
   $scope.$watch("scrobblingEnabled", function(value){
-    chrome.message("preferences", {"key": "lastfm.scrobbling", "value": value});
+    preferences.set('lastfm.scrobbling', value);
   });
 
   chrome.on("lastfm.auth.success", function(data){
@@ -15,12 +14,10 @@ export default function ScrobblingController($scope, chrome){
 
   $scope.startAuthentication = function(){
     const cb = chrome.getRedirectURL('auth.html');
-
-    chrome.message(
-      'lastfm.auth.request',
-      `http://www.last.fm/api/auth?cb=${cb}`
-    );
+    const authUrl = `http://www.last.fm/api/auth?cb=${cb}`;
+    console.log(authUrl);
+    chrome.notify('lastfm.auth.request', authUrl);
   };
 }
 
-ScrobblingController.$inject = ['$scope', 'chrome'];
+ScrobblingController.$inject = ['$scope', 'chrome', 'preferences'];

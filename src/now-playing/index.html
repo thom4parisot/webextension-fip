@@ -12,8 +12,7 @@
   <h1>{{'extension_name' | i18n}}</h1>
 
   <div id="player-controls">
-    <input type="range" from="0" to="100" ng-model="volume" ng-class="{'level-low': volume < 33, 'level-high': volume > 66}" class="volume-control" />
-    <button type="button" id="playback-button" class="icon-state" ng-click="toggle()" ng-class="status"></button>
+    <button type="button" id="playback-button" class="icon-state" ng-click="toggle()" ng-class="status" tabindex="1"></button>
   </div>
 </header>
 
@@ -62,7 +61,7 @@
       <li class="main">
         <a href="http://www.fipradio.fr/archives-antenne" class="iconify" target="_blank">{{'archives' | i18n}}</a>
       </li>
-      <li ng-controller="ScrobblingController">
+      <li ng-controller="ScrobblingController" ng-hide="{true}">
         <input type="checkbox" ng-model="scrobblingEnabled" ng-true-value="'true'" ng-false-value="'false'" id="scrobbling-switch" ng-disabled="!lastfmUsername">
         <label for="scrobbling-switch" ng-show="!lastfmUsername" ng-click="startAuthentication()">{{'enable_scrobbling' | i18n}}</label>
         <label for="scrobbling-switch" ng-show="lastfmUsername" ng-bind-html="'scrobbling_as' | i18n:lastfmUsername | unsafe"></label>

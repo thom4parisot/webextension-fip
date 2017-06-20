@@ -1,6 +1,7 @@
 import * as TextCleaner from '../lib/text-cleaner';
 import Broadcast from '../lib/broadcast';
 import LastfmAPI from '../lib/lastfm';
+import browser from 'webextension-polyfill';
 
 const LAST_FM_KEY = process.env.LAST_FM_KEY;
 
@@ -17,69 +18,55 @@ export default class ScrobblingController {
   };
 
   setupClient(process) {
-    this.client = new LastfmAPI(process.preferences.get("lastfm.token"));
+    this.client = new LastfmAPI(process.preferences.get('lastfm.token'));
   };
 
   updateUserInfos(process, token){
+    const {preferences} = process;
+
     this.client.getSessionKey(token).then(data => {
       this.client.session_key = data.sessionKey;
 
-      process.preferences.set("lastfm.token", data.sessionKey);
-      process.preferences.set("lastfm.username", data.userName);
-      process.preferences.set("lastfm.scrobbling", true);
+      preferences.set('lastfm.token', data.sessionKey);
+      preferences.set('lastfm.username', data.userName);
+      preferences.set('lastfm.scrobbling', true);
 
-      chrome.runtime.sendMessage({ "channel": "lastfm.auth.success", data });
+      chrome.notify('lastfm.auth.success', data);
     });
   };
 
   setupEvents(process) {
-    chrome.runtime.onMessage.addListener(request => {
-      if (request.channel === "broadcasts" && process.radio.state === "playing") {
-        const current = Broadcast.getCurrent(request.data);
+    const {preferences} = process;
 
-        this.processNowPlaying(current);
-        this.processScrobbling(current);
 
-        if (current && current.title !== this.previousBroadcast.title) {
-          this.previousBroadcast = current;
+    browser.runtime.onConnect.addListener(port => {
+      port.onMessage.addListener(data => {
+        if ('broadcasts' in data && preferences.get('radio.state') === 'playing') {
+          const current = Broadcast.getCurrent(data);
+
+          this.processNowPlaying(current);
+          this.processScrobbling(current);
+
+          if (current && current.title !== this.previousBroadcast.title) {
+            this.previousBroadcast = current;
+          }
         }
-      }
-    });
 
-    chrome.runtime.onMessage.addListener(request => {
-      if (request.channel === "lastfm.auth.response" && request.data){
-        let token = null;
-
-        request.data.replace(/token=([a-z0-9]{32})/, function(m, value){
-          token = value;
-        });
-
-        if (token){
-          this.updateUserInfos(process, token);
+        if ('lastfm.auth.request' in data) {
+          chrome.identity.launchWebAuthFlow({
+            interactive: true,
+            url: `${data}&api_key=${LAST_FM_KEY}`
+          }, url => this.handleAuthResponse(process, url));
         }
-      }
-    });
-
-    chrome.runtime.onMessage.addListener(request => {
-      if (request.channel === "lastfm.auth.request" && request.data) {
-        chrome.identity.launchWebAuthFlow({
-          interactive: true,
-          url: request.data + `&api_key=${LAST_FM_KEY}`
-        }, this.handleAuthResponse.bind(this, process));
-      }
+      });
     });
   };
 
   handleAuthResponse(process, url) {
-    let token = null;
-
-    url.replace(/token=([a-z0-9]{32})/, (m, value) => {
-      token = value;
-    });
-
-    if (token){
+    console.log(url);
+    url.replace(/token=([a-z0-9]{32})/, (m, token) => {
       this.updateUserInfos(process, token);
-    }
+    });
   }
 
   processNowPlaying(current) {
