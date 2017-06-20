@@ -8,7 +8,7 @@
   "default_locale": "fr",
   "background": {
     "page": "background/index.html",
-    "persistent": true
+    "persistent": false
   },
   "permissions": [
     "alarms",

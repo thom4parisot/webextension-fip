@@ -11,13 +11,11 @@ export default function RadioController($scope, chrome, preferences){
   $scope.toggle = () => chrome.notify('radio.toggle');
 
   chrome.addListener(function(request){
-    if (!request.state){
-      return;
+    if (request.state){
+      $scope.status = request.state;
+      $scope.$apply('');
     }
-
-    $scope.status = request.state;
-    $scope.$apply('');
   });
 }
 
-RadioController.$inject = ['$scope', 'chrome'];
+RadioController.$inject = ['$scope', 'chrome', 'preferences'];

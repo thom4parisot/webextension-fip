@@ -64,7 +64,7 @@ export default class ScrobblingController {
       if (request.channel === "lastfm.auth.request" && request.data) {
         chrome.identity.launchWebAuthFlow({
           interactive: true,
-          url: request.data + `&api_key=${LAST_FM_KEY}`
+          url: `${request.data}&api_key=${LAST_FM_KEY}`
         }, this.handleAuthResponse.bind(this, process));
       }
     });

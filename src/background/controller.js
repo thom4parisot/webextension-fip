@@ -5,15 +5,6 @@ import Broadcast from '../lib/broadcast';
 import Preferences from '../lib/preferences';
 
 /**
- * Whitelist of actions doable by messaging the "action" channel.
- *
- * @type {Array}
- */
-const BACKGROUND_ACTIONS = [
-  "enableBroadcastUpdates"
-];
-
-/**
  * Badge appearance and behavior on click.
  * Mainly tricking the fact the `onClicked` event is fired when no popup file is bound to the browserAction.
  * We basically display the popup when it's needed, so during the radio playback.
@@ -22,19 +13,19 @@ const BACKGROUND_ACTIONS = [
  */
 const BADGE_STATES = {
   'stopped': {
-    text: "||",
+    text: '',
     color: '#080'
   },
   'playing': {
-    text: "|>",
+    text: ">",
     color: '#080'
   },
   'buffering': {
-    text: '...',
+    text: '~',
     color: '#fc0'
   },
   'errored': {
-    text: ':-/',
+    text: '!',
     color: '#c00',
   }
 };
@@ -73,7 +64,6 @@ export default class Background {
 
     this.setupChannelBadge();
     this.registerEvents();
-    this.registerNowPlayingPopup();
     this.enableBroadcastUpdates();
   };
 
@@ -87,31 +77,14 @@ export default class Background {
     const { radio } = this;
 
     // Listening to radio events and dispatch them through the app
-    radio.on('transition', this.dispatchRadioState.bind(this));
+    radio.on('transition', transition => {
+      this.dispatchRadioState(transition);
+    });
 
     // Debug Messages
     browser.runtime.onConnect.addListener(port => {
-      console.log(port);
-      port.onMessage.addListener(message => {
-        console.log('onMessage %o', message);
-      });
-      port.onMessage.addListener(message => {
-        this.radioStateBadgeHandler(message);
-      });
-      port.onMessage.addListener(message => {
-        this.radioVolumeHandler(message);
-      });
       port.onMessage.addListener(message => {
         this.radioStateHandler(message);
-      });
-      port.onMessage.addListener(message => {
-        this.radioToggleStateHandler(message);
-      });
-      port.onMessage.addListener(message => {
-        this.actionChannelHandler(message);
-      });
-      port.onMessage.addListener(message => {
-        this.preferenceChannelHandler(message);
       });
     });
 
@@ -121,22 +94,9 @@ export default class Background {
     });
 
     browser.alarms.onAlarm.addListener(alarm => {
-      if (alarm.name !== "broadcasts"){
-        return;
+      if (alarm.name === "broadcasts"){
+        this.requestBroadcasts();
       }
-
-      this.requestBroadcasts();
-    });
-  }
-
-  /**
-   * Handles the click on the browser action icon.
-   *
-   * @api
-   */
-  registerNowPlayingPopup() {
-    browser.browserAction.onClicked.addListener(() => {
-      this.radio.play();
     });
   }
 
@@ -157,38 +117,19 @@ export default class Background {
   }
 
   /**
-   * Handle any preferences request changes.
-   *
-   * @api
-   * @param {Object} request
-   */
-  preferenceChannelHandler(request) {
-    if (request.channel === "preferences"){
-      this.preferences.set(request.data.key, request.data.value);
-    }
-  }
-
-  /**
-   * Execute a local method execution based on a remote call.
-   *
-   * @api
-   * @param {Object} request
-   */
-  actionChannelHandler(request) {
-    if (request.channel === "action" && BACKGROUND_ACTIONS.indexOf(request.data) !== -1){
-      this[request.data]();
-    }
-  }
-
-  /**
    * Spread a radio status through the app.
    *
    * @api
    * @param {String} radioState
    */
   dispatchRadioState(transition) {
-    const bus = browser.runtime.connect(browser.runtime.id);
-    bus.postMessage({ state: transition.toState });
+    const bus = browser.runtime.connect();
+    const {preferences} = this;
+    const state = transition.toState;
+
+    preferences.set('radio.state', state);
+    this.radioStateBadgeHandler(state);
+    bus.postMessage({ state });
   }
 
   /**
@@ -219,12 +160,11 @@ export default class Background {
    * @param {Array.<Broadcast>} broadcasts
    */
   dispatchBroadcasts(broadcasts) {
-    const bus = browser.runtime.connect(browser.runtime.id);
+    const {preferences} = this;
+    const bus = browser.runtime.connect();
 
-    bus.postMessage({
-      channel: 'broadcasts',
-      data: broadcasts
-    });
+    preferences.set('broadcasts', broadcasts);
+    bus.postMessage({ broadcasts });
   }
 
   /**
@@ -233,13 +173,9 @@ export default class Background {
    * @api
    * @param {Object} message
    */
-  radioStateBadgeHandler(message) {
-    if (!message.state){
-      return;
-    }
-
+  radioStateBadgeHandler(newState) {
     Object.keys(BADGE_STATES).some(state => {
-      if (message.state !== state){
+      if (newState !== state){
         return false;
       }
 
@@ -252,44 +188,19 @@ export default class Background {
   }
 
   /**
-   * Returns relevant informations about the state of the current radio playback
-   *
-   * @api
-   * @param {Object} message
-   */
-  radioStateHandler(message) {
-    if (message.channel === "radio.get"){
-      // sendResponse({
-      //   volume: this.radio.volume(),
-      //   state: this.radio.state
-      // });
-    }
-  }
-
-  /**
    * Toggle the radio on or off
    *
    * @api
    * @param {Object} message
    */
-  radioToggleStateHandler(message) {
-    if (message.channel === "radio.toggle"){
+  radioStateHandler(message) {
+    if ('radio.toggle' in message){
       this.radio.toggle();
     }
-  }
 
-  /**
-   * Handles any volume change request and adjust it accordingly.
-   *
-   * @api
-   * @param {Object} message
-   */
-  radioVolumeHandler(message) {
-    if (!message.data || (message.channel !== "preferences" && message.data.key !== "player.volume")){
-      return;
+    if ('radio.play' in message){
+      this.radio.play();
     }
-
-    this.radio.volume(message.data.value);
   }
 
   /**
