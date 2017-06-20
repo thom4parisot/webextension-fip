@@ -61,7 +61,7 @@
       <li class="main">
         <a href="http://www.fipradio.fr/archives-antenne" class="iconify" target="_blank">{{'archives' | i18n}}</a>
       </li>
-      <li ng-controller="ScrobblingController">
+      <li ng-controller="ScrobblingController" ng-hide="{true}">
         <input type="checkbox" ng-model="scrobblingEnabled" ng-true-value="'true'" ng-false-value="'false'" id="scrobbling-switch" ng-disabled="!lastfmUsername">
         <label for="scrobbling-switch" ng-show="!lastfmUsername" ng-click="startAuthentication()">{{'enable_scrobbling' | i18n}}</label>
         <label for="scrobbling-switch" ng-show="lastfmUsername" ng-bind-html="'scrobbling_as' | i18n:lastfmUsername | unsafe"></label>

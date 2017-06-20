@@ -14,11 +14,9 @@ export default function ScrobblingController($scope, chrome, preferences){
 
   $scope.startAuthentication = function(){
     const cb = chrome.getRedirectURL('auth.html');
-
-    chrome.notify(
-      'lastfm.auth.request',
-      `http://www.last.fm/api/auth?cb=${cb}`
-    );
+    const authUrl = `http://www.last.fm/api/auth?cb=${cb}`;
+    console.log(authUrl);
+    chrome.notify('lastfm.auth.request', authUrl);
   };
 }
 

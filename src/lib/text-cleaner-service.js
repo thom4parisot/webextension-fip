@@ -2,6 +2,12 @@ import angular from 'angular';
 import * as TextCleaner from './text-cleaner';
 
 export default angular.module('TextCleanerFilters', [])
+  .filter('isBuffering', () => {
+    return (...args) => {
+      console.log(args);
+      return true;
+    }
+  })
   .filter('album', function(){
     return TextCleaner.doAlbumTitle.bind(TextCleaner);
   })
