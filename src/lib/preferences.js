@@ -13,13 +13,13 @@ const STORAGE_STRATEGIES = {
      * @see Preferences.prototype.get
      */
     get (key){
-      return localStorage.getItem(key);
+      return JSON.parse(localStorage.getItem(key));
     },
     /**
      * @see Preferences.prototype.set
      */
     set (key, value){
-      localStorage.setItem(key, value);
+      localStorage.setItem(key, JSON.stringify(value));
     },
     /**
      * @see Preferences.prototype.delete
@@ -89,5 +89,3 @@ export default class Preferences{
     this.strategy.del(this.namespace + key);
   };
 }
-
-

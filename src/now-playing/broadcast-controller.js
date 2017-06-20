@@ -8,20 +8,14 @@ import Broadcast from '../lib/broadcast';
  * @param {Broadcast} Broadcast
  * @constructor
  */
-export default function BroadcastController($scope, chrome){
+export default function BroadcastController($scope, chrome, preferences){
   const getPosition = Broadcast.getPositionTracker();
-  const stubs = [new Broadcast()];
 
-  $scope.broadcasts = stubs;
-  $scope.current_index = null;
-
-  chrome.addListener(data => {
-    console.log(data);
-  })
+  $scope.broadcasts = preferences.get('broadcasts');
+  $scope.current_index = getPosition($scope.broadcasts, null);
 
   chrome.on("broadcasts", function(broadcasts){
-    console.log(broadcasts);
-    $scope.broadcasts = broadcasts.length ? broadcasts : stubs;
+    $scope.broadcasts = broadcasts;
     $scope.current_index = getPosition(broadcasts, $scope.current_index);
     $scope.$apply("");
   });
@@ -39,4 +33,4 @@ export default function BroadcastController($scope, chrome){
   };
 }
 
-BroadcastController.$inject = ['$scope', 'chrome'];
+BroadcastController.$inject = ['$scope', 'chrome', 'preferences'];

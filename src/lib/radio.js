@@ -53,7 +53,7 @@ const Radio = machina.Fsm.extend({
         this.transition('buffering');
 
         this.preparePlaybackObject();
-        //this.playbackObject.play();
+        this.playbackObject.play();
       }
     },
     "buffering": {
@@ -71,7 +71,7 @@ const Radio = machina.Fsm.extend({
       play: function playOnErrored(){
         this.transition('buffering');
 
-        //this.playbackObject.play();
+        this.playbackObject.play();
       },
       "stop": "stopped",
       "network.offline": "stopped"
