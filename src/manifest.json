@@ -7,7 +7,9 @@
   "offline_enabled": false,
   "default_locale": "fr",
   "background": {
-    "page": "background/index.html",
+    "scripts": [
+      "background/bundle.js"
+    ],
     "persistent": false
   },
   "permissions": [
