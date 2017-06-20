@@ -16,6 +16,7 @@
     "build:now-playing": "browserify -e ./src/now-playing/app.js -p [ parcelify -o ./src/now-playing/bundle.css ] -o ./src/now-playing/bundle.js",
     "build:background": "browserify -e ./src/background/app.js -o ./src/background/bundle.js",
     "start": "static -H ${npm_package_http_headers} --gzip -p ${PORT:-3000} .",
+    "version": "sed -i '' -e \"s/\\\"version\\\": \\\".*\\\"/\\\"version\\\": \\\"${npm_package_version}\\\"/\" src/manifest.json && git add src/manifest.json",
     "watch": "BUILD_CHANNEL=dev npm-run-all --parallel 'watch:*' start",
     "watch:background": "watchify -dv -e ./src/background/app.js -o ./src/background/bundle.js",
     "watch:now-playing": "watchify -dv -e ./src/now-playing/app.js -p [ parcelify -wo ./src/now-playing/bundle.css ] -o ./src/now-playing/bundle.js"
