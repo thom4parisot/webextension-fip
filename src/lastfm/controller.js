@@ -56,7 +56,7 @@ export default class ScrobblingController {
           chrome.identity.launchWebAuthFlow({
             interactive: true,
             url: `${data}&api_key=${LAST_FM_KEY}`
-          }, url => this.handleAuthResponse(process, url))
+          }, url => this.handleAuthResponse(process, url));
         }
       });
     });
