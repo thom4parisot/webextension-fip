@@ -11,14 +11,14 @@ export default angular.module('ChromeService', [])
     return browser.i18n.getMessage.bind(browser.i18n);
   })
   .factory('preferences', () => new Preferences("localStorage"))
+  .factory('browser', () => browser)
   .factory('chrome', function(){
     return {
       on: (channel, callback) => {
         browser.runtime.onConnect.addListener(port => {
           port.onMessage.addListener(message => {
-            if (message.channel === channel){
-              console.log('chrome.on#' + channel, message);
-              callback(message.data);
+            if (channel in message){
+              callback(message[channel]);
             }
           });
         });
@@ -26,11 +26,6 @@ export default angular.module('ChromeService', [])
       notify: (channel, data = null) => {
         const port = browser.runtime.connect();
         port.postMessage({ [channel]: data });
-      },
-      addListener: done => {
-        browser.runtime.onConnect.addListener(port => {
-          port.onMessage.addListener(message => done(message));
-        });
       },
       getRedirectURL: browser.identity.getRedirectURL.bind(browser.identity),
       getUrl: path => browser.runtime.getURL(path),

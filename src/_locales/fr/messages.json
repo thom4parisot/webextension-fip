@@ -60,5 +60,8 @@
   },
   "saved": {
     "message": "Enregistré ! 👌"
+  },
+  "change_settings": {
+    "message": "Changer mes réglage"
   }
 }

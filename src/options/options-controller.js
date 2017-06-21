@@ -19,6 +19,8 @@ export default function OptionsController($scope, chrome, preferences, $timeout)
     preferences.set('playback.station', $scope.currentStation);
     preferences.set('playback.quality', $scope.quality);
 
+    chrome.notify('playback.reload');
+
     $timeout(() => $scope.saveStatus = 'idle', 2000);
   };
 }

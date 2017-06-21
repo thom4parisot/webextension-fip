@@ -37,16 +37,14 @@ export default class Steps {
   }
 }
 
-export class Step {
-  static isBefore (step, date = Date.now()) {
-    return new Date(step.end * 1000).getTime() < date.getTime();
-  }
+export function isBefore (step, date = new Date()) {
+  return new Date(step.end * 1000).getTime() < date.getTime();
+}
 
-  static isNow (step, date = Date.now()) {
-    return withinBoundaries(date)(step);
-  }
+export function isCurrent (step, date = new Date()) {
+  return withinBoundaries(date)(step);
+}
 
-  static isAfter (step, date = Date.now()) {
-    return new Date(step.start * 1000).getTime() > date.getTime();
-  }
+export function isAfter (step, date = new Date()) {
+  return new Date(step.start * 1000).getTime() > date.getTime();
 }

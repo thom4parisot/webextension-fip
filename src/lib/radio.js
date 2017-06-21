@@ -12,19 +12,13 @@ const Radio = machina.Fsm.extend({
   "initialState": "stopped",
 
   // Behavior config
-  "playbackUrl": "https://direct.fipradio.fr/live/fip-midfi.mp3",
-  //"playbackUrl": "https://direct.fipradio.fr/live/fip-lofi.mp3",
-  //"playbackUrl": "https://direct.fipradio.fr/live/fip-webradio1.mp3",
-  //"playbackUrl": "https://direct.fipradio.fr/live/fip-webradio2.mp3",
-  //"playbackUrl": "https://direct.fipradio.fr/live/fip-webradio3.mp3",
-  //"playbackUrl": "https://direct.fipradio.fr/live/fip-webradio4.mp3",
-  //"playbackUrl": "https://direct.fipradio.fr/live/fip-webradio5.mp3",
-  //"playbackUrl": "https://direct.fipradio.fr/live/fip-webradio6.mp3",
-  //"playbackUrl": "https://direct.fipradio.fr/live/fip-webradio8.mp3",
+  "playbackUrl": '',
 
   // It should be fine since this point
   "playbackObject": '',
-  "initialize": function(){
+  "initialize": function({ url }){
+    this.setPlaybackUrl(url);
+
     // publicly exposing audio states change
     this.on('transition', transition => {
       if (transition.fromState !== transition.toState){
@@ -52,7 +46,6 @@ const Radio = machina.Fsm.extend({
       play: function playOnStopped(){
         this.transition('buffering');
 
-        this.preparePlaybackObject();
         this.playbackObject.play();
       }
     },
@@ -83,6 +76,10 @@ const Radio = machina.Fsm.extend({
    * @api
    */
   "play": function(){
+    if (this.state !== 'playing') {
+      this.preparePlaybackObject();
+    }
+
     this.handle('play');
   },
   /**
@@ -98,7 +95,7 @@ const Radio = machina.Fsm.extend({
    */
   "toggle": function(){
     //jshint expr:true
-    this.state !== 'stopped' ? this.handle('stop') : this.handle('play');
+    this.state !== 'stopped' ? this.stop() : this.play();
   },
 
   /**
@@ -124,6 +121,10 @@ const Radio = machina.Fsm.extend({
     });
 
     this.playbackObject = audio;
+  },
+
+  "setPlaybackUrl": function(url){
+    this.playbackUrl = url;
   }
 });
 

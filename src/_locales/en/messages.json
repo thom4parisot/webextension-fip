@@ -63,5 +63,8 @@
   },
   "saved": {
     "message": "Saved! 👌"
+  },
+  "change_settings": {
+    "message": "Update playback settings"
   }
 }

@@ -1,8 +1,9 @@
 import browser from 'webextension-polyfill';
 
 import Radio from '../lib/radio';
-import Broadcast from '../lib/broadcast';
+import Steps from '../lib/steps';
 import Preferences from '../lib/preferences';
+import {getStationBroadcasts, getStationFeed} from '../lib/stations';
 
 /**
  * Badge appearance and behavior on click.
@@ -60,7 +61,12 @@ export default class Background {
    * @api
    */
   bootstrap() {
-    this.radio = new Radio();
+    const {preferences} = this;
+
+    const station = preferences.get('playback.station', 'fip-paris');
+    const quality = preferences.get('playback.quality', 'hd');
+
+    this.radio = new Radio({ url: getStationFeed(station, quality) });
 
     this.setupChannelBadge();
     this.registerEvents();
@@ -86,6 +92,10 @@ export default class Background {
       port.onMessage.addListener(message => {
         this.radioStateHandler(message);
       });
+
+      port.onMessage.addListener(message => {
+        this.handlePlaybackChanges(message);
+      });
     });
 
     // Handling `network.online` or `network.offline` states
@@ -107,12 +117,13 @@ export default class Background {
    * @param {Function=} done If not defined, will trigger the data in the "broadcasts" channel
    */
   requestBroadcasts() {
-    fetch(`${Broadcast.getUri()}?_=${Date.now()}`)
+    const {preferences} = this;
+    const station = preferences.get('playback.station', 'fip-paris');
+
+    fetch(`${getStationBroadcasts(station)}?_=${Date.now()}`, {mode: 'cors'})
       .then(response => response.json())
       .then(response => {
-        const broadcasts = Broadcast.parseResponse(response);
-
-        this.dispatchBroadcasts(broadcasts);
+        this.dispatchBroadcasts(Steps.getAll(response));
       });
   }
 
@@ -162,7 +173,7 @@ export default class Background {
   dispatchBroadcasts(broadcasts) {
     const {preferences} = this;
     const bus = browser.runtime.connect();
-
+    
     preferences.set('broadcasts', broadcasts);
     bus.postMessage({ broadcasts });
   }
@@ -200,6 +211,17 @@ export default class Background {
 
     if ('radio.play' in message){
       this.radio.play();
+    }
+  }
+
+  handlePlaybackChanges(message) {
+    if ('playback.reload' in message) {
+      const {preferences} = this;
+
+      const station = preferences.get('playback.station');
+      const quality = preferences.get('playback.quality');
+
+      this.radio.setPlaybackUrl(getStationFeed(station, quality));
     }
   }
 
