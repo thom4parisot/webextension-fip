@@ -7,14 +7,11 @@
  */
 export default function RadioController($scope, chrome, preferences){
   $scope.status = preferences.get('radio.state');
-
   $scope.toggle = () => chrome.notify('radio.toggle');
 
-  chrome.addListener(function(request){
-    if (request.state){
-      $scope.status = request.state;
-      $scope.$apply('');
-    }
+  chrome.on('state', status => {
+    $scope.status = status;
+    $scope.$apply('');
   });
 }
 

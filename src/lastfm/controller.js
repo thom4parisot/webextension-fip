@@ -63,7 +63,6 @@ export default class ScrobblingController {
   };
 
   handleAuthResponse(process, url) {
-    console.log(url);
     url.replace(/token=([a-z0-9]{32})/, (m, token) => {
       this.updateUserInfos(process, token);
     });

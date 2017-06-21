@@ -1,7 +1,12 @@
 import angular from 'angular';
-import * as TextCleaner from './text-cleaner';
+import * as TextCleaner from '../text-cleaner';
 
 export default angular.module('TextCleanerFilters', [])
+  .filter('startsWith', function(){
+    return (data, prefix) => Object.keys(data)
+      .filter(key => key.indexOf(prefix) === 0)
+      .reduce((obj, key) => Object.assign(obj, { [key]: data[key] }), {});
+  })
   .filter('album', function(){
     return TextCleaner.doAlbumTitle.bind(TextCleaner);
   })

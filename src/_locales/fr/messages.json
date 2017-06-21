@@ -36,5 +36,32 @@
   },
   "enable_scrobbling": {
     "message": "Connexion à last.fm"
+  },
+  "listen_to": {
+    "message": "Écouter FIP"
+  },
+  "rather_in": {
+    "message": "Plutôt en"
+  },
+  "by_city": {
+    "message": "Par ville"
+  },
+  "by_theme": {
+    "message": "Par thème"
+  },
+  "sd": {
+    "message": "SD"
+  },
+  "hd": {
+    "message": "HD"
+  },
+  "save": {
+    "message": "Enregistrer"
+  },
+  "saved": {
+    "message": "Enregistré ! 👌"
+  },
+  "change_settings": {
+    "message": "Changer mes réglage"
   }
 }

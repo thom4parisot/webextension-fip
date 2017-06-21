@@ -1,5 +1,4 @@
 src/*/*.map
 
-src/background/bundle.js
-src/now-playing/bundle.js
+src/*/bundle.js
 src/now-playing/*.css
