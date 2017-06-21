@@ -1,8 +1,8 @@
 "use strict";
 
 import angular from 'angular';
-import ChromeService from './chrome-service';
-import TextCleanerFilters from '../lib/text-cleaner-service';
+import ChromeService from '../lib/angular/chrome-service';
+import TextCleanerFilters from '../lib/angular/text-cleaner-service';
 
 import BroadcastController from './broadcast-controller';
 import RadioController from './radio-controller';

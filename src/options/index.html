@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html ng-app="options" ng-csp>
+<head>
+  <meta charset="UTF-8">
+  <title>My Test Extension Options</title>
+  <style>
+    body: { padding: 10px; }
+    label, select, input, button[type="submit"] {
+      cursor: pointer;
+    }
+    button[type] {
+      padding-left: 3em;
+      padding-right: 3em;
+    }
+    .ng-hide {
+      /* this is just another form of hiding an element */
+      display: block!important;
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
+    .label__group {
+      display: inline-block;
+      margin-right: 1em;
+      text-align: right;
+      width: 30%;
+    }
+  </style>
+</head>
+
+<body ng-controller="OptionsController">
+  <label>
+    <span class="label__group">{{'listen_to' | i18n}}</span>
+
+    <select name="stations" ng-model="currentStation" required>
+      <optgroup label="{{'by_city' | i18n}}">
+        <option ng-repeat="(id, station) in stations | startsWith:'fip-'" value="{{id}}">{{ station.name }}</option>
+      </optgroup>
+      <optgroup label="{{'by_theme' | i18n}}">
+        <option ng-repeat="(id, station) in stations | startsWith:'theme-'" value="{{id}}">{{ station.name }}</option>
+      </optgroup>
+    </select>
+  </label>
+
+  <p>
+    <span class="label__group">{{'rather_in' | i18n}}</span>
+
+    <label>
+      <input type="radio" name="quality" ng-model="quality" value="sd" ng-true-value="'sd'">
+      {{'sd' | i18n}}
+    </label>
+
+    <label>
+      <input type="radio" name="quality" ng-model="quality" value="hd" ng-true-value="'hd'">
+      {{'hd' | i18n}}
+    </label>
+  </p>
+
+  <p>
+    <span class="label__group"></span>
+
+    <button type="submit" ng-click="save()" ng-show="saveStatus == 'idle'">{{'save' | i18n}}</button>
+    <button type="button" disabled ng-show="saveStatus == 'saved'">{{'saved' | i18n}}</button>
+  </p>
+
+  <script src="bundle.js"></script>
+</body>
+</html>

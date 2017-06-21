@@ -1,6 +1,6 @@
 import angular from 'angular';
 import browser from 'webextension-polyfill';
-import Preferences from '../lib/preferences.js';
+import Preferences from '../preferences.js';
 
 /**
  * Chrome API Abstraction.

@@ -39,5 +39,29 @@
   },
   "enable_scrobbling": {
     "message": "Connect to last.fm"
+  },
+  "listen_to": {
+    "message": "Listen to FIP"
+  },
+  "rather_in": {
+    "message": "Rather in"
+  },
+  "by_city": {
+    "message": "By French Town"
+  },
+  "by_theme": {
+    "message": "By Theme"
+  },
+  "sd": {
+    "message": "SD"
+  },
+  "hd": {
+    "message": "HD"
+  },
+  "save": {
+    "message": "Save"
+  },
+  "saved": {
+    "message": "Saved! 👌"
   }
 }
