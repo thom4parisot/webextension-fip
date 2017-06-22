@@ -1,98 +1,84 @@
 import * as TextCleaner from '../lib/text-cleaner';
 import Broadcast from '../lib/broadcast';
+import Steps from '../lib/steps';
 import LastfmAPI from '../lib/lastfm';
 import browser from 'webextension-polyfill';
 
-const LAST_FM_KEY = process.env.LAST_FM_KEY;
-
 export default class ScrobblingController {
-  constructor (process) {
-    this.previousBroadcast = new Broadcast();
+  constructor ({ preferences }) {
+    this.previousBroadcast = {};
+    this.preferences = preferences;
 
-    this.setupClient(process);
-    this.setupEvents(process);
+    this.client = new LastfmAPI(preferences.get('lastfm.token'));
   }
 
-  static init(process) {
-    return new ScrobblingController(process);
+  static init(options) {
+    return new ScrobblingController(options);
   };
 
-  setupClient(process) {
-    this.client = new LastfmAPI(process.preferences.get('lastfm.token'));
-  };
+  updateUserInfos(token){
+    const {preferences} = this;
 
-  updateUserInfos(process, token){
-    const {preferences} = process;
-
-    this.client.getSessionKey(token).then(data => {
+    return this.client.getSessionKey(token).then(data => {
       this.client.session_key = data.sessionKey;
 
       preferences.set('lastfm.token', data.sessionKey);
       preferences.set('lastfm.username', data.userName);
       preferences.set('lastfm.scrobbling', true);
 
-      chrome.notify('lastfm.auth.success', data);
+      const port = browser.runtime.connect();
+      port.postMessage('lastfm.auth.success');
+
+      return data;
     });
   };
 
-  setupEvents(process) {
-    const {preferences} = process;
+  scrobble(steps) {
+    if (this.preferences.get('radio.state') !== 'playing' || this.preferences.get('lastfm.scrobbling', true) === false) {
+      return;
+    }
 
+    const current = Steps.getCurrent(steps);
 
-    browser.runtime.onConnect.addListener(port => {
-      port.onMessage.addListener(data => {
-        if ('broadcasts' in data && preferences.get('radio.state') === 'playing') {
-          const current = Broadcast.getCurrent(data);
+    this.processNowPlaying(current);
+    this.processScrobbling(current);
 
-          this.processNowPlaying(current);
-          this.processScrobbling(current);
+    if (current && current.title !== this.previousBroadcast.title) {
+      this.previousBroadcast = current;
+    }
+  }
 
-          if (current && current.title !== this.previousBroadcast.title) {
-            this.previousBroadcast = current;
-          }
-        }
-
-        if ('lastfm.auth.request' in data) {
-          chrome.identity.launchWebAuthFlow({
-            interactive: true,
-            url: `${data}&api_key=${LAST_FM_KEY}`
-          }, url => this.handleAuthResponse(process, url));
-        }
-      });
-    });
-  };
-
-  handleAuthResponse(process, url) {
-    url.replace(/token=([a-z0-9]{32})/, (m, token) => {
-      this.updateUserInfos(process, token);
+  handleAuthResponse(url) {
+    url.replace(/token=([^&]+)/, (m, token) => {
+      this.updateUserInfos(token);
     });
   }
 
-  processNowPlaying(current) {
-    if (!this.client.isConfigured() || !(current instanceof Broadcast)) {
+  processNowPlaying(step) {
+    if (!this.client.isConfigured() || !step) {
       return;
     }
 
     const previous = this.previousBroadcast;
 
-    if (current && current.artist && current.title !== previous.title && current.artist !== previous.artist) {
+    if (step && step.authors && step.title !== previous.title && step.authors !== previous.authors) {
       this.client.nowPlaying({
-        artist: TextCleaner.getMainArtistName(current.artist),
-        track: TextCleaner.doTrackTitle(current.title)
+        artist: step.authors,
+        track: TextCleaner.doTrackTitle(step.title)
       });
     }
   }
 
-  processScrobbling(current) {
-    if (!this.client.isConfigured() || !(current instanceof Broadcast)) {
+  processScrobbling(step) {
+    if (!this.client.isConfigured() || !step) {
       return;
     }
 
     var previous = this.previousBroadcast;
 
-    if (current && previous.artist && current.title !== previous.title && current.artist !== previous.artist) {
+    if (step && previous.authors && step.title !== previous.title && step.authors !== previous.authors) {
       this.client.scrobble({
-        artist: TextCleaner.getMainArtistName(previous.artist),
+        artist: previous.authors,
         track: TextCleaner.doTrackTitle(previous.title),
         when: Date.now() - 120 * 1000 // let's pretend we listened to it 2 minutes ago
       });

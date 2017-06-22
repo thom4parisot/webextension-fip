@@ -1,3 +1,9 @@
+String.prototype.toCamelCase = function () {
+  return this
+    .toLocaleLowerCase()
+    .replace(/(^\w|[\\\/\( ]\w)/g, (m, letter) => letter.toLocaleUpperCase());
+};
+
 /**
  * Clean the album title.
  *
@@ -11,7 +17,10 @@
  * @returns {String}
  */
 export function doAlbumTitle(text) {
-  return text.replace(/\(?\s*(cd|single|ep|lp) promo( fip)?\s*\)?/i, '').trim();
+  return text
+    .replace(/\(?\s*(cd|single|ep|lp) promo( fip)?\s*\)?/i, '')
+    .trim()
+    .toCamelCase();
 }
 
 /**
@@ -27,7 +36,11 @@ export function doAlbumTitle(text) {
  * @returns {String}
  */
 export function doTrackTitle(text) {
-  return text.replace(/\([^\)]+(?!\))$/g, '').trim();
+  return text
+    .replace(/\(?\s*(cd|singles?|ep|lp)( : )?/i, '')
+    .replace(/\([^\)]+(?!\))$/g, '')
+    .trim()
+    .toCamelCase();
 }
 
 /**
@@ -44,13 +57,16 @@ export function getArtistNames(text){
   if (text.indexOf('/') !== -1 && /^([^\/]+(\/|$))+$/.test(text)){
     text.replace(/([a-z]{2,3} )?([^\/]+)(\/|$)/g, function(m, position, name){
       artists.push({
-        name: name.trim(),
+        name: name.trim().toCamelCase(),
         position: position ? position.trim() : null
       });
     });
   }
   else{
-    artists.push({ name: text.trim(), role: null });
+    artists.push({
+      name: text.trim().toCamelCase(),
+      role: null
+    });
   }
 
   return artists;
@@ -67,7 +83,9 @@ export function getArtistNames(text){
  * @returns {String}
  */
 export function doArtistName(text){
-  return getArtistNames(text).map(artist => artist.name).join(', ');
+  return getArtistNames(text)
+    .map(artist => artist.name)
+    .join(', ');
 }
 
 /**

@@ -27,20 +27,20 @@
 
       <article class="panel" id="content">
         <h2 class="title" ng-show="broadcast.title && broadcast.authors">
-          <a ng-href="http://www.last.fm/search?q={{broadcast.title | track}}+{{broadcast.authors | mainArtist}}" target="_blank">{{broadcast.title | track}}</a>
+          <a ng-href="https://www.last.fm/search/tracks?q={{broadcast.title | track}}+{{broadcast.authors | artist}}" target="_blank">{{broadcast.title | track}}</a>
         </h2>
 
         <h2 class="title" ng-show="!broadcast.authors">{{broadcast.title || ('no_information' | i18n)}}</h2>
 
         <ul class="metadata">
           <li class="album-title icon-cd" ng-show="broadcast.titreAlbum">
-            <a ng-href="http://www.last.fm/search?q={{broadcast.titreAlbum | album}}+{{broadcast.authors | mainArtist}}&amp;type=album" target="_blank">{{broadcast.titreAlbum | album}}</a>
+            <a ng-href="https://www.last.fm/search/albums?q={{broadcast.titreAlbum | album}}+{{broadcast.authors | mainArtist}}" target="_blank">{{broadcast.titreAlbum | album}}</a>
           </li>
           <li class="album-date icon-calendar" ng-show="broadcast.titreAlbum && broadcast.anneeEditionMusique">
             <date>{{broadcast.anneeEditionMusique}}</date>
           </li>
           <li class="artist icon-user" ng-show="broadcast.performers">
-            <a ng-href="http://www.last.fm/search?q={{broadcast.performers | mainArtist}}&amp;type=artist" target="_blank">{{broadcast.performers | artist}}</a>
+            <a ng-href="https://www.last.fm/search/artists?q={{broadcast.authors | artist}}" target="_blank">{{broadcast.performers | artist}}</a>
           </li>
         </ul>
       </article>
@@ -63,11 +63,6 @@
       </li>
       <li>
         <a href="#settings">{{ 'change_settings' | i18n }}</a>
-      </li>
-      <li ng-controller="ScrobblingController" ng-hide="{true}">
-        <input type="checkbox" ng-model="scrobblingEnabled" ng-true-value="'true'" ng-false-value="'false'" id="scrobbling-switch" ng-disabled="!lastfmUsername">
-        <label for="scrobbling-switch" ng-show="!lastfmUsername" ng-click="startAuthentication()">{{'enable_scrobbling' | i18n}}</label>
-        <label for="scrobbling-switch" ng-show="lastfmUsername" ng-bind-html="'scrobbling_as' | i18n:lastfmUsername | unsafe"></label>
       </li>
     </ul>
   </nav>
