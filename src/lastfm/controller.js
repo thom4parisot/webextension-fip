@@ -63,7 +63,7 @@ export default class ScrobblingController {
 
     if (step && step.authors && step.title !== previous.title && step.authors !== previous.authors) {
       this.client.nowPlaying({
-        artist: TextCleaner.getMainArtistName(step.authors),
+        artist: step.authors,
         track: TextCleaner.doTrackTitle(step.title)
       });
     }
@@ -78,7 +78,7 @@ export default class ScrobblingController {
 
     if (step && previous.authors && step.title !== previous.title && step.authors !== previous.authors) {
       this.client.scrobble({
-        artist: TextCleaner.getMainArtistName(previous.authors),
+        artist: previous.authors,
         track: TextCleaner.doTrackTitle(previous.title),
         when: Date.now() - 120 * 1000 // let's pretend we listened to it 2 minutes ago
       });
