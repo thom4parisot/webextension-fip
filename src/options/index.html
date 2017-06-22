@@ -5,6 +5,15 @@
   <title>{{ 'extension_name' | i18n }}</title>
   <style>
     body: { padding: 10px; }
+    a {
+      border-bottom: 1px solid #808080;
+      color: #e2007a;
+      text-decoration: none;
+    }
+    a:hover, a:focus {
+      border-bottom-color: transparent;
+    }
+
     label, select, input, button[type="submit"] {
       cursor: pointer;
     }
@@ -23,7 +32,14 @@
       display: inline-block;
       margin-right: 1em;
       text-align: right;
+      vertical-align: top;
       width: 30%;
+    }
+    label .label__group {
+      vertical-align: middle;
+    }
+    .option__group {
+      display: inline-block;
     }
   </style>
 </head>
@@ -54,6 +70,23 @@
       <input type="radio" name="quality" ng-model="quality" value="hd" ng-true-value="'hd'">
       {{'hd' | i18n}}
     </label>
+  </p>
+
+  <p ng-controller="ScrobblingController">
+    <span class="label__group">Last.fm</span>
+
+    <span class="option__group" ng-show="lastfmUsername">
+      <span ng-bind-html="'scrobbling_as' | i18n:lastfmUsername:lastfmUserProfile | unsafe"></span>
+      •
+      <a href="#logout" ng-click="disconnect($event)">{{ 'disconnect' | i18n }}</a>
+
+      <br>
+
+      <a href="#pause" ng-click="toggle()" ng-show="scrobblingEnabled">{{ 'pause_scrobbling' | i18n }}</a>
+      <a href="#scrobble" ng-click="toggle()" ng-show="!scrobblingEnabled">{{ 'resume_scrobbling' | i18n }}</a>
+    </span>
+
+    <a ng-href="#" ng-click="startAuthentication($event)" ng-show="!lastfmUsername">{{ 'link_lastfm' | i18n }}</a>
   </p>
 
   <p>

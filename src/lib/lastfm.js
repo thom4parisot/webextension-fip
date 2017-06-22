@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import request from 'superagent';
 
 /*
- Securely provided by .travis.yml + envify transform
+ "Securely" provided by .travis.yml + envify transform
  */
 const LAST_FM_KEY = process.env.LAST_FM_KEY;
 const LAST_FM_SECRET = process.env.LAST_FM_SECRET;

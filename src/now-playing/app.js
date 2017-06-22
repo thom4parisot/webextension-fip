@@ -7,7 +7,6 @@ import StepsFilters from '../lib/angular/steps-service';
 
 import BroadcastController from './broadcast-controller';
 import RadioController from './radio-controller';
-import ScrobblingController from './scrobbling-controller';
 
 /**
  * Now Playing App module.
@@ -24,8 +23,5 @@ document.querySelector('a[href="#settings"]').addEventListener('click', (e) => {
   chrome.runtime.openOptionsPage();
 });
 
-App.filter('unsafe', $sce => $sce.trustAsHtml);
-
 App.controller('BroadcastController', BroadcastController);
 App.controller('RadioController', RadioController);
-App.controller('ScrobblingController', ScrobblingController);

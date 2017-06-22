@@ -5,6 +5,12 @@ import Steps from '../lib/steps';
 import Preferences from '../lib/preferences';
 import {getStationBroadcasts, getStationFeed} from '../lib/stations';
 
+/*
+ "Securely" provided by .travis.yml + envify transform
+ */
+const LAST_FM_KEY = process.env.LAST_FM_KEY;
+
+
 /**
  * Badge appearance and behavior on click.
  * Mainly tricking the fact the `onClicked` event is fired when no popup file is bound to the browserAction.
@@ -37,9 +43,10 @@ const BADGE_STATES = {
  * @constructor
  */
 export default class Background {
-  constructor(){
+  constructor({ lastfm }){
     this.channel = process.env.BUILD_CHANNEL || "stable";
     this.preferences = new Preferences("localStorage");
+    this.lastfm = lastfm.init({ preferences: this.preferences });
   }
 
   /**
@@ -47,10 +54,10 @@ export default class Background {
    *
    * @returns {Background}
    */
-  static init() {
-    const instance = new Background();
+  static init(options) {
+    const instance = new Background(options);
 
-    instance.bootstrap();
+    instance.bootstrap(options);
 
     return instance;
   }
@@ -62,6 +69,8 @@ export default class Background {
    */
   bootstrap() {
     const {preferences} = this;
+
+    preferences.del('radio.state');
 
     const station = preferences.get('playback.station', 'fip-paris');
     const quality = preferences.get('playback.quality', 'hd');
@@ -96,6 +105,10 @@ export default class Background {
       port.onMessage.addListener(message => {
         this.handlePlaybackChanges(message);
       });
+
+      port.onMessage.addListener(message => {
+        this.handleLastfmAuth(message);
+      });
     });
 
     // Handling `network.online` or `network.offline` states
@@ -119,11 +132,19 @@ export default class Background {
   requestBroadcasts() {
     const {preferences} = this;
     const station = preferences.get('playback.station', 'fip-paris');
+    const url = getStationBroadcasts(station);
 
-    fetch(`${getStationBroadcasts(station)}?_=${Date.now()}`, {mode: 'cors'})
+    return fetch(`${url}?_=${Date.now()}`, {mode: 'cors'})
       .then(response => response.json())
-      .then(response => {
-        this.dispatchBroadcasts(Steps.getAll(response));
+      .then(response => Steps.getAll(response))
+      .then(steps => {
+        preferences.set('broadcasts', steps);
+
+        return steps;
+      })
+      .then(steps => {
+        this.dispatchBroadcasts(steps);
+        this.lastfm.scrobble(steps);
       });
   }
 
@@ -173,8 +194,7 @@ export default class Background {
   dispatchBroadcasts(broadcasts) {
     const {preferences} = this;
     const bus = browser.runtime.connect();
-    
-    preferences.set('broadcasts', broadcasts);
+
     bus.postMessage({ broadcasts });
   }
 
@@ -222,6 +242,18 @@ export default class Background {
       const quality = preferences.get('playback.quality');
 
       this.radio.setPlaybackUrl(getStationFeed(station, quality));
+      this.requestBroadcasts();
+    }
+  }
+
+  handleLastfmAuth(message) {
+    if ('lastfm.auth.request' in message) {
+      const authUrl = message['lastfm.auth.request'];
+
+      chrome.identity.launchWebAuthFlow({
+        interactive: true,
+        url: `${authUrl}&api_key=${LAST_FM_KEY}`
+      }, url => this.lastfm.handleAuthResponse(url));
     }
   }
 

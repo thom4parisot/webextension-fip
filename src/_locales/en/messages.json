@@ -30,10 +30,13 @@
     "message": "Last.fm Configuration"
   },
   "scrobbling_as": {
-    "message": "Scrobbling as <span>$username$</span>",
+    "message": "Scrobbling as <a href='$url$' target='_blank'>$username$</a>",
     "placeholders": {
       "username": {
         "content": "$1"
+      },
+      "url": {
+        "content": "$2"
       }
     }
   },
@@ -66,5 +69,17 @@
   },
   "change_settings": {
     "message": "Update playback settings"
+  },
+  "pause_scrobbling": {
+    "message": "Pause scrobbling"
+  },
+  "resume_scrobbling": {
+    "message": "Resume scrobbling"
+  },
+  "link_lastfm": {
+    "message": "Link your last.fm account"
+  },
+  "disconnect": {
+    "message": "Disconnect"
   }
 }

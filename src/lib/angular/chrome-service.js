@@ -8,7 +8,7 @@ import Preferences from '../preferences.js';
  */
 export default angular.module('ChromeService', [])
   .filter('i18n', function(){
-    return browser.i18n.getMessage.bind(browser.i18n);
+    return (key, ...args) => browser.i18n.getMessage(key, args);
   })
   .factory('preferences', () => new Preferences("localStorage"))
   .factory('browser', () => browser)
@@ -17,7 +17,7 @@ export default angular.module('ChromeService', [])
       on: (channel, callback) => {
         browser.runtime.onConnect.addListener(port => {
           port.onMessage.addListener(message => {
-            if (channel in message){
+            if (message === channel || channel in message){
               callback(message[channel]);
             }
           });

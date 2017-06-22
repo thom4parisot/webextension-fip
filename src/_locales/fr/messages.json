@@ -27,10 +27,13 @@
     "message": "À venir"
   },
   "scrobbling_as": {
-    "message": "Scrobble en tant que <span>$username$</span>",
+    "message": "Scrobble en tant que <a href='$url$' target='_blank'>$username$</a>",
     "placeholders": {
       "username": {
         "content": "$1"
+      },
+      "url": {
+        "content": "$2"
       }
     }
   },
@@ -63,5 +66,17 @@
   },
   "change_settings": {
     "message": "Changer mes réglage"
+  },
+  "pause_scrobbling": {
+    "message": "Pauser le scrobbling"
+  },
+  "resume_scrobbling": {
+    "message": "Relancer le scrobbling"
+  },
+  "link_lastfm": {
+    "message": "Connecter mon compte last.fm"
+  },
+  "disconnect": {
+    "message": "Déconnecter"
   }
 }

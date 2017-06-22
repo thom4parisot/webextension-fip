@@ -6,8 +6,9 @@ const DURING = 2;
 const AFTER = 4;
 
 const collection = response => {
-  return Object.keys(response.steps)
-    .map(id => response.steps[id])
+  const steps = response.steps || response;
+  return Object.keys(steps)
+    .map(id => steps[id])
     .filter(step => step.embedType && step.embedType === 'song')
     .sort((a, b) => a.start - b.start);
 };
@@ -33,7 +34,7 @@ export default class Steps {
   }
 
   static getCurrent(response) {
-    return this.atTime(response, Date.now());
+    return this.atTime(response, new Date());
   }
 }
 
