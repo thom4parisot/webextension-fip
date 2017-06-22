@@ -1,7 +1,7 @@
 String.prototype.toCamelCase = function () {
   return this
     .toLocaleLowerCase()
-    .replace(/(^\w| \w)/g, (m, letter) => letter.toLocaleUpperCase());
+    .replace(/(^\w|[\\\/\( ]\w)/g, (m, letter) => letter.toLocaleUpperCase());
 };
 
 /**

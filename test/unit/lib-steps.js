@@ -47,7 +47,7 @@ describe('Steps', function(){
     });
 
     it('should return a step played at the moment', () => {
-      clock = sinon.useFakeTimers(1497986700);
+      clock = sinon.useFakeTimers(1497986700000);
       const step = Steps.getCurrent(data);
 
       expect(step.title).to.deep.equal('ON THE BEACH');

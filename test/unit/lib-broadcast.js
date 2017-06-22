@@ -3,8 +3,8 @@ import Broadcast from '../../src/lib/broadcast';
 import EmptyFixtures from '../fixtures/empty-list.json';
 import WorkingFixtures from '../fixtures/working.json';
 
-xdescribe('Broadcast', function(){
-  it('#getPositionTracker', function(){
+describe('Broadcast', function(){
+  xit('#getPositionTracker', function(){
     var broadcasts = [new Broadcast(), new Broadcast(), new Broadcast(), new Broadcast({status: 'current'})];
     var tracker = Broadcast.getPositionTracker();
 
