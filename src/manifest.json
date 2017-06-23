@@ -8,6 +8,7 @@
   "default_locale": "fr",
   "background": {
     "scripts": [
+      "core.js",
       "background/bundle.js"
     ],
     "persistent": false

@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import md5 from 'md5-hex';
 import request from 'superagent';
 
 /*
@@ -37,7 +37,7 @@ function generateSignature(params, secret = LAST_FM_SECRET) {
     return previous + key + params[key];
   }, '');
 
-  return crypto.createHash('md5').update(signature + secret).digest('hex');
+  return md5(signature + secret);
 }
 
 export default class LastfmAPI {
