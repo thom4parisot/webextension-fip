@@ -49,4 +49,4 @@ increase contribution safetey. As I'm using the extension everyday, I may be the
 [Chrome extension]: https://chrome.google.com/webstore/detail/fnhlecpfnocgmmmghkjcipmhdpmpddii
 [Build Status]: https://travis-ci.org/oncletom/chrome-fip.svg?branch=master
 [Chrome extension downloads]: https://img.shields.io/chrome-web-store/d/fnhlecpfnocgmmmghkjcipmhdpmpddii.svg
-[Chrome extension version]: https://img.shields.io/chrome-web-store/v/nimelepbpejjlbmoobocpfnjhihnpked.svg
+[Chrome extension version]: https://img.shields.io/chrome-web-store/v/fnhlecpfnocgmmmghkjcipmhdpmpddii.svg
