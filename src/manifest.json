@@ -21,7 +21,9 @@
   "permissions": [
     "alarms",
     "identity",
-    "http://www.fipradio.fr/sites/default/files/import_si/si_titre_antenne/FIP_player_current.json"
+    "*://www.fipradio.fr/*",
+    "*://direct.fipradio.fr/*",
+    "https://*.cdn.dvmr.fr/*"
   ],
   "browser_action": {
     "default_icon": "resources/fip.png",
