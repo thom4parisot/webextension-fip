@@ -7,6 +7,10 @@ Vous pouvez suivre les bugs ou l'implémentation des fonctionnalités à cette a
 
 # Quoi de neuf ?
 
+## Version 1.1.6
+
+- active le débogage des requêtes réseau (pour rendre leur lecture plus aisée)
+
 ## Version 1.1.5
 
 - règle les `permissions` du Manifeste pour autoriser les ressources `fipradio.fr`

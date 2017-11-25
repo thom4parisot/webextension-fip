@@ -7,6 +7,10 @@ Issues and features roadmap are tracked on this page:
 
 # Quoi de neuf ?
 
+## Version 1.1.6
+
+- enable logging on network requests errors (mostly to ease troubleshooting)
+
 ## Version 1.1.5
 
 - set Manifest `permissions` to target `fipradio.fr` resources
