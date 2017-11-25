@@ -7,8 +7,18 @@ Vous pouvez suivre les bugs ou l'implémentation des fonctionnalités à cette a
 
 # Quoi de neuf ?
 
+## Version 1.1.5
+
+- règle les `permissions` du Manifeste pour autoriser les ressources `fipradio.fr`
+- corriger la connexion à last.fm qui a été cassée par erreur
+
+## Version 1.1.4
+
+- mise à jour des dépendances (corrige un défaut d'affichage sous Firefox)
+
 ## Version 1.1.3
 
+- ajout d'un CHANGELOG
 - correction des boutons Précédent/Suivant (Firefox)
 
 ## Version 1.1.2
