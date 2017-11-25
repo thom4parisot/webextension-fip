@@ -1,5 +1,4 @@
 import * as TextCleaner from '../lib/text-cleaner';
-import Broadcast from '../lib/broadcast';
 import Steps from '../lib/steps';
 import LastfmAPI from '../lib/lastfm';
 import browser from 'webextension-polyfill';
@@ -14,7 +13,7 @@ export default class ScrobblingController {
 
   static init(options) {
     return new ScrobblingController(options);
-  };
+  }
 
   updateUserInfos(token){
     const {preferences} = this;
@@ -31,7 +30,7 @@ export default class ScrobblingController {
 
       return data;
     });
-  };
+  }
 
   scrobble(steps) {
     if (this.preferences.get('radio.state') !== 'playing' || this.preferences.get('lastfm.scrobbling', true) === false) {

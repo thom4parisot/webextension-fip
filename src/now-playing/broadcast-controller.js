@@ -8,7 +8,7 @@ import Broadcast from '../lib/broadcast';
  * @param {Broadcast} Broadcast
  * @constructor
  */
-export default function BroadcastController($scope, chrome, preferences, browser){
+export default function BroadcastController($scope, chrome, preferences){
   const getPosition = Broadcast.getPositionTracker();
 
   $scope.broadcasts = preferences.get('broadcasts');

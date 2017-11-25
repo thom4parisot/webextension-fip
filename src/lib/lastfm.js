@@ -61,7 +61,7 @@ export default class LastfmAPI {
    */
   isConfigured() {
     return LAST_FM_SECRET && LAST_FM_KEY && this.session_key;
-  };
+  }
 
   /**
    * Send a raw HTTP request to Last.fm.
@@ -70,13 +70,14 @@ export default class LastfmAPI {
    * @param {Object} data
    * @param {Function=} done
    */
-  sendRequest(data, done) {
+  sendRequest(data) {
     const method = LAST_FM_API_METHODS[data.method];
 
     if (this.session_key) {
       data.sk = this.session_key;
     }
 
+    // eslint-disable-next-line promise/avoid-new
     return new Promise((resolve, reject) => {
       const payload = Object.assign({}, data, {
         format: 'json',
@@ -95,7 +96,7 @@ export default class LastfmAPI {
           resolve(response.body);
         });
     });
-  };
+  }
 
   /**
    * Retrieve the session key after a user authentication.
@@ -110,7 +111,7 @@ export default class LastfmAPI {
           userName: response.session.name
         };
       });
-  };
+  }
 
   /**
    * Track the listening of a song.
@@ -128,7 +129,7 @@ export default class LastfmAPI {
     };
 
     return this.sendRequest(data);
-  };
+  }
 
   /**
    * Update the "Now Playing" status.
@@ -145,5 +146,5 @@ export default class LastfmAPI {
     };
 
     return this.sendRequest(data);
-  };
+  }
 }

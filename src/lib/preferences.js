@@ -62,7 +62,7 @@ export default class Preferences{
     var value = this.strategy.get(this.namespace + key, default_value);
 
     return typeof value !== undefined && value !== null ? value : (default_value || null);
-  };
+  }
 
   /**
    * Persist a value; overwriting if already existing.
@@ -77,7 +77,7 @@ export default class Preferences{
     else {
       this.strategy.set(this.namespace + key, value);
     }
-  };
+  }
 
   /**
    * Delete a value.
@@ -87,5 +87,5 @@ export default class Preferences{
    */
   del (key){
     this.strategy.del(this.namespace + key);
-  };
+  }
 }

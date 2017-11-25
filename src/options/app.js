@@ -7,7 +7,7 @@ import TextCleanerFilters from '../lib/angular/text-cleaner-service';
 import OptionsController from './options-controller';
 import ScrobblingController from './scrobbling-controller';
 
-const App = angular.module('options', ['ChromeService', 'TextCleanerFilters']).run(chrome => {
+const App = angular.module('options', ['ChromeService', 'TextCleanerFilters']).run(() => {
   document.documentElement.setAttribute('lang', navigator.language);
 });
 

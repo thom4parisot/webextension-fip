@@ -1,10 +1,5 @@
 'use strict';
 
-const NEVER = 0;
-const BEFORE = 1;
-const DURING = 2;
-const AFTER = 4;
-
 const collection = response => {
   const steps = response.steps || response;
   return Object.keys(steps)

@@ -1,0 +1,19 @@
+plugins:
+  - promise
+extends:
+  - 'eslint:recommended'
+  - 'plugin:promise/recommended'
+env:
+  browser: true
+  es6: true
+  webextensions: true
+parserOptions:
+  sourceType: module
+globals:
+  process: true
+rules:
+  semi: 1
+  no-undef: 2
+  no-unused-vars:
+    - error
+    - varsIgnorePattern: "(Service|Filters)$"

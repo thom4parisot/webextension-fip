@@ -1,5 +1,6 @@
 import browser from 'webextension-polyfill';
 
+import debug from '../lib/debug';
 import Radio from '../lib/radio';
 import Steps from '../lib/steps';
 import Preferences from '../lib/preferences';
@@ -80,7 +81,7 @@ export default class Background {
     this.setupChannelBadge();
     this.registerEvents();
     this.enableBroadcastUpdates();
-  };
+  }
 
   /**
    * Event registration.
@@ -145,7 +146,10 @@ export default class Background {
       .then(steps => {
         this.dispatchBroadcasts(steps);
         this.lastfm.scrobble(steps);
-      });
+
+        return steps;
+      })
+      .catch(debug);
   }
 
   /**
@@ -182,8 +186,8 @@ export default class Background {
         browser.alarms.create(alarmName, { periodInMinutes: 0.5 });
       }
 
-      this.requestBroadcasts();
-    });
+      return this.requestBroadcasts();
+    }).catch(debug);
   }
 
   /**
@@ -192,7 +196,6 @@ export default class Background {
    * @param {Array.<Broadcast>} broadcasts
    */
   dispatchBroadcasts(broadcasts) {
-    const {preferences} = this;
     const bus = browser.runtime.connect();
 
     bus.postMessage({ broadcasts });

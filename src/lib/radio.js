@@ -1,6 +1,7 @@
 "use strict";
 
 import machina from 'machina';
+import {log} from './debug';
 
 /**
  * Radio State Machine.
@@ -24,7 +25,7 @@ const Radio = machina.Fsm.extend({
       if (transition.fromState !== transition.toState){
         /* jshint devel:true */
         this.emit(transition.toState, transition);
-        console.log("State changed from '%s' to '%s'.", transition.fromState, transition.toState);
+        log("State changed from '%s' to '%s'.", transition.fromState, transition.toState);
       }
     });
   },

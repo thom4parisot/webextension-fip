@@ -1,7 +1,7 @@
 String.prototype.toCamelCase = function () {
   return this
     .toLocaleLowerCase()
-    .replace(/(^\w|[\\\/\( ]\w)/g, (m, letter) => letter.toLocaleUpperCase());
+    .replace(/(^\w|[\\/( ]\w)/g, (m, letter) => letter.toLocaleUpperCase());
 };
 
 /**
@@ -38,7 +38,7 @@ export function doAlbumTitle(text) {
 export function doTrackTitle(text) {
   return text
     .replace(/\(?\s*(cd|singles?|ep|lp)( : )?/i, '')
-    .replace(/\([^\)]+(?!\))$/g, '')
+    .replace(/\([^)]+(?!\))$/g, '')
     .trim()
     .toCamelCase();
 }
@@ -54,8 +54,8 @@ export function getArtistNames(text){
 
   //checking if the data structure allows securely splitting it
   //"Lou Reed" is a good example of single artist with a first name possibly recognizable as a 'position' in a band
-  if (text.indexOf('/') !== -1 && /^([^\/]+(\/|$))+$/.test(text)){
-    text.replace(/([a-z]{2,3} )?([^\/]+)(\/|$)/g, function(m, position, name){
+  if (text.indexOf('/') !== -1 && /^([^/]+(\/|$))+$/.test(text)){
+    text.replace(/([a-z]{2,3} )?([^/]+)(\/|$)/g, function(m, position, name){
       artists.push({
         name: name.trim().toCamelCase(),
         position: position ? position.trim() : null

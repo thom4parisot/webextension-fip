@@ -5,10 +5,6 @@
  * @type {string}
  */
 
-const STATUS_CURRENT = 'current';
-const STATUS_PREVIOUS = 'previous';
-const STATUS_NEXT = 'next';
-
 import {isCurrent} from './steps';
 
 /**
