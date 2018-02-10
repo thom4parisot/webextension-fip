@@ -7,9 +7,9 @@
       "id": "afb7b376babf48b37f2cc3acf6022450",
       "titre": "Rendez-vous au club Jazzafip",
       "visuel": {
-        "small": "http://www.fipradio.fr/sites/all/themes/fip_player_theme/img/37x37.png"
+        "small": "https://www.fip.fr/sites/all/themes/fip_player_theme/img/37x37.png"
       },
-      "lien": "http://www.fipradio.fr/emission-rendez-vous-au-club-jazzafip"
+      "lien": "https://www.fip.fr/emission-rendez-vous-au-club-jazzafip"
     },
     "song": {
       "startTime": 1407344565,
@@ -20,9 +20,9 @@
       "interpreteMorceau": "GUI NATALIA M.KING/TRP STEPHANE BELMONDO/SAX PIERRCK PEDRON/PNO VLADIMIR IVANOVSKY/BAT DOMINIQUE CRAVIC",
       "anneeEditionMusique": "2014",
       "visuel": {
-        "small": "http://www.fipradio.fr/sites/all/modules/fip/fip_direct/images/direct_default_cover.png"
+        "small": "https://www.fip.fr/sites/all/modules/fip/fip_direct/images/direct_default_cover.png"
       },
-      "lien": "http://www.fipradio.fr/"
+      "lien": "https://www.fip.fr/"
     }
   },
   "previous1": {
@@ -68,9 +68,9 @@
       "interpreteMorceau": "JERRY LEONIDE",
       "anneeEditionMusique": "2014",
       "visuel": {
-        "small": "http://www.fipradio.fr/sites/all/modules/fip/fip_direct/images/direct_default_cover.png"
+        "small": "https://www.fip.fr/sites/all/modules/fip/fip_direct/images/direct_default_cover.png"
       },
-      "lien": "http://www.fipradio.fr/"
+      "lien": "https://www.fip.fr/"
     }
   }
 

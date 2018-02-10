@@ -2,7 +2,7 @@
 
 import stations from '../stations.json';
 
-const feedUrl = id => `http://www.fipradio.fr/livemeta/${id}`;
+const feedUrl = id => `https://www.fip.fr/livemeta/${id}`;
 
 export function getStationBroadcasts (station) {
   const {channelId} = stations[station];

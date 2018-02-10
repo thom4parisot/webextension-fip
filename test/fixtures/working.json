@@ -2,11 +2,11 @@
   "emission": {
     "endTime": 1407344400,
     "id": "1bb98af42e2e7c13e20025d3fe951dcc",
-    "lien": "http://www.fipradio.fr/",
+    "lien": "https://www.fip.fr/",
     "startTime": 1407276000,
     "titre": "",
     "visuel": {
-      "small": "http://www.fipradio.fr/sites/all/modules/fip/fip_direct/images/direct_default_cover.png"
+      "small": "https://www.fip.fr/sites/all/modules/fip/fip_direct/images/direct_default_cover.png"
     }
   },
   "song": {
@@ -29,12 +29,12 @@
       "endTime": 1407343957,
       "id": "8541c28bb0d9e09e04f5264c11c883fc",
       "interpreteMorceau": "GNU QUARTET",
-      "lien": "http://www.fipradio.fr/",
+      "lien": "https://www.fip.fr/",
       "startTime": 1407343844,
       "titre": "MISREAD",
       "titreAlbum": "RIOT ON AN EMPTY STREET",
       "visuel": {
-        "small": "http://www.fipradio.fr/sites/all/modules/fip/fip_direct/images/direct_default_cover.png"
+        "small": "https://www.fip.fr/sites/all/modules/fip/fip_direct/images/direct_default_cover.png"
       }
     }
   },
@@ -74,12 +74,12 @@
       "endTime": 1407343357,
       "id": "a6b02e62032f5371a702a462af25af79",
       "interpreteMorceau": "LARRY MOREY/FLU EUGENIA ZUKERMAN/QUATUOR SHANGHAI",
-      "lien": "http://www.fipradio.fr/",
+      "lien": "https://www.fip.fr/",
       "startTime": 1407343197,
       "titre": "BLANCHE-NEIGE ET LES 7 NAINS : HEIGH HO (A LA MANIERE DE MOZART)",
       "titreAlbum": "HEIGH HO MOZART",
       "visuel": {
-        "small": "http://www.fipradio.fr/sites/all/modules/fip/fip_direct/images/direct_default_cover.png"
+        "small": "https://www.fip.fr/sites/all/modules/fip/fip_direct/images/direct_default_cover.png"
       }
     }
   }
