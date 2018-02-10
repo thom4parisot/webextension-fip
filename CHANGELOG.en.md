@@ -7,6 +7,10 @@ Issues and features roadmap are tracked on this page:
 
 # Quoi de neuf ?
 
+## Version 1.1.7
+
+- fix broken interface due to fipradio.fr being permanently redirected to fip.fr [#79](https://github.com/oncletom/chrome-fip/issues/79)
+
 ## Version 1.1.6
 
 - enable logging on network requests errors (mostly to ease troubleshooting)

@@ -7,6 +7,10 @@ Vous pouvez suivre les bugs ou l'implémentation des fonctionnalités à cette a
 
 # Quoi de neuf ?
 
+## Version 1.1.7
+
+- corrige l'interface cassée depuis la redirection permanente de fipradio.fr vers fip.fr [#79](https://github.com/oncletom/chrome-fip/issues/79)
+
 ## Version 1.1.6
 
 - active le débogage des requêtes réseau (pour rendre leur lecture plus aisée)
