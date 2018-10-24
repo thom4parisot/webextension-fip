@@ -22,7 +22,9 @@
     "watch": "BUILD_CHANNEL=dev npm-run-all -s 'build:core' -p 'watch:*' start",
     "watch:background": "watchify -dv -x angular -x webextension-polyfill -e ./src/background/app.js -o ./src/background/bundle.js",
     "watch:now-playing": "watchify -dv -x angular -x webextension-polyfill -e ./src/now-playing/app.js -p [ parcelify -wo ./src/now-playing/bundle.css ] -o ./src/now-playing/bundle.js",
-    "watch:options": "watchify -dv -x angular -x webextension-polyfill -e ./src/options/app.js -o ./src/options/bundle.js"
+    "watch:options": "watchify -dv -x angular -x webextension-polyfill -e ./src/options/app.js -o ./src/options/bundle.js",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "style": [
     "src/now-playing/*.scss"
@@ -93,6 +95,8 @@
     "md5-hex": "^2.0.0",
     "parcelify": "^2.1.0",
     "superagent": "^3.8.1",
-    "webextension-polyfill": "^0.2.1"
-  }
+    "webextension-polyfill": "^0.2.1",
+    "snyk": "^1.104.2"
+  },
+  "snyk": true
 }
