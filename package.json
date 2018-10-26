@@ -89,7 +89,7 @@
   },
   "dependencies": {
     "angular": "^1.6.7",
-    "machina": "^2.0.0",
+    "machina": "^4.0.0",
     "md5-hex": "^2.0.0",
     "parcelify": "^2.1.0",
     "superagent": "^3.8.1",
