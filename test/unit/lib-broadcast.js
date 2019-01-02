@@ -1,4 +1,4 @@
-import Broadcast from '../../src/lib/broadcast';
+import Broadcast from '../../src/lib/broadcast.js';
 
 import EmptyFixtures from '../fixtures/empty-list.json';
 import WorkingFixtures from '../fixtures/working.json';

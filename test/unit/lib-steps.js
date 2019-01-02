@@ -1,4 +1,4 @@
-import Steps, {Step} from '../../src/lib/steps';
+import Steps from '../../src/lib/steps.js';
 import data from '../fixtures/livemeta.json';
 import sinon from 'sinon';
 

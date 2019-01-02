@@ -10,8 +10,8 @@
   "scripts": {
     "prepackage": "npm run build",
     "package": "cd src && ls manifest.json _locales/**/*.json background/bundle.js now-playing/bundle.js now-playing/*.html now-playing/*.css options/bundle.js options/*.html resources/*.png resources/icons/css/*embedded.css | zip -9 -@ ../dist/${npm_package_name}-${npm_package_version}.zip",
-    "test": "NODE_ENV=test xvfb-maybe ./node_modules/karma/bin/karma start",
-    "posttest": "eslint ./src",
+    "test": "NODE_ENV=test PREFERENCES_NAMESPACE=test xvfb-maybe ./node_modules/karma/bin/karma start",
+    "posttest": "eslint --ignore-path .gitignore ./src",
     "build": "NODE_ENV=production run-p 'build:*'",
     "build:bundles": "rollup --config ",
     "start": "static -H ${npm_package_http_headers} --gzip -p ${PORT:-3000} .",
@@ -39,16 +39,26 @@
   "author": "Thomas Parisot (https://oncletom.io)",
   "license": "MIT",
   "readmeFilename": "README.md",
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  },
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/plugin-external-helpers": "^7.2.0",
     "@babel/plugin-transform-runtime": "^7.2.0",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/runtime": "^7.2.0",
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",
+    "babelify": "^10.0.0",
     "blueimp-md5": "^2.10.0",
+    "browserify": "^16.2.3",
     "chai": "^4.2.0",
     "eslint": "^4.19.1",
     "eslint-plugin-promise": "^3.8.0",
     "karma": "^1.7.1",
+    "karma-browserify": "^6.0.0",
     "karma-chrome-launcher": "^2.2.0",
     "karma-firefox-launcher": "^1.1.0",
     "karma-mocha": "^1.3.0",

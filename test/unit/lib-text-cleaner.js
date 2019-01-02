@@ -1,4 +1,4 @@
-import * as TextCleaner from '../../src/lib/text-cleaner';
+import * as TextCleaner from '../../src/lib/text-cleaner.js';
 
 describe('Text Cleaner', function(){
 

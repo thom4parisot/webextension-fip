@@ -1,6 +1,4 @@
-import Preferences from '../../src/lib/preferences';
-
-process.env.PREFERENCES_NAMESPACE = Symbol('test').toString();
+import Preferences from '../../src/lib/preferences.js';
 
 describe('Preferences - localStorage', function(){
   var manager;
@@ -21,6 +19,7 @@ describe('Preferences - localStorage', function(){
 
   describe('#constructor', function(){
     it('it should have switched over a new test namespace', function(){
+      expect(manager.namespace).to.not.be.empty;
       expect(manager.namespace).to.equal(process.env.PREFERENCES_NAMESPACE);
     });
 

@@ -1,4 +1,4 @@
-import Radio from '../../src/lib/radio';
+import Radio from '../../src/lib/radio.js';
 
 describe('Radio', function(){
   var radio;
