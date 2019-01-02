@@ -43,14 +43,6 @@ export default class LastfmAPI {
   constructor(token) {
     this.session_key = token || null;
     this.api_url = "https://ws.audioscrobbler.com/2.0/";
-
-    if (!LAST_FM_KEY) {
-      throw new Error('No Last.fm API key was provided');
-    }
-
-    if (!LAST_FM_SECRET) {
-      throw new Error('No Last.fm secret key was provided');
-    }
   }
 
   /**
@@ -59,7 +51,11 @@ export default class LastfmAPI {
    * @returns {Boolean}
    */
   isConfigured() {
-    return LAST_FM_SECRET && LAST_FM_KEY && this.session_key;
+    return Boolean(LAST_FM_SECRET && LAST_FM_KEY && this.session_key);
+  }
+
+  static isEnabled() {
+    return Boolean(LAST_FM_SECRET && LAST_FM_KEY);
   }
 
   /**

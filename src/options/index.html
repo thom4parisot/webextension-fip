@@ -72,7 +72,7 @@
     </label>
   </p>
 
-  <p ng-controller="ScrobblingController">
+  <p ng-controller="ScrobblingController" ng-if="lastfm_enabled">
     <span class="label__group">Last.fm</span>
 
     <span class="option__group" ng-show="lastfmUsername">
