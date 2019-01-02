@@ -11,7 +11,5 @@ const App = angular.module('options', ['ChromeService', 'TextCleanerFilters']).r
   document.documentElement.setAttribute('lang', navigator.language);
 });
 
-App.filter('unsafe', $sce => $sce.trustAsHtml);
-
 App.controller('OptionsController', OptionsController);
 App.controller('ScrobblingController', ScrobblingController);
