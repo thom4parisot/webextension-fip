@@ -1,6 +1,6 @@
 {
   "name": "chrome-fip",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "FIP Radio Chrome Extension for an in-browser listening and scrobbling experience.",
   "main": "index.js",
   "private": true,
