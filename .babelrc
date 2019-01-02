@@ -1,0 +1,21 @@
+{
+  "plugins": [
+    "@babel/plugin-external-helpers",
+    "@babel/plugin-transform-runtime",
+    ["transform-inline-environment-variables", {
+      "include": [
+        "BUILD_CHANNEL",
+        "LAST_FM_KEY",
+        "LAST_FM_SECRET",
+        "NODE_ENV",
+        "PREFERENCES_NAMESPACE"
+      ]
+    }]
+  ],
+  "presets": [
+  ],
+  "generatorOpts": {
+    "compact": false,
+    "minified": false
+  }
+}

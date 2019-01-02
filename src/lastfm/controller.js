@@ -1,7 +1,6 @@
-import * as TextCleaner from '../lib/text-cleaner';
-import Steps from '../lib/steps';
-import LastfmAPI from '../lib/lastfm';
-import browser from 'webextension-polyfill';
+import * as TextCleaner from '../lib/text-cleaner.js';
+import Steps from '../lib/steps.js';
+import LastfmAPI from '../lib/lastfm.js';
 
 export default class ScrobblingController {
   constructor ({ preferences }) {

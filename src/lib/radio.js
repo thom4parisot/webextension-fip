@@ -1,7 +1,5 @@
-"use strict";
-
 import machina from 'machina';
-import {log} from './debug';
+import {log} from './debug.js';
 
 /**
  * Radio State Machine.

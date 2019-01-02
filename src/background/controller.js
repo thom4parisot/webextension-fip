@@ -1,10 +1,10 @@
 import browser from 'webextension-polyfill';
 
-import debug from '../lib/debug';
-import Radio from '../lib/radio';
-import Steps from '../lib/steps';
-import Preferences from '../lib/preferences';
-import {getStationBroadcasts, getStationFeed} from '../lib/stations';
+import debug from '../lib/debug.js';
+import Radio from '../lib/radio.js';
+import Steps from '../lib/steps.js';
+import Preferences from '../lib/preferences.js';
+import {getStationBroadcasts, getStationFeed} from '../lib/stations.js';
 
 /*
  "Securely" provided by .travis.yml + envify transform

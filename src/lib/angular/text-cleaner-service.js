@@ -1,5 +1,5 @@
 import angular from 'angular';
-import * as TextCleaner from '../text-cleaner';
+import * as TextCleaner from '../text-cleaner.js';
 
 export default angular.module('TextCleanerFilters', [])
   .filter('startsWith', function(){

@@ -1,5 +1,3 @@
-'use strict';
-
 const collection = response => {
   const steps = response.steps || response;
   return Object.keys(steps)

@@ -7,7 +7,7 @@
     body: { padding: 10px; }
     a {
       border-bottom: 1px solid #808080;
-      color: #e2007a;
+      color: #e07;
       text-decoration: none;
     }
     a:hover, a:focus {
@@ -76,7 +76,7 @@
     <span class="label__group">Last.fm</span>
 
     <span class="option__group" ng-show="lastfmUsername">
-      <span ng-bind-html="'scrobbling_as' | i18n:lastfmUsername:lastfmUserProfile | unsafe"></span>
+      <span ng-bind-html="'scrobbling_as' | i18n:lastfmUsername:lastfmUserProfile"></span>
       •
       <a href="#logout" ng-click="disconnect($event)">{{ 'disconnect' | i18n }}</a>
 
@@ -96,7 +96,6 @@
     <button type="button" disabled ng-show="saveStatus == 'saved'">{{'saved' | i18n}}</button>
   </p>
 
-  <script src="../core.js"></script>
-  <script src="bundle.js"></script>
+  <script src="./bundle.js" type="module"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 {
   "name": "__MSG_extension_name__",
-  "version": "1.1.7",
+  "version": "1.2.0",
   "description": "__MSG_extension_description__",
   "manifest_version": 2,
   "minimum_chrome_version": "42",
@@ -8,7 +8,6 @@
   "default_locale": "fr",
   "background": {
     "scripts": [
-      "core.js",
       "background/bundle.js"
     ],
     "persistent": false

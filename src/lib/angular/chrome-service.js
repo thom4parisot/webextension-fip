@@ -1,5 +1,6 @@
 import angular from 'angular';
 import browser from 'webextension-polyfill';
+
 import Preferences from '../preferences.js';
 
 /**
