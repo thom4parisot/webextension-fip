@@ -13,5 +13,9 @@
     }]
   ],
   "presets": [
-  ]
+  ],
+  "generatorOpts": {
+    "compact": false,
+    "minified": false
+  }
 }
