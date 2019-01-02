@@ -1,4 +1,4 @@
-import stations from '../stations.json';
+import {stations} from '../lib/stations.js';
 
 /**
  * Options Controller

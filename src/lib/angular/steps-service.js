@@ -1,5 +1,5 @@
 import angular from 'angular';
-import {isBefore, isCurrent, isAfter} from '../steps';
+import {isBefore, isCurrent, isAfter} from '../steps.js';
 
 const STATUSES = {
   previous: isBefore,

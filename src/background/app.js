@@ -1,7 +1,5 @@
-"use strict";
-
-import Background from './controller';
-import ScrobblingController from '../lastfm/controller';
+import Background from './controller.js';
+import ScrobblingController from '../lastfm/controller.js';
 
 Background.init({
   lastfm: ScrobblingController

@@ -1,12 +1,11 @@
-"use strict";
-
 import angular from 'angular';
-import ChromeService from '../lib/angular/chrome-service';
-import TextCleanerFilters from '../lib/angular/text-cleaner-service';
-import StepsFilters from '../lib/angular/steps-service';
 
-import BroadcastController from './broadcast-controller';
-import RadioController from './radio-controller';
+import ChromeService from '../lib/angular/chrome-service.js';
+import TextCleanerFilters from '../lib/angular/text-cleaner-service.js';
+import StepsFilters from '../lib/angular/steps-service.js';
+
+import BroadcastController from './broadcast-controller.js';
+import RadioController from './radio-controller.js';
 
 /**
  * Now Playing App module.

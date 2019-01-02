@@ -5,7 +5,7 @@
  * @type {string}
  */
 
-import {isCurrent} from './steps';
+import {isCurrent} from './steps.js';
 
 /**
  * Broadcast object constructor.

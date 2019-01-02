@@ -1,5 +1,4 @@
-import md5 from 'md5-hex';
-import request from 'superagent';
+import md5 from 'blueimp-md5';
 
 /*
  "Securely" provided by .travis.yml + envify transform
@@ -77,25 +76,21 @@ export default class LastfmAPI {
       data.sk = this.session_key;
     }
 
-    // eslint-disable-next-line promise/avoid-new
-    return new Promise((resolve, reject) => {
-      const payload = Object.assign({}, data, {
+    return Promise.resolve()
+      .then(() => Object.assign({}, data, {
         format: 'json',
         api_sig: generateSignature(data)
-      });
+      }))
+      .then((payload) => {
+        const options = {
+          method,
+          body: method === 'POST' ? payload : null
+        };
+        const params = new URLSearchParams(method === 'GET' ? payload : '');
 
-      request(method, this.api_url)
-        .type('form')
-        .query(method === 'GET' ? payload : {})
-        .send(method === 'POST' ? payload : null)
-        .end((err, response) => {
-          if (err) {
-            return reject(err);
-          }
-
-          resolve(response.body);
-        });
-    });
+        return fetch(`${this.api_url}?${params}`, options);
+      })
+      .then((response) => response.json());
   }
 
   /**

@@ -1,4 +1,4 @@
-import Broadcast from '../lib/broadcast';
+import Broadcast from '../lib/broadcast.js';
 
 /**
  * Now Playing Controller.

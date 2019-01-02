@@ -1,5 +1,3 @@
-"use strict";
-
 export default (err) => {
   // eslint-disable-next-line no-console
   console.error(err);
