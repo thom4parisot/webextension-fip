@@ -4,7 +4,7 @@ import builtins from 'rollup-plugin-node-builtins';
 import babel from 'rollup-plugin-babel';
 import json from 'rollup-plugin-json';
 
-export const plugins = [
+const plugins = [
   resolve({
     preferBuiltins: false
   }),
