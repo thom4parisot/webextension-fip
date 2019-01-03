@@ -3,7 +3,7 @@
   --default-transition-function: ease-out;
 
   --background-color: #fafafa;
-  --foreground-color: #e2007a;
+  --foreground-color: #e07;
   --gutter-width: 10px;
   --text-color: #111;
 }
@@ -11,8 +11,17 @@
 body{
   background: var(--background-color);
   font-family: "Helvetica Neue", "Trebuchet MS", Trebuchet, sans-serif;
+  font-size: 14px;
   margin: 0;
   padding: 0;
+  min-width: 300px;
+  max-width: 450px;
+}
+@supports (-webkit-appearance:none) and (not (overflow:-webkit-marquee))
+and (not (-ms-ime-align:auto)) and (not (-moz-appearance:none)) {
+  body {
+    min-width: 450px;
+  }
 }
 
 .ng-hide {
@@ -113,8 +122,6 @@ footer.alternate{
 
   #playback-button:before{
     font-size: 2em;
-    padding-left: var(--gutter-width);
-    padding-right: var(--gutter-width);
     margin: 0;
     width: auto;
   }
@@ -157,10 +164,9 @@ footer nav ul {
  * Popup Content
  */
 main{
-  overflow: hidden;
+  min-height: 170px;
   padding-bottom: var(--gutter-width) * 2;
   position: relative;
-  max-width: 425px;
 }
   main nav{
     bottom: 0;
