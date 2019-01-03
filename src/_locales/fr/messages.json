@@ -27,13 +27,10 @@
     "message": "À venir"
   },
   "scrobbling_as": {
-    "message": "Scrobble en tant que <a href='$url$' target='_blank'>$username$</a>",
+    "message": "Scrobble en tant que $username$",
     "placeholders": {
       "username": {
         "content": "$1"
-      },
-      "url": {
-        "content": "$2"
       }
     }
   },
