@@ -134,6 +134,9 @@ footer.alternate{
 /**
  * Popup Footer
  */
+footer {
+  font-size: .9em;
+}
 footer nav ul {
   display: flex;
   justify-content: space-between;
