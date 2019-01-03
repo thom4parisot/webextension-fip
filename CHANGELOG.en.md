@@ -7,6 +7,17 @@ Issues and features roadmap are tracked on this page:
 
 # Quoi de neuf ?
 
+## Version 1.2.5
+
+- Firefox: responsive layout to make it work when the extension is located in the _additional tools_ menu
+- fix a typo in the french translation
+- add a privacy policy
+
+## Version 1.2.3
+
+- fix last.fm connection
+- rework the software tooling to conform to the distribution platforms policy
+
 ## Version 1.1.7
 
 - fix broken interface due to fipradio.fr being permanently redirected to fip.fr [#79](https://github.com/oncletom/chrome-fip/issues/79)

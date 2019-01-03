@@ -7,6 +7,17 @@ Vous pouvez suivre les bugs ou l'implémentation des fonctionnalités à cette a
 
 # Quoi de neuf ?
 
+## Version 1.2.5
+
+- Firefox : correction de l'affichage lorsque l'extension est accédée depuis les _outils supplémentaires_
+- correction d'une faute dans un message
+- ajout d'une politique de confidentialité
+
+## Version 1.2.3
+
+- corrige la connexion à last.fm
+- mise en conformité du code source pour la publication sur les plates-formes de distribution de l'extension
+
 ## Version 1.1.7
 
 - corrige l'interface cassée depuis la redirection permanente de fipradio.fr vers fip.fr [#79](https://github.com/oncletom/chrome-fip/issues/79)
