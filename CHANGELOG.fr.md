@@ -7,6 +7,12 @@ Vous pouvez suivre les bugs ou l'implémentation des fonctionnalités à cette a
 
 # Quoi de neuf ?
 
+## Version 1.2.8
+
+- correction du scrobbling last.fm
+- nouvel affichage des options last.fm
+- Chrome : correction de l'affichage fluide (cassé dans 1.2.5)
+
 ## Version 1.2.5
 
 - Firefox : correction de l'affichage lorsque l'extension est accédée depuis les _outils supplémentaires_

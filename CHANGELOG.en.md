@@ -7,6 +7,12 @@ Issues and features roadmap are tracked on this page:
 
 # Quoi de neuf ?
 
+## Version 1.2.8
+
+- fix last.fm scrobbling
+- restore last.fm setup on the options page
+- Chrome : fix responsive layout (broken in 1.2.5)
+
 ## Version 1.2.5
 
 - Firefox: responsive layout to make it work when the extension is located in the _additional tools_ menu
