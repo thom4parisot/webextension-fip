@@ -78,13 +78,16 @@ export default class LastfmAPI {
         api_sig: generateSignature(data)
       }))
       .then((payload) => {
+        const params = new URLSearchParams(payload);
         const options = {
           method,
-          body: method === 'POST' ? payload : null
+          mode: 'cors',
+          body: method === 'POST' ? params : null,
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
         };
-        const params = new URLSearchParams(method === 'GET' ? payload : '');
-
-        return fetch(`${this.api_url}?${params}`, options);
+        return fetch(`${this.api_url}?${method === 'GET' ? params : ''}`, options);
       })
       .then((response) => response.json());
   }
