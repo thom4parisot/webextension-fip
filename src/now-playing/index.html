@@ -16,7 +16,7 @@
 
 <main ng-controller="BroadcastController">
   <div class="tiles" data-current-index="{{current_index}}" style="--current-index:{{current_index}};">
-    <section ng-repeat="broadcast in broadcasts" class="status-{{broadcast | status}}">
+    <section ng-repeat="(index,broadcast) in broadcasts" class="status-{{broadcast | status}}" ng-class="{show: current_index === index}">
       <aside class="panel" id="cover">
         <img ng-src="{{broadcast.visual}}" class="album-cover" alt="{{broadcast.title}} from {{broadcast.artist}}"/>
 
@@ -39,6 +39,9 @@
           </li>
           <li class="artist icon-user" ng-show="broadcast.performers">
             <a ng-href="https://www.last.fm/search/artists?q={{broadcast.authors | artist}}" target="_blank">{{broadcast.performers | artist}}</a>
+          </li>
+          <li class="artist icon-user" ng-show="!broadcast.performers && broadcast.authors">
+            <a ng-href="https://www.last.fm/search/artists?q={{broadcast.authors | artist}}" target="_blank">{{broadcast.authors | artist}}</a>
           </li>
         </ul>
       </article>

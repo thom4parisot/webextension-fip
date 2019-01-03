@@ -13,7 +13,6 @@ body{
   font-family: "Helvetica Neue", "Trebuchet MS", Trebuchet, sans-serif;
   margin: 0;
   padding: 0;
-  width: 425px;
 }
 
 .ng-hide {
@@ -37,7 +36,7 @@ h1{
 }
 
 h2{
-  line-height: 0.9;
+  font-size: 1.25em;
   margin: 0 0 var(--gutter-width);
 }
 
@@ -114,6 +113,10 @@ footer.alternate{
 
   #playback-button:before{
     font-size: 2em;
+    padding-left: var(--gutter-width);
+    padding-right: var(--gutter-width);
+    margin: 0;
+    width: auto;
   }
 
   #playback-button.stopped::before,
@@ -154,19 +157,15 @@ main{
   overflow: hidden;
   padding-bottom: var(--gutter-width) * 2;
   position: relative;
-  width: 100%;
+  max-width: 425px;
 }
   main nav{
     bottom: 0;
-    opacity: 0.5;
     padding: var(--gutter-width);
     position: absolute;
     right: 0;
+    z-index: 100;
   }
-    main nav:hover{
-      opacity: 1;
-    }
-
     main nav > ul{
       list-style: none;
     }
@@ -184,51 +183,58 @@ main{
       color: var(--foreground-color);
       cursor: pointer;
       margin-left: 3px;
+      padding: 2px 10px;
     }
+      main nav button:hover,
+      main nav button:focus {
+        background: var(--foreground-color);
+        color: #fff;
+      }
 
     main nav .label{
       display: none;
     }
 
 .tiles{
+  display: flex;
+  flex-flow: row wrap;
   margin-left: 0;
-  transition: margin-left .5s;
-  width: 1000%;    // enough for 10 tiles
 }
   .tiles[data-current-index]{
     /* --current-index is set dynamically in the HTML document via Angular */
-    margin-left: calc(var(--current-index) * 425px * -1);
+    /* margin-left: calc(var(--current-index) * 425px * -1); */
   }
 
 section{
-  display: table;
-  float: left;
-  width: 425px;
+  display: none;
+  width: 100%;
+  will-change: display;
 }
+  section.show {
+    display: flex;
+  }
 
 aside,
 article {
-  padding: var(--gutter-width) 0 var(--gutter-width) var(--gutter-width);
+  padding: var(--gutter-width);
 }
 
 aside{
-  display: table-cell;
+  flex: 0;
   text-align: center;
   vertical-align: top;
-  width: 110px;
 }
   .album-cover{
     background: var(--foreground-color);
-    border: 3px solid var(--text-color);
+    border: 1px solid var(--text-color);
     height: 100px;
     margin-bottom: var(--gutter-width) / 2;
     width: 100px;
   }
 
 article{
-  display: table-cell;
-  padding-right: var(--gutter-width);
-  width: 300px;
+  flex: 1 1 auto;
+  padding-left: 0;
 }
   article a{
     color: var(--text-color);
@@ -242,29 +248,27 @@ article{
 
 
 .metadata{
+  display: flex;
+  flex-flow: row wrap;
   list-style: none;
   margin: 0;
   padding: 0;
 }
   .metadata > li{
-    margin-bottom: var(--gutter-width);
+    flex: 1 1 100%;
+    margin-bottom: calc(var(--gutter-width) / 2);
+  }
+  .metadata > .album-date {
+    white-space: nowrap;
   }
 
-  .metadata > .album-date,
-  .metadata > .album-title{
-    float: left;
-  }
-
-  .metadata > .album-title{
-    width: 76%;
-  }
-  .metadata > .album-date{
-    width: 24%;
-    text-align: right;
-  }
-  .metadata > .artist{
-    clear: both;
-    margin-top: 0.5em;
+  @media screen and (min-width: 400px) {
+    .metadata > .album-title{
+      flex: 1 1 70%;
+    }
+    .metadata > .album-date{
+      flex: 0 1 0;
+    }
   }
 
 // authenticated
@@ -302,12 +306,16 @@ article{
 /**
  * Statuses
  */
+ .status {
+   display: block;
+ }
  .status[data-status]::before{
+   border: 1px solid #ccc;
    border-radius: 20px;
    color: var(--text-color);
-   box-shadow: 0 0 2px var(--text-color);
    font-size: 0.8em;
-   padding: 2px 20px;
+   padding: 2px 15px;
+   white-space: nowrap;
  }
 
  .status[data-status="previous"]::before{
@@ -321,7 +329,7 @@ article{
  }
  .status[data-status="current"]::before{
    background-color: var(--foreground-color);
-   box-shadow: none;
+   border-color: var(--foreground-color);
    color: var(--background-color);
    font-weight: bold;
  }
