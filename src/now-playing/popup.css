@@ -1,0 +1,327 @@
+:root {
+  --default-transition-duration: 0.3s;
+  --default-transition-function: ease-out;
+
+  --background-color: #fafafa;
+  --foreground-color: #e2007a;
+  --gutter-width: 10px;
+  --text-color: #111;
+}
+
+body{
+  background: var(--background-color);
+  font-family: "Helvetica Neue", "Trebuchet MS", Trebuchet, sans-serif;
+  margin: 0;
+  padding: 0;
+  width: 425px;
+}
+
+.ng-hide {
+  display: none;
+}
+
+label,
+input[type="checkbox"],
+input[type="range"]{
+  cursor: pointer;
+}
+
+a:focus,
+a:hover{
+  text-decoration: none;
+}
+
+h1{
+  font-weight: normal;
+  margin: 0;
+}
+
+h2{
+  line-height: 0.9;
+  margin: 0 0 var(--gutter-width);
+}
+
+
+/**
+ * Popup Header
+ */
+header,
+footer {
+  background: var(--foreground-color);
+  clear: both;
+  color: var(--background-color);
+  padding: var(--gutter-width);
+  position: relative;
+}
+
+header a,
+footer a {
+  color: var(--background-color);
+}
+
+header.alternate,
+footer.alternate {
+  background: transparent;
+  border: var(--foreground-color) solid 0;
+  color: var(--text-color);
+  opacity: 0.3;
+  transition: opacity .5s;
+}
+
+header {
+  display: flex;
+  flex-flow: row nowrap;
+}
+  header h1 {
+    flex: 1 0 auto;
+  }
+
+.alternate:focus,
+.alternate:hover{
+  opacity: 1;
+}
+
+.alternate a{
+  color: var(--foreground-color);
+}
+
+footer.alternate{
+  border-top-width: 3px;
+}
+
+#playback-button{
+  background: transparent;
+  border: none;
+  color: var(--background-color);
+  cursor: pointer;
+  font-size: 1em;
+  opacity: 1;
+  padding: 0;
+}
+
+  #playback-button:hover{
+    opacity: 0.8;
+  }
+
+  #playback-button:focus{
+    outline: none;
+  }
+
+  #playback-button:active,
+  #playback-button:focus{
+    opacity: 1;
+  }
+
+  #playback-button:before{
+    font-size: 2em;
+  }
+
+  #playback-button.stopped::before,
+  #playback-button.errored::before{
+    content: "\e801";
+  }
+
+  #playback-button.playing::before,
+  #playback-button.buffering::before{
+    content: "\e802";
+  }
+
+
+
+/**
+ * Popup Footer
+ */
+footer nav ul {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+  footer nav ul li{
+    text-align: right;
+  }
+    //Expanding any main row to use the whole width
+  footer nav ul li.main{
+    text-align: left;
+  }
+
+/**
+ * Popup Content
+ */
+main{
+  overflow: hidden;
+  padding-bottom: var(--gutter-width) * 2;
+  position: relative;
+  width: 100%;
+}
+  main nav{
+    bottom: 0;
+    opacity: 0.5;
+    padding: var(--gutter-width);
+    position: absolute;
+    right: 0;
+  }
+    main nav:hover{
+      opacity: 1;
+    }
+
+    main nav > ul{
+      list-style: none;
+    }
+    main nav li{
+      float: left;
+      margin-left: 0;
+      padding-right: 0;
+      white-space: nowrap;
+    }
+
+    main nav button{
+      background: #fff;
+      border: 1px solid var(--foreground-color);
+      border-radius: 3px;
+      color: var(--foreground-color);
+      cursor: pointer;
+      margin-left: 3px;
+    }
+
+    main nav .label{
+      display: none;
+    }
+
+.tiles{
+  margin-left: 0;
+  transition: margin-left .5s;
+  width: 1000%;    // enough for 10 tiles
+}
+  .tiles[data-current-index]{
+    /* --current-index is set dynamically in the HTML document via Angular */
+    margin-left: calc(var(--current-index) * 425px * -1);
+  }
+
+section{
+  display: table;
+  float: left;
+  width: 425px;
+}
+
+aside,
+article {
+  padding: var(--gutter-width) 0 var(--gutter-width) var(--gutter-width);
+}
+
+aside{
+  display: table-cell;
+  text-align: center;
+  vertical-align: top;
+  width: 110px;
+}
+  .album-cover{
+    background: var(--foreground-color);
+    border: 3px solid var(--text-color);
+    height: 100px;
+    margin-bottom: var(--gutter-width) / 2;
+    width: 100px;
+  }
+
+article{
+  display: table-cell;
+  padding-right: var(--gutter-width);
+  width: 300px;
+}
+  article a{
+    color: var(--text-color);
+    text-decoration: none;
+  }
+    article a:focus,
+    article a:hover{
+      color: #E2007A;
+      text-decoration: underline;
+    }
+
+
+.metadata{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+  .metadata > li{
+    margin-bottom: var(--gutter-width);
+  }
+
+  .metadata > .album-date,
+  .metadata > .album-title{
+    float: left;
+  }
+
+  .metadata > .album-title{
+    width: 76%;
+  }
+  .metadata > .album-date{
+    width: 24%;
+    text-align: right;
+  }
+  .metadata > .artist{
+    clear: both;
+    margin-top: 0.5em;
+  }
+
+// authenticated
+[ng-controller="ScrobblingController"] [for="scrobbling-switch"] span{
+  font-style: italic;
+}
+
+//not-authenticated
+[ng-controller="ScrobblingController"] [ng-click]{
+  color: var(--foreground-color);
+  text-decoration: underline;
+}
+  [ng-controller="ScrobblingController"] [ng-click]:hover,
+  [ng-controller="ScrobblingController"] [ng-click]:focus{
+    text-decoration: none;
+  }
+
+/**
+ * Iconification
+ */
+.iconify::before{
+  background: transparent no-repeat center center;
+  background-size: cover;
+  content: "";
+  display: inline-block;
+  height: 1em;
+  margin-right: 0.3em;
+  vertical-align: middle;
+  width: 1em;
+}
+[href*="fip.fr"].iconify::before{
+  background-image: url('../resources/fip.png');
+}
+
+/**
+ * Statuses
+ */
+ .status[data-status]::before{
+   border-radius: 20px;
+   color: var(--text-color);
+   box-shadow: 0 0 2px var(--text-color);
+   font-size: 0.8em;
+   padding: 2px 20px;
+ }
+
+ .status[data-status="previous"]::before{
+   content: "__MSG_status_previous__";
+ }
+ .status[data-status="next"]::before{
+   content: "__MSG_status_next__";
+ }
+ .status[data-status="current"]::before{
+   content: "__MSG_status_current__";
+ }
+ .status[data-status="current"]::before{
+   background-color: var(--foreground-color);
+   box-shadow: none;
+   color: var(--background-color);
+   font-weight: bold;
+ }

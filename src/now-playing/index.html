@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>{{'extension_name' | i18n}}</title>
-  <link rel="stylesheet" href="bundle.css"/>
+  <link rel="stylesheet" href="popup.css"/>
   <link rel="stylesheet" href="../resources/icons/css/fontello-embedded.css"/>
 </head>
 <body>
@@ -11,13 +11,11 @@
 <header ng-controller="RadioController">
   <h1>{{'extension_name' | i18n}}</h1>
 
-  <div id="player-controls">
-    <button type="button" id="playback-button" class="icon-state" ng-click="toggle()" ng-class="status" tabindex="1"></button>
-  </div>
+  <button type="button" id="playback-button" class="icon-state" ng-click="toggle()" ng-class="status" tabindex="1"></button>
 </header>
 
 <main ng-controller="BroadcastController">
-  <div class="tiles" data-current-index="{{current_index}}">
+  <div class="tiles" data-current-index="{{current_index}}" style="--current-index:{{current_index}};">
     <section ng-repeat="broadcast in broadcasts" class="status-{{broadcast | status}}">
       <aside class="panel" id="cover">
         <img ng-src="{{broadcast.visual}}" class="album-cover" alt="{{broadcast.title}} from {{broadcast.artist}}"/>

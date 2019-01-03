@@ -2,4 +2,3 @@ src/*/*.map
 
 src/core.js
 bundle.js
-src/now-playing/*.css
