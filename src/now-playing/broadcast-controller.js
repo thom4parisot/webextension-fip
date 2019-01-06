@@ -1,4 +1,5 @@
 import Broadcast from '../lib/broadcast.js';
+import {getStationArchiveUrl} from '../lib/stations.js';
 
 /**
  * Now Playing Controller.
@@ -10,6 +11,9 @@ import Broadcast from '../lib/broadcast.js';
  */
 export default function BroadcastController($scope, chrome, preferences){
   const getPosition = Broadcast.getPositionTracker();
+  const station = preferences.get('playback.station', 'fip-paris');
+
+  $scope.archives_url = getStationArchiveUrl(station);
 
   $scope.broadcasts = preferences.get('broadcasts');
   $scope.current_index = getPosition($scope.broadcasts, null);
