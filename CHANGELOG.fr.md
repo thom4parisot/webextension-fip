@@ -7,6 +7,11 @@ Vous pouvez suivre les bugs ou l'implémentation des fonctionnalités à cette a
 
 # Quoi de neuf ?
 
+## Version 1.3.0
+
+- le lien 'Archives' est désormais lié à la radio sélectionné dans l'écran d'options
+- l'écoute de la radio est actualisée si vous la changez dans les options (pas besoin de l'arrêter et de la lancer à nouveau)
+
 ## Version 1.2.8
 
 - correction du scrobbling last.fm

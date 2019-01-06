@@ -7,6 +7,11 @@ Issues and features roadmap are tracked on this page:
 
 # Quoi de neuf ?
 
+## Version 1.3.0
+
+- the 'Archives' is now related to your current radio channel
+- when you change the radio channel while its playing, the playback will switch to this channel
+
 ## Version 1.2.8
 
 - fix last.fm scrobbling
