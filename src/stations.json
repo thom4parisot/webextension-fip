@@ -2,6 +2,7 @@
   "fip-paris": {
     "name": "Paris",
     "channelId": 7,
+    "archives": "https://www.fip.fr/archives-antenne",
     "streams": {
       "sd": "https://direct.fipradio.fr/live/fip-lofi.mp3",
       "hd": "https://direct.fipradio.fr/live/fip-midfi.mp3"
@@ -10,6 +11,7 @@
   "fip-bordeaux": {
     "name": "Bordeaux",
     "channelId": 7,
+    "archives": "https://www.fip.fr/archives-antenne",
     "streams": {
       "sd": "https://direct.fipradio.fr/live/fipbordeaux-lofi.mp3",
       "hd": "https://direct.fipradio.fr/live/fipbordeaux-midfi.mp3"
@@ -18,6 +20,7 @@
   "fip-nantes": {
     "name": "Nantes",
     "channelId": 7,
+    "archives": "https://www.fip.fr/archives-antenne",
     "streams": {
       "sd": "https://direct.fipradio.fr/live/fipnantes-lofi.mp3",
       "hd": "https://direct.fipradio.fr/live/fipnantes-midfi.mp3"
@@ -26,6 +29,7 @@
   "fip-strasbourg": {
     "name": "Strasbourg",
     "channelId": 7,
+    "archives": "https://www.fip.fr/archives-antenne",
     "streams": {
       "sd": "https://direct.fipradio.fr/live/fipstrasbourg-lofi.mp3",
       "hd": "https://direct.fipradio.fr/live/fipstrasbourg-midfi.mp3"
@@ -34,6 +38,7 @@
   "theme-electro": {
     "name": "Autour de l'électro",
     "channelId": 74,
+    "archives": "https://www.fip.fr/archives-antenne/74",
     "streams": {
       "sd": "https://direct.fipradio.fr/live/fip-webradio8.mp3"
     }
@@ -41,6 +46,7 @@
   "theme-rock": {
     "name": "Autour du rock",
     "channelId": 64,
+    "archives": "https://www.fip.fr/archives-antenne/64",
     "streams": {
       "sd": "https://direct.fipradio.fr/live/fip-webradio1.mp3"
     }
@@ -48,6 +54,7 @@
   "theme-jazz": {
     "name": "Autour du jazz",
     "channelId": 65,
+    "archives": "https://www.fip.fr/archives-antenne/65",
     "streams": {
       "sd": "https://direct.fipradio.fr/live/fip-webradio2.mp3"
     }
@@ -55,6 +62,7 @@
   "theme-groove": {
     "name": "Autour du groove",
     "channelId": 66,
+    "archives": "https://www.fip.fr/archives-antenne/66",
     "streams": {
       "sd": "https://direct.fipradio.fr/live/fip-webradio3.mp3"
     }
@@ -62,6 +70,7 @@
   "theme-monde": {
     "name": "Autour du monde",
     "channelId": 69,
+    "archives": "https://www.fip.fr/archives-antenne/69",
     "streams": {
       "sd": "https://direct.fipradio.fr/live/fip-webradio4.mp3"
     }
@@ -69,6 +78,7 @@
   "theme-nouveau": {
     "name": "Tout nouveau, tout FIP",
     "channelId": 70,
+    "archives": "https://www.fip.fr/archives-antenne/70",
     "streams": {
       "sd": "https://direct.fipradio.fr/live/fip-webradio5.mp3"
     }
@@ -76,6 +86,7 @@
   "theme-reggae": {
     "name": "Autour du reggae",
     "channelId": 71,
+    "archives": "https://www.fip.fr/archives-antenne/71",
     "streams": {
       "sd": "https://direct.fipradio.fr/live/fip-webradio6.mp3"
     }

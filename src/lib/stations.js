@@ -14,3 +14,9 @@ export function getStationFeed (station, quality) {
 
   return streams[quality] ? streams[quality] : streams['sd'];
 }
+
+export function getStationArchiveUrl(station) {
+  const {archives} = stations[station];
+
+  return archives;
+}

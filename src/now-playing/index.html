@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="popup.css"/>
   <link rel="stylesheet" href="../resources/icons/css/fontello-embedded.css"/>
 </head>
-<body>
+<body ng-controller="BroadcastController">
 
 <header ng-controller="RadioController">
   <h1>{{'extension_name' | i18n}}</h1>
@@ -14,7 +14,7 @@
   <button type="button" id="playback-button" class="icon-state" ng-click="toggle()" ng-class="status" tabindex="1"></button>
 </header>
 
-<main ng-controller="BroadcastController">
+<main>
   <div class="tiles" data-current-index="{{current_index}}" style="--current-index:{{current_index}};">
     <section ng-repeat="(index,broadcast) in broadcasts" class="status-{{broadcast | status}}" ng-class="{show: current_index === index}">
       <aside class="panel" id="cover">
@@ -70,7 +70,7 @@
   <nav>
     <ul>
       <li class="main">
-        <a href="https://www.fip.fr/archives-antenne" class="iconify" target="_blank">{{'archives' | i18n}}</a>
+        <a ng-href="{{archives_url}}" class="iconify" target="_blank">{{'archives' | i18n}}</a>
       </li>
       <li>
         <a href="#settings">{{ 'change_settings' | i18n }}</a>
