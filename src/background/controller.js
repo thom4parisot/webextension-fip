@@ -243,8 +243,8 @@ export default class Background {
 
       const station = preferences.get('playback.station');
       const quality = preferences.get('playback.quality');
-
       this.radio.setPlaybackUrl(getStationFeed(station, quality));
+      this.radio.reload();
       this.requestBroadcasts();
     }
   }

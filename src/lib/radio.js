@@ -82,6 +82,16 @@ const Radio = machina.Fsm.extend({
     this.handle('play');
   },
   /**
+   * Reload the radio
+   * @api
+   */
+  "reload": function(){
+    if (this.state !== 'stopped') {
+      this.stop();
+      this.play();
+    }
+  },
+  /**
    * Stop the radio
    * @api
    */
