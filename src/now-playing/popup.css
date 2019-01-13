@@ -312,6 +312,15 @@ article{
   background-image: url('../resources/fip.png');
 }
 
+.icon-deactivated::before {
+  color: #777;
+  text-decoration: none !important;
+}
+.icon-activated::before {
+  color: #090;
+  text-decoration: none !important;
+}
+
 /**
  * Statuses
  */

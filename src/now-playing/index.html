@@ -85,6 +85,7 @@
         <a ng-href="{{archives_url}}" class="iconify" target="_blank">{{'archives' | i18n}}</a>
       </li>
       <li>
+        <span class="icon-lastfm" aria-label="Last.fm Status" ng-class="{'icon-activated': lastfm_enabled, 'icon-deactivated': !lastfm_enabled}"></span>
         <a href="#settings">{{ 'change_settings' | i18n }}</a>
       </li>
     </ul>
