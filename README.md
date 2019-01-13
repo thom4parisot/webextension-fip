@@ -2,7 +2,7 @@
 
 > *FIP Radio Browser Extension* provides a minimalistic interface to listen to [FIP Radio](https://www.fip.fr/), an eclectic and ad-free radio station. You can optionnally scrobble to your last.fm account.
 
-![Extension Showcase](resources/showcase.png)
+![Extension Showcase](resources/now-playing.png)
 
 I developed this extension to listen to my favourite station in a single click, without popup.
 
@@ -19,6 +19,8 @@ To use the extension, your first need to install it in your web browser:
 Once installed, the radio playback is accessible via the radio station logo, near your browser search bar.
 
 That's it!
+
+![](resources/webstore.jpg)
 
 ## Contribute
 
