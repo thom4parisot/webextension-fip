@@ -9,7 +9,7 @@
   },
   "scripts": {
     "prepackage": "npm run build",
-    "package": "cd src && ls manifest.json _locales/**/*.json background/bundle.js now-playing/bundle.js now-playing/*.html now-playing/*.css options/bundle.js options/*.html resources/**/*.* | zip -9 -@ ../dist/${npm_package_name}-${npm_package_version}.zip",
+    "package": "cd src && ls manifest.json _locales/**/*.json background/bundle.js now-playing/bundle.js now-playing/*.html now-playing/*.css options/bundle.js options/*.html resources/*.png resources/icons/css/*.css resources/icons/font/*.woff2 | zip -9 -@ ../dist/${npm_package_name}-${npm_package_version}.zip",
     "test": "NODE_ENV=test PREFERENCES_NAMESPACE=test xvfb-maybe ./node_modules/karma/bin/karma start",
     "posttest": "eslint --ignore-path .gitignore ./src",
     "build": "NODE_ENV=production run-p 'build:*'",
