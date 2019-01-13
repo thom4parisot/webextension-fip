@@ -3,6 +3,7 @@ const collection = response => {
   return Object.keys(steps)
     .map(id => steps[id])
     .filter(step => step.embedType && step.embedType === 'song')
+    .map(step => Object.assign({}, step, extendLinks(step.path)))
     .sort((a, b) => a.start - b.start);
 };
 
@@ -29,6 +30,22 @@ export default class Steps {
   static getCurrent(response) {
     return this.atTime(response, new Date());
   }
+}
+
+export function extendLinks (path) {
+  if (typeof path !== 'string') {
+    return {};
+  }
+
+  if (/itunes.apple.com/.test(path)) {
+    return {lienItunes: path};
+  }
+
+  if (/amazon./.test(path)) {
+    return {lienAmazon: path};
+  }
+
+  return {};
 }
 
 export function isBefore (step, date = new Date()) {
