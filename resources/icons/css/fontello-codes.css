@@ -1,0 +1,15 @@
+
+.icon-play-circled:before { content: '\e801'; } /* '' */
+.icon-pause:before { content: '\e802'; } /* '' */
+.icon-itunes:before { content: '\e809'; } /* '' */
+.icon-github:before { content: '\e80a'; } /* '' */
+.icon-user:before { content: '\e80f'; } /* '' */
+.icon-cd:before { content: '\e811'; } /* '' */
+.icon-calendar:before { content: '\e812'; } /* '' */
+.icon-users:before { content: '\e813'; } /* '' */
+.icon-left-circled:before { content: '\f0a8'; } /* '' */
+.icon-right-circled:before { content: '\f0a9'; } /* '' */
+.icon-youtube:before { content: '\f16a'; } /* '' */
+.icon-spotify:before { content: '\f1bc'; } /* '' */
+.icon-amazon:before { content: '\f270'; } /* '' */
+.icon-lastfm:before { content: '\f321'; } /* '' */

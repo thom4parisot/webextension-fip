@@ -1,0 +1,94 @@
+{
+  "name": "",
+  "css_prefix_text": "icon-",
+  "css_use_suffix": false,
+  "hinting": true,
+  "units_per_em": 1000,
+  "ascent": 850,
+  "glyphs": [
+    {
+      "uid": "531bc468eecbb8867d822f1c11f1e039",
+      "css": "calendar",
+      "code": 59410,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "5717236f6134afe2d2a278a5c9b3927a",
+      "css": "play-circled",
+      "code": 59393,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "bbd66ef66bb8fa9edde54d9a90b89150",
+      "css": "user",
+      "code": 59407,
+      "src": "entypo"
+    },
+    {
+      "uid": "ecf8edb95c3f45eb433b4cce7ba9f740",
+      "css": "users",
+      "code": 59411,
+      "src": "entypo"
+    },
+    {
+      "uid": "d8d378d0ce413f231dfa37592e39c227",
+      "css": "pause",
+      "code": 59394,
+      "src": "entypo"
+    },
+    {
+      "uid": "80fm9zvbe9habbzvsy6w4aymkgz2vu9i",
+      "css": "cd",
+      "code": 59409,
+      "src": "modernpics"
+    },
+    {
+      "uid": "d6096cb47cc4448ac68b6a2e2c52a81d",
+      "css": "itunes",
+      "code": 59401,
+      "src": "zocial"
+    },
+    {
+      "uid": "fb4794d89b77ab712ad56c0dc4c76c6b",
+      "css": "spotify",
+      "code": 61884,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "47a1f80457068fbeab69fdb83d7d0817",
+      "css": "youtube",
+      "code": 61802,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "ae49d5a5d0c2f7253f375bde5f0da2d2",
+      "css": "lastfm",
+      "code": 62241,
+      "src": "entypo"
+    },
+    {
+      "uid": "ff16079eb4be12c49bf3014d2322acdd",
+      "css": "github",
+      "code": 59402,
+      "src": "zocial"
+    },
+    {
+      "uid": "6855131631509e8795730ce062045ea1",
+      "css": "left-circled",
+      "code": 61608,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "19b04848ae7332d2c0ea2a9e19064037",
+      "css": "right-circled",
+      "code": 61609,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "efb5a384af4a5450b7c9acff76a85b8b",
+      "css": "amazon",
+      "code": 62064,
+      "src": "fontawesome"
+    }
+  ]
+}
