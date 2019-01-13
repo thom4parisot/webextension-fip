@@ -43,6 +43,18 @@
           <li class="artist icon-user" ng-show="!broadcast.performers && broadcast.authors">
             <a ng-href="https://www.last.fm/search/artists?q={{broadcast.authors | artist}}" target="_blank">{{broadcast.authors | artist}}</a>
           </li>
+          <li class="artist icon-amazon" ng-show="broadcast.lienAmazon">
+            <a ng-href="{{broadcast.lienAmazon}}" target="_blank">Amazon Music</a>
+          </li>
+          <li class="artist icon-itunes" ng-show="broadcast.lienItunes">
+            <a ng-href="{{broadcast.lienItunes}}" target="_blank">iTunes</a>
+          </li>
+          <li class="artist icon-spotify" ng-show="broadcast.lienSpotify">
+            <a ng-href="{{broadcast.lienSpotify}}" target="_blank">Spotify</a>
+          </li>
+          <li class="artist icon-youtube" ng-show="broadcast.lienYoutube">
+            <a ng-href="{{broadcast.lienYoutube}}" target="_blank">YouTube</a>
+          </li>
         </ul>
       </article>
     </section>
