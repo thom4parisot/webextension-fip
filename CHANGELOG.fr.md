@@ -7,6 +7,12 @@ Vous pouvez suivre les bugs ou l'implémentation des fonctionnalités à cette a
 
 # Quoi de neuf ?
 
+## Version 1.4.0
+
+- affiche les liens iTunes, Amazon et YouTube s'ils sont disponibles
+- les boutons de navigation utilisent des flèches en guise d'icône
+- affiche le statut du scrobbling last.fm
+
 ## Version 1.3.0
 
 - le lien 'Archives' est désormais lié à la radio sélectionné dans l'écran d'options

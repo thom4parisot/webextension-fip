@@ -7,6 +7,12 @@ Issues and features roadmap are tracked on this page:
 
 # Quoi de neuf ?
 
+## Version 1.4.0
+
+- display iTunes, Amazon and YouTube links, if available
+- navigation buttons use arrow icons to be more explicit
+- display last.fm scrobbling status
+
 ## Version 1.3.0
 
 - the 'Archives' is now related to your current radio channel
