@@ -17,7 +17,9 @@
     "start": "static -H ${npm_package_http_headers} --gzip -p ${PORT:-3000} .",
     "version": "sed -i '' -e \"s/\\\"version\\\": \\\".*\\\"/\\\"version\\\": \\\"${npm_package_version}\\\"/\" src/manifest.json && git add src/manifest.json",
     "watch": "BUILD_CHANNEL=dev run-p 'watch:*' start",
-    "watch:bundles": "rollup --config --watch"
+    "watch:bundles": "rollup --config --watch",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "http": {
     "headers": "{\"Access-Control-Allow-Origin\":\"*\",\"Access-Control-Allow-Methods\":\"GET\",\"Access-Control-Allow-Headers\":\"Content-Type\"}"
@@ -80,6 +82,8 @@
     "angular": "^1.7.5",
     "blueimp-md5": "^2.10.0",
     "machina": "^4.0.2",
-    "webextension-polyfill": "^0.3.1"
-  }
+    "webextension-polyfill": "^0.3.1",
+    "snyk": "^1.189.0"
+  },
+  "snyk": true
 }
