@@ -30,6 +30,5 @@ export default angular.module('ChromeService', [])
       },
       getRedirectURL: browser.identity.getRedirectURL.bind(browser.identity),
       getUrl: path => browser.runtime.getURL(path),
-      newTab: url => browser.tabs.create({ url, active: true }),
     };
   });
