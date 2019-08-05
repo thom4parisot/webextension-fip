@@ -274,6 +274,18 @@ article{
   .metadata > .album-date {
     white-space: nowrap;
   }
+  .metadata > .artist > ul {
+    display: inline;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .metadata > .artist li {
+    display: inline;
+  }
+    .metadata > .artist li:not(:first-child):before {
+      content: ", ";
+    }
 
   @media screen and (min-width: 400px) {
     .metadata > .album-title{
