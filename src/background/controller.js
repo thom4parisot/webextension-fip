@@ -71,12 +71,11 @@ export default class Background {
   bootstrap() {
     const {preferences} = this;
 
-    preferences.del('radio.state');
-
     const station = preferences.get('playback.station', 'fip-paris');
     const quality = preferences.get('playback.quality', 'hd');
 
     this.radio = new Radio({ url: getStationFeed(station, quality) });
+    preferences.set('radio.state', this.radio.state);
 
     this.setupChannelBadge();
     this.registerEvents();
