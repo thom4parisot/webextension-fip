@@ -3,7 +3,7 @@ Un moyen pratique et rapide d'écouter FIP depuis votre navigateur.
 Son interface simple et pratique vous permet de lancer la radio en un seul clic, de scrobbler les musiques diffusées mais aussi d'afficher les informations du direct.
 
 Vous pouvez suivre les bugs ou l'implémentation des fonctionnalités à cette adresse :
-> https://github.com/oncletom/chrome-fip/issues
+> https://github.com/oncletom/webextension-fip/issues
 
 # Quoi de neuf ?
 
@@ -37,7 +37,7 @@ Vous pouvez suivre les bugs ou l'implémentation des fonctionnalités à cette a
 
 ## Version 1.1.7
 
-- corrige l'interface cassée depuis la redirection permanente de fipradio.fr vers fip.fr [#79](https://github.com/oncletom/chrome-fip/issues/79)
+- corrige l'interface cassée depuis la redirection permanente de fipradio.fr vers fip.fr [#79](https://github.com/oncletom/webextension-fip/issues/79)
 
 ## Version 1.1.6
 

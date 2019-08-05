@@ -1,20 +1,21 @@
-# FIP Radio Browser Extension [![Build Status][]](https://travis-ci.org/oncletom/chrome-fip) ![][rating badge] ![][downloads badge] ![][version badge]
+# FIP Radio WebExtension (for Chrome, Firefox, Edge and Opera) [![Build Status][]](https://travis-ci.org/oncletom/webextension-fip) ![][rating badge] ![][downloads badge] ![][version badge]
 
-> *FIP Radio Browser Extension* provides a minimalistic interface to listen to [FIP Radio](https://www.fip.fr/), an eclectic and ad-free radio station. You can optionnally scrobble to your last.fm account.
+> *FIP Radio WebExtension* provides a minimalistic browser interface to listen to [FIP Radio](https://www.fip.fr/), an eclectic and ad-free radio station. You can optionnally scrobble to your last.fm account.
 
 ![Extension Showcase](resources/now-playing.png)
 
-I developed this extension to listen to my favourite station in a single click, without popup.
+I developed this extension to listen to my favourite radio station in a single click, without popup.
 
-It works in Google Chrome, Chromium, Mozilla Firefox and Opera browsers.
+It works in Google Chrome, Chromium, Mozilla Firefox, Opera browsers and Microsoft Edge browsers.
 
 ## Get Started
 
 To use the extension, your first need to install it in your web browser:
 
-* Chrome: [via the Chrome Web Store][Chrome extension]
 * Firefox: [via Firefox Add-ons][Firefox extension]
+* Chrome: [via the Chrome Web Store][Chrome extension]
 * Opera: [via the Chrome Web Store][Chrome extension]
+* Edge: [via the Chrome Web Store][Chrome extension]
 
 Once installed, the radio playback is accessible via the radio station logo, near your browser search bar.
 
@@ -33,7 +34,7 @@ The developer toolchain relies on:
 
 If you don't know them much… well it's a good occasion to learn!
 
-### Develop in your browser
+### Development Setup
 
 Better for you to have [https://nodejs.org/download/](Node.js) (v10+) installed on your computer to use the development tooling.
 
@@ -75,7 +76,7 @@ Current status is pretty poor but the codebase is solid.
 
 [Chrome extension]: 	https://chrome.google.com/webstore/detail/fnhlecpfnocgmmmghkjcipmhdpmpddii
 [Firefox extension]: https://addons.mozilla.org/firefox/addon/fip-radio/
-[Build Status]: 	https://travis-ci.org/oncletom/chrome-fip.svg?branch=master
+[Build Status]: 	https://travis-ci.org/oncletom/webextension-fip.svg?branch=master
 [downloads badge]: 	https://img.shields.io/chrome-web-store/d/fnhlecpfnocgmmmghkjcipmhdpmpddii.svg
 [version badge]: 	https://img.shields.io/chrome-web-store/v/fnhlecpfnocgmmmghkjcipmhdpmpddii.svg
 [rating badge]: 	https://img.shields.io/chrome-web-store/rating/fnhlecpfnocgmmmghkjcipmhdpmpddii.svg

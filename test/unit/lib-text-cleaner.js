@@ -2,7 +2,7 @@ import * as TextCleaner from '../../src/lib/text-cleaner.js';
 
 describe('Text Cleaner', function(){
 
-  //@see https://github.com/oncletom/chrome-fip/issues/23
+  //@see https://github.com/oncletom/webextension-fip/issues/23
   it('Cleaning PROMO', function(){
     expect(TextCleaner.doAlbumTitle('magical title')).to.equal('Magical Title');
     expect(TextCleaner.doAlbumTitle('magical title cd promo ')).to.equal('Magical Title');
@@ -15,7 +15,7 @@ describe('Text Cleaner', function(){
     expect(TextCleaner.doAlbumTitle('Pour Une Ame Souveraine (a Dedication To Nina Simone) (cd Promo)')).to.equal('Pour Une Ame Souveraine (A Dedication To Nina Simone)');
   });
 
-  //@see https://github.com/oncletom/chrome-fip/issues/26
+  //@see https://github.com/oncletom/webextension-fip/issues/26
   it('Cleaning incomplete titles', function(){
     expect(TextCleaner.doTrackTitle('Beautiful Mongolian Horse (bonus Tra')).to.equal('Beautiful Mongolian Horse');
     expect(TextCleaner.doTrackTitle('Awesome flying cheese (whatever')).to.equal('Awesome Flying Cheese');
@@ -23,7 +23,7 @@ describe('Text Cleaner', function(){
     expect(TextCleaner.doTrackTitle('magical promo single ')).to.equal('Magical Promo');
   });
 
-  //@see https://github.com/oncletom/chrome-fip/issues/25
+  //@see https://github.com/oncletom/webextension-fip/issues/25
   it('Cleaning artist names', function(){
     expect(TextCleaner.doArtistName('Musica Nuda/voi Peträ Magoni/ctb Ferruccio Spinetti/vib Daniele Di Gregorio/bat Balafon')).to.equal('Musica Nuda, Peträ Magoni, Ferruccio Spinetti, Daniele Di Gregorio, Balafon');
     expect(TextCleaner.doArtistName('Musica Nuda/Petra Magoni/Ferruccio Spinetti/ Daniele Di Gregorio/Balafon')).to.equal('Musica Nuda, Petra Magoni, Ferruccio Spinetti, Daniele Di Gregorio, Balafon');
@@ -38,7 +38,7 @@ describe('Text Cleaner', function(){
     expect(TextCleaner.doArtistName('Ji Mob/gui Matthieu Ouaki/bat Nico Rajao/bas Toskano Jeanniard/fl Ji Dru')).to.equal('Ji Mob, Matthieu Ouaki, Nico Rajao, Toskano Jeanniard, Ji Dru');
   });
 
-  //@see https://github.com/oncletom/chrome-fip/issues/25
+  //@see https://github.com/oncletom/webextension-fip/issues/25
   it('Retrieving main artist name', function(){
     expect(TextCleaner.getMainArtistName('Musica Nuda/voi Petra Magoni/ctb Ferruccio Spinetti/vib Daniele Di Gregorio/bat Balafon')).to.equal('Musica Nuda');
     expect(TextCleaner.getMainArtistName('Musica Nuda/Petra Magoni/Ferruccio Spinetti/ Daniele Di Gregorio/Balafon')).to.equal('Musica Nuda');

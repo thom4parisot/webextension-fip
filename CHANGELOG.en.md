@@ -3,7 +3,7 @@ A great way to listen to the fabulous and ad-free FIP Radio within you browser.
 Its simple and neat interface provides you a one-click playback, automatic scrobbling and on air informations display.
 
 Issues and features roadmap are tracked on this page:
-> https://github.com/oncletom/chrome-fip/issues
+> https://github.com/oncletom/webextension-fip/issues
 
 # Quoi de neuf ?
 
@@ -37,7 +37,7 @@ Issues and features roadmap are tracked on this page:
 
 ## Version 1.1.7
 
-- fix broken interface due to fipradio.fr being permanently redirected to fip.fr [#79](https://github.com/oncletom/chrome-fip/issues/79)
+- fix broken interface due to fipradio.fr being permanently redirected to fip.fr [#79](https://github.com/oncletom/webextension-fip/issues/79)
 
 ## Version 1.1.6
 
@@ -55,7 +55,7 @@ Issues and features roadmap are tracked on this page:
 ## Version 1.1.3
 
 - add CHANGELOG
-- fix Previous/Next buttons (they did not work in Firefox) [#72](https://github.com/oncletom/chrome-fip/issues/72)
+- fix Previous/Next buttons (they did not work in Firefox) [#72](https://github.com/oncletom/webextension-fip/issues/72)
 
 ## Version 1.1.2
 
