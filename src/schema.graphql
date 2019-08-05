@@ -1,0 +1,482 @@
+directive @cacheControl(maxAge: Int, scope: CacheControlScope) on FIELD_DEFINITION | OBJECT | INTERFACE
+
+"""A blank step is a step without diffusion"""
+type BlankStep implements Step {
+  """The unique identifier of a step"""
+  id: ID!
+
+  """Start time of the step"""
+  start: Int
+
+  """End time of the step"""
+  end: Int
+
+  """Step's title"""
+  title: String
+
+  """Step within the current step"""
+  children: [Step]
+}
+
+"""A Brand is a web or broadcast radio station."""
+type Brand {
+  """The unique identifier of a brand"""
+  id: ID!
+
+  """Brand's title"""
+  title: String!
+
+  """Brand's baseline"""
+  baseline: String
+
+  """Brand's description"""
+  description: String
+
+  """Brand's website URL"""
+  websiteUrl: String
+
+  """List of available webradios"""
+  webRadios: [WebRadio]
+
+  """List of available local radios"""
+  localRadios: [LocalRadio]
+
+  """live stream"""
+  liveStream: String
+}
+
+enum CacheControlScope {
+  PUBLIC
+  PRIVATE
+}
+
+"""An Diffusion is an occurence of a radio Show on a given Station."""
+type Diffusion {
+  """The unique identifier of an diffusion"""
+  id: ID!
+
+  """Diffusion's title"""
+  title: String!
+
+  """Diffusion's standFirst"""
+  standFirst: String
+
+  """Website's URL of the Diffusion"""
+  url: String
+
+  """Diffusion's publication date"""
+  published_date: String
+
+  """List of associated podcats"""
+  podcastEpisode: PodcastEpisode
+
+  """Personnalities associates to a Diffusion"""
+  personalitiesConnection: DiffusionPersonalitiesConnection
+
+  """Diffusion's taxonomies"""
+  taxonomiesConnection: DiffusionTaxonomiesConnection
+
+  """Show"""
+  show: Show
+}
+
+type DiffusionPersonalitiesConnection {
+  edges: [DiffusionPersonalitiesEdge]
+}
+
+type DiffusionPersonalitiesEdge {
+  relation: String
+  info: String
+  node: Personality
+}
+
+"""A diffusion step is a step with an diffusion"""
+type DiffusionStep implements Step {
+  """The unique identifier of a step"""
+  id: ID!
+
+  """Start time of the step"""
+  start: Int
+
+  """End time of the step"""
+  end: Int
+
+  """Step within the current step"""
+  children: [Step]
+  diffusion: Diffusion
+}
+
+type DiffusionTaxonomiesConnection {
+  edges: [DiffusionTaxonomiesEdge]
+}
+
+type DiffusionTaxonomiesEdge {
+  relation: String
+  info: String
+  node: Taxonomy
+}
+
+"""This object contains a show, a program and a song"""
+type Live {
+  """A station show"""
+  show: Step
+
+  """A station program in show"""
+  program: Step
+
+  """A station song in program"""
+  song: TrackStep
+}
+
+"""This object contains a local radio"""
+type LocalRadio {
+  """The unique identifier of a local radio"""
+  id: ID!
+
+  """Local radio's title"""
+  title: String!
+
+  """Local radio's description"""
+  description: String
+
+  """live stream"""
+  liveStream: String
+}
+
+"""A Personality is an individual or an organisation."""
+type Personality {
+  """The unique identifier of a personality"""
+  id: ID!
+
+  """Personality's name"""
+  name: String!
+}
+
+"""An object referencing links to a podcast"""
+type Podcast {
+  """Link to the RSS stream"""
+  rss: String!
+
+  """Link to iTunes"""
+  itunes: String
+}
+
+"""A PodcastEpisode is a media file in a given format / resolution."""
+type PodcastEpisode {
+  """The unique identifier of a manifestation"""
+  id: ID!
+
+  """PodcastEpisode's title"""
+  title: String!
+
+  """PodcastEpisode's URL"""
+  url: String!
+
+  """PodcastEpisode's creation date"""
+  created: Int!
+
+  """PodcastEpisode's duration"""
+  duration: Int
+
+  """The diffusion associate to the manifestation"""
+  diffusion: Diffusion
+}
+
+type Query {
+  query: Query
+
+  """Get the list of stations available"""
+  brands: [Brand]
+
+  """Get a specific station"""
+  brand(
+    """station id"""
+    id: StationsEnum!
+  ): Brand
+
+  """Get a specific show by ID"""
+  show(
+    """Show's ID"""
+    id: ID!
+  ): Show
+
+  """Get a specific show by url"""
+  showByUrl(
+    """Show's url"""
+    url: String!
+  ): Show
+
+  """Get list of shows for a specific Station"""
+  shows(
+    """Station's id"""
+    station: StationsEnum!
+
+    """Limit of show to return. Default=10 Max=100"""
+    first: Int
+
+    """Cursor use that to paginate"""
+    after: String
+  ): Shows
+
+  """Get the program schedule of a specific station"""
+  grid(
+    """Start time (timestamp)"""
+    start: Int
+
+    """End time (timestamp)"""
+    end: Int
+
+    """Station's id"""
+    station: StationsEnum!
+  ): [Step]
+  live(
+    """Station's id"""
+    station: StationsEnum!
+  ): Live
+}
+
+"""A radio show"""
+type Show {
+  """The unique identifier of a Show"""
+  id: ID!
+
+  """Show's title"""
+  title: String!
+
+  """Website's URL of the Concept"""
+  url: String
+
+  """Show's standFirst"""
+  standFirst: String
+
+  """Links to the show's podcast"""
+  podcast: Podcast
+
+  """Personnalities associates to a Show"""
+  personalitiesConnection: ShowPersonalitiesConnection
+
+  """Diffusions associates to a Show"""
+  diffusionsConnection: ShowDiffusionsConnection
+
+  """Taxonomies associates to a Show"""
+  taxonomiesConnection: ShowTaxonomiesConnection
+}
+
+type ShowDiffusionsConnection {
+  edges: [ShowDiffusionsEdge]
+}
+
+type ShowDiffusionsEdge {
+  cursor: String!
+  node: Diffusion
+}
+
+type ShowEdge {
+  cursor: String!
+  node: Show
+}
+
+type ShowPersonalitiesConnection {
+  edges: [ShowPersonalitiesEdge]
+}
+
+type ShowPersonalitiesEdge {
+  relation: String
+  info: String
+  node: Personality
+}
+
+type Shows {
+  edges: [ShowEdge]
+}
+
+type ShowTaxonomiesConnection {
+  edges: [ShowTaxonomiesEdge]
+}
+
+type ShowTaxonomiesEdge {
+  relation: String
+  info: String
+  node: Taxonomy
+}
+
+"""List of Radio France brands, local radios and webradios"""
+enum StationsEnum {
+  FRANCEINTER
+  FRANCEINFO
+  FRANCEBLEU
+  FRANCEMUSIQUE
+  FRANCECULTURE
+  MOUV
+  FIP
+  FRANCEBLEU_RCFM
+  FRANCEBLEU_ALSACE
+  FRANCEBLEU_ARMORIQUE
+  FRANCEBLEU_AUXERRE
+  FRANCEBLEU_BEARN
+  FRANCEBLEU_BELFORT_MONTBELIARD
+  FRANCEBLEU_BERRY
+  FRANCEBLEU_BESANCON
+  FRANCEBLEU_BOURGOGNE
+  FRANCEBLEU_BREIZH_IZEL
+  FRANCEBLEU_CHAMPAGNE_ARDENNE
+  FRANCEBLEU_COTENTIN
+  FRANCEBLEU_CREUSE
+  FRANCEBLEU_DROME_ARDECHE
+  FRANCEBLEU_GARD_LOZERE
+  FRANCEBLEU_GASCOGNE
+  FRANCEBLEU_GIRONDE
+  FRANCEBLEU_HERAULT
+  FRANCEBLEU_ISERE
+  FRANCEBLEU_LA_ROCHELLE
+  FRANCEBLEU_LIMOUSIN
+  FRANCEBLEU_LOIRE_OCEAN
+  FRANCEBLEU_SUR_LORRAINE
+  FRANCEBLEU_MAYENNE
+  FRANCEBLEU_NORD
+  FRANCEBLEU_NORMANDIE_CAEN
+  FRANCEBLEU_NORMANDIE_ROUEN
+  FRANCEBLEU_ORLEANS
+  FRANCEBLEU_PAYS_D_AUVERGNE
+  FRANCEBLEU_PAYS_BASQUE
+  FRANCEBLEU_PAYS_DE_SAVOIE
+  FRANCEBLEU_PERIGORD
+  FRANCEBLEU_PICARDIE
+  FRANCEBLEU_PROVENCE
+  FRANCEBLEU_ROUSSILLON
+  FRANCEBLEU_TOURAINE
+  FRANCEBLEU_VAUCLUSE
+  FRANCEBLEU_AZUR
+  FRANCEBLEU_LORRAINE_NORD
+  FRANCEBLEU_POITOU
+  FIP_BORDEAUX
+  FIP_NANTES
+  FIP_STRASBOURG
+  FIP_ROCK
+  FIP_JAZZ
+  FIP_GROOVE
+  FRANCEBLEU_PARIS
+  FIP_WORLD
+  FIP_NOUVEAUTES
+  FIP_REGGAE
+  FIP_ELECTRO
+  MOUV_100MIX
+  FIP_METAL
+  MOUV_CLASSICS
+  MOUV_DANCEHALL
+  MOUV_RNB
+  MOUV_RAPUS
+  MOUV_RAPFR
+  ELSASS
+  FRANCEBLEU_MAINE
+  FRANCEBLEU_TOULOUSE
+  FRANCEBLEU_SAINT_ETIENNE_LOIRE
+  FORMATION
+  FRANCEMUSIQUE_CLASSIQUE_EASY
+  FRANCEMUSIQUE_CLASSIQUE_PLUS
+  FRANCEMUSIQUE_CONCERT_RF
+  FRANCEMUSIQUE_OCORA_MONDE
+  FRANCEMUSIQUE_LA_JAZZ
+  FRANCEMUSIQUE_LA_CONTEMPORAINE
+  FRANCEMUSIQUE_EVENEMENTIELLE
+  FRANCEMUSIC
+}
+
+"""A Step represents a period of time on a given radio Station."""
+interface Step {
+  """The unique identifier of a step"""
+  id: ID!
+
+  """Start time of the step"""
+  start: Int
+
+  """End time of the step"""
+  end: Int
+}
+
+"""A taxonomy can be a tag, a category..."""
+type Taxonomy {
+  """Taxonomy's ID"""
+  id: ID!
+
+  """Taxonomy's path"""
+  path: String!
+
+  """Taxonomy's type"""
+  type: String
+
+  """Taxonomy's title"""
+  title: String
+
+  """Taxonomy's standFirst"""
+  standFirst: String
+}
+
+"""A Track represents an audio track."""
+type Track {
+  """Track's ID"""
+  id: ID!
+
+  """Track's title"""
+  title: String!
+
+  """Track's album title"""
+  albumTitle: String
+
+  """Track's artists"""
+  label: String
+
+  """Track's main artists"""
+  mainArtists: [String]
+
+  """Track's authors"""
+  authors: [String]
+
+  """Track's composers"""
+  composers: [String]
+
+  """Track's performers"""
+  performers: [String]
+
+  """Track's production date"""
+  productionDate: Int
+
+  """Track's disc Number"""
+  discNumber: Int
+
+  """Track's number"""
+  trackNumber: Int
+}
+
+"""A track step is a step with a song/track"""
+type TrackStep implements Step {
+  """The unique identifier of a step"""
+  id: ID!
+
+  """Start time of the step"""
+  start: Int
+
+  """End time of the step"""
+  end: Int
+
+  """Song"""
+  track: Track
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+"""This object contains a webradio"""
+type WebRadio {
+  """The unique identifier of a webradio"""
+  id: ID!
+
+  """Webradio's title"""
+  title: String!
+
+  """Webradio's description"""
+  description: String
+
+  """live stream"""
+  liveStream: String
+}
