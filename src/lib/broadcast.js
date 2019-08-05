@@ -23,7 +23,7 @@ export default class Broadcast {
   static getPositionTracker(){
     const previous = {
       "size": 0,
-      "position": null
+      "position": 0
     };
 
     /**

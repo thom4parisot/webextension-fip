@@ -18,7 +18,7 @@ export default function BroadcastController($scope, chrome, preferences){
   $scope.lastfm_enabled = lastFm.isEnabled() && preferences.get("lastfm.scrobbling") && preferences.get("lastfm.username");
 
   $scope.broadcasts = preferences.get('broadcasts');
-  $scope.current_index = getPosition($scope.broadcasts, null);
+  $scope.current_index = getPosition($scope.broadcasts, $scope.broadcasts.length - 1);
 
   chrome.on('broadcasts', broadcasts => {
     $scope.broadcasts = broadcasts;

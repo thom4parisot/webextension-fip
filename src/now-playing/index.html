@@ -63,13 +63,13 @@
   <nav ng-show="broadcasts.length > 1">
     <ul>
       <li>
-        <button ng-click="previous()">
+        <button ng-click="previous()" ng-disabled="current_index === 0">
           <span class="icon-left-circled"></span>
           <span class="label">Previous</span>
         </button>
       </li>
       <li>
-        <button ng-click="next()">
+        <button ng-click="next()" ng-disabled="current_index === broadcasts.length-1">
           <span class="label">Next</span>
           <span class="icon-right-circled"></span>
         </button>

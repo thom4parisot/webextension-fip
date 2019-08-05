@@ -194,6 +194,10 @@ main{
       margin-left: 3px;
       padding: 0;
     }
+      main nav button:disabled {
+        color: gray !important;
+        cursor: default;
+      }
       main nav button:hover,
       main nav button:focus {
         color: #333;
