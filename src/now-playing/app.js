@@ -13,7 +13,11 @@ import RadioController from './radio-controller.js';
 const App = angular.module('now-playing', ['ChromeService', 'StepsFilters']).run(chrome => {
   document.documentElement.setAttribute('lang', navigator.language);
 
-  chrome.notify('radio.play');
+  // autoplay in production only
+  // it's annoying to have autoplay when developping
+  if (process.env.BUILD_CHANNEL !== 'dev') {
+    chrome.notify('radio.play');
+  }
 });
 
 document.querySelector('a[href="#settings"]').addEventListener('click', (e) => {
