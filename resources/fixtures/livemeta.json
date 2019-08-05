@@ -1,0 +1,254 @@
+{
+  "data": {
+    "timelineCursor": {
+      "__typename": "HistoryCursor",
+      "totalCount": 0,
+      "edges": [
+        {
+          "__typename": "TimeLineItemEdge",
+          "node": {
+            "__typename": "TimelineItem",
+            "subtitle": "Naima",
+            "start_time": 1565026011,
+            "end_time": 1565026535,
+            "cover": null,
+            "label": "LE TRES JAZZ CLUB",
+            "album": "Physical structure",
+            "interpreters": [
+              "George Otsuka",
+              "Shozo Sasaki",
+              "Fumio Karashima",
+              "Mitsuako Furuno",
+              "Norio Ohno"
+            ],
+            "musical_kind": "Jazz ",
+            "external_links": {
+              "__typename": "ExternalLinks",
+              "youtube": null
+            },
+            "title": "George Otsuka, Shozo Sasaki, Fumio Karashima, Mitsuako Furuno, Norio Ohno"
+          },
+          "cursor": "MTU2NTAyNjUzNQ=="
+        },
+        {
+          "__typename": "TimeLineItemEdge",
+          "node": {
+            "__typename": "TimelineItem",
+            "subtitle": "Sky Islands",
+            "start_time": 1565025654,
+            "end_time": 1565026016,
+            "cover": "https://e-cdns-images.dzcdn.net/images/cover/93ecf61b9b7d51cacbd0a4da06dc010a/1000x1000-000000-80-0-0.jpg",
+            "label": "BLUE NOTE",
+            "album": "Funky notes from the West coast",
+            "interpreters": ["Caldera"],
+            "musical_kind": "Jazz ",
+            "external_links": {
+              "__typename": "ExternalLinks",
+              "youtube": {
+                "__typename": "ExternalLink",
+                "link": "https://www.youtube.com/watch?v=WpRBjXKuAfs",
+                "image": "https://i.ytimg.com/vi/WpRBjXKuAfs/hqdefault.jpg"
+              }
+            },
+            "title": "Caldera"
+          },
+          "cursor": "MTU2NTAyNjAxNg=="
+        },
+        {
+          "__typename": "TimeLineItemEdge",
+          "node": {
+            "__typename": "TimelineItem",
+            "subtitle": "Eternal / Internal peace",
+            "start_time": 1565025130,
+            "end_time": 1565025655,
+            "cover": "https://e-cdns-images.dzcdn.net/images/cover/1e534de8ca4fd150c5f1020714f1b40a/1000x1000-000000-80-0-0.jpg",
+            "label": "BROWNSWOOD RECORDINGS",
+            "album": "Sunny side up",
+            "interpreters": ["Silentjay"],
+            "musical_kind": "Jazz ",
+            "external_links": {
+              "__typename": "ExternalLinks",
+              "youtube": {
+                "__typename": "ExternalLink",
+                "link": "https://www.youtube.com/watch?v=S6j-CeIlp8o",
+                "image": "https://i.ytimg.com/vi/S6j-CeIlp8o/hqdefault.jpg"
+              }
+            },
+            "title": "Silentjay"
+          },
+          "cursor": "MTU2NTAyNTY1NQ=="
+        },
+        {
+          "__typename": "TimeLineItemEdge",
+          "node": {
+            "__typename": "TimelineItem",
+            "subtitle": "Make it last",
+            "start_time": 1565024792,
+            "end_time": 1565025138,
+            "cover": "https://cdns-images.dzcdn.net/images/cover/59500df5715efcca68fbd860317611c4/1000x1000-000000-80-0-0.jpg",
+            "label": "BLUE ENGINE RECORDS",
+            "album": "The music never stops",
+            "interpreters": ["Betty Carter"],
+            "musical_kind": "Jazz ",
+            "external_links": {
+              "__typename": "ExternalLinks",
+              "youtube": {
+                "__typename": "ExternalLink",
+                "link": "https://www.youtube.com/watch?v=TiYIy3AVEL0",
+                "image": "https://i.ytimg.com/vi/TiYIy3AVEL0/hqdefault.jpg"
+              }
+            },
+            "title": "Betty Carter"
+          },
+          "cursor": "MTU2NTAyNTEzOA=="
+        },
+        {
+          "__typename": "TimeLineItemEdge",
+          "node": {
+            "__typename": "TimelineItem",
+            "subtitle": "Night And Day",
+            "start_time": 1565024498,
+            "end_time": 1565024802,
+            "cover": "https://e-cdns-images.dzcdn.net/images/cover/1e34eec71e8d6ade211bb9debf5d12ad/1000x1000-000000-80-0-0.jpg",
+            "label": "COLUMBIA LEGACY",
+            "album": "The complete \"\"Concert by the sea\"\"",
+            "interpreters": [
+              "Erroll Garner",
+              "Denzil Decosta Best",
+              "Eddie Calhoun"
+            ],
+            "musical_kind": "Jazz ",
+            "external_links": {
+              "__typename": "ExternalLinks",
+              "youtube": {
+                "__typename": "ExternalLink",
+                "link": "https://www.youtube.com/watch?v=kD34WHYM9p0",
+                "image": "https://i.ytimg.com/vi/kD34WHYM9p0/hqdefault.jpg"
+              }
+            },
+            "title": "Erroll Garner, Denzil Decosta Best, Eddie Calhoun"
+          },
+          "cursor": "MTU2NTAyNDgwMg=="
+        },
+        {
+          "__typename": "TimeLineItemEdge",
+          "node": {
+            "__typename": "TimelineItem",
+            "subtitle": "Nuits bleues",
+            "start_time": 1565024241,
+            "end_time": 1565024436,
+            "cover": "https://is4-ssl.mzstatic.com/image/thumb/Music128/v4/b8/18/2a/b8182a76-f34a-81c5-1b31-48195b24e4cb/source/400x400bb.jpg",
+            "label": "WAGRAM MUSIC",
+            "album": "Persona",
+            "interpreters": ["Bertrand Belin"],
+            "musical_kind": "Variété francophone ",
+            "external_links": {
+              "__typename": "ExternalLinks",
+              "youtube": null
+            },
+            "title": "Bertrand Belin"
+          },
+          "cursor": "MTU2NTAyNDQzNg=="
+        },
+        {
+          "__typename": "TimeLineItemEdge",
+          "node": {
+            "__typename": "TimelineItem",
+            "subtitle": "Get yourself together",
+            "start_time": 1565024010,
+            "end_time": 1565024246,
+            "cover": "https://e-cdns-images.dzcdn.net/images/cover/c6e0d35f2abe9e05c214e7eaef42d80f/1000x1000-000000-80-0-0.jpg",
+            "label": "NONESUCH",
+            "album": "Let's rock",
+            "interpreters": ["The Black Keys"],
+            "musical_kind": "Rock ",
+            "external_links": {
+              "__typename": "ExternalLinks",
+              "youtube": {
+                "__typename": "ExternalLink",
+                "link": "https://www.youtube.com/watch?v=X4ZoZOO5gqE",
+                "image": "https://i.ytimg.com/vi/X4ZoZOO5gqE/hqdefault.jpg"
+              }
+            },
+            "title": "The Black Keys"
+          },
+          "cursor": "MTU2NTAyNDI0Ng=="
+        },
+        {
+          "__typename": "TimeLineItemEdge",
+          "node": {
+            "__typename": "TimelineItem",
+            "subtitle": "Let's call it a day",
+            "start_time": 1565023513,
+            "end_time": 1565023863,
+            "cover": "https://cdns-images.dzcdn.net/images/cover/757c422de16b34259d8bcd9596fff7e7/1000x1000-000000-80-0-0.jpg",
+            "label": "UNIVERSAL MU",
+            "album": "Sophisticated ladies",
+            "interpreters": ["Charlie Haden Quartet West"],
+            "musical_kind": "Jazz ",
+            "external_links": {
+              "__typename": "ExternalLinks",
+              "youtube": null
+            },
+            "title": "Charlie Haden Quartet West"
+          },
+          "cursor": "MTU2NTAyMzg2Mw=="
+        },
+        {
+          "__typename": "TimeLineItemEdge",
+          "node": {
+            "__typename": "TimelineItem",
+            "subtitle": "Sonate en Ré Maj op 3 n°1 : Allegro - pour violoncelle et basse continue",
+            "start_time": 1565023291,
+            "end_time": 1565023522,
+            "cover": null,
+            "label": "GLOSSA",
+            "album": "Le violoncelle en Espagne / Boccherini et autres virtuoses du 18ème siècle",
+            "interpreters": [
+              "La Ritirata",
+              "Josetxu Obregon",
+              "Daniel Oyarzabal",
+              "Diana Vinagre"
+            ],
+            "musical_kind": "Musique de chambre ",
+            "external_links": {
+              "__typename": "ExternalLinks",
+              "youtube": null
+            },
+            "title": "La Ritirata, Josetxu Obregon, Daniel Oyarzabal, Diana Vinagre"
+          },
+          "cursor": "MTU2NTAyMzUyMg=="
+        },
+        {
+          "__typename": "TimeLineItemEdge",
+          "node": {
+            "__typename": "TimelineItem",
+            "subtitle": "Igualito que el tango",
+            "start_time": 1565023158,
+            "end_time": 1565023292,
+            "cover": "https://e-cdns-images.dzcdn.net/images/cover/6ecb4a028cd83b614b26adc9c5658378/1000x1000-000000-80-0-0.jpg",
+            "label": "WORLD VILLAGE",
+            "album": "Anda",
+            "interpreters": ["Melingo"],
+            "musical_kind": "Musique du monde ",
+            "external_links": {
+              "__typename": "ExternalLinks",
+              "youtube": {
+                "__typename": "ExternalLink",
+                "link": "https://www.youtube.com/watch?v=7WKZCX1Mp5U",
+                "image": "https://i.ytimg.com/vi/7WKZCX1Mp5U/hqdefault.jpg"
+              }
+            },
+            "title": "Melingo"
+          },
+          "cursor": "MTU2NTAyMzI5Mg=="
+        }
+      ],
+      "pageInfo": {
+        "__typename": "PageInfo",
+        "endCursor": "MTU2NTAyMzI5Mg==",
+        "hasNextPage": true
+      }
+    }
+  }
+}
