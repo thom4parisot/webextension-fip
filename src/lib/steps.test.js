@@ -1,10 +1,10 @@
 import Steps from './steps.js';
-import {withResponse} from './stations.js';
-import fixtures from '../../resources/fixtures/livemeta.json';
+import {withHistoryResponse} from './stations.js';
+import fixtures from '../../resources/fixtures/history.json';
 import sinon from 'sinon';
 
 describe('Steps', function(){
-  const data = withResponse(fixtures);
+  const data = withHistoryResponse(fixtures);
 
   describe('getAll', () => {
     it('should return an ascending ordered list', () => {

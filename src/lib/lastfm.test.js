@@ -1,11 +1,11 @@
 import lastFm from './lastfm.js';
-import fixtures from '../../resources/fixtures/livemeta.json';
+import fixtures from '../../resources/fixtures/history.json';
 
-import {withResponse} from './stations.js';
+import {withHistoryResponse} from './stations.js';
 import Steps from './steps.js';
 
 describe('Last.fm', function(){
-  const song = Steps.getAll(withResponse(fixtures))[0];
+  const song = Steps.getAll(withHistoryResponse(fixtures))[0];
 
   it('should have API and Secret configured', () => {
     expect(lastFm.isEnabled()).toBe(true);

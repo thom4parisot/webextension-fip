@@ -3,9 +3,7 @@ import stations from '../stations.json';
 
 export {stations};
 
-export function getStationBroadcasts (station) {
-  const {stationId} = stations[station];
-
+export function getStationHistory (stationId) {
   return request('https://www.fip.fr/latest/api/graphql', {
     method: 'POST',
     mode: 'cors',
@@ -29,11 +27,52 @@ export function getStationBroadcasts (station) {
     })
   })
   .then(res => res.json())
-  .then(withResponse);
+  .then(withHistoryResponse);
 }
 
-export function withResponse({data}) {
+export function getStationNowPlaying (stationId) {
+  return request('https://www.fip.fr/latest/api/graphql', {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    body: JSON.stringify({
+      operationName: 'Now',
+      variables: {
+        stationId,
+        previousTrackLimit: 0,
+      },
+      extensions: {
+        persistedQuery: {
+          version:1,
+          sha256Hash: "8a931c7d177ff69709a79f4c213bd2403f0c11836c560bc22da55628d8100df8"
+        }
+      }
+    })
+  })
+  .then(res => res.json())
+  .then(withNowPlayingResponse);
+}
+
+export function getStationBroadcasts (station) {
+  const {stationId} = stations[station];
+
+  return Promise.all([
+    getStationNowPlaying(stationId),
+    getStationHistory(stationId),
+  ])
+  .then(([nowPlaying, ...history]) => [nowPlaying].concat(...history))
+  .then(items => items.filter(d => d));
+}
+
+export function withHistoryResponse({data}) {
   return data.timelineCursor.edges.map(({node}) => node);
+}
+
+export function withNowPlayingResponse({data}) {
+  return data.now ? Object.assign({}, data.now.song, data.now.playing_item) : null;
 }
 
 export function getStationFeed (station, quality) {

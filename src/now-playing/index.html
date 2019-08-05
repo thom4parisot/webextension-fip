@@ -18,7 +18,7 @@
   <div class="tiles" data-current-index="{{current_index}}" style="--current-index:{{current_index}};">
     <section ng-repeat="(index,broadcast) in broadcasts" class="status-{{broadcast | status}}" ng-class="{show: current_index === index}" data-start="{{broadcast.start_time * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}" data-end="{{broadcast.end_time * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}">
       <aside class="panel" id="cover">
-        <img ng-src="{{broadcast.cover}}" class="album-cover" alt="{{broadcast.title}} from {{broadcast.artist}}"/>
+        <img ng-src="{{broadcast.cover || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='}}" class="album-cover" alt="{{broadcast.title}} from {{broadcast.artist}}"/>
 
         <span class="status" data-status="{{broadcast | status}}" aria-label="{{broadcast | status}}" title="{{broadcast.start_time * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}"></span>
       </aside>
