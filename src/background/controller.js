@@ -133,10 +133,8 @@ export default class Background {
   requestBroadcasts() {
     const {preferences} = this;
     const station = preferences.get('playback.station', 'fip-paris');
-    const url = getStationBroadcasts(station);
 
-    return fetch(`${url}?_=${Date.now()}`, {mode: 'cors'})
-      .then(response => response.json())
+    return getStationBroadcasts(station)
       .then(response => Steps.getAll(response))
       .then(steps => {
         preferences.set('broadcasts', steps);

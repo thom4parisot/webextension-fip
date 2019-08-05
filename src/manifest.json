@@ -20,8 +20,8 @@
   "permissions": [
     "alarms",
     "identity",
-    "*://www.fip.fr/*",
-    "*://direct.fipradio.fr/*",
+    "https://www.fip.fr/latest/api/*",
+    "https://direct.fipradio.fr/*",
     "https://*.cdn.dvmr.fr/*"
   ],
   "browser_action": {

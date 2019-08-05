@@ -126,13 +126,13 @@ footer.alternate{
     width: auto;
   }
 
-  #playback-button.stopped::before,
-  #playback-button.errored::before{
+  #playback-button.STOPPED::before,
+  #playback-button.ERRORED::before{
     content: "\e801";
   }
 
-  #playback-button.playing::before,
-  #playback-button.buffering::before{
+  #playback-button.PLAYING::before,
+  #playback-button.BUFFERING::before{
     content: "\e802";
   }
 
