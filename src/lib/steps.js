@@ -1,9 +1,11 @@
 const collection = timelineItems => {
   return timelineItems
-    .map(timelineItem => Object.assign(timelineItem,
+    .map(timelineItem => Object.assign({}, timelineItem,
       {
         title: timelineItem.subtitle,
         authors: timelineItem.title,
+        start_time: timelineItem.start_time * 1000,
+        end_time: timelineItem.end_time * 1000,
       }
     ))
     .sort((a, b) => a.start_time - b.start_time);
@@ -11,8 +13,8 @@ const collection = timelineItems => {
 
 const withinBoundaries = date => {
   return timelineItem => (
-    date.getTime() >= new Date(timelineItem.start_time * 1000).getTime() &&
-    date.getTime() < new Date(timelineItem.end_time * 1000).getTime()
+    date.getTime() >= new Date(timelineItem.start_time).getTime() &&
+    date.getTime() < new Date(timelineItem.end_time).getTime()
   );
 };
 
@@ -22,9 +24,7 @@ export default class Steps {
   }
 
   static atTime(response, timestampOrDate) {
-    const date = Number.isFinite(timestampOrDate)
-      ? new Date(timestampOrDate * 1000)
-      : new Date(timestampOrDate);
+    const date = new Date(timestampOrDate);
 
     return collection(response).find(withinBoundaries(date));
   }
@@ -35,7 +35,7 @@ export default class Steps {
 }
 
 export function isBefore (timelineItem, date = new Date()) {
-  return new Date(timelineItem.end_time * 1000).getTime() < date.getTime();
+  return new Date(timelineItem.end_time).getTime() < date.getTime();
 }
 
 export function isCurrent (timelineItem, date = new Date()) {
@@ -43,5 +43,5 @@ export function isCurrent (timelineItem, date = new Date()) {
 }
 
 export function isAfter (timelineItem, date = new Date()) {
-  return new Date(timelineItem.start_time * 1000).getTime() > date.getTime();
+  return new Date(timelineItem.start_time).getTime() > date.getTime();
 }

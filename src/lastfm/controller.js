@@ -77,7 +77,7 @@ export default class ScrobblingController {
       this.client.scrobble({
         artist: previous.authors,
         track: previous.title,
-        when: Date.now() - 120 * 1000 // let's pretend we listened to it 2 minutes ago
+        when: Date.now() - 120 // let's pretend we listened to it 2 minutes ago
       });
     }
   }
