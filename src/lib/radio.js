@@ -5,6 +5,7 @@ export const states = Object.freeze({
   STOPPED: 'STOPPED',
   PLAYING: 'PLAYING',
   BUFFERING: 'BUFFERING',
+  STALLED: 'STALLED',
   ERRORED: 'ERRORED',
 });
 
@@ -82,7 +83,7 @@ const Radio = machina.Fsm.extend({
    * @api
    */
   "play": function(){
-    if (this.state !== 'playing') {
+    if (this.state !== states.PLAYING) {
       this.preparePlaybackObject();
     }
 

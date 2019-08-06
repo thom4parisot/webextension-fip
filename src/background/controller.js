@@ -80,6 +80,7 @@ export default class Background {
     this.setupChannelBadge();
     this.registerEvents();
     this.enableBroadcastUpdates();
+    this.requestBroadcasts();
   }
 
   /**
