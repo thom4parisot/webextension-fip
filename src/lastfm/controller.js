@@ -1,3 +1,5 @@
+import browser from 'webextension-polyfill';
+
 import Steps from '../lib/steps.js';
 import LastfmAPI from '../lib/lastfm.js';
 

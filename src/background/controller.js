@@ -257,10 +257,10 @@ export default class Background {
     if ('lastfm.auth.request' in message) {
       const authUrl = message['lastfm.auth.request'];
 
-      chrome.identity.launchWebAuthFlow({
+      browser.identity.launchWebAuthFlow({
         interactive: true,
         url: `${authUrl}&api_key=${LAST_FM_KEY}`
-      }, url => this.lastfm.handleAuthResponse(url));
+      }).then(url => this.lastfm.handleAuthResponse(url));
     }
   }
 
