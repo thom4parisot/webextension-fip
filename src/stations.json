@@ -1,94 +1,102 @@
 {
   "fip-paris": {
-    "name": "Paris",
+    "name": "FIP",
     "stationId": 7,
-    "archives": "https://www.fip.fr/archives-antenne",
+    "archives": "https://www.fip.fr/titres-diffuses",
     "streams": {
       "sd": "https://direct.fipradio.fr/live/fip-lofi.mp3",
       "hd": "https://direct.fipradio.fr/live/fip-midfi.mp3"
     }
   },
   "fip-bordeaux": {
-    "name": "Bordeaux",
+    "name": "FIP Bordeaux",
     "stationId": 7,
-    "archives": "https://www.fip.fr/archives-antenne",
+    "archives": "https://www.fip.fr/titres-diffuses",
     "streams": {
       "sd": "https://direct.fipradio.fr/live/fipbordeaux-lofi.mp3",
       "hd": "https://direct.fipradio.fr/live/fipbordeaux-midfi.mp3"
     }
   },
   "fip-nantes": {
-    "name": "Nantes",
+    "name": "FIP Nantes",
     "stationId": 7,
-    "archives": "https://www.fip.fr/archives-antenne",
+    "archives": "https://www.fip.fr/titres-diffuses",
     "streams": {
       "sd": "https://direct.fipradio.fr/live/fipnantes-lofi.mp3",
       "hd": "https://direct.fipradio.fr/live/fipnantes-midfi.mp3"
     }
   },
   "fip-strasbourg": {
-    "name": "Strasbourg",
+    "name": "FIP Strasbourg",
     "stationId": 7,
-    "archives": "https://www.fip.fr/archives-antenne",
+    "archives": "https://www.fip.fr/titres-diffuses",
     "streams": {
       "sd": "https://direct.fipradio.fr/live/fipstrasbourg-lofi.mp3",
       "hd": "https://direct.fipradio.fr/live/fipstrasbourg-midfi.mp3"
     }
   },
-  "theme-electro": {
-    "name": "Autour de l'électro",
-    "stationId": 74,
-    "archives": "https://www.fip.fr/archives-antenne/74",
-    "streams": {
-      "sd": "https://direct.fipradio.fr/live/fip-webradio8.mp3"
-    }
-  },
   "theme-rock": {
-    "name": "Autour du rock",
+    "name": "FIP Rock",
     "stationId": 64,
-    "archives": "https://www.fip.fr/archives-antenne/64",
+    "archives": "https://www.fip.fr/titres-diffuses?station=rock",
     "streams": {
       "sd": "https://direct.fipradio.fr/live/fip-webradio1.mp3"
     }
   },
   "theme-jazz": {
-    "name": "Autour du jazz",
+    "name": "FIP Jazz",
     "stationId": 65,
-    "archives": "https://www.fip.fr/archives-antenne/65",
+    "archives": "https://www.fip.fr/titres-diffuses?station=jazz",
     "streams": {
       "sd": "https://direct.fipradio.fr/live/fip-webradio2.mp3"
     }
   },
   "theme-groove": {
-    "name": "Autour du groove",
+    "name": "FIP Groove",
     "stationId": 66,
-    "archives": "https://www.fip.fr/archives-antenne/66",
+    "archives": "https://www.fip.fr/titres-diffuses?station=groove",
     "streams": {
       "sd": "https://direct.fipradio.fr/live/fip-webradio3.mp3"
     }
   },
   "theme-monde": {
-    "name": "Autour du monde",
+    "name": "FIP Monde",
     "stationId": 69,
-    "archives": "https://www.fip.fr/archives-antenne/69",
+    "archives": "https://www.fip.fr/titres-diffuses?station=musiques-du-monde",
     "streams": {
       "sd": "https://direct.fipradio.fr/live/fip-webradio4.mp3"
     }
   },
   "theme-nouveau": {
-    "name": "Tout nouveau, tout FIP",
+    "name": "FIP Nouveautés",
     "stationId": 70,
-    "archives": "https://www.fip.fr/archives-antenne/70",
+    "archives": "https://www.fip.fr/titres-diffuses?station=tout-nouveau-tout-fip",
     "streams": {
       "sd": "https://direct.fipradio.fr/live/fip-webradio5.mp3"
     }
   },
   "theme-reggae": {
-    "name": "Autour du reggae",
+    "name": "FIP Reggae",
     "stationId": 71,
-    "archives": "https://www.fip.fr/archives-antenne/71",
+    "archives": "https://www.fip.fr/titres-diffuses?station=reggae",
     "streams": {
       "sd": "https://direct.fipradio.fr/live/fip-webradio6.mp3"
+    },
+    "theme-electro": {
+      "name": "FIP Électro",
+      "stationId": 74,
+      "archives": "https://www.fip.fr/titres-diffuses?station=electro",
+      "streams": {
+        "sd": "https://direct.fipradio.fr/live/fip-webradio8.mp3"
+      }
+    },
+    "theme-metal": {
+      "name": "FIP, l'été Métal",
+      "stationId": 77,
+      "archives": "https://www.fip.fr/titres-diffuses?station=fip-metal",
+      "streams": {
+        "sd": "https://direct.fipradio.fr/live/fip-webradio7.mp3"
+      }
     }
   }
 }
