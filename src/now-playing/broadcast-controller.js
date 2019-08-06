@@ -1,6 +1,6 @@
 import Broadcast from '../lib/broadcast.js';
 import lastFm from '../lib/lastfm.js';
-import {getStationArchiveUrl} from '../lib/stations.js';
+import {getStation} from '../lib/stations.js';
 
 /**
  * Now Playing Controller.
@@ -12,12 +12,13 @@ import {getStationArchiveUrl} from '../lib/stations.js';
  */
 export default function BroadcastController($scope, chrome, preferences){
   const getPosition = Broadcast.getPositionTracker();
-  const station = preferences.get('playback.station', 'fip-paris');
+  const {archives,name} = getStation(preferences.get('playback.station', 'fip-paris'));
 
-  $scope.archives_url = getStationArchiveUrl(station);
+  $scope.archives_url = archives;
+  $scope.station_name = name;
   $scope.lastfm_enabled = lastFm.isEnabled() && preferences.get("lastfm.scrobbling") && preferences.get("lastfm.username");
 
-  $scope.broadcasts = preferences.get('broadcasts');
+  $scope.broadcasts = preferences.get('broadcasts', []);
   $scope.current_index = getPosition($scope.broadcasts, $scope.broadcasts.length - 1);
 
   chrome.on('broadcasts', broadcasts => {

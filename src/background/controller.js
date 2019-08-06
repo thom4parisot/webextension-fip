@@ -260,7 +260,9 @@ export default class Background {
       browser.identity.launchWebAuthFlow({
         interactive: true,
         url: `${authUrl}&api_key=${LAST_FM_KEY}`
-      }).then(url => this.lastfm.handleAuthResponse(url));
+      })
+      .then(url => this.lastfm.handleAuthResponse(url))
+      .catch(debug);
     }
   }
 

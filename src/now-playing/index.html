@@ -88,9 +88,7 @@
   <nav>
     <ul>
       <li class="main">
-        <a href="https://www.fip.fr" class="iconify" target="_blank">{{'extension_name' | i18n}}</a>
-        •
-        <a ng-href="{{archives_url}}" target="_blank">{{'archives' | i18n}}</a>
+        <a ng-href="{{archives_url}}" class="iconify" target="_blank">{{station_name}}</a>
       </li>
       <li>
         <span class="icon-lastfm" aria-label="Last.fm Status" ng-class="{'icon-activated': lastfm_enabled, 'icon-deactivated': !lastfm_enabled}"></span>
