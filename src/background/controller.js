@@ -1,7 +1,7 @@
 import browser from 'webextension-polyfill';
 
 import debug from '../lib/debug.js';
-import Radio from '../lib/radio.js';
+import Radio, {states} from '../lib/radio.js';
 import Steps from '../lib/steps.js';
 import Preferences from '../lib/preferences.js';
 import {getStationBroadcasts, getStationFeed} from '../lib/stations.js';
@@ -20,19 +20,19 @@ const LAST_FM_KEY = process.env.LAST_FM_KEY;
  * @type {Object} Items containing badge behavior data
  */
 const BADGE_STATES = {
-  'stopped': {
+  [states.STOPPED]: {
     text: '',
     color: '#080'
   },
-  'playing': {
+  [states.PLAYING]: {
     text: ">",
     color: '#080'
   },
-  'buffering': {
+  [states.BUFFERING]: {
     text: '~',
     color: '#fc0'
   },
-  'errored': {
+  [states.ERRORED]: {
     text: '!',
     color: '#c00',
   }
