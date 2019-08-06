@@ -8,7 +8,7 @@
 </head>
 <body ng-controller="BroadcastController" aria-live>
 
-<header class="alternate" ng-controller="RadioController">
+<header class="alternate" ng-controller="RadioController" ng-cloak>
   <span class="volume-range" aria-hidden ng-class="{'level-off': volume === 0, 'level-low': volume > 0 && volume < 0.3, 'level-regular': volume >= 0.3 && volume < 0.7, 'level-high': volume >= 0.7}"></span>
   <input type="range" id="volume-range" step="0.1" min="0" max="1" list="tickmarks" ng-model="volume" tabindex="0">
   <datalist id="tickmarks">
@@ -21,7 +21,7 @@
   <button type="button" id="playback-button" class="icon-state" ng-click="toggle()" ng-class="status" tabindex="0"></button>
 </header>
 
-<main>
+<main ng-cloak>
   <div class="tiles" data-current-index="{{current_index}}" style="--current-index:{{current_index}};">
     <section ng-repeat="(index,broadcast) in broadcasts" class="status-{{broadcast | status}}" ng-class="{show: current_index === index}" data-start="{{broadcast.start_time | date:'yyyy-MM-dd HH:mm:ss Z'}}" data-end="{{broadcast.end_time | date:'yyyy-MM-dd HH:mm:ss Z'}}">
       <aside class="panel" id="cover">
@@ -84,7 +84,7 @@
   </nav>
 </main>
 
-<footer class="alternate">
+<footer class="alternate" ng-cloak>
   <nav>
     <ul>
       <li class="main">
