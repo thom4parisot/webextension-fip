@@ -21,11 +21,7 @@
     "alarms",
     "identity",
     "https://www.fip.fr/latest/api/*",
-    "https://direct.fipradio.fr/*",
-    "https://e-cdns-images.dzcdn.net/*",
-    "https://*.mzstatic.com/*",
-    "https://cdns-images.dzcdn.net/*",
-    "https://e-cdns-images.dzcdn.net/*"
+    "https://direct.fipradio.fr/*"
   ],
   "browser_action": {
     "default_icon": "resources/fip.png",

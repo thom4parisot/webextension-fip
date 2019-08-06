@@ -15,7 +15,7 @@
     "test": "NODE_ENV=test PREFERENCES_NAMESPACE=test jest",
     "lint": "eslint --ignore-path .gitignore ./src",
     "posttest": "npm run lint",
-    "build": "NODE_ENV=production run-p 'build:*'",
+    "build": "NODE_ENV=production BUILD_CHANNEL=stable run-p 'build:*'",
     "build:bundles": "rollup --config ",
     "start": "static -H ${npm_package_http_headers} --gzip -p ${PORT:-3000} .",
     "version": "sed -i '' -e \"s/\\\"version\\\": \\\".*\\\"/\\\"version\\\": \\\"${npm_package_version}\\\"/\" src/manifest.json && git add src/manifest.json",
