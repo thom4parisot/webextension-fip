@@ -1,6 +1,13 @@
 import machina from 'machina';
 import {log} from './debug.js';
 
+export const states = Object.freeze({
+  STOPPED: 'STOPPED',
+  PLAYING: 'PLAYING',
+  BUFFERING: 'BUFFERING',
+  ERRORED: 'ERRORED',
+});
+
 /**
  * Radio State Machine.
  * Handles the transitions from a state to another in a very clean way.
@@ -8,7 +15,7 @@ import {log} from './debug.js';
  * @type {Radio}
  */
 const Radio = machina.Fsm.extend({
-  "initialState": "stopped",
+  "initialState": states.STOPPED,
 
   // Behavior config
   "playbackUrl": '',
@@ -30,43 +37,43 @@ const Radio = machina.Fsm.extend({
 
   // State transitioning
   "states": {
-    "playing": {
+    [states.PLAYING]: {
       stop: function stopOnPlaying(){
-        this.transition('stopped');
+        this.transition(states.STOPPED);
 
         this.playbackObject.pause();
         this.playbackObject.src = '';
       },
-      "audio.error": "errored",
-      "audio.stalled": "buffering",
-      "network.offline": "buffering"
+      "audio.error": states.ERRORED,
+      "audio.stalled": states.BUFFERING,
+      "network.offline": states.BUFFERING
     },
-    "stopped": {
+    [states.STOPPED]: {
       play: function playOnStopped(){
-        this.transition('buffering');
+        this.transition(states.BUFFERING);
 
         this.playbackObject.play();
       }
     },
-    "buffering": {
+    [states.BUFFERING]: {
       stop: function stopOnBuffering(){
-        this.transition('stopped');
+        this.transition(states.STOPPED);
 
         this.playbackObject.pause();
       },
-      "audio.error": "errored",
-      "audio.canplaythrough": "playing",
-      "audio.stalled": "buffering",
-      "network.offline": "buffering"
+      "audio.error": states.ERRORED,
+      "audio.canplaythrough": states.PLAYING,
+      "audio.stalled": states.BUFFERING,
+      "network.offline": states.BUFFERING
     },
-    "errored": {
+    [states.ERRORED]: {
       play: function playOnErrored(){
-        this.transition('buffering');
+        this.transition(states.BUFFERING);
 
         this.playbackObject.play();
       },
-      "stop": "stopped",
-      "network.offline": "stopped"
+      "stop": states.STOPPED,
+      "network.offline": states.STOPPED
     }
   },
 
@@ -86,7 +93,7 @@ const Radio = machina.Fsm.extend({
    * @api
    */
   "reload": function(){
-    if (this.state !== 'stopped') {
+    if (this.state !== states.STOPPED) {
       this.stop();
       this.play();
     }
@@ -104,7 +111,7 @@ const Radio = machina.Fsm.extend({
    */
   "toggle": function(){
     //jshint expr:true
-    this.state !== 'stopped' ? this.stop() : this.play();
+    this.state !== states.STOPPED ? this.stop() : this.play();
   },
 
   /**

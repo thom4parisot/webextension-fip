@@ -1,13 +1,17 @@
-import lastFm from '../../src/lib/lastfm.js';
-import fixtures from '../fixtures/livemeta.json';
+import lastFm from './lastfm.js';
+import fixtures from '../../resources/fixtures/history.json';
+
+import {withHistoryResponse} from './stations.js';
+import Steps from './steps.js';
 
 describe('Last.fm', function(){
+  const song = Steps.getAll(withHistoryResponse(fixtures))[0];
+
   it('should have API and Secret configured', () => {
-    expect(lastFm.isEnabled()).to.be.true;
+    expect(lastFm.isEnabled()).toBe(true);
   });
 
   it('should try to hint a _now playing_ tune', () => {
-    const song = fixtures.steps['7f6c3935b7d12360ec7f14c772edea9a7'];
     const client = new lastFm('dummy token');
 
     return client.nowPlaying({
@@ -16,12 +20,11 @@ describe('Last.fm', function(){
     })
     .catch(({message}) => {
       // it proves the payload is okay
-      expect(message).to.match(/Invalid session key/);
+      expect(message).toMatch(/Invalid session key/);
     });
   });
 
   it('should try to scroll a tune', () => {
-    const song = fixtures.steps['7f6c3935b7d12360ec7f14c772edea9a7'];
     const client = new lastFm('dummy token');
 
     return client.scrobble({
@@ -31,7 +34,7 @@ describe('Last.fm', function(){
     })
     .catch(({message}) => {
       // it proves the payload is okay
-      expect(message).to.match(/Invalid session key/);
+      expect(message).toMatch(/Invalid session key/);
     });
   });
 });

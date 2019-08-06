@@ -126,13 +126,13 @@ footer.alternate{
     width: auto;
   }
 
-  #playback-button.stopped::before,
-  #playback-button.errored::before{
+  #playback-button.STOPPED::before,
+  #playback-button.ERRORED::before{
     content: "\e801";
   }
 
-  #playback-button.playing::before,
-  #playback-button.buffering::before{
+  #playback-button.PLAYING::before,
+  #playback-button.BUFFERING::before{
     content: "\e802";
   }
 
@@ -194,6 +194,10 @@ main{
       margin-left: 3px;
       padding: 0;
     }
+      main nav button:disabled {
+        color: gray !important;
+        cursor: default;
+      }
       main nav button:hover,
       main nav button:focus {
         color: #333;
@@ -270,6 +274,18 @@ article{
   .metadata > .album-date {
     white-space: nowrap;
   }
+  .metadata > .artist > ul {
+    display: inline;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .metadata > .artist li {
+    display: inline;
+  }
+    .metadata > .artist li:not(:first-child):before {
+      content: ", ";
+    }
 
   @media screen and (min-width: 400px) {
     .metadata > .album-title{
@@ -324,30 +340,17 @@ article{
 /**
  * Statuses
  */
- .status {
-   display: block;
- }
- .status[data-status]::before{
+ .status[data-status]{
    border: 1px solid #ccc;
    border-radius: 20px;
    color: var(--text-color);
+   display: block;
    font-size: 0.8em;
-   padding: 2px 15px;
+   padding: 2px 0;
    white-space: nowrap;
  }
-
- .status[data-status="previous"]::before{
-   content: "__MSG_status_previous__";
- }
- .status[data-status="next"]::before{
-   content: "__MSG_status_next__";
- }
- .status[data-status="current"]::before{
-   content: "__MSG_status_current__";
- }
- .status[data-status="current"]::before{
-   background-color: var(--foreground-color);
+ .status[data-status="current"]{
    border-color: var(--foreground-color);
-   color: var(--background-color);
+   color: var(--foreground-color);
    font-weight: bold;
  }

@@ -1,4 +1,3 @@
-import * as TextCleaner from '../lib/text-cleaner.js';
 import Steps from '../lib/steps.js';
 import LastfmAPI from '../lib/lastfm.js';
 
@@ -62,7 +61,7 @@ export default class ScrobblingController {
     if (step && step.authors && step.title !== previous.title && step.authors !== previous.authors) {
       this.client.nowPlaying({
         artist: step.authors,
-        track: TextCleaner.doTrackTitle(step.title)
+        track: step.title
       });
     }
   }
@@ -77,7 +76,7 @@ export default class ScrobblingController {
     if (step && previous.authors && step.title !== previous.title && step.authors !== previous.authors) {
       this.client.scrobble({
         artist: previous.authors,
-        track: TextCleaner.doTrackTitle(previous.title),
+        track: previous.title,
         when: Date.now() - 120 * 1000 // let's pretend we listened to it 2 minutes ago
       });
     }

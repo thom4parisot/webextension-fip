@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="popup.css"/>
   <link rel="stylesheet" href="../resources/icons/css/fontello.css"/>
 </head>
-<body ng-controller="BroadcastController">
+<body ng-controller="BroadcastController" aria-live>
 
 <header ng-controller="RadioController">
   <h1>{{'extension_name' | i18n}}</h1>
@@ -16,44 +16,43 @@
 
 <main>
   <div class="tiles" data-current-index="{{current_index}}" style="--current-index:{{current_index}};">
-    <section ng-repeat="(index,broadcast) in broadcasts" class="status-{{broadcast | status}}" ng-class="{show: current_index === index}">
+    <section ng-repeat="(index,broadcast) in broadcasts" class="status-{{broadcast | status}}" ng-class="{show: current_index === index}" data-start="{{broadcast.start_time * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}" data-end="{{broadcast.end_time * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}">
       <aside class="panel" id="cover">
-        <img ng-src="{{broadcast.visual}}" class="album-cover" alt="{{broadcast.title}} from {{broadcast.artist}}"/>
+        <img ng-src="{{broadcast.cover || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='}}" class="album-cover" alt="{{broadcast.title}} from {{broadcast.artist}}"/>
 
-        <span class="status" data-status="{{broadcast | status}}"></span>
+        <time class="status" data-status="{{broadcast | status}}" datetime="{{broadcast.start_time * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}" ng-bind="(broadcast | status) !== 'current' ? (broadcast.start_time | ago) : ('status_' + (broadcast | status) | i18n)"></time>
       </aside>
 
       <article class="panel" id="content">
         <h2 class="title" ng-show="broadcast.title && broadcast.authors">
-          <a ng-href="https://www.last.fm/search/tracks?q={{broadcast.title | track}}+{{broadcast.authors | artist}}" target="_blank">{{broadcast.title | track}}</a>
+          <a ng-href="https://www.last.fm/search/tracks?q={{broadcast.title}}+{{broadcast.authors}}" target="_blank">{{broadcast.title}}</a>
         </h2>
 
         <h2 class="title" ng-show="!broadcast.authors">{{broadcast.title || ('no_information' | i18n)}}</h2>
 
         <ul class="metadata">
-          <li class="album-title icon-cd" ng-show="broadcast.titreAlbum">
-            <a ng-href="https://www.last.fm/search/albums?q={{broadcast.titreAlbum | album}}+{{broadcast.authors | mainArtist}}" target="_blank">{{broadcast.titreAlbum | album}}</a>
+          <li class="album-title icon-cd" ng-show="broadcast.album">
+            <a ng-href="https://www.last.fm/search/albums?q={{broadcast.album}}+{{broadcast.authors}}" target="_blank">{{broadcast.album}}</a>
           </li>
-          <li class="album-date icon-calendar" ng-show="broadcast.titreAlbum && broadcast.anneeEditionMusique">
+          <li class="album-date icon-calendar" ng-show="broadcast.album && broadcast.anneeEditionMusique">
             <date>{{broadcast.anneeEditionMusique}}</date>
           </li>
-          <li class="artist icon-user" ng-show="broadcast.performers">
-            <a ng-href="https://www.last.fm/search/artists?q={{broadcast.authors | artist}}" target="_blank">{{broadcast.performers | artist}}</a>
+          <li class="artist icon-user" ng-show="broadcast.interpreters">
+            <ul>
+              <li ng-repeat="performer in broadcast.interpreters"><a ng-href="https://www.last.fm/search/artists?q={{performer}}" target="_blank">{{performer}}</a></li>
+            </ul>
           </li>
-          <li class="artist icon-user" ng-show="!broadcast.performers && broadcast.authors">
-            <a ng-href="https://www.last.fm/search/artists?q={{broadcast.authors | artist}}" target="_blank">{{broadcast.authors | artist}}</a>
+          <li class="artist icon-amazon" ng-show="broadcast.external_links.amazon">
+            <a ng-href="{{broadcast.external_links.amazon.link}}" target="_blank">Amazon Music</a>
           </li>
-          <li class="artist icon-amazon" ng-show="broadcast.lienAmazon">
-            <a ng-href="{{broadcast.lienAmazon}}" target="_blank">Amazon Music</a>
+          <li class="artist icon-itunes" ng-show="broadcast.external_links.itunes">
+            <a ng-href="{{broadcast.external_links.itunes.link}}" target="_blank">iTunes</a>
           </li>
-          <li class="artist icon-itunes" ng-show="broadcast.lienItunes">
-            <a ng-href="{{broadcast.lienItunes}}" target="_blank">iTunes</a>
+          <li class="artist icon-spotify" ng-show="broadcast.external_links.spotify">
+            <a ng-href="{{broadcast.external_links.spotify.link}}" target="_blank">Spotify</a>
           </li>
-          <li class="artist icon-spotify" ng-show="broadcast.lienSpotify">
-            <a ng-href="{{broadcast.lienSpotify}}" target="_blank">Spotify</a>
-          </li>
-          <li class="artist icon-youtube" ng-show="broadcast.lienYoutube">
-            <a ng-href="{{broadcast.lienYoutube}}" target="_blank">YouTube</a>
+          <li class="artist icon-youtube" ng-show="broadcast.external_links.youtube">
+            <a ng-href="{{broadcast.external_links.youtube.link}}" target="_blank">YouTube</a>
           </li>
         </ul>
       </article>
@@ -63,13 +62,13 @@
   <nav ng-show="broadcasts.length > 1">
     <ul>
       <li>
-        <button ng-click="previous()">
+        <button ng-click="previous()" ng-disabled="current_index === 0">
           <span class="icon-left-circled"></span>
           <span class="label">Previous</span>
         </button>
       </li>
       <li>
-        <button ng-click="next()">
+        <button ng-click="next()" ng-disabled="current_index === broadcasts.length-1">
           <span class="label">Next</span>
           <span class="icon-right-circled"></span>
         </button>

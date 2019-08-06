@@ -1,16 +1,18 @@
-const collection = response => {
-  const steps = response.steps || response;
-  return Object.keys(steps)
-    .map(id => steps[id])
-    .filter(step => step.embedType && step.embedType === 'song')
-    .map(step => Object.assign({}, step, extendLinks(step.path)))
-    .sort((a, b) => a.start - b.start);
+const collection = timelineItems => {
+  return timelineItems
+    .map(timelineItem => Object.assign(timelineItem,
+      {
+        title: timelineItem.subtitle,
+        authors: timelineItem.title,
+      }
+    ))
+    .sort((a, b) => a.start_time - b.start_time);
 };
 
 const withinBoundaries = date => {
-  return step => (
-    new Date(step.start * 1000).getTime() <= date.getTime() &&
-    new Date(step.end * 1000).getTime() > date.getTime()
+  return timelineItem => (
+    date.getTime() >= new Date(timelineItem.start_time * 1000).getTime() &&
+    date.getTime() < new Date(timelineItem.end_time * 1000).getTime()
   );
 };
 
@@ -32,30 +34,14 @@ export default class Steps {
   }
 }
 
-export function extendLinks (path) {
-  if (typeof path !== 'string') {
-    return {};
-  }
-
-  if (/itunes.apple.com/.test(path)) {
-    return {lienItunes: path};
-  }
-
-  if (/amazon./.test(path)) {
-    return {lienAmazon: path};
-  }
-
-  return {};
+export function isBefore (timelineItem, date = new Date()) {
+  return new Date(timelineItem.end_time * 1000).getTime() < date.getTime();
 }
 
-export function isBefore (step, date = new Date()) {
-  return new Date(step.end * 1000).getTime() < date.getTime();
+export function isCurrent (timelineItem, date = new Date()) {
+  return withinBoundaries(date)(timelineItem);
 }
 
-export function isCurrent (step, date = new Date()) {
-  return withinBoundaries(date)(step);
-}
-
-export function isAfter (step, date = new Date()) {
-  return new Date(step.start * 1000).getTime() > date.getTime();
+export function isAfter (timelineItem, date = new Date()) {
+  return new Date(timelineItem.start_time * 1000).getTime() > date.getTime();
 }

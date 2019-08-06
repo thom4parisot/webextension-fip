@@ -71,12 +71,11 @@ export default class Background {
   bootstrap() {
     const {preferences} = this;
 
-    preferences.del('radio.state');
-
     const station = preferences.get('playback.station', 'fip-paris');
     const quality = preferences.get('playback.quality', 'hd');
 
     this.radio = new Radio({ url: getStationFeed(station, quality) });
+    preferences.set('radio.state', this.radio.state);
 
     this.setupChannelBadge();
     this.registerEvents();
@@ -133,10 +132,8 @@ export default class Background {
   requestBroadcasts() {
     const {preferences} = this;
     const station = preferences.get('playback.station', 'fip-paris');
-    const url = getStationBroadcasts(station);
 
-    return fetch(`${url}?_=${Date.now()}`, {mode: 'cors'})
-      .then(response => response.json())
+    return getStationBroadcasts(station)
       .then(response => Steps.getAll(response))
       .then(steps => {
         preferences.set('broadcasts', steps);

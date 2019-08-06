@@ -1,0 +1,99 @@
+{
+  "data": {
+    "now": {
+      "__typename": "Now",
+      "playing_item": {
+        "__typename": "TimelineItem",
+        "title": "Lisa Ekdahl",
+        "subtitle": "Like mermaids",
+        "cover": "https://e-cdns-images.dzcdn.net/images/cover/b66768137a9415fb838aae488afa9308/1000x1000-000000-80-0-0.jpg",
+        "start_time": 1565037322,
+        "end_time": 1565037557
+      },
+      "program": null,
+      "song": {
+        "__typename": "SongOnAir",
+        "cover": "https://e-cdns-images.dzcdn.net/images/cover/b66768137a9415fb838aae488afa9308/1000x1000-000000-80-0-0.jpg",
+        "title": "Like mermaids",
+        "interpreters": ["Lisa Ekdahl"],
+        "musical_kind": "Variété internationale ",
+        "label": "OKEH",
+        "album": "More of the good",
+        "external_links": {
+          "youtube": {
+            "id": "RnrJYc1T64Q",
+            "link": "https://www.youtube.com/watch?v=RnrJYc1T64Q",
+            "image": "https://i.ytimg.com/vi/RnrJYc1T64Q/hqdefault.jpg",
+            "__typename": "ExternalLink"
+          },
+          "deezer": {
+            "id": "549713682",
+            "link": "https://www.deezer.com/track/549713682",
+            "image": "https://e-cdns-images.dzcdn.net/images/cover/b66768137a9415fb838aae488afa9308/1000x1000-000000-80-0-0.jpg",
+            "__typename": "ExternalLink"
+          },
+          "itunes": {
+            "id": "1435081166",
+            "link": "https://itunes.apple.com/fr/album/like-mermaids/1435080990?i=1435081166&uo=4",
+            "image": "https://is2-ssl.mzstatic.com/image/thumb/Music118/v4/5e/ac/89/5eac8940-de43-4e61-9ff8-83e797f7303f/source/100x100bb.jpg",
+            "__typename": "ExternalLink"
+          },
+          "spotify": {
+            "id": "42SaPQIKNQBFbxp8HVVSGy",
+            "link": "https://open.spotify.com/track/42SaPQIKNQBFbxp8HVVSGy",
+            "image": "https://i.scdn.co/image/218411aae27b6841ecb3cf57e0cc07d49b80d65c",
+            "__typename": "ExternalLink"
+          },
+          "__typename": "ExternalLinks"
+        }
+      },
+      "server_time": 1565037381,
+      "next_refresh": 1565037558,
+      "mode": "song"
+    },
+    "previousTracks": {
+      "__typename": "HistoryCursor",
+      "edges": [
+        {
+          "__typename": "TimeLineItemEdge",
+          "node": {
+            "__typename": "TimelineItem",
+            "title": "Paul Desmond, Gerry Mulligan",
+            "subtitle": "Blight of the fumble bee",
+            "start_time": 1565036927,
+            "cover": "https://e-cdns-images.dzcdn.net/images/cover/5af74099e0bcd6e751a2fa3353dc8457/1000x1000-000000-80-0-0.jpg"
+          }
+        },
+        {
+          "__typename": "TimeLineItemEdge",
+          "node": {
+            "__typename": "TimelineItem",
+            "title": "Sammy Davis Jr & Carmen Mac Rae",
+            "subtitle": "Who cares",
+            "start_time": 1565036775,
+            "cover": null
+          }
+        },
+        {
+          "__typename": "TimeLineItemEdge",
+          "node": {
+            "__typename": "TimelineItem",
+            "title": "Joe Tex",
+            "subtitle": "The love you save (may be your own)",
+            "start_time": 1565036601,
+            "cover": "https://cdns-images.dzcdn.net/images/cover/d20c32202daaa0297876c2c729ee0a64/1000x1000-000000-80-0-0.jpg"
+          }
+        }
+      ]
+    },
+    "nextTracks": [
+      {
+        "__typename": "TimelineItem",
+        "title": "Loyle Carner",
+        "subtitle": "Ottolenghi (Radio Edit)",
+        "start_time": 1565037556,
+        "cover": null
+      }
+    ]
+  }
+}
