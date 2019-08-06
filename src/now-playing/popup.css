@@ -62,6 +62,7 @@ header.alternate,
 footer.alternate {
  --bg-color: var(--background-color);
  --border-color: var(--foreground-color);
+ background-color: #f0f0f0;
 }
 
 header,
@@ -97,12 +98,15 @@ header {
 }
 
 header.alternate{
-  border-bottom: 3px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
 }
 footer.alternate{
-  border-top: 3px solid var(--border-color);
+  border-top: 2px solid var(--border-color);
 }
 
+#volume-range{
+  background: transparent;
+}
 #volume-range::-moz-range-track,
 #volume-range::-webkit-slider-runnable-track {
   background: var(--border-color);
