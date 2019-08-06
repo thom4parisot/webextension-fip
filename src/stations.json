@@ -81,22 +81,22 @@
     "archives": "https://www.fip.fr/titres-diffuses?station=reggae",
     "streams": {
       "sd": "https://direct.fipradio.fr/live/fip-webradio6.mp3"
-    },
-    "theme-electro": {
-      "name": "FIP Électro",
-      "stationId": 74,
-      "archives": "https://www.fip.fr/titres-diffuses?station=electro",
-      "streams": {
-        "sd": "https://direct.fipradio.fr/live/fip-webradio8.mp3"
-      }
-    },
-    "theme-metal": {
-      "name": "FIP, l'été Métal",
-      "stationId": 77,
-      "archives": "https://www.fip.fr/titres-diffuses?station=fip-metal",
-      "streams": {
-        "sd": "https://direct.fipradio.fr/live/fip-webradio7.mp3"
-      }
+    }
+  },
+  "theme-electro": {
+    "name": "FIP Électro",
+    "stationId": 74,
+    "archives": "https://www.fip.fr/titres-diffuses?station=electro",
+    "streams": {
+      "sd": "https://direct.fipradio.fr/live/fip-webradio8.mp3"
+    }
+  },
+  "theme-metal": {
+    "name": "FIP, l'été Métal",
+    "stationId": 77,
+    "archives": "https://www.fip.fr/titres-diffuses?station=fip-metal",
+    "streams": {
+      "sd": "https://direct.fipradio.fr/live/fip-webradio7.mp3"
     }
   }
 }
