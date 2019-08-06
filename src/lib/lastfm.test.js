@@ -30,7 +30,7 @@ describe('Last.fm', function(){
     return client.scrobble({
       artist: song.authors,
       track: song.title,
-      when: Date.now() - 120 * 1000
+      when: Date.now() - 120
     })
     .catch(({message}) => {
       // it proves the payload is okay

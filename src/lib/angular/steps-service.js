@@ -9,7 +9,7 @@ const STATUSES = {
 
 const toMinutes = milliseconds => {
   return Math.ceil(milliseconds / 1000 / 60);
-}
+};
 
 export default angular.module('StepsFilters', [])
   .filter('status', function(){
@@ -31,8 +31,8 @@ export default angular.module('StepsFilters', [])
     const relativeTime = new Intl.RelativeTimeFormat();
     return start_time => {
       const now = new Date();
-      const started = new Date(start_time * 1000);
+      const started = new Date(start_time);
 
       return relativeTime.format(toMinutes(started.getTime() - now.getTime()), 'minute');
-    }
-  })
+    };
+  });

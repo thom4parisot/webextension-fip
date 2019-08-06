@@ -27,19 +27,19 @@ describe('Steps', function(){
 
   describe('atTime', () => {
     it('should return a step overlapping a numeric UNIX timestamp', () => {
-      const step = Steps.atTime(data, 1565024242);
+      const step = Steps.atTime(data, 1565024242000);
 
       expect(step.title).toEqual('Get yourself together');
     });
 
     it('should return a step starting at a numeric UNIX timestamp', () => {
-      const step = Steps.atTime(data, 1565024247);
+      const step = Steps.atTime(data, 1565024247000);
 
       expect(step.title).toEqual('Nuits bleues');
     });
 
     it('should return a step based on a Date object', () => {
-      const step = Steps.atTime(data, new Date('2019-08-05T16:58:00.000Z'));
+      const step = Steps.atTime(data, new Date('2019-08-05T16:57:27.000Z'));
 
       expect(step.title).toEqual('Nuits bleues');
     });

@@ -5,7 +5,7 @@
   --background-color: #fafafa;
   --foreground-color: #e07;
   --gutter-width: 10px;
-  --text-color: #111;
+  --text-color: #333;
 }
 
 body{
@@ -55,23 +55,31 @@ h2{
  */
 header,
 footer {
-  background: var(--foreground-color);
+ --bg-color: var(--foreground-color);
+ --border-color: var(--background-color);
+}
+header.alternate,
+footer.alternate {
+ --bg-color: var(--background-color);
+ --border-color: var(--foreground-color);
+}
+
+header,
+footer {
+  background: var(--bg-color);
+  border-color: var(--border-color);
   clear: both;
-  color: var(--background-color);
+  color: var(--text-color);
   padding: var(--gutter-width);
   position: relative;
 }
 
 header a,
 footer a {
-  color: var(--background-color);
+  color: var(--border-color);
 }
 
-header.alternate,
 footer.alternate {
-  background: transparent;
-  border: var(--foreground-color) solid 0;
-  color: var(--text-color);
   opacity: 0.3;
   transition: opacity .5s;
 }
@@ -79,45 +87,68 @@ footer.alternate {
 header {
   display: flex;
   flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
 }
-  header h1 {
-    flex: 1 0 auto;
-  }
 
 .alternate:focus,
 .alternate:hover{
   opacity: 1;
 }
 
-.alternate a{
-  color: var(--foreground-color);
+header.alternate{
+  border-bottom: 3px solid var(--border-color);
+}
+footer.alternate{
+  border-top: 3px solid var(--border-color);
 }
 
-footer.alternate{
-  border-top-width: 3px;
+#volume-range::-moz-range-track,
+#volume-range::-webkit-slider-runnable-track {
+  background: var(--border-color);
+}
+#volume-range::-moz-range-thumb,
+#volume-range::-webkit-slider-thumb {
+  background: var(--bg-color);
+}
+
+.volume-range {
+  margin-right: 2px;
+}
+.volume-range:before {
+  font-family: fontello;
+  color: var(--border-color);
+}
+.volume-range.level-off:before  {
+  content: "\e805";
+}
+.volume-range.level-low:before  {
+  content: "\e804";
+}
+.volume-range.level-regular:before  {
+  content: "\e803";
+}
+.volume-range.level-high:before  {
+  content: "\e800";
 }
 
 #playback-button{
   background: transparent;
   border: none;
-  color: var(--background-color);
+  color: var(--border-color);
   cursor: pointer;
   font-size: 1em;
   opacity: 1;
-  padding: 0;
+  padding: 0 0 0 calc(var(--gutter-width) * 2);
 }
 
-  #playback-button:hover{
-    opacity: 0.8;
+  #playback-button:hover,
+  #playback-button:focus{
+    color: var(--text-color);
   }
 
   #playback-button:focus{
     outline: none;
-  }
-
-  #playback-button:active,
-  #playback-button:focus{
-    opacity: 1;
   }
 
   #playback-button:before{
@@ -200,7 +231,7 @@ main{
       }
       main nav button:hover,
       main nav button:focus {
-        color: #333;
+        color: var(--text-color);
         outline: none;
       }
 

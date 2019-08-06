@@ -232,6 +232,13 @@ export default class Background {
     if ('radio.play' in message){
       this.radio.play();
     }
+
+    if ('radio.volume' in message){
+      const newVolume = parseFloat(message['radio.volume']);
+      this.preferences.set('radio.volume', newVolume);
+    }
+
+    this.radio.setVolume(this.preferences.get('radio.volume', 1));
   }
 
   handlePlaybackChanges(message) {

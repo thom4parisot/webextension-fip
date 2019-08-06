@@ -125,7 +125,6 @@ const Radio = machina.Fsm.extend({
 
     audio.src = this.playbackUrl;
     audio.preload = false;
-    audio.volume = 1;
 
     // the audio object is already constructed; don't need to go further
     if (this.playbackObject){
@@ -141,6 +140,12 @@ const Radio = machina.Fsm.extend({
 
   "setPlaybackUrl": function(url){
     this.playbackUrl = url;
+  },
+
+  "setVolume": function(newVolume) {
+    if (this.playbackObject) {
+      this.playbackObject.volume = newVolume;
+    }
   }
 });
 
