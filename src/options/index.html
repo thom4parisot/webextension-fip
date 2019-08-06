@@ -50,7 +50,7 @@
 
     <select name="stations" ng-model="currentStation" required>
       <optgroup label="{{'by_city' | i18n}}">
-        <option ng-repeat="(id, station) in stations | startsWith:'fip-'" value="{{id}}">{{ station.name }}</option>
+        <option ng-repeat="(id, station) in stations | startsWith:'fip-'"  value="{{id}}">{{ station.name }}</option>
       </optgroup>
       <optgroup label="{{'by_theme' | i18n}}">
         <option ng-repeat="(id, station) in stations | startsWith:'theme-'" value="{{id}}">{{ station.name }}</option>
