@@ -7,6 +7,13 @@ Vous pouvez suivre les bugs ou l'implémentation des fonctionnalités à cette a
 
 # Quoi de neuf ?
 
+## Version 1.5.0
+
+- affiche le nom de la station
+- affiche un contrôleur de volume
+- affiche un temps relatif pour les morceaux passés
+- compatibilité avec le nouveau flux de données de FIP
+
 ## Version 1.4.0
 
 - affiche les liens iTunes, Amazon et YouTube s'ils sont disponibles

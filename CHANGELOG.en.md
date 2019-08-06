@@ -7,6 +7,13 @@ Issues and features roadmap are tracked on this page:
 
 # Quoi de neuf ?
 
+## Version 1.5.0
+
+- display station name
+- display volume control
+- display relative time for previous tracks
+- adjust to new FIP data feed
+
 ## Version 1.4.0
 
 - display iTunes, Amazon and YouTube links, if available
