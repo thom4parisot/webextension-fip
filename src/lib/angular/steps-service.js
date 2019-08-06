@@ -7,6 +7,10 @@ const STATUSES = {
   next: isAfter,
 };
 
+const toMinutes = milliseconds => {
+  return Math.ceil(milliseconds / 1000 / 60);
+}
+
 export default angular.module('StepsFilters', [])
   .filter('status', function(){
     return step => {
@@ -22,4 +26,13 @@ export default angular.module('StepsFilters', [])
 
       return status;
     };
-  });
+  })
+  .filter('ago', function(){
+    const relativeTime = new Intl.RelativeTimeFormat();
+    return start_time => {
+      const now = new Date();
+      const started = new Date(start_time * 1000);
+
+      return relativeTime.format(toMinutes(started.getTime() - now.getTime()), 'minute');
+    }
+  })

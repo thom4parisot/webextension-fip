@@ -20,7 +20,7 @@
       <aside class="panel" id="cover">
         <img ng-src="{{broadcast.cover || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='}}" class="album-cover" alt="{{broadcast.title}} from {{broadcast.artist}}"/>
 
-        <span class="status" data-status="{{broadcast | status}}" aria-label="{{broadcast | status}}" title="{{broadcast.start_time * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}"></span>
+        <time class="status" data-status="{{broadcast | status}}" datetime="{{broadcast.start_time * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}" ng-bind="(broadcast | status) !== 'current' ? (broadcast.start_time | ago) : ('status_' + (broadcast | status) | i18n)"></time>
       </aside>
 
       <article class="panel" id="content">
