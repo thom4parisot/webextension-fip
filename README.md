@@ -1,29 +1,44 @@
-# FIP Radio WebExtension (for Chrome, Firefox, Edge and Opera) [![Build Status][]](https://travis-ci.org/oncletom/webextension-fip) ![][rating badge] ![][downloads badge] ![][version badge]
+# FIP Radio — for Chrome, Firefox, Edge and Opera web browsers [![Build Status][]](https://travis-ci.org/oncletom/webextension-fip) ![][rating badge] ![][downloads badge] ![][version badge]
 
-> *FIP Radio WebExtension* provides a minimalistic browser interface to listen to [FIP Radio](https://www.fip.fr/), an eclectic and ad-free radio station. You can optionnally scrobble to your last.fm account.
+> *FIP Radio WebExtension* is a minimalistic browser interface to listen to [FIP Radio](https://www.fip.fr/), an eclectic and ad-free radio station. You can optionnally scrobble to your last.fm account.
 
-![Extension Showcase](resources/now-playing.png)
+I developed this extension to listen to my favourite radio station when [I moved from France to London](https://oncletom.io/2013/every-day-is-a-brand-new-place/).
 
-I developed this extension to listen to my favourite radio station in a single click, without popup.
+![Extension Showcase](resources/screenshots/popup-now-playing.png)
 
-It works in Google Chrome, Chromium, Mozilla Firefox, Opera browsers and Microsoft Edge browsers.
 
-## Get Started
+# Features
 
-To use the extension, your first need to install it in your web browser:
+| One-click playback, volume control and song preview | Get to know what aired previously |
+| ---              | ---                 |
+| ![][img-now]     | ![][img-history]    |
+
+
+| Select a station | Scrobble to last.fm |
+| ---              | ---                 |
+| ![][img-stations]| ![][img-lastfm]     |
+
+Oh, and it's **ads free** and **trackers free**.<br>
+Check the [privacy policy](PRIVACY_POLICY.md) to know more how first-parties (aka. _not me_) may collect data about you.
+
+# Install in your browser
+
+![](resources/webstore.jpg)
+
+
+You are **one click away** from installing the extension in your favourite web browser.
+_FIP Radio WebExtension_ is distributed on the  official web stores:
 
 * Firefox: [via Firefox Add-ons][Firefox extension]
 * Chrome: [via the Chrome Web Store][Chrome extension]
 * Opera: [via the Chrome Web Store][Chrome extension]
 * Edge: [via the Chrome Web Store][Chrome extension]
 
-Once installed, the radio playback is accessible via the radio station logo, near your browser search bar.
+Once installed, the radio playback is accessible by clicking on the FIP logo, freshly added to your browser.
 
 That's it!
 
-![](resources/webstore.jpg)
-
-## Contribute
+# Contribute
 
 Contributions are friendly welcomed, either they are code, ideas or bug reports.
 
@@ -34,7 +49,7 @@ The developer toolchain relies on:
 
 If you don't know them much… well it's a good occasion to learn!
 
-### Development Setup
+## Development Setup
 
 Better for you to have [https://nodejs.org/download/](Node.js) (v10+) installed on your computer to use the development tooling.
 
@@ -50,7 +65,7 @@ Finally, load the unpacked extension ([in Chrome/Chromium](http://developer.chro
 [Chrome Dev Tools](https://developers.google.com/chrome-developer-tools/) will
 help you debugging by displaying errors or the various state change of the playback.
 
-### Testing
+## Testing
 
 Tests partially assert the code works as expected. You can check on your own:
 
@@ -80,3 +95,8 @@ Current status is pretty poor but the codebase is solid.
 [downloads badge]: 	https://img.shields.io/chrome-web-store/d/fnhlecpfnocgmmmghkjcipmhdpmpddii.svg
 [version badge]: 	https://img.shields.io/chrome-web-store/v/fnhlecpfnocgmmmghkjcipmhdpmpddii.svg
 [rating badge]: 	https://img.shields.io/chrome-web-store/rating/fnhlecpfnocgmmmghkjcipmhdpmpddii.svg
+
+[img-now]: resources/screenshots/popup-now-playing.png
+[img-history]: resources/screenshots/popup-relative-buffering.png
+[img-stations]: resources/screenshots/options-stations.png
+[img-lastfm]: resources/screenshots/options-logged-in.png
