@@ -1,5 +1,6 @@
 import browser from 'webextension-polyfill';
 
+import {states} from '../lib/radio.js';
 import Steps from '../lib/steps.js';
 import LastfmAPI from '../lib/lastfm.js';
 
@@ -33,7 +34,10 @@ export default class ScrobblingController {
   }
 
   scrobble(steps) {
-    if (this.preferences.get('radio.state') !== 'playing' || this.preferences.get('lastfm.scrobbling', true) === false) {
+    const radioState = this.preferences.get('radio.state');
+    const isScrobblingEnabled = this.preferences.get('lastfm.scrobbling', true);
+
+    if (radioState !== states.PLAYING || isScrobblingEnabled === false) {
       return;
     }
 
