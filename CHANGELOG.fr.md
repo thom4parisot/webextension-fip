@@ -7,6 +7,10 @@ Vous pouvez suivre les bugs ou l'implémentation des fonctionnalités à cette a
 
 # Quoi de neuf ?
 
+## Version 1.5.2
+
+- corrige le scrobbling last.fm
+
 ## Version 1.5.0
 
 - affiche le nom de la station
