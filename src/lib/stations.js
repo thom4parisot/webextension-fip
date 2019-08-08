@@ -42,7 +42,7 @@ export function getStationNowPlaying (stationId) {
       operationName: 'Now',
       variables: {
         stationId,
-        previousTrackLimit: 0,
+        previousTrackLimit: 1,
       },
       extensions: {
         persistedQuery: {
