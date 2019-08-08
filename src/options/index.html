@@ -46,13 +46,11 @@
 
 <body ng-controller="OptionsController">
   <label>
-    <span class="label__group">{{'listen_to' | i18n}}</span>
+    <span class="label__group">{{'station' | i18n}}</span>
 
     <select name="stations" ng-model="currentStation" required>
-      <optgroup label="{{'by_city' | i18n}}">
-        <option ng-repeat="(id, station) in stations | startsWith:'fip-'"  value="{{id}}">{{ station.name }}</option>
-      </optgroup>
-      <optgroup label="{{'by_theme' | i18n}}">
+      <option ng-repeat="(id, station) in stations | startsWith:'fip-'"  value="{{id}}">{{ station.name }}</option>
+      <optgroup label="{{'webradios' | i18n}}">
         <option ng-repeat="(id, station) in stations | startsWith:'theme-'" value="{{id}}">{{ station.name }}</option>
       </optgroup>
     </select>

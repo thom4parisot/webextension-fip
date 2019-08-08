@@ -40,17 +40,14 @@
   "enable_scrobbling": {
     "message": "Connect to last.fm"
   },
-  "listen_to": {
-    "message": "Listen to FIP"
+  "station": {
+    "message": "Station"
   },
   "rather_in": {
     "message": "Rather in"
   },
-  "by_city": {
-    "message": "By French Town"
-  },
-  "by_theme": {
-    "message": "By Theme"
+  "webradios": {
+    "message": "Webradios"
   },
   "sd": {
     "message": "SD"

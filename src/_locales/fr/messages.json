@@ -37,17 +37,14 @@
   "enable_scrobbling": {
     "message": "Connexion à last.fm"
   },
-  "listen_to": {
-    "message": "Écouter FIP"
+  "station": {
+    "message": "Station"
   },
   "rather_in": {
     "message": "Plutôt en"
   },
-  "by_city": {
-    "message": "Par ville"
-  },
-  "by_theme": {
-    "message": "Par thème"
+  "webradios": {
+    "message": "Webradios"
   },
   "sd": {
     "message": "SD"
