@@ -22,6 +22,10 @@
     "watch": "BUILD_CHANNEL=dev run-p 'watch:*' start",
     "watch:bundles": "rollup --config --watch"
   },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/oncletom"
+  },
   "http": {
     "headers": "{\"Access-Control-Allow-Origin\":\"*\",\"Access-Control-Allow-Methods\":\"GET\",\"Access-Control-Allow-Headers\":\"Content-Type\"}"
   },
