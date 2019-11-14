@@ -60,7 +60,18 @@ $ npm install
 $ npm run watch
 ```
 
-Finally, load the unpacked extension ([in Chrome/Chromium](http://developer.chrome.com/extensions/getstarted.html#unpacked), [in Firefox](https://developer.mozilla.org/en-US/docs/Tools/about:debugging#Loading_a_temporary_add-on)). Changes will be taken in account immediatly — anything related to the _background_ page requires to reload/refresh the browser extension.
+Then load the **unpacked extension** or **temporary module** in your browser by typing a special URL:
+
+| Firefox           | Chrome
+| ---               | ---
+| `about:debugging#/runtime/this-firefox`  | `chrome://extensions/`  |
+| ![](./resources/debug-firefox.png)  | ![](./resources/debug-chrome.png) |
+
+The browser will ask you to **locate the `manifest.json` file**.
+
+![](./resources/debug-load-extension.png)
+
+After being loaded, any change in the source code will be taken in account immediately ⚠️ **except background page code** — which requires to hit the related `Refresh` or `Reload` button in the extension panel.
 
 [Chrome Dev Tools](https://developers.google.com/chrome-developer-tools/) will
 help you debugging by displaying errors or the various state change of the playback.
