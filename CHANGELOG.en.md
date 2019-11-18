@@ -7,6 +7,12 @@ Issues and features roadmap are tracked on this page:
 
 # Quoi de neuf ?
 
+## Version 1.5.3
+
+- update data feed details to fix the display of song informations
+
+Thanks to Geoffrey for the bug report.
+
 ## Version 1.5.2
 
 - fix last.fm scrobbling (I broke it)

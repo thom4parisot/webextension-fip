@@ -7,6 +7,12 @@ Vous pouvez suivre les bugs ou l'implémentation des fonctionnalités à cette a
 
 # Quoi de neuf ?
 
+## Version 1.5.3
+
+- correction du flux de données pour afficher à nouveau l'historique des titres diffusés
+
+Merci à Geoffrey pour avoir signalé le problème.
+
 ## Version 1.5.2
 
 - corrige le scrobbling last.fm
