@@ -3,54 +3,62 @@ import stations from '../stations.json';
 
 export {stations};
 
+const encode = (obj) => {
+  return Object.entries(obj)
+    .map(([key, val]) => `${encodeURIComponent(key)}=${encodeURIComponent(val)}`)
+    .join('&');
+};
+
 export function getStationHistory (stationId) {
-  return request('https://www.fip.fr/latest/api/graphql', {
-    method: 'POST',
+  const params = {
+    operationName: 'History',
+    variables: JSON.stringify({
+      stationId,
+      first: 10,
+      after: ""
+    }),
+    extensions: JSON.stringify({
+      persistedQuery: {
+        version:1,
+        sha256Hash: "ce6791c62408f27b9338f58c2a4b6fdfd9d1afc992ebae874063f714784d4129"
+      }
+    })
+  };
+
+  return request(`https://www.fip.fr/latest/api/graphql?${encode(params)}`, {
+    method: 'GET',
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-    },
-    body: JSON.stringify({
-      operationName: 'History',
-      variables: {
-        stationId,
-        first: 10,
-        after: ""
-      },
-      extensions: {
-        persistedQuery: {
-          version:1,
-          sha256Hash: "a7679f6f89afe7e503b0dac11b6c2ff53dcd983f271b630d3e22f7230b1aa6b3"
-        }
-      }
-    })
+    }
   })
   .then(res => res.json())
   .then(withHistoryResponse);
 }
 
 export function getStationNowPlaying (stationId) {
-  return request('https://www.fip.fr/latest/api/graphql', {
-    method: 'POST',
+  const params = {
+    operationName: 'Now',
+    variables: JSON.stringify({
+      stationId,
+      previousTrackLimit: 1,
+    }),
+    extensions: JSON.stringify({
+      persistedQuery: {
+        version:1,
+        sha256Hash: "9551487ee4a6810ec4afa35e70dd1c204fa84db3519d39eb3176e5a3a8b0e482"
+      }
+    })
+  };
+
+  return request(`https://www.fip.fr/latest/api/graphql?${encode(params)}`, {
+    method: 'GET',
     mode: 'cors',
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-    },
-    body: JSON.stringify({
-      operationName: 'Now',
-      variables: {
-        stationId,
-        previousTrackLimit: 1,
-      },
-      extensions: {
-        persistedQuery: {
-          version:1,
-          sha256Hash: "8a931c7d177ff69709a79f4c213bd2403f0c11836c560bc22da55628d8100df8"
-        }
-      }
-    })
+    }
   })
   .then(res => res.json())
   .then(withNowPlayingResponse);
