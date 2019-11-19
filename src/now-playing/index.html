@@ -41,8 +41,8 @@
           <li class="album-title icon-cd" ng-show="broadcast.album">
             <a ng-href="https://www.last.fm/search/albums?q={{broadcast.album}}+{{broadcast.authors}}" target="_blank">{{broadcast.album}}</a>
           </li>
-          <li class="album-date icon-calendar" ng-show="broadcast.album && broadcast.anneeEditionMusique">
-            <date>{{broadcast.anneeEditionMusique}}</date>
+          <li class="album-date icon-calendar" ng-show="broadcast.album && broadcast.year">
+            <date>{{broadcast.year}}</date>
           </li>
           <li class="artist icon-user" ng-show="broadcast.interpreters">
             <ul>
