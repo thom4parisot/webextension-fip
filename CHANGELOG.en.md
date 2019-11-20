@@ -7,6 +7,12 @@ Issues and features roadmap are tracked on this page:
 
 # Quoi de neuf ?
 
+## Version 1.5.4
+
+- fix album year display ([#94](https://github.com/oncletom/webextension-fip/pull/94))
+
+Thank you [Geoffrey](https://github.com/geoffrey-guilbon) for your contribution.
+
 ## Version 1.5.3
 
 - update data feed details to fix the display of song informations

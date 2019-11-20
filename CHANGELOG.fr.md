@@ -7,6 +7,12 @@ Vous pouvez suivre les bugs ou l'implémentation des fonctionnalités à cette a
 
 # Quoi de neuf ?
 
+## Version 1.5.4
+
+- corrige l'affichage manquant de l'année de sortie d'un album ([#94](https://github.com/oncletom/webextension-fip/pull/94))
+
+Merci [Geoffrey](https://github.com/geoffrey-guilbon) pour ta contribution.
+
 ## Version 1.5.3
 
 - correction du flux de données pour afficher à nouveau l'historique des titres diffusés
