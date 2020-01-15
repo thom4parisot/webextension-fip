@@ -28,7 +28,9 @@ and (not (-ms-ime-align:auto)) and (not (-moz-appearance:none)) {
   display: none;
 }
 
+
 label,
+select,
 input[type="checkbox"],
 input[type="range"]{
   cursor: pointer;

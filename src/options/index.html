@@ -45,19 +45,8 @@
 </head>
 
 <body ng-controller="OptionsController">
-  <label>
-    <span class="label__group">{{'station' | i18n}}</span>
-
-    <select name="stations" ng-model="currentStation" required>
-      <option ng-repeat="(id, station) in stations | startsWith:'fip-'"  value="{{id}}">{{ station.name }}</option>
-      <optgroup label="{{'webradios' | i18n}}">
-        <option ng-repeat="(id, station) in stations | startsWith:'theme-'" value="{{id}}">{{ station.name }}</option>
-      </optgroup>
-    </select>
-  </label>
-
   <p>
-    <span class="label__group">{{'rather_in' | i18n}}</span>
+    <span class="label__group">{{'quality_preference' | i18n}}</span>
 
     <label>
       <input type="radio" name="quality" ng-model="quality" value="sd" ng-true-value="'sd'">

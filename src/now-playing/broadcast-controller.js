@@ -1,6 +1,6 @@
 import Broadcast from '../lib/broadcast.js';
 import lastFm from '../lib/lastfm.js';
-import {getStation} from '../lib/stations.js';
+import {stations} from '../lib/stations.js';
 
 /**
  * Now Playing Controller.
@@ -10,12 +10,11 @@ import {getStation} from '../lib/stations.js';
  * @param {Broadcast} Broadcast
  * @constructor
  */
-export default function BroadcastController($scope, chrome, preferences){
+export default function BroadcastController($scope, chrome, preferences, $timeout){
   const getPosition = Broadcast.getPositionTracker();
-  const {archives,name} = getStation(preferences.get('playback.station', 'fip-paris'));
 
-  $scope.archives_url = archives;
-  $scope.station_name = name;
+  $scope.stations = stations;
+  $scope.currentStation = preferences.get('playback.station', 'fip-paris');
   $scope.lastfm_enabled = lastFm.isEnabled() && preferences.get("lastfm.scrobbling") && preferences.get("lastfm.username");
 
   $scope.broadcasts = preferences.get('broadcasts', []);
@@ -38,6 +37,17 @@ export default function BroadcastController($scope, chrome, preferences){
       $scope.current_index++;
     }
   };
+
+  $scope.saveStation = function(){
+    const prevStation = preferences.get('playback.station', 'fip-paris');
+    preferences.set('playback.station', $scope.currentStation);
+
+    if ($scope.currentStation !== prevStation) {
+      chrome.notify('playback.reload');
+    }
+
+    $timeout(() => $scope.saveStatus = 'idle', 2000);
+  };
 }
 
-BroadcastController.$inject = ['$scope', 'chrome', 'preferences', 'browser'];
+BroadcastController.$inject = ['$scope', 'chrome', 'preferences', '$timeout'];

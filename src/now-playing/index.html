@@ -84,7 +84,12 @@
   <nav>
     <ul>
       <li class="main">
-        <a ng-href="{{archives_url}}" class="iconify" target="_blank">{{station_name}}</a>
+        <select name="stations" ng-model="currentStation" ng-change="saveStation()" required>
+          <option ng-repeat="(id, station) in stations | startsWith:'fip-'" value="{{id}}">{{ station.name }}</option>
+          <optgroup label="{{'webradios' | i18n}}">
+            <option ng-repeat="(id, station) in stations | startsWith:'theme-'" value="{{id}}">{{ station.name }}</option>
+          </optgroup>
+        </select>
       </li>
       <li>
         <span class="icon-lastfm" aria-label="Last.fm Status" ng-class="{'icon-activated': lastfm_enabled, 'icon-deactivated': !lastfm_enabled}"></span>

@@ -43,8 +43,8 @@
   "station": {
     "message": "Station"
   },
-  "rather_in": {
-    "message": "Rather in"
+  "quality_preference": {
+    "message": "Audio quality preference"
   },
   "webradios": {
     "message": "Webradios"
