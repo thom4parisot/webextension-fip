@@ -7,6 +7,11 @@ Issues and features roadmap are tracked on this page:
 
 # Quoi de neuf ?
 
+## Version 1.6.0
+
+- follow color scheme user preference (light and dark mode) ([#97](https://github.com/oncletom/webextension-fip/issues/97))
+- change radio station the fly ([#95](https://github.com/oncletom/webextension-fip/issues/95))
+
 ## Version 1.5.4
 
 - fix album year display ([#94](https://github.com/oncletom/webextension-fip/pull/94))

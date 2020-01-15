@@ -7,6 +7,11 @@ Vous pouvez suivre les bugs ou l'implémentation des fonctionnalités à cette a
 
 # Quoi de neuf ?
 
+## Version 1.6.0
+
+- ajustement automatique au mode d'affichage de l'utilisateur·ice (dark mode) ([#97](https://github.com/oncletom/webextension-fip/issues/97))
+- changement de radio à la volée ([#95](https://github.com/oncletom/webextension-fip/issues/95))
+
 ## Version 1.5.4
 
 - corrige l'affichage manquant de l'année de sortie d'un album ([#94](https://github.com/oncletom/webextension-fip/pull/94))
