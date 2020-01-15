@@ -323,6 +323,9 @@ article{
     }
 
   @media screen and (min-width: 400px) {
+    .metadata [class*="icon-"]:before {
+      margin-left: 0;
+    }
     .metadata > .album-title{
       flex: 1 1 70%;
     }
