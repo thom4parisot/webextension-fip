@@ -8,7 +8,7 @@
 </head>
 <body ng-controller="BroadcastController" aria-live>
 
-<header class="alternate" ng-controller="RadioController" ng-cloak>
+<header ng-controller="RadioController" ng-cloak>
   <span class="volume-range" aria-hidden ng-class="{'level-off': volume === 0, 'level-low': volume > 0 && volume < 0.3, 'level-regular': volume >= 0.3 && volume < 0.7, 'level-high': volume >= 0.7}"></span>
   <input type="range" id="volume-range" step="0.1" min="0" max="1" list="tickmarks" ng-model="volume" tabindex="0">
   <datalist id="tickmarks">
@@ -80,7 +80,7 @@
   </nav>
 </main>
 
-<footer class="alternate" ng-cloak>
+<footer ng-cloak>
   <nav>
     <ul>
       <li class="main">

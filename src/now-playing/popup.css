@@ -1,15 +1,30 @@
 :root {
   --default-transition-duration: 0.3s;
   --default-transition-function: ease-out;
-
-  --background-color: #fafafa;
-  --foreground-color: #e07;
   --gutter-width: 10px;
-  --text-color: #333;
+
+  --brand-color: #e07;
+  --background-color: #fafafa;
+  --alternate-background-color: #f0f0f0;
+  --border-color: #e07;
+  --foreground-color: var(--brand-color);
+  --text-color: #212529;
+  --text-icon-color: #383e45;
+}
+
+@media (prefers-color-scheme:dark) {
+  :root {
+    --background-color: rgba(32,35,38,.93);
+    --alternate-background-color: #202326;
+    --border-color: #484b4e;
+    --text-color: #c4c5c6;
+    --text-icon-color: #7f8183;
+  }
 }
 
 body{
   background: var(--background-color);
+  color: var(--text-color);
   font-family: "Helvetica Neue", "Trebuchet MS", Trebuchet, sans-serif;
   font-size: 14px;
   margin: 0;
@@ -57,14 +72,7 @@ h2{
  */
 header,
 footer {
- --bg-color: var(--foreground-color);
- --border-color: var(--background-color);
-}
-header.alternate,
-footer.alternate {
- --bg-color: var(--background-color);
- --border-color: var(--foreground-color);
- background-color: #f0f0f0;
+ --bg-color: var(--alternate-background-color);
 }
 
 header,
@@ -77,9 +85,16 @@ footer {
   position: relative;
 }
 
+header{
+  border-bottom: 1px solid var(--border-color);
+}
+footer{
+  border-top: 2px solid var(--border-color);
+}
+
 header a,
 footer a {
-  color: var(--border-color);
+  color: var(--brand-color);
 }
 
 footer.alternate {
@@ -92,18 +107,6 @@ header {
   flex-flow: row nowrap;
   justify-content: flex-end;
   align-items: center;
-}
-
-.alternate:focus,
-.alternate:hover{
-  opacity: 1;
-}
-
-header.alternate{
-  border-bottom: 1px solid var(--border-color);
-}
-footer.alternate{
-  border-top: 2px solid var(--border-color);
 }
 
 #volume-range{
@@ -319,6 +322,10 @@ article{
   margin: 0;
   padding: 0;
 }
+  .metadata [class*="icon-"]:before {
+    color: var(--text-icon-color);
+    margin-left: 0;
+  }
   .metadata > li{
     flex: 1 1 100%;
     margin-bottom: calc(var(--gutter-width) / 2);
@@ -340,9 +347,6 @@ article{
     }
 
   @media screen and (min-width: 400px) {
-    .metadata [class*="icon-"]:before {
-      margin-left: 0;
-    }
     .metadata > .album-title{
       flex: 1 1 100%;
     }
