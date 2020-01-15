@@ -1,6 +1,6 @@
 {
   "name": "webextension-fip",
-  "version": "1.5.4",
+  "version": "1.6.0",
   "description": "FIP Radio WebExtension for an in-browser radio playback and scrobbling experience.",
   "main": "index.js",
   "type": "module",
