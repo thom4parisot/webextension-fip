@@ -4,7 +4,6 @@
   "description": "__MSG_extension_description__",
   "manifest_version": 2,
   "minimum_chrome_version": "42",
-  "offline_enabled": false,
   "default_locale": "fr",
   "background": {
     "scripts": [
