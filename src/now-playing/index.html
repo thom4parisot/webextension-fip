@@ -41,25 +41,21 @@
           <li class="album-title icon-cd" ng-show="broadcast.album">
             <a ng-href="https://www.last.fm/search/albums?q={{broadcast.album}}+{{broadcast.authors}}" target="_blank">{{broadcast.album}}</a>
           </li>
-          <li class="album-date icon-calendar" ng-show="broadcast.album && broadcast.year">
-            <date>{{broadcast.year}}</date>
-          </li>
           <li class="artist icon-user" ng-show="broadcast.interpreters">
             <ul>
               <li ng-repeat="performer in broadcast.interpreters"><a ng-href="https://www.last.fm/search/artists?q={{performer}}" target="_blank">{{performer}}</a></li>
             </ul>
           </li>
-          <li class="artist icon-amazon" ng-show="broadcast.external_links.amazon">
-            <a ng-href="{{broadcast.external_links.amazon.link}}" target="_blank">Amazon Music</a>
+          <li class="album-date icon-calendar" ng-show="broadcast.album && broadcast.year">
+            <date>{{broadcast.year}}</date>
           </li>
-          <li class="artist icon-itunes" ng-show="broadcast.external_links.itunes">
-            <a ng-href="{{broadcast.external_links.itunes.link}}" target="_blank">iTunes</a>
-          </li>
-          <li class="artist icon-spotify" ng-show="broadcast.external_links.spotify">
-            <a ng-href="{{broadcast.external_links.spotify.link}}" target="_blank">Spotify</a>
-          </li>
-          <li class="artist icon-youtube" ng-show="broadcast.external_links.youtube">
-            <a ng-href="{{broadcast.external_links.youtube.link}}" target="_blank">YouTube</a>
+          <li class="external-links" ng-show="broadcast.external_links.amazon || broadcast.external_links.itunes || broadcast.external_links.spotify || broadcast.external_links.youtube">
+            <ul class="inline-list">
+              <li ng-show="broadcast.external_links.amazon" class="icon-amazon"><a ng-href="{{broadcast.external_links.amazon.link}}" target="_blank">Amazon Music</a></li>
+              <li ng-show="broadcast.external_links.itunes" class="icon-itunes"><a ng-href="{{broadcast.external_links.itunes.link}}" target="_blank">iTunes</a></li>
+              <li ng-show="broadcast.external_links.spotify" class="icon-spotify"><a ng-href="{{broadcast.external_links.spotify.link}}" target="_blank">Spotify</a></li>
+              <li ng-show="broadcast.external_links.youtube" class="icon-youtube"><a ng-href="{{broadcast.external_links.youtube.link}}" target="_blank">YouTube</a></li>
+            </ul>
           </li>
         </ul>
       </article>

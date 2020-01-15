@@ -294,7 +294,22 @@ article{
       text-decoration: underline;
     }
 
-
+.ng-hide {
+  display: none !important;
+}
+.inline-list {
+  list-style: none;
+  padding: 0;
+}
+  .inline-list > li {
+    display: inline;
+  }
+  .inline-list [class*="icon-"]::before {
+    padding-right: 5px;
+  }
+  .inline-list [class*="icon-"] {
+    margin-right: 1em;
+  }
 .metadata{
   display: flex;
   flex-flow: row wrap;
@@ -327,10 +342,25 @@ article{
       margin-left: 0;
     }
     .metadata > .album-title{
-      flex: 1 1 70%;
+      flex: 1 1 100%;
+    }
+    .metadata > .artist{
+      flex: 1 1 0;
+      width: 75%;
     }
     .metadata > .album-date{
       flex: 0 1 0;
+      width: 25%;
+    }
+    .metadata > .external-links:not(.count-0){
+      padding-top: .5em;
+    }
+    .metadata > .external-links:not(.count-0)::before {
+      content: "";
+      display: block;
+      border-top: 1px solid #ccc;
+      padding-bottom: .5em;
+      width: 75px;
     }
   }
 
