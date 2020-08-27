@@ -178,7 +178,7 @@ export default class Background {
     //workaround due to the `browser.alarms.get` uncatchable exception bug
     //@see https://code.google.com/p/chromium/issues/detail?id=265800
     browser.alarms.getAll().then(alarms => {
-      const exists = alarms.some(alarm => alarm.name === alarmName);
+      const exists = (alarms ?? []).some(alarm => alarm.name === alarmName);
 
       if (!exists){
         browser.alarms.create(alarmName, { periodInMinutes: 0.5 });
