@@ -12,6 +12,7 @@ env:
   jest/globals: true
 parserOptions:
   sourceType: module
+  ecmaVersion: 2020
 globals:
   process: true
 rules:

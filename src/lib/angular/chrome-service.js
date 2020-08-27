@@ -4,6 +4,15 @@ import browser from 'webextension-polyfill';
 import Preferences from '../preferences.js';
 
 /**
+ * Indicates if the browser has a certain API available, or not
+ * Not all WebExtension APIs are available at a given time (Safari 14 does not have browser.identity for instance).
+ *
+ * @param {String} cap
+ * @returns {Boolean}
+ */
+const hasCapability = (cap) => cap in browser;
+
+/**
  * Chrome API Abstraction.
  * Especially used to enables unit/function tests without relying on Chrome API direct access.
  */
@@ -28,7 +37,8 @@ export default angular.module('ChromeService', [])
         const port = browser.runtime.connect();
         port.postMessage({ [channel]: data });
       },
-      getRedirectURL: browser.identity.getRedirectURL.bind(browser.identity),
+      hasCapability,
+      getRedirectURL: (...args) => hasCapability('identity') && browser.identity.getRedirectURL(...args),
       getUrl: path => browser.runtime.getURL(path),
     };
   });

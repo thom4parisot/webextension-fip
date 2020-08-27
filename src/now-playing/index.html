@@ -91,7 +91,7 @@
           </optgroup>
         </select>
       </li>
-      <li>
+      <li ng-if="lastfm_enabled">
         <span class="icon-lastfm" aria-label="Last.fm Status" ng-class="{'icon-activated': lastfm_enabled, 'icon-deactivated': !lastfm_enabled}"></span>
         <a href="#settings">{{ 'change_settings' | i18n }}</a>
       </li>

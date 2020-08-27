@@ -15,7 +15,7 @@ export default function BroadcastController($scope, chrome, preferences, $timeou
 
   $scope.stations = stations;
   $scope.currentStation = preferences.get('playback.station', 'fip-paris');
-  $scope.lastfm_enabled = lastFm.isEnabled() && preferences.get("lastfm.scrobbling") && preferences.get("lastfm.username");
+  $scope.lastfm_enabled = lastFm.isEnabled() && chrome.hasCapability("identity") && preferences.get("lastfm.scrobbling") && preferences.get("lastfm.username");
 
   $scope.broadcasts = preferences.get('broadcasts', []);
   $scope.current_index = getPosition($scope.broadcasts, $scope.broadcasts.length - 1);

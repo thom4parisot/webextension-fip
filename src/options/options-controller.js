@@ -14,7 +14,7 @@ export default function OptionsController($scope, chrome, preferences, $timeout)
   $scope.currentStation = preferences.get('playback.station', 'fip-paris');
   $scope.quality = preferences.get('playback.quality', 'hd');
   $scope.saveStatus = 'idle';
-  $scope.lastfm_enabled = lastFm.isEnabled();
+  $scope.lastfm_enabled = lastFm.isEnabled() && chrome.hasCapability("identity");
 
   $scope.save = function(){
     const prevStation = preferences.get('playback.station', 'fip-paris');
