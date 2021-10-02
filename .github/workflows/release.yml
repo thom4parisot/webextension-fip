@@ -1,0 +1,39 @@
+name: Release
+
+on:
+  push:
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - run: npm clean-install-test
+
+    - name: Package the extension
+      run: |
+        mkdir -p dist
+        npm run package
+
+    - name: Get the version
+      id: get_version
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
+    - name: Create release (if tagged)
+      if: ${{ github.event_name == 'create' && github.event.ref_type == 'tag' }}
+      run: |
+        hub release create -a "webextension-fip-${VERSION}.zip" ${VERSION}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        VERSION: ${{ steps.get_version.outputs.VERSION }}

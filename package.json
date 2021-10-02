@@ -12,7 +12,7 @@
   "scripts": {
     "download-schema": "npx get-graphql-schema 'https://openapi.radiofrance.fr/v1/graphql?x-token=${OPENAPI_RADIOFRANCE_API_TOKEN} > src/schema.graphql",
     "prepackage": "npm run build",
-    "package": "cd src && ls manifest.json _locales/**/*.json background/bundle.js now-playing/bundle.js now-playing/*.html now-playing/*.css options/bundle.js options/*.html resources/*.png resources/icons/css/*.css resources/icons/font/*.woff2 | zip -9 -@ ../dist/${npm_package_name}-${npm_package_version}.zip",
+    "package": "cd src && ls manifest.json _locales/**/*.json background/bundle.js now-playing/bundle.js now-playing/*.html now-playing/*.css options/bundle.js options/*.html resources/*.png resources/icons/css/*.css resources/icons/font/*.woff2 | zip -9 -@ ../dist/${npm_package_name}-v${npm_package_version}.zip",
     "test": "NODE_ENV=test PREFERENCES_NAMESPACE=test jest",
     "lint": "eslint --ignore-path .gitignore ./src",
     "posttest": "npm run lint",
