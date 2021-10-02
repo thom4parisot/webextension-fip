@@ -6,7 +6,8 @@
   "type": "module",
   "private": true,
   "engines": {
-    "node": ">=10.0.0"
+    "node": ">=16.0.0",
+    "npm": ">=7.0.0"
   },
   "scripts": {
     "download-schema": "npx get-graphql-schema 'https://openapi.radiofrance.fr/v1/graphql?x-token=${OPENAPI_RADIOFRANCE_API_TOKEN} > src/schema.graphql",
@@ -46,39 +47,34 @@
   "author": "Thomas Parisot (https://oncletom.io)",
   "license": "MIT",
   "readmeFilename": "README.md",
-  "browserify": {
-    "transform": [
-      "babelify"
-    ]
-  },
   "devDependencies": {
-    "@babel/core": "^7.8.3",
-    "@babel/plugin-external-helpers": "^7.8.3",
-    "@babel/plugin-transform-runtime": "^7.8.3",
-    "@babel/preset-env": "^7.8.3",
-    "@babel/runtime": "^7.8.3",
+    "@babel/core": "^7.15.5",
+    "@babel/plugin-external-helpers": "^7.14.5",
+    "@babel/plugin-transform-runtime": "^7.15.0",
+    "@babel/preset-env": "^7.15.6",
+    "@babel/runtime": "^7.15.4",
     "babel-plugin-transform-inline-environment-variables": "^0.4.3",
-    "eslint": "^6.8.0",
-    "eslint-plugin-jest": "^23.6.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "jest": "^24.9.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-jest": "^24.5.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "jest": "^27.2.4",
     "node-static": "^0.7.11",
     "npm-run-all": "^4.1.5",
-    "rollup": "^1.29.0",
+    "rollup": "^2.58.0",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-globals": "^1.4.0",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "sinon": "^8.0.4",
+    "sinon": "^11.1.2",
     "xvfb-maybe": "^0.2.1"
   },
   "dependencies": {
-    "angular": "^1.7.9",
-    "blueimp-md5": "^2.12.0",
+    "angular": "^1.8.2",
+    "blueimp-md5": "^2.19.0",
     "machina": "^4.0.2",
-    "webextension-polyfill": "^0.6.0",
-    "whatwg-fetch": "^3.0.0"
+    "webextension-polyfill": "^0.8.0",
+    "whatwg-fetch": "^3.6.2"
   }
 }
