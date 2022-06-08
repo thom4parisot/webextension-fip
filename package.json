@@ -25,14 +25,14 @@
   },
   "funding": {
     "type": "github",
-    "url": "https://github.com/sponsors/oncletom"
+    "url": "https://github.com/sponsors/thom4parisot"
   },
   "http": {
     "headers": "{\"Access-Control-Allow-Origin\":\"*\",\"Access-Control-Allow-Methods\":\"GET\",\"Access-Control-Allow-Headers\":\"Content-Type\"}"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/oncletom/webextension-fip.git"
+    "url": "git://github.com/thom4parisot/webextension-fip.git"
   },
   "keywords": [
     "fip",
@@ -44,7 +44,7 @@
     "streaming",
     "france"
   ],
-  "author": "Thomas Parisot (https://oncletom.io)",
+  "author": "Thomas Parisot (https://thom4.net)",
   "license": "MIT",
   "readmeFilename": "README.md",
   "devDependencies": {

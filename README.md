@@ -1,8 +1,13 @@
-# FIP Radio — for Chrome, Firefox, Edge and Opera web browsers [![Build Status][]](https://travis-ci.org/oncletom/webextension-fip) ![][rating badge] ![][downloads badge] ![][version badge]
+# FIP Radio — for Chrome, Firefox, Edge and Opera web browsers ![][status badge] ![][rating badge] ![][downloads badge] ![][version badge]
 
-> *FIP Radio WebExtension* is a minimalistic browser interface to listen to [FIP Radio](https://www.fip.fr/), an eclectic and ad-free radio station. You can optionnally scrobble to your last.fm account.
+> Listen to [FIP Radio](https://www.fip.fr/) in a minimalistic browser interface.
+> FIP is an eclectic and ad-free radio station.
+> Optionnally scrobble tracks to your last.fm account.
 
-I developed this extension to listen to my favourite radio station when [I moved from France to London](https://oncletom.io/2013/every-day-is-a-brand-new-place/).
+Oh, and it's **ads free** and **trackers free**.<br>
+Check the [privacy policy](PRIVACY_POLICY.md) to know more how first-parties (aka. _not me_) may collect data about you.
+
+I developed this extension to listen to my favourite radio station when [I moved from France to London](https://thom4.net/2013/every-day-is-a-brand-new-place/).
 
 ![Extension Showcase](resources/screenshots/popup-now-playing.png)
 
@@ -17,9 +22,6 @@ I developed this extension to listen to my favourite radio station when [I moved
 | Select a station | Scrobble to last.fm |
 | ---              | ---                 |
 | ![][img-stations]| ![][img-lastfm]     |
-
-Oh, and it's **ads free** and **trackers free**.<br>
-Check the [privacy policy](PRIVACY_POLICY.md) to know more how first-parties (aka. _not me_) may collect data about you.
 
 # Install in your browser
 
@@ -102,7 +104,7 @@ Current status is pretty poor but the codebase is solid.
 
 [Chrome extension]: 	https://chrome.google.com/webstore/detail/fnhlecpfnocgmmmghkjcipmhdpmpddii
 [Firefox extension]: https://addons.mozilla.org/firefox/addon/fip-radio/
-[Build Status]: 	https://travis-ci.org/oncletom/webextension-fip.svg?branch=master
+[status badge]: https://github.com/thom4parisot/webextension-fip/actions/workflows/release.yml/badge.svg
 [downloads badge]: 	https://img.shields.io/chrome-web-store/d/fnhlecpfnocgmmmghkjcipmhdpmpddii.svg
 [version badge]: 	https://img.shields.io/chrome-web-store/v/fnhlecpfnocgmmmghkjcipmhdpmpddii.svg
 [rating badge]: 	https://img.shields.io/chrome-web-store/rating/fnhlecpfnocgmmmghkjcipmhdpmpddii.svg
