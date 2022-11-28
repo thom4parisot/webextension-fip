@@ -52,6 +52,9 @@
   "hd": {
     "message": "HD"
   },
+  "hifi": {
+    "message": "HiFi"
+  },
   "save": {
     "message": "Enregistrer"
   },

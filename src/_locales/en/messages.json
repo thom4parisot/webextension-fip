@@ -55,6 +55,9 @@
   "hd": {
     "message": "HD"
   },
+  "hifi": {
+    "message": "HiFi"
+  },
   "save": {
     "message": "Save"
   },
