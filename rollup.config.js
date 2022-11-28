@@ -1,8 +1,8 @@
-import commonjs from 'rollup-plugin-commonjs';
-import resolve from 'rollup-plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import resolve from '@rollup/plugin-node-resolve';
 import builtins from 'rollup-plugin-node-builtins';
-import babel from 'rollup-plugin-babel';
-import json from 'rollup-plugin-json';
+import babel from '@rollup/plugin-babel';
+import json from '@rollup/plugin-json';
 
 const plugins = [
   resolve({
@@ -13,7 +13,8 @@ const plugins = [
   json(),
   babel({
     babelrc: true,
-    runtimeHelpers: true,
+    babelHelpers: 'runtime',
+    plugins: [['@babel/plugin-transform-runtime', { useESModules: true }]]
   }),
 ];
 
