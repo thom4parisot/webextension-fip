@@ -57,6 +57,11 @@
       <input type="radio" name="quality" ng-model="quality" value="hd" ng-true-value="'hd'">
       {{'hd' | i18n}}
     </label>
+
+    <label>
+      <input type="radio" name="quality" ng-model="quality" value="hifi" ng-true-value="'hifi'">
+      {{'hifi' | i18n}}
+    </label>
   </p>
 
   <p ng-controller="ScrobblingController" ng-if="lastfm_enabled">
