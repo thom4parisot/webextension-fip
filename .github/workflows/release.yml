@@ -15,11 +15,17 @@ jobs:
         node-version: '18'
 
     - run: npm clean-install-test
+      env:
+        LAST_FM_SECRET: ${{ secrets.LAST_FM_SECRET }}
+        LAST_FM_KEY: ${{ secrets.LAST_FM_KEY }}
 
     - name: Package the extension
       run: |
         mkdir -p dist
         npm run package
+      env:
+        LAST_FM_SECRET: ${{ secrets.LAST_FM_SECRET }}
+        LAST_FM_KEY: ${{ secrets.LAST_FM_KEY }}
 
     - name: Get the version
       id: get_version
