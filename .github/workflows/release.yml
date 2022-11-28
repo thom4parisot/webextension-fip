@@ -32,9 +32,11 @@ jobs:
       run: echo "VERSION=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_OUTPUT
 
     - name: Create release (if tagged)
-      if: ${{ steps.get_version.outputs.VERSION }}
+      if: ${{ github.ref_type == 'tag' }}
       run: |
-        hub release create -a "dist/webextension-fip-${VERSION}.zip" ${VERSION}
+        echo $TAG_NAME $VERSION
+        hub release create -a "webextension-fip-${VERSION}.zip" -m "${VERSION}" ${VERSION}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         VERSION: ${{ steps.get_version.outputs.VERSION }}
+        TAG_NAME: ${{ github.ref_name }}
