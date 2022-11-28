@@ -34,7 +34,7 @@ jobs:
     - name: Create release (if tagged)
       if: ${{ steps.get_version.outputs.VERSION }}
       run: |
-        hub release create -a "webextension-fip-${VERSION}.zip" ${VERSION}
+        hub release create -a "dist/webextension-fip-${VERSION}.zip" ${VERSION}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         VERSION: ${{ steps.get_version.outputs.VERSION }}
