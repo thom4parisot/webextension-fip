@@ -1,8 +1,5 @@
 import md5 from 'blueimp-md5';
 
-/*
- "Securely" provided by .travis.yml + envify transform
- */
 const LAST_FM_KEY = process.env.LAST_FM_KEY;
 const LAST_FM_SECRET = process.env.LAST_FM_SECRET;
 

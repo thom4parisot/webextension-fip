@@ -1,46 +1,69 @@
+import { cp, glob } from 'node:fs/promises';
+
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
-import builtins from 'rollup-plugin-node-builtins';
-import babel from '@rollup/plugin-babel';
 import json from '@rollup/plugin-json';
+import replace from '@rollup/plugin-replace';
+
+/**
+ * Environment variables inlined in the bundles.
+ */
+const ENV_VARIABLES = ['BUILD_CHANNEL', 'LAST_FM_KEY', 'LAST_FM_SECRET', 'PREFERENCES_NAMESPACE'];
 
 const plugins = [
-  resolve({
-    preferBuiltins: false
-  }),
-  builtins(),
+  resolve(),
   commonjs(),
   json(),
-  babel({
-    babelrc: true,
-    babelHelpers: 'runtime',
-    plugins: [['@babel/plugin-transform-runtime', { useESModules: true }]]
+  replace({
+    preventAssignment: true,
+    values: Object.fromEntries(ENV_VARIABLES.map(name => [`process.env.${name}`, JSON.stringify(process.env[name] ?? '')])),
   }),
+  copyStaticFiles(),
 ];
 
-export default [
-  {
-    input: 'src/background/app.js',
-    output: {
-      file: 'src/background/bundle.js',
-      format: 'esm',
+/**
+ * Files loaded by the browser as they are: manifest, HTML, CSS, icons and translations.
+ * JavaScript and `stations.json` are processed by Rollup instead.
+ */
+const isStaticFile = path => !path.endsWith('.js') && path !== 'src/stations.json';
+
+function copyStaticFiles () {
+  return {
+    name: 'copy-static-files',
+    async buildStart () {
+      for await (const path of glob('src/**/*.*')) {
+        if (isStaticFile(path)) {
+          this.addWatchFile(path);
+        }
+      }
     },
-    plugins,
-  },
-  {
-    input: 'src/now-playing/app.js',
-    output: {
-      file: 'src/now-playing/bundle.js',
-      format: 'esm',
+    writeBundle () {
+      return cp('src', 'build', { recursive: true, filter: isStaticFile });
     },
-    plugins,
+  };
+}
+
+/**
+ * One file per module, in `build/`, mirroring `src/`.
+ * npm dependencies go in `build/vendor/`, so reviewers can compare them with the published packages.
+ */
+export default {
+  input: [
+    'src/background/service-worker.js',
+    'src/players/background/index.js',
+    'src/players/offscreen/index.js',
+    'src/now-playing/app.js',
+    'src/options/app.js',
+  ],
+  output: {
+    dir: 'build',
+    format: 'esm',
+    preserveModules: true,
+    preserveModulesRoot: 'src',
+    // Chrome rejects paths starting with `_`, like Rollup's default `_virtual/`
+    virtualDirname: 'vendor/virtual',
+    entryFileNames: ({ name }) => `${name.replace(/^node_modules\//, 'vendor/')}.js`,
   },
-  {
-    input: 'src/options/app.js',
-    output: {
-      file: 'src/options/bundle.js',
-      format: 'esm',
-    },
-    plugins,
-  },
-];
+  plugins,
+};
+

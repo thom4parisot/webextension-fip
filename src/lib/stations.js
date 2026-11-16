@@ -1,94 +1,99 @@
-import {fetch as request} from 'whatwg-fetch';
-import stations from '../stations.json';
+import stations from '../stations.json' with { type: 'json' };
 
 export {stations};
 
-const encode = (obj) => {
-  return Object.entries(obj)
-    .map(([key, val]) => `${encodeURIComponent(key)}=${encodeURIComponent(val)}`)
-    .join('&');
-};
+/**
+ * Gives up on requests which do not answer, so a broken connection does not leave them pending.
+ */
+const REQUEST_TIMEOUT = 10 * 1000;
 
-export function getStationHistory (stationId) {
-  const params = {
-    operationName: 'History',
-    variables: JSON.stringify({
-      stationId,
-      first: 10,
-      after: ""
-    }),
-    extensions: JSON.stringify({
-      persistedQuery: {
-        version:1,
-        sha256Hash: "ce6791c62408f27b9338f58c2a4b6fdfd9d1afc992ebae874063f714784d4129"
-      }
-    })
-  };
+const getJSON = url => fetch(url, {
+  headers: {
+    'Accept': 'application/json',
+  },
+  signal: AbortSignal.timeout(REQUEST_TIMEOUT),
+})
+.then(res => {
+  if (!res.ok) {
+    throw new Error(`HTTP ${res.status}`);
+  }
 
-  return request(`https://www.fip.fr/latest/api/graphql?${encode(params)}`, {
-    method: 'GET',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    }
-  })
-  .then(res => res.json())
-  .then(withHistoryResponse);
-}
+  return res.json();
+});
 
-export function getStationNowPlaying (stationId) {
-  const params = {
-    operationName: 'Now',
-    variables: JSON.stringify({
-      stationId,
-      previousTrackLimit: 1,
-    }),
-    extensions: JSON.stringify({
-      persistedQuery: {
-        version:1,
-        sha256Hash: "9551487ee4a6810ec4afa35e70dd1c204fa84db3519d39eb3176e5a3a8b0e482"
-      }
-    })
-  };
-
-  return request(`https://www.fip.fr/latest/api/graphql?${encode(params)}`, {
-    method: 'GET',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    }
-  })
-  .then(res => res.json())
-  .then(withNowPlayingResponse);
-}
-
+/**
+ * Fetches the latest tracks played on a station.
+ * Stations without `history` only provide the track currently played.
+ *
+ * @param {String} station Station key, as found in `stations.json`
+ * @returns {Promise.<Array.<Object>>}
+ */
 export function getStationBroadcasts (station) {
-  const {stationId} = stations[station];
+  const {stationId, history} = getStation(station);
 
-  return Promise.all([
-    getStationNowPlaying(stationId),
-    getStationHistory(stationId),
-  ])
-  .then(([nowPlaying, ...history]) => [nowPlaying].concat(...history))
-  .then(items => items.filter(d => d));
+  return history
+    ? getJSON(`https://api.radiofrance.fr/livemeta/pull/${stationId}`).then(withLivemetaResponse)
+    : getJSON(`https://api.radiofrance.fr/livemeta/live/${stationId}/webrf_fip_player`).then(withLiveResponse);
 }
 
-export function withHistoryResponse({data}) {
-  return data.timelineCursor.edges.map(({node}) => node);
+/**
+ * Converts livemeta songs into steps. Times are in milliseconds.
+ *
+ * @param {Object} response
+ * @returns {Array.<Object>}
+ */
+export function withLivemetaResponse({steps}) {
+  return Object.values(steps)
+    .filter(step => step.embedType === 'song')
+    .map(step => ({
+      title: step.title,
+      authors: step.authors,
+      start_time: step.start * 1000,
+      end_time: step.end * 1000,
+      cover: step.visual,
+      album: step.titreAlbum,
+      label: step.label,
+      year: step.anneeEditionMusique,
+      interpreters: step.highlightedArtists,
+      external_links: {
+        itunes: step.path && { link: step.path },
+        youtube: step.lienYoutube && { link: step.lienYoutube },
+      },
+    }));
 }
 
-export function withNowPlayingResponse({data}) {
-  return data.now ? Object.assign({}, data.now.song, data.now.playing_item) : null;
+/**
+ * Converts the live player response into steps. Times are in milliseconds.
+ * Items without `startTime` are the station placeholder, not a track.
+ *
+ * @param {Object} response
+ * @returns {Array.<Object>}
+ */
+export function withLiveResponse({prev, now}) {
+  return [...prev, now]
+    .filter(item => item.startTime)
+    .map(item => ({
+      title: item.firstLine,
+      authors: item.secondLine,
+      start_time: item.startTime * 1000,
+      end_time: item.endTime * 1000,
+      cover: `https://www.radiofrance.fr/pikapi/images/${item.cover}/400x400`,
+      external_links: {},
+    }));
 }
 
+/**
+ * Every station has a `hd` stream; others depend on the station.
+ */
 export function getStationFeed (station, quality) {
-  const {streams} = stations[station];
+  const {streams} = getStation(station);
 
-  return streams[quality] ? streams[quality] : streams['sd'];
+  return streams[quality] || streams.hd;
 }
 
+/**
+ * Unknown stations, such as a removed webradio still saved in the preferences, fall back on FIP.
+ */
 export function getStation (station) {
-  return stations[station];
+  return stations[station] ?? stations['fip-paris'];
 }

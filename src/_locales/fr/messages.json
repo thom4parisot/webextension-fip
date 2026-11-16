@@ -11,6 +11,9 @@
   "album": {
     "message": "album"
   },
+  "offline": {
+    "message": "Hors ligne : la lecture reprendra au retour du réseau."
+  },
   "no_information": {
     "message": "Pas d'information"
   },

@@ -1,62 +1,53 @@
+import assert from 'node:assert/strict';
+import { describe, it } from 'node:test';
+
 import Steps from './steps.js';
-import {withHistoryResponse} from './stations.js';
-import fixtures from '../../resources/fixtures/history.json';
-import sinon from 'sinon';
+import {withLivemetaResponse} from './stations.js';
+import fixtures from '../../resources/fixtures/livemeta.json' with { type: 'json' };
 
 describe('Steps', function(){
-  const data = withHistoryResponse(fixtures);
+  const data = withLivemetaResponse(fixtures);
 
   describe('getAll', () => {
     it('should return an ascending ordered list', () => {
       const titles = Steps.getAll(data).map(d => d.title);
 
-      expect(titles).toEqual([
-        'Igualito que el tango',
-        'Sonate en Ré Maj op 3 n°1 : Allegro - pour violoncelle et basse continue',
-        'Let\'s call it a day',
-        'Get yourself together',
-        'Nuits bleues',
-        'Night And Day',
-        'Make it last',
-        'Eternal / Internal peace',
-        'Sky Islands',
-        'Naima',
+      assert.deepStrictEqual(titles, [
+        'Ladies',
+        'Holiday (radio edit)',
+        'Switched-on',
+        'Carousel',
+        'shérif',
       ]);
     });
   });
 
   describe('atTime', () => {
     it('should return a step overlapping a numeric UNIX timestamp', () => {
-      const step = Steps.atTime(data, 1565024242000);
+      const step = Steps.atTime(data, 1794830400000);
 
-      expect(step.title).toEqual('Get yourself together');
+      assert.deepStrictEqual(step.title, 'Switched-on');
     });
 
     it('should return a step starting at a numeric UNIX timestamp', () => {
-      const step = Steps.atTime(data, 1565024247000);
+      const step = Steps.atTime(data, 1794830297000);
 
-      expect(step.title).toEqual('Nuits bleues');
+      assert.deepStrictEqual(step.title, 'Switched-on');
     });
 
     it('should return a step based on a Date object', () => {
-      const step = Steps.atTime(data, new Date('2019-08-05T16:57:27.000Z'));
+      const step = Steps.atTime(data, new Date('2026-11-16T12:03:20.000Z'));
 
-      expect(step.title).toEqual('Nuits bleues');
+      assert.deepStrictEqual(step.title, 'Carousel');
     });
   });
 
   describe('getCurrent', () => {
-    let clock;
-
-    afterEach(() => {
-      clock && clock.restore();
-    });
-
-    it('should return a step played at the moment', () => {
-      clock = sinon.useFakeTimers(1565024247000);
+    it('should return a step played at the moment', (t) => {
+      t.mock.timers.enable({ apis: ['Date'], now: 1794830600000 });
       const step = Steps.getCurrent(data);
 
-      expect(step.title).toEqual('Nuits bleues');
+      assert.deepStrictEqual(step.title, 'Carousel');
     });
   });
 });

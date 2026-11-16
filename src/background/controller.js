@@ -1,20 +1,17 @@
 import browser from 'webextension-polyfill';
 
 import debug from '../lib/debug.js';
-import Radio, {states} from '../lib/radio.js';
+import {states} from '../lib/radio.js';
 import Steps from '../lib/steps.js';
 import Preferences from '../lib/preferences.js';
 import {getStationBroadcasts, getStationFeed} from '../lib/stations.js';
 
-/*
- "Securely" provided by .travis.yml + envify transform
- */
 const LAST_FM_KEY = process.env.LAST_FM_KEY;
 
 
 /**
  * Badge appearance and behavior on click.
- * Mainly tricking the fact the `onClicked` event is fired when no popup file is bound to the browserAction.
+ * Mainly tricking the fact the `onClicked` event is fired when no popup file is bound to the action.
  * We basically display the popup when it's needed, so during the radio playback.
  *
  * @type {Object} Items containing badge behavior data
@@ -35,6 +32,10 @@ const BADGE_STATES = {
   [states.ERRORED]: {
     text: '!',
     color: '#c00',
+  },
+  [states.OFFLINE]: {
+    text: '×',
+    color: '#888',
   }
 };
 
@@ -42,12 +43,16 @@ const BADGE_STATES = {
  * Background process handling the radio stuff
  *
  * @constructor
+ * @param {Object} options
+ * @param {typeof ScrobblingController} options.lastfm
+ * @param {PlayerStrategy} options.player Plays the audio stream, depending on the browser capabilities
  */
 export default class Background {
-  constructor({ lastfm }){
+  constructor({ lastfm, player }){
     this.channel = process.env.BUILD_CHANNEL || "stable";
-    this.preferences = new Preferences("localStorage");
-    this.lastfm = lastfm.init({ preferences: this.preferences });
+    this.preferences = new Preferences(browser.storage);
+    this.ScrobblingController = lastfm;
+    this.player = player;
   }
 
   /**
@@ -58,29 +63,36 @@ export default class Background {
   static init(options) {
     const instance = new Background(options);
 
-    instance.bootstrap(options);
+    // listeners are registered right away, to catch the event which woke the background up
+    instance.ready = instance.preferences.ready().then(() => instance.bootstrap());
+    instance.registerEvents();
 
     return instance;
   }
 
   /**
-   * Bootstraping process
+   * Bootstraping process, once preferences are loaded.
    *
    * @api
    */
   bootstrap() {
-    const {preferences} = this;
+    const {preferences, player} = this;
 
-    const station = preferences.get('playback.station', 'fip-paris');
-    const quality = preferences.get('playback.quality', 'hd');
-
-    this.radio = new Radio({ url: getStationFeed(station, quality) });
-    preferences.set('radio.state', this.radio.state);
+    this.lastfm = this.ScrobblingController.init({ preferences });
+    player.setUrl(this.getFeed());
 
     this.setupChannelBadge();
-    this.registerEvents();
-    this.enableBroadcastUpdates();
+    // the popup has something to display, even when the radio is stopped
     this.requestBroadcasts();
+  }
+
+  /**
+   * Runs `task` once the preferences are loaded.
+   *
+   * @param {Function} task
+   */
+  whenReady(task) {
+    this.ready.then(() => task()).catch(debug);
   }
 
   /**
@@ -90,45 +102,44 @@ export default class Background {
    * @api
    */
   registerEvents() {
-    const { radio } = this;
-
     // Listening to radio events and dispatch them through the app
-    radio.on('transition', transition => {
-      this.dispatchRadioState(transition);
+    this.player.onStateChange(state => {
+      this.whenReady(() => {
+        this.dispatchRadioState(state);
+        this.updateBroadcastsAlarm(state);
+      });
     });
 
-    // Debug Messages
     browser.runtime.onConnect.addListener(port => {
       port.onMessage.addListener(message => {
-        this.radioStateHandler(message);
-      });
-
-      port.onMessage.addListener(message => {
-        this.handlePlaybackChanges(message);
-      });
-
-      port.onMessage.addListener(message => {
-        this.handleLastfmAuth(message);
+        this.whenReady(() => this.handleMessage(message));
       });
     });
 
-    // Handling `network.online` or `network.offline` states
-    ['online', 'offline'].forEach(eventType => {
-      window.addEventListener(eventType, event => radio.handle('network.' + event.type));
+    this.preferences.onChange(['playback.station', 'playback.quality'], () => {
+      this.whenReady(() => this.reloadPlayback());
     });
 
     browser.alarms.onAlarm.addListener(alarm => {
       if (alarm.name === "broadcasts"){
-        this.requestBroadcasts();
+        this.whenReady(() => this.requestBroadcasts());
       }
     });
   }
 
   /**
+   * Dispatches a message received from the popup or the options page.
+   *
+   * @param {Object} message
+   */
+  handleMessage(message) {
+    this.radioStateHandler(message);
+    this.handleLastfmAuth(message);
+  }
+
+  /**
    * Request broadcasts and do something afterwards.
    * Generally broadcasting the values to let them bubble everywhere.
-   *
-   * @param {Function=} done If not defined, will trigger the data in the "broadcasts" channel
    */
   requestBroadcasts() {
     const {preferences} = this;
@@ -154,12 +165,11 @@ export default class Background {
    * Spread a radio status through the app.
    *
    * @api
-   * @param {String} radioState
+   * @param {String} state
    */
-  dispatchRadioState(transition) {
+  dispatchRadioState(state) {
     const bus = browser.runtime.connect();
     const {preferences} = this;
-    const state = transition.toState;
 
     preferences.set('radio.state', state);
     this.radioStateBadgeHandler(state);
@@ -167,25 +177,18 @@ export default class Background {
   }
 
   /**
-   * Enables broadcasting data collection.
-   * It might not only happen on play as we could eventually display a view without playing the radio.
+   * Refreshes the broadcasts while the radio plays only,
+   * so the background page can sleep once the radio is stopped.
    *
-   * Part of whitelist actions.
+   * @param {String} state
    */
-  enableBroadcastUpdates() {
-    const alarmName = "broadcasts";
-
-    //workaround due to the `browser.alarms.get` uncatchable exception bug
-    //@see https://code.google.com/p/chromium/issues/detail?id=265800
-    browser.alarms.getAll().then(alarms => {
-      const exists = alarms.some(alarm => alarm.name === alarmName);
-
-      if (!exists){
-        browser.alarms.create(alarmName, { periodInMinutes: 0.5 });
-      }
-
-      return this.requestBroadcasts();
-    }).catch(debug);
+  updateBroadcastsAlarm(state) {
+    if (state === states.STOPPED) {
+      browser.alarms.clear('broadcasts');
+    }
+    else {
+      browser.alarms.create('broadcasts', { periodInMinutes: 0.5 });
+    }
   }
 
   /**
@@ -227,11 +230,11 @@ export default class Background {
    */
   radioStateHandler(message) {
     if ('radio.toggle' in message){
-      this.radio.toggle();
+      this.player.toggle();
     }
 
     if ('radio.play' in message){
-      this.radio.play();
+      this.player.play();
     }
 
     if ('radio.volume' in message){
@@ -239,19 +242,27 @@ export default class Background {
       this.preferences.set('radio.volume', newVolume);
     }
 
-    this.radio.setVolume(this.preferences.get('radio.volume', 1));
+    this.player.setVolume(this.preferences.get('radio.volume', 1));
   }
 
-  handlePlaybackChanges(message) {
-    if ('playback.reload' in message) {
-      const {preferences} = this;
+  /**
+   * Stream of the station and quality saved in the preferences.
+   *
+   * @returns {String}
+   */
+  getFeed() {
+    const {preferences} = this;
 
-      const station = preferences.get('playback.station');
-      const quality = preferences.get('playback.quality');
-      this.radio.setPlaybackUrl(getStationFeed(station, quality));
-      this.radio.reload();
-      this.requestBroadcasts();
-    }
+    return getStationFeed(preferences.get('playback.station', 'fip-paris'), preferences.get('playback.quality', 'hd'));
+  }
+
+  /**
+   * Switches to the station and quality saved in the preferences.
+   */
+  reloadPlayback() {
+    this.player.setUrl(this.getFeed());
+    this.player.reload();
+    this.requestBroadcasts();
   }
 
   handleLastfmAuth(message) {
@@ -274,10 +285,10 @@ export default class Background {
    * @param {String|Array=} color
    */
   setBadge(text, color) {
-    browser.browserAction.setBadgeText({ text: String(text) });
+    browser.action.setBadgeText({ text: String(text) });
 
     if (color){
-      browser.browserAction.setBadgeBackgroundColor({ color });
+      browser.action.setBadgeBackgroundColor({ color });
     }
   }
 
@@ -290,9 +301,13 @@ export default class Background {
 
   setupChannelBadge (){
     const iconName = `fip-${this.channel}`.replace('-stable', '');
-    const path = `/resources/${iconName}.png`;
+    const path = {
+      16: `/resources/${iconName}-16.png`,
+      48: `/resources/${iconName}-48.png`,
+      128: `/resources/${iconName}.png`,
+    };
 
-    browser.browserAction.setIcon({ path });
+    browser.action.setIcon({ path });
     this.setBadge('');
   }
 }

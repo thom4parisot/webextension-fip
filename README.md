@@ -53,7 +53,7 @@ If you don't know them much… well it's a good occasion to learn!
 
 ## Development Setup
 
-Better for you to have [https://nodejs.org/download/](Node.js) (v10+) installed on your computer to use the development tooling.
+You need [Node.js](https://nodejs.org/download/) v26 or later (see [`.nvmrc`](.nvmrc)) to use the development tooling.
 
 Hit the `Clone or download` button above to get a copy of the source code. Then run these commands in a terminal:
 
@@ -69,7 +69,7 @@ Then load the **unpacked extension** or **temporary module** in your browser by 
 | `about:debugging#/runtime/this-firefox`  | `chrome://extensions/`  |
 | ![](./resources/debug-firefox.png)  | ![](./resources/debug-chrome.png) |
 
-The browser will ask you to **locate the `manifest.json` file**.
+The browser will ask you to **locate the `build/manifest.json` file**: `npm run watch` rebuilds the `build/` folder on each change.
 
 ![](./resources/debug-load-extension.png)
 
@@ -91,6 +91,28 @@ If you don't think about it, no problem, tests are automated when you contribute
 You will receive help and guidance if adding new tests is necessary.
 
 Current status is pretty poor but the codebase is solid.
+
+## Build from source
+
+This section is meant for add-ons reviewers, to rebuild the published package.
+
+Requirements: [Node.js](https://nodejs.org/download/) v26 or later and npm.
+
+```bash
+$ npm ci
+$ npm run package
+```
+
+`npm run build` uses [Rollup](https://rollupjs.org/) to write the extension in the `build/` folder, configured in [`rollup.config.js`](rollup.config.js). There is no transpilation, no minification and no bundling: each file of `build/` matches a file of `src/`, with the same path.
+
+- `src/**/*.js` → `build/**/*.js`: the source code as written. Only `process.env.*` values are inlined, and `import`/`export` statements are rewritten.
+- `src/stations.json` → `build/stations.json.js`: the same data, as a JavaScript module.
+- npm dependencies → `build/vendor/<package>/`: the published files, wrapped in `build/vendor/virtual/` when they are CommonJS modules.
+- the manifest, HTML, CSS, images and translations are copied as they are.
+
+`npm run package` builds the extension, then zips the `build/` folder into `dist/webextension-fip-v<version>.zip` with [web-ext](https://github.com/mozilla/web-ext). It also archives the committed source code (`git archive HEAD`) into `dist/webextension-fip-v<version>-source.zip`.
+
+The Last.fm API credentials are inlined at build time from the `LAST_FM_KEY` and `LAST_FM_SECRET` environment variables, or from a `.env` file (see [`.env.example`](.env.example)). Without them, the rebuilt files only differ from the published ones by these two strings, and Last.fm scrobbling is disabled.
 
 # Privacy Policy
 

@@ -1,49 +1,160 @@
-import Preferences from '../../src/lib/preferences.js';
+import assert from 'node:assert/strict';
+import { beforeEach, describe, it, mock } from 'node:test';
 
-describe('Preferences - localStorage', function(){
-  var manager;
+import Preferences from './preferences.js';
+
+/**
+ * Minimal in-memory `browser.storage` double.
+ * As Firefox does, it reports every key which is set, even with an unchanged value.
+ */
+function createStorage (items = {}) {
+  const listeners = [];
+  const notify = changes => listeners.forEach(listener => listener(changes, 'local'));
+
+  return {
+    items,
+    onChanged: { addListener: listener => listeners.push(listener) },
+    local: {
+      get: () => Promise.resolve({ ...items }),
+      set: values => {
+        const changes = Object.fromEntries(Object.entries(values).map(([key, newValue]) => [key, { oldValue: items[key], newValue }]));
+
+        Object.assign(items, values);
+        notify(changes);
+        return Promise.resolve();
+      },
+      remove: key => {
+        const changes = { [key]: { oldValue: items[key] } };
+
+        delete items[key];
+        notify(changes);
+        return Promise.resolve();
+      },
+    },
+  };
+}
+
+/**
+ * Minimal in-memory Web Storage (`localStorage`) double.
+ */
+function createLegacyStorage (items = {}) {
+  return {
+    get length () {
+      return Object.keys(items).length;
+    },
+    key: index => Object.keys(items)[index],
+    getItem: key => items[key] ?? null,
+    setItem: (key, value) => {
+      items[key] = String(value);
+    },
+  };
+}
+
+describe('Preferences', function(){
+  let storage, legacyStorage, manager;
 
   beforeEach(function(){
-    manager = new Preferences();
+    storage = createStorage();
+    legacyStorage = createLegacyStorage();
+    manager = new Preferences(storage, legacyStorage);
   });
 
-  afterEach(function(){
-    var keyMatcher = new RegExp("^" + manager.namespace);
-
-    Object.keys(localStorage).forEach(function(key){
-      if (key.match(keyMatcher)){
-        localStorage.removeItem(key);
-      }
-    });
+  it('should have switched over a new test namespace', function(){
+    assert.ok(manager.namespace);
+    assert.deepStrictEqual(manager.namespace, process.env.PREFERENCES_NAMESPACE);
   });
 
-  describe('#constructor', function(){
-    it('it should have switched over a new test namespace', function(){
-      expect(manager.namespace).not.toBeFalsy();
-      expect(manager.namespace).toEqual(process.env.PREFERENCES_NAMESPACE);
-    });
+  it('#get', async function(){
+    await manager.ready();
 
-    it('should have localStorage as a default  strategy', function(){
-      expect(manager.strategy.name).toEqual('localStorage');
-    });
+    assert.deepStrictEqual(manager.get("non-existing key"), null);
+    assert.deepStrictEqual(manager.get("non-existing key", "default"), "default");
+    assert.deepStrictEqual(manager.get(null), null);
+    assert.deepStrictEqual(manager.get(""), null);
   });
 
-  it('#get', function(){
-    expect(manager.get("non-existing key")).toEqual(null);
-    expect(manager.get(null)).toEqual(null);
-    expect(manager.get("")).toEqual(null);
+  it('#set', async function(){
+    await manager.ready();
+    await manager.set("future key", {foo: "bar"});
+
+    assert.deepStrictEqual(manager.get("future key"), {foo: "bar"});
+    assert.deepStrictEqual(storage.items[manager.namespace + "future key"], {foo: "bar"});
   });
 
-  it('#set', function(){
-    expect(manager.get("future key")).toEqual(null);
-    manager.set("future key", {foo: "bar"});
-    expect(manager.get("future key")).toEqual({foo: "bar"});
-    expect(localStorage.getItem(manager.namespace + "future key")).toEqual(JSON.stringify({foo: "bar"}));
+  it('#del', async function(){
+    await manager.ready();
+    await manager.set("future key", {foo: "bar"});
+    await manager.del("future key");
+
+    assert.deepStrictEqual(manager.get("future key"), null);
+    assert.deepStrictEqual(storage.items, {});
   });
 
-  it('#del', function(){
-    manager.set("future key", {foo: "bar"});
-    manager.del("future key");
-    expect(manager.get("future key")).toEqual(null);
+  it('#ready loads stored values', async function(){
+    storage.items[manager.namespace + "playback.station"] = "theme-jazz";
+
+    await manager.ready();
+
+    assert.deepStrictEqual(manager.get("playback.station"), "theme-jazz");
+  });
+
+  it('#ready migrates localStorage values when storage is empty', async function(){
+    legacyStorage.setItem(manager.namespace + "playback.station", JSON.stringify("theme-jazz"));
+
+    await manager.ready();
+
+    assert.deepStrictEqual(manager.get("playback.station"), "theme-jazz");
+    assert.deepStrictEqual(storage.items[manager.namespace + "playback.station"], "theme-jazz");
+  });
+
+  it('syncs values changed by another context', async function(){
+    const other = new Preferences(storage, legacyStorage);
+
+    await manager.ready();
+    await other.set("radio.volume", 0.5);
+
+    assert.deepStrictEqual(manager.get("radio.volume"), 0.5);
+  });
+
+  it('#onChange runs once the cache is up to date', async function(){
+    const other = new Preferences(storage, legacyStorage);
+    const callback = mock.fn(() => manager.get("playback.station"));
+
+    await manager.ready();
+    manager.onChange(["playback.station"], callback);
+    await other.set("radio.volume", 0.5);
+    await other.set("playback.station", "theme-jazz");
+
+    assert.equal(callback.mock.callCount(), 1);
+    assert.equal(callback.mock.calls[0].result, "theme-jazz");
+  });
+
+  it('#onChange ignores a value set again, unchanged', async function(){
+    const other = new Preferences(storage, legacyStorage);
+    const callback = mock.fn();
+
+    await manager.ready();
+    await other.set("playback.station", "theme-jazz");
+    manager.onChange(["playback.station"], callback);
+    await other.set("playback.station", "theme-jazz");
+    await other.set("broadcasts", [{title: "Ladies"}]);
+    manager.onChange(["broadcasts"], callback);
+    await other.set("broadcasts", [{title: "Ladies"}]);
+
+    assert.equal(callback.mock.callCount(), 0);
+  });
+
+  it('#setAll persists several values as a single change', async function(){
+    const other = new Preferences(storage, legacyStorage);
+    const callback = mock.fn();
+
+    await manager.ready();
+    manager.onChange(["playback.station", "playback.quality"], callback);
+    await other.setAll({"playback.station": "theme-jazz", "playback.quality": "hifi"});
+
+    assert.equal(callback.mock.callCount(), 1);
+    assert.equal(other.get("playback.station"), "theme-jazz");
+    assert.equal(manager.get("playback.quality"), "hifi");
+    assert.equal(storage.items[manager.namespace + "playback.quality"], "hifi");
   });
 });

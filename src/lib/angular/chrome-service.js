@@ -4,6 +4,11 @@ import browser from 'webextension-polyfill';
 import Preferences from '../preferences.js';
 
 /**
+ * Shared instance: wait for `preferences.ready()` before bootstrapping Angular.
+ */
+export const preferences = new Preferences(browser.storage);
+
+/**
  * Chrome API Abstraction.
  * Especially used to enables unit/function tests without relying on Chrome API direct access.
  */
@@ -11,7 +16,7 @@ export default angular.module('ChromeService', [])
   .filter('i18n', function(){
     return (key, ...args) => browser.i18n.getMessage(key, args);
   })
-  .factory('preferences', () => new Preferences("localStorage"))
+  .factory('preferences', () => preferences)
   .factory('browser', () => browser)
   .factory('chrome', function(){
     return {
@@ -28,7 +33,9 @@ export default angular.module('ChromeService', [])
         const port = browser.runtime.connect();
         port.postMessage({ [channel]: data });
       },
-      getRedirectURL: browser.identity.getRedirectURL.bind(browser.identity),
+      // the `identity` API is missing on Firefox for Android
+      canAuthenticate: Boolean(browser.identity),
+      getRedirectURL: path => browser.identity.getRedirectURL(path),
       getUrl: path => browser.runtime.getURL(path),
     };
   });

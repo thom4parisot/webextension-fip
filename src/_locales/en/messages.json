@@ -11,6 +11,9 @@
   "album": {
     "message": "record"
   },
+  "offline": {
+    "message": "Offline: playback will resume once the network is back."
+  },
   "no_information": {
     "message": "No information"
   },

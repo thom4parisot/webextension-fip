@@ -1,119 +1,186 @@
-import machina from 'machina';
+import { createFsm } from 'machina';
 import {log} from './debug.js';
 
 export const states = Object.freeze({
   STOPPED: 'STOPPED',
   PLAYING: 'PLAYING',
   BUFFERING: 'BUFFERING',
-  STALLED: 'STALLED',
   ERRORED: 'ERRORED',
+  OFFLINE: 'OFFLINE',
 });
 
 /**
- * Radio State Machine.
- * Handles the transitions from a state to another in a very clean way.
- *
- * @type {Radio}
+ * <audio> events forwarded to the state machine, as `audio.<type>` inputs.
  */
-const Radio = machina.Fsm.extend({
-  "initialState": states.STOPPED,
+const AUDIO_EVENTS = ['error', 'stalled', 'canplaythrough'];
 
-  // Behavior config
-  "playbackUrl": '',
+/**
+ * A stream which does not start in time is considered unreachable: it can be played again.
+ * It covers connections which stop responding without going offline (captive portal, weak signal).
+ */
+export const BUFFERING_TIMEOUT = 15 * 1000;
 
-  // It should be fine since this point
-  "playbackObject": '',
-  "initialize": function({ url }){
-    this.setPlaybackUrl(url);
+/**
+ * Radio playback, driven by a finite state machine.
+ * Each state declares the inputs it reacts to, and the state they lead to.
+ */
+export default class Radio {
+  constructor ({ url = '' } = {}) {
+    this.playbackUrl = url;
+    this.playbackObject = null;
 
-    // publicly exposing audio states change
-    this.on('transition', transition => {
-      if (transition.fromState !== transition.toState){
-        /* jshint devel:true */
-        this.emit(transition.toState, transition);
-        log("State changed from '%s' to '%s'.", transition.fromState, transition.toState);
+    this.fsm = createFsm({
+      id: 'radio',
+      initialState: states.STOPPED,
+      states: {
+        [states.PLAYING]: {
+          stop: () => {
+            this.playbackObject.pause();
+            this.playbackObject.src = '';
+
+            return states.STOPPED;
+          },
+          "audio.error": states.ERRORED,
+          "audio.stalled": states.BUFFERING,
+          "network.offline": states.OFFLINE
+        },
+        [states.STOPPED]: {
+          play: () => {
+            if (navigator.onLine === false) {
+              return states.OFFLINE;
+            }
+
+            this.playAudio();
+
+            return states.BUFFERING;
+          }
+        },
+        [states.BUFFERING]: {
+          _onEnter: () => {
+            this.bufferingTimer = setTimeout(() => this.handle('audio.timeout'), BUFFERING_TIMEOUT);
+          },
+          _onExit: () => {
+            clearTimeout(this.bufferingTimer);
+          },
+          stop: () => {
+            this.playbackObject.pause();
+
+            return states.STOPPED;
+          },
+          "audio.error": states.ERRORED,
+          "audio.timeout": states.ERRORED,
+          "audio.canplaythrough": states.PLAYING,
+          "audio.stalled": states.BUFFERING,
+          "network.offline": states.OFFLINE
+        },
+        [states.ERRORED]: {
+          play: () => {
+            this.playAudio();
+
+            return states.BUFFERING;
+          },
+          "stop": states.STOPPED,
+          "network.offline": states.OFFLINE
+        },
+        // remembers the radio was on, to resume once the network is back
+        [states.OFFLINE]: {
+          _onEnter: () => {
+            this.playbackObject.pause();
+          },
+          play: () => this.resume(),
+          "network.online": () => this.resume(),
+          stop: () => {
+            this.playbackObject.src = '';
+
+            return states.STOPPED;
+          }
+        }
       }
     });
-  },
 
-  // State transitioning
-  "states": {
-    [states.PLAYING]: {
-      stop: function stopOnPlaying(){
-        this.transition(states.STOPPED);
+    this.onTransition(({ fromState, toState }) => {
+      log("State changed from '%s' to '%s'.", fromState, toState);
+    });
+  }
 
-        this.playbackObject.pause();
-        this.playbackObject.src = '';
-      },
-      "audio.error": states.ERRORED,
-      "audio.stalled": states.BUFFERING,
-      "network.offline": states.BUFFERING
-    },
-    [states.STOPPED]: {
-      play: function playOnStopped(){
-        this.transition(states.BUFFERING);
+  get state () {
+    return this.fsm.currentState();
+  }
 
-        this.playbackObject.play();
-      }
-    },
-    [states.BUFFERING]: {
-      stop: function stopOnBuffering(){
-        this.transition(states.STOPPED);
+  /**
+   * @param {Function} callback Receives `{ fromState, toState }` after each state change
+   */
+  onTransition (callback) {
+    this.fsm.on('transitioned', callback);
+  }
 
-        this.playbackObject.pause();
-      },
-      "audio.error": states.ERRORED,
-      "audio.canplaythrough": states.PLAYING,
-      "audio.stalled": states.BUFFERING,
-      "network.offline": states.BUFFERING
-    },
-    [states.ERRORED]: {
-      play: function playOnErrored(){
-        this.transition(states.BUFFERING);
-
-        this.playbackObject.play();
-      },
-      "stop": states.STOPPED,
-      "network.offline": states.STOPPED
-    }
-  },
+  /**
+   * Sends an input to the state machine, such as `network.offline`.
+   *
+   * @param {String} input
+   */
+  handle (input) {
+    this.fsm.handle(input);
+  }
 
   /**
    * Play the radio
    * @api
    */
-  "play": function(){
+  play () {
     if (this.state !== states.PLAYING) {
       this.preparePlaybackObject();
     }
 
     this.handle('play');
-  },
+  }
+
   /**
    * Reload the radio
    * @api
    */
-  "reload": function(){
+  reload () {
     if (this.state !== states.STOPPED) {
       this.stop();
       this.play();
     }
-  },
+  }
+
   /**
    * Stop the radio
    * @api
    */
-  "stop": function(){
+  stop () {
     this.handle('stop');
-  },
+  }
+
   /**
    * Blindly play or pause the audio
    * @api
    */
-  "toggle": function(){
-    //jshint expr:true
+  toggle () {
     this.state !== states.STOPPED ? this.stop() : this.play();
-  },
+  }
+
+  /**
+   * Reconnects to the stream: the previous connection is likely broken.
+   *
+   * @returns {String} next state
+   */
+  resume () {
+    this.preparePlaybackObject();
+    this.playAudio();
+
+    return states.BUFFERING;
+  }
+
+  /**
+   * The browser may refuse to play (autoplay policy, unreachable stream).
+   * A rejection caused by a `stop()` is ignored: `STOPPED` does not handle `audio.error`.
+   */
+  playAudio () {
+    this.playbackObject.play().catch(() => this.handle('audio.error'));
+  }
 
   /**
    * Prepare the audio object to be played.
@@ -121,33 +188,26 @@ const Radio = machina.Fsm.extend({
    *
    * @api
    */
-  "preparePlaybackObject": function(){
-    const audio = this.playbackObject || new Audio();
+  preparePlaybackObject () {
+    if (!this.playbackObject) {
+      this.playbackObject = new Audio();
 
-    audio.src = this.playbackUrl;
-    audio.preload = false;
-
-    // the audio object is already constructed; don't need to go further
-    if (this.playbackObject){
-      return;
+      AUDIO_EVENTS.forEach(type => {
+        this.playbackObject.addEventListener(type, () => this.handle(`audio.${type}`));
+      });
     }
 
-    ['error', 'stalled', 'progress', 'waiting', 'loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough', 'durationchange', 'loadstart', 'emptied'].forEach(type => {
-      audio.addEventListener(type, event => this.handle(`audio.${event.type}`));
-    });
+    this.playbackObject.src = this.playbackUrl;
+    this.playbackObject.preload = 'none';
+  }
 
-    this.playbackObject = audio;
-  },
-
-  "setPlaybackUrl": function(url){
+  setPlaybackUrl (url) {
     this.playbackUrl = url;
-  },
+  }
 
-  "setVolume": function(newVolume) {
+  setVolume (newVolume) {
     if (this.playbackObject) {
       this.playbackObject.volume = newVolume;
     }
   }
-});
-
-export default Radio;
+}

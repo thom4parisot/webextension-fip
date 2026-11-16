@@ -14,19 +14,14 @@ export default function OptionsController($scope, chrome, preferences, $timeout)
   $scope.currentStation = preferences.get('playback.station', 'fip-paris');
   $scope.quality = preferences.get('playback.quality', 'hd');
   $scope.saveStatus = 'idle';
-  $scope.lastfm_enabled = lastFm.isEnabled();
+  $scope.lastfm_enabled = lastFm.isEnabled() && chrome.canAuthenticate;
 
   $scope.save = function(){
-    const prevStation = preferences.get('playback.station', 'fip-paris');
-    const prevQuality = preferences.get('playback.quality', 'hd');
-
     $scope.saveStatus = 'saved';
-    preferences.set('playback.station', $scope.currentStation);
-    preferences.set('playback.quality', $scope.quality);
-
-    if ($scope.currentStation !== prevStation || $scope.quality !== prevQuality) {
-      chrome.notify('playback.reload');
-    }
+    preferences.setAll({
+      'playback.station': $scope.currentStation,
+      'playback.quality': $scope.quality,
+    });
 
     $timeout(() => $scope.saveStatus = 'idle', 2000);
   };

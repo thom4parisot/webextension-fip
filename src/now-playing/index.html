@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="now-playing" ng-csp>
+<html ng-csp>
 <head>
   <meta charset="UTF-8">
   <title>{{'extension_name' | i18n}}</title>
@@ -19,6 +19,7 @@
     <option value="1">
   </datalist>
   <button type="button" id="playback-button" class="icon-state" ng-click="toggle()" ng-class="status" tabindex="0"></button>
+  <p class="network-status" role="status" ng-show="status === 'OFFLINE'">{{'offline' | i18n}}</p>
 </header>
 
 <main ng-cloak>
@@ -99,6 +100,6 @@
   </nav>
 </footer>
 
-<script src="./bundle.js" type="module"></script>
+<script src="./app.js" type="module"></script>
 </body>
 </html>

@@ -2,101 +2,119 @@
   "fip-paris": {
     "name": "FIP",
     "stationId": 7,
-    "archives": "https://www.radiofrance.fr/fip/titres-diffuses",
+    "history": true,
     "streams": {
       "sd": "https://icecast.radiofrance.fr/fip-lofi.mp3",
       "hd": "https://icecast.radiofrance.fr/fip-midfi.mp3",
       "hifi": "https://icecast.radiofrance.fr/fip-hifi.aac"
     }
   },
-  "theme-electro": {
-    "name": "FIP Électro",
-    "stationId": 74,
-    "archives": "https://www.radiofrance.fr/fip/radio-electro",
+  "theme-rock": {
+    "name": "FIP Rock",
+    "stationId": 64,
+    "history": true,
     "streams": {
-      "sd": "https://icecast.radiofrance.fr/fipelectro-midfi.mp3",
-      "hifi": "https://icecast.radiofrance.fr/fipelectro-hifi.aac"
-    }
-  },
-  "theme-groove": {
-    "name": "FIP Groove",
-    "stationId": 66,
-    "archives": "https://www.radiofrance.fr/fip/radio-groove",
-    "streams": {
-      "sd": "https://icecast.radiofrance.fr/fipgroove-midfi.mp3",
-      "hifi": "https://icecast.radiofrance.fr/fipgroove-hifi.aac"
-    }
-  },
-  "theme-hiphop": {
-    "name": "FIP Hip-Hop",
-    "stationId": 77,
-    "archives": "https://www.radiofrance.fr/fip/radio-hip-hop",
-    "streams": {
-      "sd": "https://icecast.radiofrance.fr/fiphiphop-midfi.mp3",
-      "hifi": "https://icecast.radiofrance.fr/fiphiphop-hifi.aac"
+      "hd": "https://icecast.radiofrance.fr/fiprock-midfi.mp3",
+      "hifi": "https://icecast.radiofrance.fr/fiprock-hifi.aac"
     }
   },
   "theme-jazz": {
     "name": "FIP Jazz",
     "stationId": 65,
-    "archives": "https://www.radiofrance.fr/fip/radio-jazz",
+    "history": true,
     "streams": {
-      "sd": "https://icecast.radiofrance.fr/fipjazz-midfi.mp3",
+      "hd": "https://icecast.radiofrance.fr/fipjazz-midfi.mp3",
       "hifi": "https://icecast.radiofrance.fr/fipjazz-hifi.aac"
+    }
+  },
+  "theme-groove": {
+    "name": "FIP Groove",
+    "stationId": 66,
+    "history": true,
+    "streams": {
+      "hd": "https://icecast.radiofrance.fr/fipgroove-midfi.mp3",
+      "hifi": "https://icecast.radiofrance.fr/fipgroove-hifi.aac"
     }
   },
   "theme-monde": {
     "name": "FIP Monde",
     "stationId": 69,
-    "archives": "https://www.radiofrance.fr/fip/radio-monde",
+    "history": true,
     "streams": {
-      "sd": "https://icecast.radiofrance.fr/fipworld-midfi.mp3",
+      "hd": "https://icecast.radiofrance.fr/fipworld-midfi.mp3",
       "hifi": "https://icecast.radiofrance.fr/fipworld-hifi.aac"
-    }
-  },
-  "theme-reggae": {
-    "name": "FIP Reggae",
-    "stationId": 71,
-    "archives": "https://www.radiofrance.fr/fip/radio-reggae",
-    "streams": {
-      "sd": "https://icecast.radiofrance.fr/fipreggae-midfi.mp3",
-      "hifi": "https://icecast.radiofrance.fr/fipreggae-hifi.aac"
-    }
-  },
-  "theme-metal": {
-    "name": "FIP Métal",
-    "stationId": 77,
-    "archives": "https://www.radiofrance.fr/fip/radio-metal",
-    "streams": {
-      "sd": "https://icecast.radiofrance.fr/fipmetal-midfi.mp3",
-      "hifi": "https://icecast.radiofrance.fr/fipmetal-hifi.aac"
     }
   },
   "theme-nouveau": {
     "name": "FIP Nouveautés",
     "stationId": 70,
-    "archives": "https://www.radiofrance.fr/fip/radio-nouveautes",
+    "history": true,
     "streams": {
-      "sd": "https://icecast.radiofrance.fr/fipnouveautes-midfi.mp3",
+      "hd": "https://icecast.radiofrance.fr/fipnouveautes-midfi.mp3",
       "hifi": "https://icecast.radiofrance.fr/fipnouveautes-hifi.aac"
+    }
+  },
+  "theme-reggae": {
+    "name": "FIP Reggae",
+    "stationId": 71,
+    "history": true,
+    "streams": {
+      "hd": "https://icecast.radiofrance.fr/fipreggae-midfi.mp3",
+      "hifi": "https://icecast.radiofrance.fr/fipreggae-hifi.aac"
+    }
+  },
+  "theme-electro": {
+    "name": "FIP Electro",
+    "stationId": 74,
+    "history": true,
+    "streams": {
+      "hd": "https://icecast.radiofrance.fr/fipelectro-midfi.mp3",
+      "hifi": "https://icecast.radiofrance.fr/fipelectro-hifi.aac"
+    }
+  },
+  "theme-metal": {
+    "name": "FIP Metal",
+    "stationId": 77,
+    "history": true,
+    "streams": {
+      "hd": "https://icecast.radiofrance.fr/fipmetal-midfi.mp3",
+      "hifi": "https://icecast.radiofrance.fr/fipmetal-hifi.aac"
     }
   },
   "theme-pop": {
     "name": "FIP Pop",
-    "stationId": 77,
-    "archives": "https://www.radiofrance.fr/fip/radio-hop",
+    "stationId": 78,
+    "history": false,
     "streams": {
-      "sd": "https://icecast.radiofrance.fr/fippop-midfi.mp3",
+      "hd": "https://icecast.radiofrance.fr/fippop-midfi.mp3",
       "hifi": "https://icecast.radiofrance.fr/fippop-hifi.aac"
     }
   },
-  "theme-rock": {
-    "name": "FIP Rock",
-    "stationId": 64,
-    "archives": "https://www.radiofrance.fr/fip/radio-rock",
+  "theme-hiphop": {
+    "name": "FIP Hip-Hop",
+    "stationId": 95,
+    "history": false,
     "streams": {
-      "sd": "https://icecast.radiofrance.fr/fiprock-midfi.mp3",
-      "hifi": "https://icecast.radiofrance.fr/fiprock-hifi.aac"
+      "hd": "https://icecast.radiofrance.fr/fiphiphop-midfi.mp3",
+      "hifi": "https://icecast.radiofrance.fr/fiphiphop-hifi.aac"
+    }
+  },
+  "theme-sacre-francais": {
+    "name": "FIP Sacré français !",
+    "stationId": 96,
+    "history": false,
+    "streams": {
+      "hd": "https://icecast.radiofrance.fr/fipsacrefrancais-midfi.mp3",
+      "hifi": "https://icecast.radiofrance.fr/fipsacrefrancais-hifi.aac"
+    }
+  },
+  "theme-cultes": {
+    "name": "FIP Cultes",
+    "stationId": 709,
+    "history": false,
+    "streams": {
+      "hd": "https://icecast.radiofrance.fr/fipcultes-midfi.mp3",
+      "hifi": "https://icecast.radiofrance.fr/fipcultes-hifi.aac"
     }
   }
 }
