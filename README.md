@@ -53,7 +53,7 @@ If you don't know them much… well it's a good occasion to learn!
 
 ## Development Setup
 
-Better for you to have [https://nodejs.org/download/](Node.js) (v10+) installed on your computer to use the development tooling.
+You need [Node.js](https://nodejs.org/download/) v26 or later (see [`.nvmrc`](.nvmrc)) to use the development tooling.
 
 Hit the `Clone or download` button above to get a copy of the source code. Then run these commands in a terminal:
 
@@ -91,6 +91,29 @@ If you don't think about it, no problem, tests are automated when you contribute
 You will receive help and guidance if adding new tests is necessary.
 
 Current status is pretty poor but the codebase is solid.
+
+## Build from source
+
+This section is meant for add-ons reviewers, to rebuild the published package.
+
+Requirements: [Node.js](https://nodejs.org/download/) v26 or later, npm, and the `zip` command line tool.
+
+```bash
+$ npm ci
+$ npm run package
+```
+
+`npm run build` uses [Rollup](https://rollupjs.org/) to bundle each entry point with its npm dependencies, in [`rollup.config.js`](rollup.config.js). There is no transpilation and no minification: the bundles contain the source code as written.
+
+| Entry point | Bundle |
+| --- | --- |
+| `src/players/background/index.js` | `src/players/background/bundle.js` |
+| `src/now-playing/app.js` | `src/now-playing/bundle.js` |
+| `src/options/app.js` | `src/options/bundle.js` |
+
+`npm run package` builds the bundles, then zips them with the other extension files into `dist/webextension-fip-v<version>.zip`.
+
+The Last.fm API credentials are inlined at build time from the `LAST_FM_KEY` and `LAST_FM_SECRET` environment variables, or from a `.env` file (see [`.env.example`](.env.example)). Without them, the rebuilt bundles only differ from the published ones by these two strings, and Last.fm scrobbling is disabled.
 
 # Privacy Policy
 
