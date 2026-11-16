@@ -1,3 +1,6 @@
+import assert from 'node:assert/strict';
+import { after, before, beforeEach, describe, it, mock } from 'node:test';
+
 import Radio, {states} from './radio.js';
 
 /**
@@ -11,14 +14,14 @@ class FakeAudio extends EventTarget {
 describe('Radio', function(){
   let radio;
 
-  beforeAll(() => {
+  before(() => {
     globalThis.Audio = FakeAudio;
-    jest.spyOn(console, 'log').mockImplementation(() => {});
+    mock.method(console, 'log', () => {});
   });
 
-  afterAll(() => {
+  after(() => {
     delete globalThis.Audio;
-    jest.restoreAllMocks();
+    mock.restoreAll();
   });
 
   beforeEach(() => {
@@ -26,16 +29,16 @@ describe('Radio', function(){
   });
 
   it('should provide a ready-to-be played radio object', () => {
-    expect(radio.state).toEqual(states.STOPPED);
+    assert.deepStrictEqual(radio.state, states.STOPPED);
   });
 
   it('buffers, then plays once the stream can play through', () => {
     radio.play();
-    expect(radio.state).toEqual(states.BUFFERING);
-    expect(radio.playbackObject.src).toEqual('https://icecast.radiofrance.fr/fip-midfi.mp3');
+    assert.deepStrictEqual(radio.state, states.BUFFERING);
+    assert.deepStrictEqual(radio.playbackObject.src, 'https://icecast.radiofrance.fr/fip-midfi.mp3');
 
     radio.playbackObject.dispatchEvent(new Event('canplaythrough'));
-    expect(radio.state).toEqual(states.PLAYING);
+    assert.deepStrictEqual(radio.state, states.PLAYING);
   });
 
   it('toggles between playing and stopped', () => {
@@ -43,8 +46,8 @@ describe('Radio', function(){
     radio.playbackObject.dispatchEvent(new Event('canplaythrough'));
     radio.toggle();
 
-    expect(radio.state).toEqual(states.STOPPED);
-    expect(radio.playbackObject.src).toEqual('');
+    assert.deepStrictEqual(radio.state, states.STOPPED);
+    assert.deepStrictEqual(radio.playbackObject.src, '');
   });
 
   it('goes back to buffering when the network goes offline', () => {
@@ -52,16 +55,16 @@ describe('Radio', function(){
     radio.playbackObject.dispatchEvent(new Event('canplaythrough'));
     radio.handle('network.offline');
 
-    expect(radio.state).toEqual(states.BUFFERING);
+    assert.deepStrictEqual(radio.state, states.BUFFERING);
   });
 
   it('can play again after an error', () => {
     radio.play();
     radio.playbackObject.dispatchEvent(new Event('error'));
-    expect(radio.state).toEqual(states.ERRORED);
+    assert.deepStrictEqual(radio.state, states.ERRORED);
 
     radio.play();
-    expect(radio.state).toEqual(states.BUFFERING);
+    assert.deepStrictEqual(radio.state, states.BUFFERING);
   });
 
   it('reports each state change', () => {
@@ -72,7 +75,7 @@ describe('Radio', function(){
     radio.playbackObject.dispatchEvent(new Event('canplaythrough'));
     radio.stop();
 
-    expect(transitions).toEqual([
+    assert.deepStrictEqual(transitions, [
       [states.STOPPED, states.BUFFERING],
       [states.BUFFERING, states.PLAYING],
       [states.PLAYING, states.STOPPED],

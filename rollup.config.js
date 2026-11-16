@@ -1,11 +1,16 @@
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
-import babel from '@rollup/plugin-babel';
 import json from '@rollup/plugin-json';
+import replace from '@rollup/plugin-replace';
 
 import loadEnv from './scripts/load-env.js';
 
 loadEnv();
+
+/**
+ * Environment variables inlined in the bundles.
+ */
+const ENV_VARIABLES = ['BUILD_CHANNEL', 'LAST_FM_KEY', 'LAST_FM_SECRET', 'PREFERENCES_NAMESPACE'];
 
 const plugins = [
   resolve({
@@ -13,10 +18,9 @@ const plugins = [
   }),
   commonjs(),
   json(),
-  babel({
-    babelrc: true,
-    babelHelpers: 'runtime',
-    plugins: [['@babel/plugin-transform-runtime', { useESModules: true }]]
+  replace({
+    preventAssignment: true,
+    values: Object.fromEntries(ENV_VARIABLES.map(name => [`process.env.${name}`, JSON.stringify(process.env[name] ?? '')])),
   }),
 ];
 

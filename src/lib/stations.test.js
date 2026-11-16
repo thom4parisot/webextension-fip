@@ -1,15 +1,17 @@
+import assert from 'node:assert/strict';
+import { describe, test } from 'node:test';
+
 import {getStationBroadcasts, getStationFeed, withLiveResponse} from './stations.js';
-import fixtures from '../../resources/fixtures/livemeta.json';
-import liveFixtures from '../../resources/fixtures/live.json';
+import fixtures from '../../resources/fixtures/livemeta.json' with { type: 'json' };
+import liveFixtures from '../../resources/fixtures/live.json' with { type: 'json' };
 
 describe('getStationBroadcasts()', function(){
-  const request = jest.spyOn(globalThis, 'fetch').mockImplementationOnce(() => Promise.resolve({json: () => fixtures}));
+  test('bring back 5 tracks', async (t) => {
+    const request = t.mock.method(globalThis, 'fetch', () => Promise.resolve({json: () => fixtures}));
+    const broadcasts = await getStationBroadcasts('fip-paris');
 
-  test('bring back 5 tracks', () => {
-    return getStationBroadcasts('fip-paris').then(broadcasts => {
-      expect(request).toHaveBeenCalledWith('https://api.radiofrance.fr/livemeta/pull/7', expect.any(Object));
-      return expect(broadcasts).toHaveLength(5);
-    });
+    assert.equal(request.mock.calls[0].arguments[0], 'https://api.radiofrance.fr/livemeta/pull/7');
+    assert.equal(broadcasts.length, 5);
   });
 });
 
@@ -17,14 +19,14 @@ describe('withLiveResponse()', function(){
   test('keeps the current track, without the station placeholder', () => {
     const [track, ...others] = withLiveResponse(liveFixtures);
 
-    expect(others).toHaveLength(0);
-    expect(track).toMatchObject({ subtitle: 'Glitter', start_time: 1794831504 });
+    assert.equal(others.length, 0);
+    assert.partialDeepStrictEqual(track, { subtitle: 'Glitter', start_time: 1794831504 });
   });
 });
 
 describe('getStationFeed()', function(){
   test('falls back on the hd stream', () => {
-    expect(getStationFeed('fip-paris', 'sd')).toEqual('https://icecast.radiofrance.fr/fip-lofi.mp3');
-    expect(getStationFeed('theme-jazz', 'sd')).toEqual('https://icecast.radiofrance.fr/fipjazz-midfi.mp3');
+    assert.deepStrictEqual(getStationFeed('fip-paris', 'sd'), 'https://icecast.radiofrance.fr/fip-lofi.mp3');
+    assert.deepStrictEqual(getStationFeed('theme-jazz', 'sd'), 'https://icecast.radiofrance.fr/fipjazz-midfi.mp3');
   });
 });

@@ -1,5 +1,8 @@
+import assert from 'node:assert/strict';
+import { describe, it } from 'node:test';
+
 import lastFm from './lastfm.js';
-import fixtures from '../../resources/fixtures/livemeta.json';
+import fixtures from '../../resources/fixtures/livemeta.json' with { type: 'json' };
 
 import {withLivemetaResponse} from './stations.js';
 import Steps from './steps.js';
@@ -8,7 +11,7 @@ describe('Last.fm', function(){
   const song = Steps.getAll(withLivemetaResponse(fixtures))[0];
 
   it('should have API and Secret configured', () => {
-    expect(lastFm.isEnabled()).toBe(true);
+    assert.equal(lastFm.isEnabled(), true);
   });
 
   it('should try to hint a _now playing_ tune', () => {
@@ -20,7 +23,7 @@ describe('Last.fm', function(){
     })
     .catch(({message}) => {
       // it proves the payload is okay
-      expect(message).toMatch(/Invalid session key/);
+      assert.match(message, /Invalid session key/);
     });
   });
 
@@ -34,7 +37,7 @@ describe('Last.fm', function(){
     })
     .catch(({message}) => {
       // it proves the payload is okay
-      expect(message).toMatch(/Invalid session key/);
+      assert.match(message, /Invalid session key/);
     });
   });
 });

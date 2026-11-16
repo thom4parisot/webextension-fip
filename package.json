@@ -13,8 +13,8 @@
     "update-stations": "node scripts/update-stations.js",
     "prepackage": "npm run build",
     "package": "cd src && ls manifest.json _locales/**/*.json players/background/bundle.js players/background/index.html now-playing/bundle.js now-playing/*.html now-playing/*.css options/bundle.js options/*.html resources/*.png resources/icons/css/*.css resources/icons/font/*.woff2 | zip -9 -@ ../dist/${npm_package_name}-v${npm_package_version}.zip",
-    "test": "NODE_ENV=test PREFERENCES_NAMESPACE=test jest",
-    "lint": "eslint --ignore-path .gitignore ./src",
+    "test": "PREFERENCES_NAMESPACE=test node --env-file-if-exists=.env --test 'src/**/*.test.js'",
+    "lint": "eslint src",
     "posttest": "npm run lint",
     "build": "NODE_ENV=production BUILD_CHANNEL=stable rollup --config",
     "version": "sed -i '' -e \"s/\\\"version\\\": \\\".*\\\"/\\\"version\\\": \\\"${npm_package_version}\\\"/\" src/manifest.json && git add src/manifest.json",
@@ -23,10 +23,6 @@
   "funding": {
     "type": "github",
     "url": "https://github.com/sponsors/thom4parisot"
-  },
-  "jest": {
-    "globalSetup": "./scripts/load-env.js",
-    "resetMocks": false
   },
   "repository": {
     "type": "git",
@@ -46,21 +42,15 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "devDependencies": {
-    "@babel/core": "^7.15.5",
-    "@babel/plugin-external-helpers": "^7.14.5",
-    "@babel/plugin-transform-runtime": "^7.19.6",
-    "@babel/preset-env": "^7.15.6",
-    "@babel/runtime": "^7.15.4",
-    "@rollup/plugin-babel": "^6.0.3",
-    "@rollup/plugin-commonjs": "^23.0.3",
-    "@rollup/plugin-json": "^5.0.2",
-    "@rollup/plugin-node-resolve": "^15.0.1",
-    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
-    "eslint": "^7.32.0",
-    "eslint-plugin-jest": "^27.1.6",
-    "eslint-plugin-promise": "^5.1.0",
-    "jest": "^29.3.1",
-    "rollup": "^3.5.0"
+    "@eslint/js": "^9.39.5",
+    "@rollup/plugin-commonjs": "^29.0.3",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-replace": "^6.0.3",
+    "eslint": "^9.39.5",
+    "eslint-plugin-promise": "^7.3.0",
+    "globals": "^17.14.0",
+    "rollup": "^4.68.4"
   },
   "dependencies": {
     "angular": "^1.8.2",

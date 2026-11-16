@@ -1,3 +1,6 @@
+import assert from 'node:assert/strict';
+import { beforeEach, describe, it, mock } from 'node:test';
+
 import Preferences from './preferences.js';
 
 /**
@@ -52,25 +55,25 @@ describe('Preferences', function(){
   });
 
   it('should have switched over a new test namespace', function(){
-    expect(manager.namespace).not.toBeFalsy();
-    expect(manager.namespace).toEqual(process.env.PREFERENCES_NAMESPACE);
+    assert.ok(manager.namespace);
+    assert.deepStrictEqual(manager.namespace, process.env.PREFERENCES_NAMESPACE);
   });
 
   it('#get', async function(){
     await manager.ready();
 
-    expect(manager.get("non-existing key")).toEqual(null);
-    expect(manager.get("non-existing key", "default")).toEqual("default");
-    expect(manager.get(null)).toEqual(null);
-    expect(manager.get("")).toEqual(null);
+    assert.deepStrictEqual(manager.get("non-existing key"), null);
+    assert.deepStrictEqual(manager.get("non-existing key", "default"), "default");
+    assert.deepStrictEqual(manager.get(null), null);
+    assert.deepStrictEqual(manager.get(""), null);
   });
 
   it('#set', async function(){
     await manager.ready();
     await manager.set("future key", {foo: "bar"});
 
-    expect(manager.get("future key")).toEqual({foo: "bar"});
-    expect(storage.items[manager.namespace + "future key"]).toEqual({foo: "bar"});
+    assert.deepStrictEqual(manager.get("future key"), {foo: "bar"});
+    assert.deepStrictEqual(storage.items[manager.namespace + "future key"], {foo: "bar"});
   });
 
   it('#del', async function(){
@@ -78,8 +81,8 @@ describe('Preferences', function(){
     await manager.set("future key", {foo: "bar"});
     await manager.del("future key");
 
-    expect(manager.get("future key")).toEqual(null);
-    expect(storage.items).toEqual({});
+    assert.deepStrictEqual(manager.get("future key"), null);
+    assert.deepStrictEqual(storage.items, {});
   });
 
   it('#ready loads stored values', async function(){
@@ -87,7 +90,7 @@ describe('Preferences', function(){
 
     await manager.ready();
 
-    expect(manager.get("playback.station")).toEqual("theme-jazz");
+    assert.deepStrictEqual(manager.get("playback.station"), "theme-jazz");
   });
 
   it('#ready migrates localStorage values when storage is empty', async function(){
@@ -95,8 +98,8 @@ describe('Preferences', function(){
 
     await manager.ready();
 
-    expect(manager.get("playback.station")).toEqual("theme-jazz");
-    expect(storage.items[manager.namespace + "playback.station"]).toEqual("theme-jazz");
+    assert.deepStrictEqual(manager.get("playback.station"), "theme-jazz");
+    assert.deepStrictEqual(storage.items[manager.namespace + "playback.station"], "theme-jazz");
   });
 
   it('syncs values changed by another context', async function(){
@@ -105,19 +108,19 @@ describe('Preferences', function(){
     await manager.ready();
     await other.set("radio.volume", 0.5);
 
-    expect(manager.get("radio.volume")).toEqual(0.5);
+    assert.deepStrictEqual(manager.get("radio.volume"), 0.5);
   });
 
   it('#onChange runs once the cache is up to date', async function(){
     const other = new Preferences(storage, legacyStorage);
-    const callback = jest.fn(() => manager.get("playback.station"));
+    const callback = mock.fn(() => manager.get("playback.station"));
 
     await manager.ready();
     manager.onChange(["playback.station"], callback);
     await other.set("radio.volume", 0.5);
     await other.set("playback.station", "theme-jazz");
 
-    expect(callback).toHaveBeenCalledTimes(1);
-    expect(callback).toHaveReturnedWith("theme-jazz");
+    assert.equal(callback.mock.callCount(), 1);
+    assert.equal(callback.mock.calls[0].result, "theme-jazz");
   });
 });

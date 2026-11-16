@@ -1,6 +1,9 @@
+import assert from 'node:assert/strict';
+import { describe, it } from 'node:test';
+
 import Steps from './steps.js';
 import {withLivemetaResponse} from './stations.js';
-import fixtures from '../../resources/fixtures/livemeta.json';
+import fixtures from '../../resources/fixtures/livemeta.json' with { type: 'json' };
 
 describe('Steps', function(){
   const data = withLivemetaResponse(fixtures);
@@ -9,7 +12,7 @@ describe('Steps', function(){
     it('should return an ascending ordered list', () => {
       const titles = Steps.getAll(data).map(d => d.title);
 
-      expect(titles).toEqual([
+      assert.deepStrictEqual(titles, [
         'Ladies',
         'Holiday (radio edit)',
         'Switched-on',
@@ -23,32 +26,28 @@ describe('Steps', function(){
     it('should return a step overlapping a numeric UNIX timestamp', () => {
       const step = Steps.atTime(data, 1794830400000);
 
-      expect(step.title).toEqual('Switched-on');
+      assert.deepStrictEqual(step.title, 'Switched-on');
     });
 
     it('should return a step starting at a numeric UNIX timestamp', () => {
       const step = Steps.atTime(data, 1794830297000);
 
-      expect(step.title).toEqual('Switched-on');
+      assert.deepStrictEqual(step.title, 'Switched-on');
     });
 
     it('should return a step based on a Date object', () => {
       const step = Steps.atTime(data, new Date('2026-11-16T12:03:20.000Z'));
 
-      expect(step.title).toEqual('Carousel');
+      assert.deepStrictEqual(step.title, 'Carousel');
     });
   });
 
   describe('getCurrent', () => {
-    afterEach(() => {
-      jest.useRealTimers();
-    });
-
-    it('should return a step played at the moment', () => {
-      jest.useFakeTimers({ now: 1794830600000 });
+    it('should return a step played at the moment', (t) => {
+      t.mock.timers.enable({ apis: ['Date'], now: 1794830600000 });
       const step = Steps.getCurrent(data);
 
-      expect(step.title).toEqual('Carousel');
+      assert.deepStrictEqual(step.title, 'Carousel');
     });
   });
 });
