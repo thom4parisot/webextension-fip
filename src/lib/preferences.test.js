@@ -26,13 +26,29 @@ function createStorage (items = {}) {
   };
 }
 
+/**
+ * Minimal in-memory Web Storage (`localStorage`) double.
+ */
+function createLegacyStorage (items = {}) {
+  return {
+    get length () {
+      return Object.keys(items).length;
+    },
+    key: index => Object.keys(items)[index],
+    getItem: key => items[key] ?? null,
+    setItem: (key, value) => {
+      items[key] = String(value);
+    },
+  };
+}
+
 describe('Preferences', function(){
-  let storage, manager;
+  let storage, legacyStorage, manager;
 
   beforeEach(function(){
-    localStorage.clear();
     storage = createStorage();
-    manager = new Preferences(storage);
+    legacyStorage = createLegacyStorage();
+    manager = new Preferences(storage, legacyStorage);
   });
 
   it('should have switched over a new test namespace', function(){
@@ -75,7 +91,7 @@ describe('Preferences', function(){
   });
 
   it('#ready migrates localStorage values when storage is empty', async function(){
-    localStorage.setItem(manager.namespace + "playback.station", JSON.stringify("theme-jazz"));
+    legacyStorage.setItem(manager.namespace + "playback.station", JSON.stringify("theme-jazz"));
 
     await manager.ready();
 
@@ -84,7 +100,7 @@ describe('Preferences', function(){
   });
 
   it('syncs values changed by another context', async function(){
-    const other = new Preferences(storage);
+    const other = new Preferences(storage, legacyStorage);
 
     await manager.ready();
     await other.set("radio.volume", 0.5);
@@ -93,7 +109,7 @@ describe('Preferences', function(){
   });
 
   it('#onChange runs once the cache is up to date', async function(){
-    const other = new Preferences(storage);
+    const other = new Preferences(storage, legacyStorage);
     const callback = jest.fn(() => manager.get("playback.station"));
 
     await manager.ready();

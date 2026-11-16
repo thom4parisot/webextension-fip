@@ -7,14 +7,16 @@
 export default class Preferences {
   /**
    * @param {browser.storage} storage `browser.storage` namespace
+   * @param {Storage=} legacyStorage Where versions <= 1.6.7 saved preferences
    */
-  constructor (storage) {
+  constructor (storage, legacyStorage = globalThis.localStorage) {
     /**
      * Instance storage key prefix.
      * @type {string}
      */
     this.namespace = process.env.PREFERENCES_NAMESPACE || '';
     this.storage = storage;
+    this.legacyStorage = legacyStorage;
     this.cache = {};
     this.listeners = [];
 
@@ -60,11 +62,14 @@ export default class Preferences {
    * @returns {Promise.<Object>}
    */
   migrateLocalStorage () {
-    if (typeof localStorage === 'undefined' || !localStorage.length) {
+    const { legacyStorage } = this;
+
+    if (!legacyStorage?.length) {
       return {};
     }
 
-    const items = Object.fromEntries(Object.keys(localStorage).map(key => [key, JSON.parse(localStorage.getItem(key))]));
+    const keys = Array.from({ length: legacyStorage.length }, (_, index) => legacyStorage.key(index));
+    const items = Object.fromEntries(keys.map(key => [key, JSON.parse(legacyStorage.getItem(key))]));
 
     return this.storage.local.set(items).then(() => items);
   }

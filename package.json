@@ -14,7 +14,7 @@
     "update-stations": "node scripts/update-stations.js",
     "prepackage": "npm run build",
     "package": "cd src && ls manifest.json _locales/**/*.json players/background/bundle.js players/background/index.html now-playing/bundle.js now-playing/*.html now-playing/*.css options/bundle.js options/*.html resources/*.png resources/icons/css/*.css resources/icons/font/*.woff2 | zip -9 -@ ../dist/${npm_package_name}-v${npm_package_version}.zip",
-    "test": "NODE_OPTIONS=--localstorage-file=:memory: NODE_ENV=test PREFERENCES_NAMESPACE=test jest",
+    "test": "NODE_ENV=test PREFERENCES_NAMESPACE=test jest",
     "lint": "eslint --ignore-path .gitignore ./src",
     "posttest": "npm run lint",
     "build": "NODE_ENV=production BUILD_CHANNEL=stable run-p 'build:*'",
