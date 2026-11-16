@@ -1,47 +1,42 @@
 import Steps from './steps.js';
-import {withHistoryResponse} from './stations.js';
-import fixtures from '../../resources/fixtures/history.json';
+import {withLivemetaResponse} from './stations.js';
+import fixtures from '../../resources/fixtures/livemeta.json';
 import sinon from 'sinon';
 
 describe('Steps', function(){
-  const data = withHistoryResponse(fixtures);
+  const data = withLivemetaResponse(fixtures);
 
   describe('getAll', () => {
     it('should return an ascending ordered list', () => {
       const titles = Steps.getAll(data).map(d => d.title);
 
       expect(titles).toEqual([
-        'Igualito que el tango',
-        'Sonate en Ré Maj op 3 n°1 : Allegro - pour violoncelle et basse continue',
-        'Let\'s call it a day',
-        'Get yourself together',
-        'Nuits bleues',
-        'Night And Day',
-        'Make it last',
-        'Eternal / Internal peace',
-        'Sky Islands',
-        'Naima',
+        'Ladies',
+        'Holiday (radio edit)',
+        'Switched-on',
+        'Carousel',
+        'shérif',
       ]);
     });
   });
 
   describe('atTime', () => {
     it('should return a step overlapping a numeric UNIX timestamp', () => {
-      const step = Steps.atTime(data, 1565024242000);
+      const step = Steps.atTime(data, 1794830400000);
 
-      expect(step.title).toEqual('Get yourself together');
+      expect(step.title).toEqual('Switched-on');
     });
 
     it('should return a step starting at a numeric UNIX timestamp', () => {
-      const step = Steps.atTime(data, 1565024247000);
+      const step = Steps.atTime(data, 1794830297000);
 
-      expect(step.title).toEqual('Nuits bleues');
+      expect(step.title).toEqual('Switched-on');
     });
 
     it('should return a step based on a Date object', () => {
-      const step = Steps.atTime(data, new Date('2019-08-05T16:57:27.000Z'));
+      const step = Steps.atTime(data, new Date('2026-11-16T12:03:20.000Z'));
 
-      expect(step.title).toEqual('Nuits bleues');
+      expect(step.title).toEqual('Carousel');
     });
   });
 
@@ -53,10 +48,10 @@ describe('Steps', function(){
     });
 
     it('should return a step played at the moment', () => {
-      clock = sinon.useFakeTimers(1565024247000);
+      clock = sinon.useFakeTimers(1794830600000);
       const step = Steps.getCurrent(data);
 
-      expect(step.title).toEqual('Nuits bleues');
+      expect(step.title).toEqual('Carousel');
     });
   });
 });

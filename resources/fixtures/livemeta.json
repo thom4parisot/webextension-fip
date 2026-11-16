@@ -1,0 +1,160 @@
+{
+  "steps": {
+    "20106707-02f8-456f-a072-ea01644f9a18_7": {
+      "uuid": "2d0458ab-a7e2-44a2-b276-a627763ae3f9",
+      "stepId": "20106707-02f8-456f-a072-ea01644f9a18_7",
+      "title": "Ladies",
+      "start": 1794829808,
+      "end": 1794830063,
+      "fatherStepId": null,
+      "stationId": 7,
+      "embedId": "0176601700721-1-8",
+      "embedType": "song",
+      "depth": 3,
+      "discJockey": null,
+      "authors": "Lee Fields",
+      "performers": "",
+      "highlightedArtists": [
+        "Lee Fields"
+      ],
+      "titleSlug": "ladies",
+      "path": "https://music.apple.com/fr/album/ladies/316451307?i=316451443&uo=4",
+      "lienYoutube": "https://www.youtube.com/watch?v=epu97rNb9F8",
+      "visuelYoutube": "https://i.ytimg.com/vi/epu97rNb9F8/hqdefault.jpg",
+      "anneeEditionMusique": 2009,
+      "songId": "c7fa5904-404e-4427-890b-cef71f610728",
+      "visual": "https://www.radiofrance.fr/s3/cruiser-production/2019/12/373eabbb-755a-4015-89ea-1ecf77710376/400x400_rf_omm_0000334718_dnc.0056457606.jpg",
+      "titreAlbum": "My world",
+      "label": "TRUTH & SOUL",
+      "composers": "",
+      "releaseId": "b7ad29fc-9b69-4f86-85a5-f2f8fdf4736d",
+      "coverUuid": "373eabbb-755a-4015-89ea-1ecf77710376"
+    },
+    "763d77a7-0aca-46c3-8bd6-84e9695d027a_7": {
+      "uuid": "b81ba84e-669e-4c7e-9e97-e2236ac9cac0",
+      "stepId": "763d77a7-0aca-46c3-8bd6-84e9695d027a_7",
+      "title": "Holiday (radio edit)",
+      "start": 1794830061,
+      "end": 1794830297,
+      "fatherStepId": null,
+      "stationId": 7,
+      "embedId": "RF00000061015-1-1",
+      "embedType": "song",
+      "depth": 3,
+      "discJockey": null,
+      "authors": "Me And My Friends",
+      "performers": "",
+      "highlightedArtists": [
+        "Me And My Friends"
+      ],
+      "titleSlug": "holiday-radio-edit",
+      "path": "https://music.apple.com/fr/album/holiday-radio-edit/1611649765?i=1611649773",
+      "lienYoutube": "https://www.youtube.com/watch?v=HmXNt--Q8Gc",
+      "visuelYoutube": "https://i.ytimg.com/vi/HmXNt--Q8Gc/hqdefault.jpg",
+      "anneeEditionMusique": 2017,
+      "songId": "b47c639f-6455-4686-a525-4f733c8603ed",
+      "visual": "https://www.radiofrance.fr/s3/cruiser-production/2019/11/f83054f5-6072-4b12-9bf7-208e8f595863/400x400_rf_omm_0001540201_dnc.0069813153.jpg",
+      "titreAlbum": "Holiday (radio edit)",
+      "label": "SOUNDWAY RECORDS",
+      "composers": "",
+      "releaseId": "752aca28-8dc7-4ce9-b22b-2ed80b2dfec3",
+      "coverUuid": "f83054f5-6072-4b12-9bf7-208e8f595863"
+    },
+    "0d3be28d-438a-44e8-819a-14ba0bd954db_7": {
+      "uuid": "65654ddc-d1fa-4b3d-8bf0-fb9892d46ddc",
+      "stepId": "0d3be28d-438a-44e8-819a-14ba0bd954db_7",
+      "title": "Switched-on",
+      "start": 1794830297,
+      "end": 1794830511,
+      "fatherStepId": null,
+      "stationId": 7,
+      "embedId": "RF00000117581-1-8",
+      "embedType": "song",
+      "depth": 3,
+      "discJockey": null,
+      "authors": "Pachyman",
+      "performers": "",
+      "highlightedArtists": [
+        "Pachyman"
+      ],
+      "titleSlug": "switched-on",
+      "path": "https://music.apple.com/fr/album/switched-on/1693921971?i=1693921987",
+      "anneeEditionMusique": 2023,
+      "songId": "f8a196d8-2837-4e95-a760-4a6b6d66c04e",
+      "visual": "https://www.radiofrance.fr/s3/cruiser-production/2023/07/79bbf96f-4d19-4686-8de0-3b4f376e9d7c/400x400_sc_rf_omm_0003568673_dnc.0137747495.jpg",
+      "titreAlbum": "Switched-on",
+      "label": "ATO RECORDS",
+      "composers": "",
+      "releaseId": "db79c49a-b78e-47da-aaf2-17a7bc7f0f5a",
+      "coverUuid": "79bbf96f-4d19-4686-8de0-3b4f376e9d7c"
+    },
+    "cd2dc9cd-ee67-415d-9d07-1249c8ab1c70_7": {
+      "uuid": "b571b7cc-1782-43db-8c35-194a6572f159",
+      "stepId": "cd2dc9cd-ee67-415d-9d07-1249c8ab1c70_7",
+      "title": "Carousel",
+      "start": 1794830510,
+      "end": 1794830736,
+      "fatherStepId": null,
+      "stationId": 7,
+      "embedId": "0075678608551-1-4",
+      "embedType": "song",
+      "depth": 3,
+      "discJockey": null,
+      "authors": "Melanie Martinez",
+      "performers": "",
+      "highlightedArtists": [
+        "Melanie Martinez"
+      ],
+      "titleSlug": "carousel",
+      "anneeEditionMusique": 2024,
+      "songId": "08f582d8-e1aa-466a-8529-63ccf72ed243",
+      "visual": "https://www.radiofrance.fr/s3/rf-cruiser-embed-production/2026/11/cc169442-5d01-4552-ae63-ea5e84b55745/400x400_sc_rf_omm_0004031888_dnc.0144257847.jpg",
+      "titreAlbum": "Cry baby",
+      "label": "ATLANTIC",
+      "composers": "",
+      "releaseId": "b312cd84-93c3-4687-a928-398d17cc0b23",
+      "coverUuid": "cc169442-5d01-4552-ae63-ea5e84b55745"
+    },
+    "d8ae5a4e-fa78-42f9-92c6-39f1bfe4dd0a_7": {
+      "uuid": "b9ae73f7-fe4f-467a-87e8-99ff4cd4a39c",
+      "stepId": "d8ae5a4e-fa78-42f9-92c6-39f1bfe4dd0a_7",
+      "title": "shérif",
+      "start": 1794830740,
+      "end": 1794830886,
+      "fatherStepId": null,
+      "stationId": 7,
+      "embedId": "3618025598920-1-3",
+      "embedType": "song",
+      "depth": 3,
+      "discJockey": null,
+      "authors": "Zinee & Chilly Gonzales & Empty7 & Louis Recasens & Epektase",
+      "performers": "",
+      "highlightedArtists": [
+        "Zinee"
+      ],
+      "titleSlug": "sherif",
+      "path": "https://music.apple.com/fr/album/sh%C3%A9rif-feat-chilly-gonzales/1877860280?i=1877860294",
+      "anneeEditionMusique": 2026,
+      "songId": "05079af9-880a-45f7-ba80-fd32a6c98044",
+      "visual": "https://www.radiofrance.fr/s3/cruiser-production-eu3/2026/03/24760d3b-5a1a-4ff1-8caf-f562811a9029/400x400_sc_rf_omm_0004196516_dnc.0159469960.jpg",
+      "titreAlbum": "bil",
+      "label": "YOTANKA",
+      "composers": "",
+      "releaseId": "61630b47-614c-4ed3-8502-9588afed317a",
+      "coverUuid": "24760d3b-5a1a-4ff1-8caf-f562811a9029"
+    }
+  },
+  "levels": [
+    {
+      "items": [
+        "20106707-02f8-456f-a072-ea01644f9a18_7",
+        "763d77a7-0aca-46c3-8bd6-84e9695d027a_7",
+        "0d3be28d-438a-44e8-819a-14ba0bd954db_7",
+        "cd2dc9cd-ee67-415d-9d07-1249c8ab1c70_7",
+        "d8ae5a4e-fa78-42f9-92c6-39f1bfe4dd0a_7"
+      ],
+      "position": 3
+    }
+  ],
+  "stationId": 7
+}

@@ -1,0 +1,35 @@
+{
+  "prev": [
+    {
+      "firstLine": "Le direct",
+      "secondLine": "Écoutez une programmation qui explore le passé, le présent et le futur du hip-hop. Des Last Poets à Little Simz, de Nujabes à Alpha Wann, plongez dans toute la richesse du rap mondial.",
+      "songUuid": null,
+      "cover": "7eee98cb-3f59-4a3b-b921-6a4be85af542",
+      "startTime": null,
+      "endTime": null
+    }
+  ],
+  "now": {
+    "firstLine": "Glitter",
+    "firstLineSongUuid": "d27fe65b-024f-4991-9983-e3c036895cf4",
+    "secondLine": "Tyler The Creator",
+    "secondLineSongUuid": "d27fe65b-024f-4991-9983-e3c036895cf4",
+    "songUuid": "d27fe65b-024f-4991-9983-e3c036895cf4",
+    "cover": "d61c2ff7-6b99-4135-be69-00dfb3026644",
+    "startTime": 1794831504,
+    "endTime": 1794831727
+  },
+  "next": [
+    {
+      "firstLine": "Groove thang (remix)",
+      "firstLineSongUuid": "9aded17b-e051-4a3a-97ed-ac4ea1b9afb1",
+      "secondLine": "Zhane",
+      "secondLineSongUuid": "9aded17b-e051-4a3a-97ed-ac4ea1b9afb1",
+      "songUuid": "9aded17b-e051-4a3a-97ed-ac4ea1b9afb1",
+      "cover": "55563e7b-65a9-4793-9434-6ba5217386f4",
+      "startTime": 1794831727,
+      "endTime": 1794831957
+    }
+  ],
+  "delayToRefresh": 190000
+}
