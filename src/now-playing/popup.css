@@ -189,11 +189,11 @@ header {
     }
   }
 
-@keyframes playback-spin {
-  to {
-    transform: rotate(360deg);
+  @keyframes playback-spin {
+    to {
+      transform: rotate(360deg);
+    }
   }
-}
 
 
 

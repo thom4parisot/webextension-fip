@@ -4,22 +4,31 @@ import globals from 'globals';
 
 export default [
   {
-    ignores: ['build/'],
+    ignores: ['build/', 'dist/', '.claude/'],
   },
   js.configs.recommended,
   promise.configs['flat/recommended'],
   {
+    rules: {
+      'semi': 'warn',
+      'no-unused-vars': ['error', { varsIgnorePattern: '(Service|Filters)$' }],
+    },
+  },
+  {
+    files: ['src/**'],
     languageOptions: {
       globals: {
         ...globals.browser,
-        ...globals.node,
         ...globals.webextensions,
+        // replaced at build time
+        process: 'readonly',
       },
     },
-    rules: {
-      'semi': 'warn',
-      'no-undef': 'error',
-      'no-unused-vars': ['error', { varsIgnorePattern: '(Service|Filters)$' }],
+  },
+  {
+    files: ['**/*.test.js', 'scripts/**', '*.config.js', '*.config.mjs'],
+    languageOptions: {
+      globals: globals.node,
     },
   },
 ];

@@ -6,9 +6,6 @@ import Steps from '../lib/steps.js';
 import Preferences from '../lib/preferences.js';
 import {getStationBroadcasts, getStationFeed} from '../lib/stations.js';
 
-/*
- "Securely" provided by .travis.yml + envify transform
- */
 const LAST_FM_KEY = process.env.LAST_FM_KEY;
 
 

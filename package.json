@@ -2,7 +2,6 @@
   "name": "webextension-fip",
   "version": "1.7.0",
   "description": "FIP Radio WebExtension for an in-browser radio playback and scrobbling experience.",
-  "main": "index.js",
   "type": "module",
   "private": true,
   "engines": {
@@ -16,11 +15,11 @@
     "package:crx": "npm run build && sh scripts/package-crx.sh",
     "postpackage": "git archive --format=zip -o dist/${npm_package_name}-v${npm_package_version}-source.zip HEAD",
     "test": "LAST_FM_KEY=test LAST_FM_SECRET=test PREFERENCES_NAMESPACE=test node --test 'src/**/*.test.js'",
-    "lint": "eslint src",
+    "lint": "eslint .",
     "posttest": "npm run lint",
-    "build": "NODE_ENV=production BUILD_CHANNEL=stable rollup --config",
+    "build": "BUILD_CHANNEL=stable node --env-file-if-exists=.env node_modules/rollup/dist/bin/rollup --config",
     "version": "sed -i '' -e \"s/\\\"version\\\": \\\".*\\\"/\\\"version\\\": \\\"${npm_package_version}\\\"/\" src/manifest.json && git add src/manifest.json",
-    "watch": "BUILD_CHANNEL=dev rollup --config --watch"
+    "watch": "BUILD_CHANNEL=dev node --env-file-if-exists=.env node_modules/rollup/dist/bin/rollup --config --watch"
   },
   "funding": {
     "type": "github",

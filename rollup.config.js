@@ -5,19 +5,13 @@ import resolve from '@rollup/plugin-node-resolve';
 import json from '@rollup/plugin-json';
 import replace from '@rollup/plugin-replace';
 
-import loadEnv from './scripts/load-env.js';
-
-loadEnv();
-
 /**
  * Environment variables inlined in the bundles.
  */
 const ENV_VARIABLES = ['BUILD_CHANNEL', 'LAST_FM_KEY', 'LAST_FM_SECRET', 'PREFERENCES_NAMESPACE'];
 
 const plugins = [
-  resolve({
-    preferBuiltins: false
-  }),
+  resolve(),
   commonjs(),
   json(),
   replace({
