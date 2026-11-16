@@ -13,6 +13,7 @@
     "update-stations": "node scripts/update-stations.js",
     "prepackage": "npm run build",
     "package": "cd src && ls manifest.json _locales/**/*.json players/background/bundle.js players/background/index.html now-playing/bundle.js now-playing/*.html now-playing/*.css options/bundle.js options/*.html resources/*.png resources/icons/css/*.css resources/icons/font/*.woff2 | zip -9 -@ ../dist/${npm_package_name}-v${npm_package_version}.zip",
+    "postpackage": "git archive --format=zip -o dist/${npm_package_name}-v${npm_package_version}-source.zip HEAD",
     "test": "PREFERENCES_NAMESPACE=test node --env-file-if-exists=.env --test 'src/**/*.test.js'",
     "lint": "eslint src",
     "posttest": "npm run lint",

@@ -111,7 +111,7 @@ $ npm run package
 | `src/now-playing/app.js` | `src/now-playing/bundle.js` |
 | `src/options/app.js` | `src/options/bundle.js` |
 
-`npm run package` builds the bundles, then zips them with the other extension files into `dist/webextension-fip-v<version>.zip`.
+`npm run package` builds the bundles, then zips them with the other extension files into `dist/webextension-fip-v<version>.zip`. It also archives the committed source code (`git archive HEAD`) into `dist/webextension-fip-v<version>-source.zip`.
 
 The Last.fm API credentials are inlined at build time from the `LAST_FM_KEY` and `LAST_FM_SECRET` environment variables, or from a `.env` file (see [`.env.example`](.env.example)). Without them, the rebuilt bundles only differ from the published ones by these two strings, and Last.fm scrobbling is disabled.
 
