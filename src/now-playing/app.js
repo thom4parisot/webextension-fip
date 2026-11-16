@@ -33,7 +33,7 @@ App.controller('RadioController', RadioController);
 
 // Android plays the stream in this tab: see TabStrategy
 if (navigator.userAgent.includes('Android')) {
-  servePlayer();
+  servePlayer(preferences);
 }
 
 preferences.ready()

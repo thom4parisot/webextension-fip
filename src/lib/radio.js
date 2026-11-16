@@ -179,7 +179,10 @@ export default class Radio {
    * A rejection caused by a `stop()` is ignored: `STOPPED` does not handle `audio.error`.
    */
   playAudio () {
-    this.playbackObject.play().catch(() => this.handle('audio.error'));
+    this.playbackObject.play().catch(error => {
+      log('Playback refused: %s', error.name);
+      this.handle('audio.error');
+    });
   }
 
   /**
