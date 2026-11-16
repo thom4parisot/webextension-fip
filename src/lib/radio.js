@@ -12,7 +12,7 @@ export const states = Object.freeze({
 /**
  * <audio> events forwarded to the state machine, as `audio.<type>` inputs.
  */
-const AUDIO_EVENTS = ['error', 'stalled', 'progress', 'waiting', 'loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough', 'durationchange', 'loadstart', 'emptied'];
+const AUDIO_EVENTS = ['error', 'stalled', 'canplaythrough'];
 
 /**
  * Radio playback, driven by a finite state machine.
@@ -40,7 +40,7 @@ export default class Radio {
         },
         [states.STOPPED]: {
           play: () => {
-            this.playbackObject.play();
+            this.playAudio();
 
             return states.BUFFERING;
           }
@@ -58,7 +58,7 @@ export default class Radio {
         },
         [states.ERRORED]: {
           play: () => {
-            this.playbackObject.play();
+            this.playAudio();
 
             return states.BUFFERING;
           },
@@ -133,6 +133,14 @@ export default class Radio {
   }
 
   /**
+   * The browser may refuse to play (autoplay policy, unreachable stream).
+   * A rejection caused by a `stop()` is ignored: `STOPPED` does not handle `audio.error`.
+   */
+  playAudio () {
+    this.playbackObject.play().catch(() => this.handle('audio.error'));
+  }
+
+  /**
    * Prepare the audio object to be played.
    * Also plugs events to drive the State Machine according to its internal events.
    *
@@ -148,7 +156,7 @@ export default class Radio {
     }
 
     this.playbackObject.src = this.playbackUrl;
-    this.playbackObject.preload = false;
+    this.playbackObject.preload = 'none';
   }
 
   setPlaybackUrl (url) {

@@ -7,7 +7,9 @@ import Radio, {states} from './radio.js';
  * Minimal <audio> double: events are dispatched by the tests.
  */
 class FakeAudio extends EventTarget {
-  play () {}
+  play () {
+    return Promise.resolve();
+  }
   pause () {}
 }
 
@@ -80,5 +82,30 @@ describe('Radio', function(){
       [states.BUFFERING, states.PLAYING],
       [states.PLAYING, states.STOPPED],
     ]);
+  });
+
+  it('does not preload the stream', () => {
+    radio.play();
+
+    assert.equal(radio.playbackObject.preload, 'none');
+  });
+
+  it('is errored when the browser refuses to play', async (t) => {
+    t.mock.method(FakeAudio.prototype, 'play', () => Promise.reject(new Error('NotAllowedError')));
+
+    radio.play();
+    await new Promise(resolve => setImmediate(resolve));
+
+    assert.equal(radio.state, states.ERRORED);
+  });
+
+  it('ignores a playback interrupted by a stop', async (t) => {
+    t.mock.method(FakeAudio.prototype, 'play', () => Promise.reject(new Error('AbortError')));
+
+    radio.play();
+    radio.stop();
+    await new Promise(resolve => setImmediate(resolve));
+
+    assert.equal(radio.state, states.STOPPED);
   });
 });
