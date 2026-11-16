@@ -160,10 +160,13 @@ header {
     outline: none;
   }
 
+  /* same square box for every state: glyphs have different widths, and the spinner rotates around its centre */
   #playback-button:before{
     font-size: 2em;
+    height: 1em;
+    line-height: 1em;
     margin: 0;
-    width: auto;
+    width: 1em;
   }
 
   #playback-button.STOPPED::before,
@@ -171,10 +174,26 @@ header {
     content: "\e801";
   }
 
-  #playback-button.PLAYING::before,
-  #playback-button.BUFFERING::before{
+  #playback-button.PLAYING::before{
     content: "\e802";
   }
+
+  #playback-button.BUFFERING::before{
+    animation: playback-spin 2s infinite linear;
+    content: "\e806";
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #playback-button.BUFFERING::before{
+      animation: none;
+    }
+  }
+
+@keyframes playback-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 
 

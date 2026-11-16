@@ -1,7 +1,7 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg">
-<metadata>Copyright (C) 2019 by original authors @ fontello.com</metadata>
+<metadata>Copyright (C) 2026 by original authors @ fontello.com</metadata>
 <defs>
 <font id="fontello" horiz-adv-x="1000" >
 <font-face font-family="fontello" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
@@ -17,6 +17,8 @@
 <glyph glyph-name="volume-down" unicode="&#xe804;" d="M0 141l0 418 236 0 358 291 0-1000-358 291-236 0z m656 37q74 74 74 174 0 104-74 180l73 74q103-106 107-256 0-144-107-246z" horiz-adv-x="836" />
 
 <glyph glyph-name="volume-off" unicode="&#xe805;" d="M0 551l305 0 345 282 0-965-345 279-229 0z m713-283q0 4 2 6l76 76-76 76q-2 2-2 6t2 6l53 53q2 2 5 2t6-2l76-76 77 76q4 2 6 2t5-2l55-53q2-2 2-6t-2-6l-76-76 76-76q2-4 2-7t-2-5l-55-54q-2-2-5-2t-6 2l-77 78-76-78q-2-2-5-2t-6 2l-53 54q-2 2-2 6z" horiz-adv-x="1000" />
+
+<glyph glyph-name="spin6" unicode="&#xe806;" d="M855 9c-189-190-520-172-705 13-190 190-200 494-28 695 11 13 21 26 35 34 36 23 85 18 117-13 30-31 35-76 16-112-5-9-9-15-16-22-140-151-145-379-8-516 153-153 407-121 542 34 106 122 142 297 77 451-83 198-305 291-510 222l0 1c236 82 492-24 588-252 71-167 37-355-72-493-11-15-23-29-36-42z" horiz-adv-x="1000" />
 
 <glyph glyph-name="itunes" unicode="&#xe809;" d="M0 350q0 136 67 251t182 182 251 67 251-67 182-182 67-251-67-251-182-182-251-67-251 67-182 182-67 251z m100 0q0-166 117-283t283-117 283 117 117 283-117 283-283 117-283-117-117-283z m183-176q0-31 22-52t52-22q33 0 57 24t24 57l0 269 200 37 0-208q-15 5-28 5-33 0-57-24t-24-57q0-31 21-52t52-22 56 23 25 54l0 394-290-50 0-300q-15 5-28 5-34 0-58-24t-24-57z" horiz-adv-x="1000" />
 
