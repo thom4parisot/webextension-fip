@@ -31,7 +31,7 @@ export default class BackgroundStrategy {
   }
 
   onStateChange (callback) {
-    this.radio.on('transition', ({ toState }) => callback(toState));
+    this.radio.onTransition(({ toState }) => callback(toState));
   }
 
   play () {
