@@ -7,9 +7,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
 
-    - uses: actions/setup-node@v4
+    - uses: actions/setup-node@v7
       with:
         node-version-file: .nvmrc
 
@@ -33,9 +33,9 @@ jobs:
       LAST_FM_SECRET: ${{ secrets.LAST_FM_SECRET }}
       LAST_FM_KEY: ${{ secrets.LAST_FM_KEY }}
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
 
-    - uses: actions/setup-node@v4
+    - uses: actions/setup-node@v7
       with:
         node-version-file: .nvmrc
 
@@ -48,7 +48,7 @@ jobs:
 
     # verify with `gh attestation verify <zip> --repo thom4parisot/webextension-fip`
     - name: Attest the packages provenance
-      uses: actions/attest-build-provenance@v2
+      uses: actions/attest-build-provenance@v4
       with:
         subject-path: dist/*.zip
 
