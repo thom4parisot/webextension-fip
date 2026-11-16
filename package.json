@@ -15,7 +15,7 @@
     "package": "web-ext build",
     "package:crx": "npm run build && sh scripts/package-crx.sh",
     "postpackage": "git archive --format=zip -o dist/${npm_package_name}-v${npm_package_version}-source.zip HEAD",
-    "test": "PREFERENCES_NAMESPACE=test node --env-file-if-exists=.env --test 'src/**/*.test.js'",
+    "test": "LAST_FM_KEY=test LAST_FM_SECRET=test PREFERENCES_NAMESPACE=test node --test 'src/**/*.test.js'",
     "lint": "eslint src",
     "posttest": "npm run lint",
     "build": "NODE_ENV=production BUILD_CHANNEL=stable rollup --config",

@@ -1,14 +1,5 @@
 const collection = timelineItems => {
-  return timelineItems
-    .map(timelineItem => Object.assign({}, timelineItem,
-      {
-        title: timelineItem.subtitle,
-        authors: timelineItem.title,
-        start_time: timelineItem.start_time * 1000,
-        end_time: timelineItem.end_time * 1000,
-      }
-    ))
-    .sort((a, b) => a.start_time - b.start_time);
+  return [...timelineItems].sort((a, b) => a.start_time - b.start_time);
 };
 
 const withinBoundaries = date => {

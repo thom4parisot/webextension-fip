@@ -3,13 +3,17 @@ import stations from '../stations.json' with { type: 'json' };
 export {stations};
 
 const getJSON = url => fetch(url, {
-  method: 'GET',
-  mode: 'cors',
   headers: {
     'Accept': 'application/json',
   }
 })
-.then(res => res.json());
+.then(res => {
+  if (!res.ok) {
+    throw new Error(`HTTP ${res.status}`);
+  }
+
+  return res.json();
+});
 
 /**
  * Fetches the latest tracks played on a station.
@@ -19,7 +23,7 @@ const getJSON = url => fetch(url, {
  * @returns {Promise.<Array.<Object>>}
  */
 export function getStationBroadcasts (station) {
-  const {stationId, history} = stations[station];
+  const {stationId, history} = getStation(station);
 
   return history
     ? getJSON(`https://api.radiofrance.fr/livemeta/pull/${stationId}`).then(withLivemetaResponse)
@@ -27,7 +31,7 @@ export function getStationBroadcasts (station) {
 }
 
 /**
- * Converts livemeta steps into timeline items, as expected by `Steps`.
+ * Converts livemeta songs into steps. Times are in milliseconds.
  *
  * @param {Object} response
  * @returns {Array.<Object>}
@@ -36,10 +40,10 @@ export function withLivemetaResponse({steps}) {
   return Object.values(steps)
     .filter(step => step.embedType === 'song')
     .map(step => ({
-      title: step.authors,
-      subtitle: step.title,
-      start_time: step.start,
-      end_time: step.end,
+      title: step.title,
+      authors: step.authors,
+      start_time: step.start * 1000,
+      end_time: step.end * 1000,
       cover: step.visual,
       album: step.titreAlbum,
       label: step.label,
@@ -53,7 +57,7 @@ export function withLivemetaResponse({steps}) {
 }
 
 /**
- * Converts the live player response into timeline items, as expected by `Steps`.
+ * Converts the live player response into steps. Times are in milliseconds.
  * Items without `startTime` are the station placeholder, not a track.
  *
  * @param {Object} response
@@ -63,10 +67,10 @@ export function withLiveResponse({prev, now}) {
   return [...prev, now]
     .filter(item => item.startTime)
     .map(item => ({
-      title: item.secondLine,
-      subtitle: item.firstLine,
-      start_time: item.startTime,
-      end_time: item.endTime,
+      title: item.firstLine,
+      authors: item.secondLine,
+      start_time: item.startTime * 1000,
+      end_time: item.endTime * 1000,
       cover: `https://www.radiofrance.fr/pikapi/images/${item.cover}/400x400`,
       external_links: {},
     }));
@@ -76,11 +80,14 @@ export function withLiveResponse({prev, now}) {
  * Every station has a `hd` stream; others depend on the station.
  */
 export function getStationFeed (station, quality) {
-  const {streams} = stations[station];
+  const {streams} = getStation(station);
 
   return streams[quality] || streams.hd;
 }
 
+/**
+ * Unknown stations, such as a removed webradio still saved in the preferences, fall back on FIP.
+ */
 export function getStation (station) {
-  return stations[station];
+  return stations[station] ?? stations['fip-paris'];
 }
