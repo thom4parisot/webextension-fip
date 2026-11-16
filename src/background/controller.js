@@ -43,12 +43,14 @@ const BADGE_STATES = {
  *
  * @constructor
  * @param {Object} options
+ * @param {typeof ScrobblingController} options.lastfm
  * @param {PlayerStrategy} options.player Plays the audio stream, depending on the browser capabilities
  */
 export default class Background {
-  constructor({ player }){
+  constructor({ lastfm, player }){
     this.channel = process.env.BUILD_CHANNEL || "stable";
     this.preferences = new Preferences(browser.storage);
+    this.ScrobblingController = lastfm;
     this.player = player;
   }
 
@@ -61,7 +63,7 @@ export default class Background {
     const instance = new Background(options);
 
     // listeners are registered right away, to catch the event which woke the background up
-    instance.ready = instance.preferences.ready().then(() => instance.bootstrap(options));
+    instance.ready = instance.preferences.ready().then(() => instance.bootstrap());
     instance.registerEvents();
 
     return instance;
@@ -71,21 +73,25 @@ export default class Background {
    * Bootstraping process, once preferences are loaded.
    *
    * @api
-   * @param {Object} options
-   * @param {ScrobblingController} options.lastfm
    */
-  bootstrap({ lastfm }) {
+  bootstrap() {
     const {preferences, player} = this;
 
-    const station = preferences.get('playback.station', 'fip-paris');
-    const quality = preferences.get('playback.quality', 'hd');
-
-    this.lastfm = lastfm.init({ preferences });
-    player.setUrl(getStationFeed(station, quality));
+    this.lastfm = this.ScrobblingController.init({ preferences });
+    player.setUrl(this.getFeed());
 
     this.setupChannelBadge();
-    this.enableBroadcastUpdates();
+    // the popup has something to display, even when the radio is stopped
     this.requestBroadcasts();
+  }
+
+  /**
+   * Runs `task` once the preferences are loaded.
+   *
+   * @param {Function} task
+   */
+  whenReady(task) {
+    this.ready.then(() => task()).catch(debug);
   }
 
   /**
@@ -97,22 +103,25 @@ export default class Background {
   registerEvents() {
     // Listening to radio events and dispatch them through the app
     this.player.onStateChange(state => {
-      this.ready.then(() => this.dispatchRadioState(state)).catch(debug);
+      this.whenReady(() => {
+        this.dispatchRadioState(state);
+        this.updateBroadcastsAlarm(state);
+      });
     });
 
     browser.runtime.onConnect.addListener(port => {
       port.onMessage.addListener(message => {
-        this.ready.then(() => this.handleMessage(message)).catch(debug);
+        this.whenReady(() => this.handleMessage(message));
       });
     });
 
     this.preferences.onChange(['playback.station', 'playback.quality'], () => {
-      this.ready.then(() => this.reloadPlayback()).catch(debug);
+      this.whenReady(() => this.reloadPlayback());
     });
 
     browser.alarms.onAlarm.addListener(alarm => {
       if (alarm.name === "broadcasts"){
-        this.ready.then(() => this.requestBroadcasts()).catch(debug);
+        this.whenReady(() => this.requestBroadcasts());
       }
     });
   }
@@ -130,8 +139,6 @@ export default class Background {
   /**
    * Request broadcasts and do something afterwards.
    * Generally broadcasting the values to let them bubble everywhere.
-   *
-   * @param {Function=} done If not defined, will trigger the data in the "broadcasts" channel
    */
   requestBroadcasts() {
     const {preferences} = this;
@@ -169,25 +176,18 @@ export default class Background {
   }
 
   /**
-   * Enables broadcasting data collection.
-   * It might not only happen on play as we could eventually display a view without playing the radio.
+   * Refreshes the broadcasts while the radio plays only,
+   * so the background page can sleep once the radio is stopped.
    *
-   * Part of whitelist actions.
+   * @param {String} state
    */
-  enableBroadcastUpdates() {
-    const alarmName = "broadcasts";
-
-    //workaround due to the `browser.alarms.get` uncatchable exception bug
-    //@see https://code.google.com/p/chromium/issues/detail?id=265800
-    browser.alarms.getAll().then(alarms => {
-      const exists = alarms.some(alarm => alarm.name === alarmName);
-
-      if (!exists){
-        browser.alarms.create(alarmName, { periodInMinutes: 0.5 });
-      }
-
-      return this.requestBroadcasts();
-    }).catch(debug);
+  updateBroadcastsAlarm(state) {
+    if (state === states.STOPPED) {
+      browser.alarms.clear('broadcasts');
+    }
+    else {
+      browser.alarms.create('broadcasts', { periodInMinutes: 0.5 });
+    }
   }
 
   /**
@@ -245,14 +245,21 @@ export default class Background {
   }
 
   /**
+   * Stream of the station and quality saved in the preferences.
+   *
+   * @returns {String}
+   */
+  getFeed() {
+    const {preferences} = this;
+
+    return getStationFeed(preferences.get('playback.station', 'fip-paris'), preferences.get('playback.quality', 'hd'));
+  }
+
+  /**
    * Switches to the station and quality saved in the preferences.
    */
   reloadPlayback() {
-    const {preferences} = this;
-
-    const station = preferences.get('playback.station', 'fip-paris');
-    const quality = preferences.get('playback.quality', 'hd');
-    this.player.setUrl(getStationFeed(station, quality));
+    this.player.setUrl(this.getFeed());
     this.player.reload();
     this.requestBroadcasts();
   }

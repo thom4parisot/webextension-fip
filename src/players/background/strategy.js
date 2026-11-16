@@ -11,6 +11,19 @@ import Radio, {states} from '../../lib/radio.js';
 const KEEP_ALIVE_INTERVAL = 20 * 1000;
 
 /**
+ * How the background controller plays the radio, whatever the browser.
+ *
+ * @typedef {Object} PlayerStrategy
+ * @property {function(function(String))} onStateChange Calls the listener with the current state, then with each new one
+ * @property {function()} play
+ * @property {function()} stop
+ * @property {function()} toggle
+ * @property {function()} reload Restarts the stream, unless it is stopped
+ * @property {function(String)} setUrl
+ * @property {function(Number)} setVolume
+ */
+
+/**
  * Player strategy playing the stream from the background page itself.
  *
  * @implements {PlayerStrategy}
