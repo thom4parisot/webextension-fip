@@ -5,15 +5,23 @@ Its simple and neat interface provides you a one-click playback, automatic scrob
 Issues and features roadmap are tracked on this page:
 > https://github.com/thom4parisot/webextension-fip/issues
 
-# Quoi de neuf ?
+# What's New?
 
-## Next version
+## Version 1.8.0
 
-- the radio keeps playing once the popup is closed
-- Manifest V3: Firefox 140 or later is required
-- new webradios: FIP Sacré français ! and FIP Cultes
+- Manifest V3: Firefox 140+ and Chrome 121+ are required
+- Extension resubmitted to Chrome Web Store
 - the playback button shows when the stream is loading
-- preferences are kept, moved to the extension storage
+- playback errors on disconnect, resumes when network is back ([#83](https://github.com/thom4parisot/webextension-fip/issues/83))
+- no network permissions are needed
+- websites and links updated everywhere (they changed since 2022)
+
+## Version 1.7.0
+
+- the radio keeps playing once the popup is closed… longest running bug ever
+- new webradios: FIP Sacré français ! and FIP Cultes
+- preferences are moved to the extension storage
+- trimmed down external dependencies
 
 ## Version 1.6.0
 

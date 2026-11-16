@@ -7,13 +7,21 @@ Vous pouvez suivre les bugs ou l'implémentation des fonctionnalités à cette a
 
 # Quoi de neuf ?
 
-## Prochaine version
+## Version 1.8.0
 
-- la radio continue de jouer une fois la fenêtre fermée
-- Manifest V3 : Firefox 140 minimum
-- nouvelles webradios : FIP Sacré français ! et FIP Cultes
+- Manifest V3 : Firefox 140 et Chrome 121 minimum
+- extension de nouveau soumise au Chrome Web Store
 - le bouton de lecture indique le chargement du flux
-- les préférences sont conservées, déplacées dans le stockage de l'extension
+- la lecture signale les coupures réseau et reprend au retour du réseau ([#83](https://github.com/thom4parisot/webextension-fip/issues/83))
+- plus aucune permission réseau n'est nécessaire
+- sites et liens mis à jour partout (ils avaient changé depuis 2022)
+
+## Version 1.7.0
+
+- la radio continue de jouer une fois la fenêtre fermée… un bug qui aura duré plusieurs années !
+- nouvelles webradios : FIP Sacré français ! et FIP Cultes
+- les préférences sont déplacées dans le stockage de l'extension
+- dépendances externes allégées
 
 ## Version 1.6.0
 
