@@ -1,6 +1,7 @@
 src/*/*.map
 
 src/core.js
-bundle.js
+build/
 
 .env
+*.pem

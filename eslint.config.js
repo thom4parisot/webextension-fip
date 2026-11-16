@@ -4,7 +4,7 @@ import globals from 'globals';
 
 export default [
   {
-    ignores: ['src/**/bundle.js'],
+    ignores: ['build/'],
   },
   js.configs.recommended,
   promise.configs['flat/recommended'],

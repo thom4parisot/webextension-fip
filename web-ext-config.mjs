@@ -3,14 +3,9 @@
  * @see https://extensionworkshop.com/documentation/develop/web-ext-command-reference/
  */
 export default {
-  sourceDir: 'src',
+  // built by `npm run build`
+  sourceDir: 'build',
   artifactsDir: 'dist',
-  ignoreFiles: [
-    '**/!(bundle).js',
-    'stations.json',
-    'lastfm',
-    'lib',
-  ],
   build: {
     filename: 'webextension-fip-v{version}.zip',
     overwriteDest: true,

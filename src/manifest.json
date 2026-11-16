@@ -20,8 +20,8 @@
     }
   },
   "background": {
-    "service_worker": "background/bundle.js",
-    "scripts": ["players/background/bundle.js"],
+    "service_worker": "background/service-worker.js",
+    "scripts": ["players/background/index.js"],
     "type": "module"
   },
   "options_ui": {

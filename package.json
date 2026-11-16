@@ -13,6 +13,7 @@
     "update-stations": "node scripts/update-stations.js",
     "prepackage": "npm run build",
     "package": "web-ext build",
+    "package:crx": "npm run build && sh scripts/package-crx.sh",
     "postpackage": "git archive --format=zip -o dist/${npm_package_name}-v${npm_package_version}-source.zip HEAD",
     "test": "PREFERENCES_NAMESPACE=test node --env-file-if-exists=.env --test 'src/**/*.test.js'",
     "lint": "eslint src",
