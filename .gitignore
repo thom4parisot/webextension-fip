@@ -2,3 +2,5 @@ src/*/*.map
 
 src/core.js
 bundle.js
+
+.env
