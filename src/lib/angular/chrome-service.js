@@ -4,6 +4,11 @@ import browser from 'webextension-polyfill';
 import Preferences from '../preferences.js';
 
 /**
+ * Shared instance: wait for `preferences.ready()` before bootstrapping Angular.
+ */
+export const preferences = new Preferences(browser.storage);
+
+/**
  * Chrome API Abstraction.
  * Especially used to enables unit/function tests without relying on Chrome API direct access.
  */
@@ -11,7 +16,7 @@ export default angular.module('ChromeService', [])
   .filter('i18n', function(){
     return (key, ...args) => browser.i18n.getMessage(key, args);
   })
-  .factory('preferences', () => new Preferences("localStorage"))
+  .factory('preferences', () => preferences)
   .factory('browser', () => browser)
   .factory('chrome', function(){
     return {

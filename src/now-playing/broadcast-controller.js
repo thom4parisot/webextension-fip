@@ -39,12 +39,7 @@ export default function BroadcastController($scope, chrome, preferences, $timeou
   };
 
   $scope.saveStation = function(){
-    const prevStation = preferences.get('playback.station', 'fip-paris');
     preferences.set('playback.station', $scope.currentStation);
-
-    if ($scope.currentStation !== prevStation) {
-      chrome.notify('playback.reload');
-    }
 
     $timeout(() => $scope.saveStatus = 'idle', 2000);
   };

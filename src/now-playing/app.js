@@ -1,8 +1,9 @@
 import angular from 'angular';
 
-import ChromeService from '../lib/angular/chrome-service.js';
+import ChromeService, {preferences} from '../lib/angular/chrome-service.js';
 import StepsFilters from '../lib/angular/steps-service.js';
 import TextFilters from '../lib/angular/text-service.js';
+import debug from '../lib/debug.js';
 
 import BroadcastController from './broadcast-controller.js';
 import RadioController from './radio-controller.js';
@@ -28,3 +29,7 @@ document.querySelector('a[href="#settings"]').addEventListener('click', (e) => {
 
 App.controller('BroadcastController', BroadcastController);
 App.controller('RadioController', RadioController);
+
+preferences.ready()
+  .then(() => angular.bootstrap(document.documentElement, [App.name]))
+  .catch(debug);

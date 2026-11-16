@@ -9,11 +9,13 @@ export default function ScrobblingController($scope, chrome, preferences){
     preferences.set('lastfm.scrobbling', value);
   });
 
-  chrome.on('lastfm.auth.success', () => {
-    $scope.scrobblingEnabled = preferences.get("lastfm.scrobbling");
-    $scope.lastfmUsername = preferences.get("lastfm.username");
-    $scope.lastfmUserProfile = getProfileUrl($scope.lastfmUsername);
-    $scope.$apply("");
+  // the background page saves the session once the last.fm authentication succeeds
+  preferences.onChange(['lastfm.username'], () => {
+    $scope.$apply(() => {
+      $scope.scrobblingEnabled = preferences.get("lastfm.scrobbling");
+      $scope.lastfmUsername = preferences.get("lastfm.username");
+      $scope.lastfmUserProfile = getProfileUrl($scope.lastfmUsername);
+    });
   });
 
   $scope.disconnect = ($event) => {

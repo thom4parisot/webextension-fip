@@ -1,5 +1,3 @@
-import browser from 'webextension-polyfill';
-
 import {states} from '../lib/radio.js';
 import Steps from '../lib/steps.js';
 import LastfmAPI from '../lib/lastfm.js';
@@ -10,6 +8,11 @@ export default class ScrobblingController {
     this.preferences = preferences;
 
     this.client = new LastfmAPI(preferences.get('lastfm.token'));
+
+    // stops scrobbling as soon as the user disconnects from the options page
+    preferences.onChange(['lastfm.token'], () => {
+      this.client.session_key = preferences.get('lastfm.token');
+    });
   }
 
   static init(options) {
@@ -25,9 +28,6 @@ export default class ScrobblingController {
       preferences.set('lastfm.token', data.sessionKey);
       preferences.set('lastfm.username', data.userName);
       preferences.set('lastfm.scrobbling', true);
-
-      const port = browser.runtime.connect();
-      port.postMessage('lastfm.auth.success');
 
       return data;
     });

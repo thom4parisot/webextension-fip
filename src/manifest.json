@@ -6,9 +6,7 @@
   "minimum_chrome_version": "42",
   "default_locale": "fr",
   "background": {
-    "scripts": [
-      "background/bundle.js"
-    ],
+    "page": "players/background/index.html",
     "persistent": false
   },
   "options_ui": {
@@ -19,7 +17,8 @@
   "permissions": [
     "alarms",
     "identity",
-    "https://www.fip.fr/latest/api/*",
+    "storage",
+    "https://api.radiofrance.fr/livemeta/*",
     "https://direct.fipradio.fr/*"
   ],
   "browser_action": {

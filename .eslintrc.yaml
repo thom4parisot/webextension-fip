@@ -11,6 +11,7 @@ env:
   webextensions: true
   jest/globals: true
 parserOptions:
+  ecmaVersion: 2020
   sourceType: module
 globals:
   process: true

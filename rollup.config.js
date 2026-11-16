@@ -20,9 +20,9 @@ const plugins = [
 
 export default [
   {
-    input: 'src/background/app.js',
+    input: 'src/players/background/index.js',
     output: {
-      file: 'src/background/bundle.js',
+      file: 'src/players/background/bundle.js',
       format: 'esm',
     },
     plugins,
