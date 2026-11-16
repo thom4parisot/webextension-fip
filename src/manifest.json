@@ -2,33 +2,50 @@
   "name": "__MSG_extension_name__",
   "version": "1.7.0",
   "description": "__MSG_extension_description__",
-  "manifest_version": 2,
-  "minimum_chrome_version": "42",
+  "manifest_version": 3,
   "default_locale": "fr",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{7037295b-6800-4f2c-a518-ed5f3dd41733}",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
+    },
+    "gecko_android": {
+      "strict_min_version": "142.0"
+    }
+  },
   "background": {
-    "page": "players/background/index.html",
-    "persistent": false
+    "page": "players/background/index.html"
   },
   "options_ui": {
     "page": "options/index.html",
-    "chrome_style": true,
     "open_in_tab": false
   },
   "permissions": [
     "alarms",
     "identity",
-    "storage",
+    "storage"
+  ],
+  "host_permissions": [
     "https://api.radiofrance.fr/livemeta/*",
     "https://direct.fipradio.fr/*"
   ],
-  "browser_action": {
-    "default_icon": "resources/fip.png",
+  "action": {
+    "default_icon": {
+      "16": "resources/fip-16.png",
+      "48": "resources/fip-48.png",
+      "128": "resources/fip.png"
+    },
     "default_title": "__MSG_extension_name__",
     "default_popup": "now-playing/index.html"
   },
   "icons": {
-    "16": "resources/fip.png",
-    "48": "resources/fip.png",
+    "16": "resources/fip-16.png",
+    "48": "resources/fip-48.png",
     "128": "resources/fip.png"
   }
 }

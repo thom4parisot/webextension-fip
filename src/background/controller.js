@@ -14,7 +14,7 @@ const LAST_FM_KEY = process.env.LAST_FM_KEY;
 
 /**
  * Badge appearance and behavior on click.
- * Mainly tricking the fact the `onClicked` event is fired when no popup file is bound to the browserAction.
+ * Mainly tricking the fact the `onClicked` event is fired when no popup file is bound to the action.
  * We basically display the popup when it's needed, so during the radio playback.
  *
  * @type {Object} Items containing badge behavior data
@@ -276,10 +276,10 @@ export default class Background {
    * @param {String|Array=} color
    */
   setBadge(text, color) {
-    browser.browserAction.setBadgeText({ text: String(text) });
+    browser.action.setBadgeText({ text: String(text) });
 
     if (color){
-      browser.browserAction.setBadgeBackgroundColor({ color });
+      browser.action.setBadgeBackgroundColor({ color });
     }
   }
 
@@ -292,9 +292,13 @@ export default class Background {
 
   setupChannelBadge (){
     const iconName = `fip-${this.channel}`.replace('-stable', '');
-    const path = `/resources/${iconName}.png`;
+    const path = {
+      16: `/resources/${iconName}-16.png`,
+      48: `/resources/${iconName}-48.png`,
+      128: `/resources/${iconName}.png`,
+    };
 
-    browser.browserAction.setIcon({ path });
+    browser.action.setIcon({ path });
     this.setBadge('');
   }
 }
