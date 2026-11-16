@@ -7,6 +7,7 @@ import debug from '../lib/debug.js';
 
 import BroadcastController from './broadcast-controller.js';
 import RadioController from './radio-controller.js';
+import servePlayer from '../players/tab/player.js';
 
 /**
  * Now Playing App module.
@@ -29,6 +30,11 @@ document.querySelector('a[href="#settings"]').addEventListener('click', (e) => {
 
 App.controller('BroadcastController', BroadcastController);
 App.controller('RadioController', RadioController);
+
+// Android plays the stream in this tab: see TabStrategy
+if (navigator.userAgent.includes('Android')) {
+  servePlayer(preferences);
+}
 
 preferences.ready()
   .then(() => angular.bootstrap(document.documentElement, [App.name]))
