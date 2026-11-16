@@ -3,18 +3,18 @@ Un moyen pratique et rapide d'écouter FIP depuis votre navigateur.
 Son interface simple et pratique vous permet de lancer la radio en un seul clic, de scrobbler les musiques diffusées mais aussi d'afficher les informations du direct.
 
 Vous pouvez suivre les bugs ou l'implémentation des fonctionnalités à cette adresse :
-> https://github.com/oncletom/webextension-fip/issues
+> https://github.com/thom4parisot/webextension-fip/issues
 
 # Quoi de neuf ?
 
 ## Version 1.6.0
 
-- ajustement automatique au mode d'affichage de l'utilisateur·ice (dark mode) ([#97](https://github.com/oncletom/webextension-fip/issues/97))
-- changement de radio à la volée ([#95](https://github.com/oncletom/webextension-fip/issues/95))
+- ajustement automatique au mode d'affichage de l'utilisateur·ice (dark mode) ([#97](https://github.com/thom4parisot/webextension-fip/issues/97))
+- changement de radio à la volée ([#95](https://github.com/thom4parisot/webextension-fip/issues/95))
 
 ## Version 1.5.4
 
-- corrige l'affichage manquant de l'année de sortie d'un album ([#94](https://github.com/oncletom/webextension-fip/pull/94))
+- corrige l'affichage manquant de l'année de sortie d'un album ([#94](https://github.com/thom4parisot/webextension-fip/pull/94))
 
 Merci [Geoffrey](https://github.com/geoffrey-guilbon) pour ta contribution.
 
@@ -65,7 +65,7 @@ Merci à Geoffrey pour avoir signalé le problème.
 
 ## Version 1.1.7
 
-- corrige l'interface cassée depuis la redirection permanente de fipradio.fr vers fip.fr [#79](https://github.com/oncletom/webextension-fip/issues/79)
+- corrige l'interface cassée depuis la redirection permanente de fipradio.fr vers fip.fr [#79](https://github.com/thom4parisot/webextension-fip/issues/79)
 
 ## Version 1.1.6
 

@@ -3,18 +3,18 @@ A great way to listen to the fabulous and ad-free FIP Radio within you browser.
 Its simple and neat interface provides you a one-click playback, automatic scrobbling and on air informations display.
 
 Issues and features roadmap are tracked on this page:
-> https://github.com/oncletom/webextension-fip/issues
+> https://github.com/thom4parisot/webextension-fip/issues
 
 # Quoi de neuf ?
 
 ## Version 1.6.0
 
-- follow color scheme user preference (light and dark mode) ([#97](https://github.com/oncletom/webextension-fip/issues/97))
-- change radio station the fly ([#95](https://github.com/oncletom/webextension-fip/issues/95))
+- follow color scheme user preference (light and dark mode) ([#97](https://github.com/thom4parisot/webextension-fip/issues/97))
+- change radio station the fly ([#95](https://github.com/thom4parisot/webextension-fip/issues/95))
 
 ## Version 1.5.4
 
-- fix album year display ([#94](https://github.com/oncletom/webextension-fip/pull/94))
+- fix album year display ([#94](https://github.com/thom4parisot/webextension-fip/pull/94))
 
 Thank you [Geoffrey](https://github.com/geoffrey-guilbon) for your contribution.
 
@@ -65,7 +65,7 @@ Thanks to Geoffrey for the bug report.
 
 ## Version 1.1.7
 
-- fix broken interface due to fipradio.fr being permanently redirected to fip.fr [#79](https://github.com/oncletom/webextension-fip/issues/79)
+- fix broken interface due to fipradio.fr being permanently redirected to fip.fr [#79](https://github.com/thom4parisot/webextension-fip/issues/79)
 
 ## Version 1.1.6
 
@@ -83,7 +83,7 @@ Thanks to Geoffrey for the bug report.
 ## Version 1.1.3
 
 - add CHANGELOG
-- fix Previous/Next buttons (they did not work in Firefox) [#72](https://github.com/oncletom/webextension-fip/issues/72)
+- fix Previous/Next buttons (they did not work in Firefox) [#72](https://github.com/thom4parisot/webextension-fip/issues/72)
 
 ## Version 1.1.2
 
