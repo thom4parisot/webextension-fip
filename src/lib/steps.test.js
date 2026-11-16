@@ -1,7 +1,6 @@
 import Steps from './steps.js';
 import {withLivemetaResponse} from './stations.js';
 import fixtures from '../../resources/fixtures/livemeta.json';
-import sinon from 'sinon';
 
 describe('Steps', function(){
   const data = withLivemetaResponse(fixtures);
@@ -41,14 +40,12 @@ describe('Steps', function(){
   });
 
   describe('getCurrent', () => {
-    let clock;
-
     afterEach(() => {
-      clock && clock.restore();
+      jest.useRealTimers();
     });
 
     it('should return a step played at the moment', () => {
-      clock = sinon.useFakeTimers(1794830600000);
+      jest.useFakeTimers({ now: 1794830600000 });
       const step = Steps.getCurrent(data);
 
       expect(step.title).toEqual('Carousel');
