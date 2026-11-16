@@ -18,8 +18,10 @@ export default function OptionsController($scope, chrome, preferences, $timeout)
 
   $scope.save = function(){
     $scope.saveStatus = 'saved';
-    preferences.set('playback.station', $scope.currentStation);
-    preferences.set('playback.quality', $scope.quality);
+    preferences.setAll({
+      'playback.station': $scope.currentStation,
+      'playback.quality': $scope.quality,
+    });
 
     $timeout(() => $scope.saveStatus = 'idle', 2000);
   };

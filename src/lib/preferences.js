@@ -35,8 +35,12 @@ export default class Preferences {
         }
       });
 
+      // Firefox reports every key which is set, even when its value is unchanged
+      const changedKeys = Object.keys(changes)
+        .filter(key => JSON.stringify(changes[key].oldValue) !== JSON.stringify(changes[key].newValue));
+
       this.listeners
-        .filter(({ keys }) => keys.some(key => key in changes))
+        .filter(({ keys }) => keys.some(key => changedKeys.includes(key)))
         .forEach(({ callback }) => callback());
     });
   }
@@ -108,9 +112,21 @@ export default class Preferences {
       return this.del(key);
     }
 
-    this.cache[this.namespace + key] = value;
+    return this.setAll({ [key]: value });
+  }
 
-    return this.storage.local.set({ [this.namespace + key]: value });
+  /**
+   * Persist several values at once, as a single storage change.
+   *
+   * @param {Object} values
+   * @returns {Promise}
+   */
+  setAll (values) {
+    const items = Object.fromEntries(Object.entries(values).map(([key, value]) => [this.namespace + key, value]));
+
+    Object.assign(this.cache, items);
+
+    return this.storage.local.set(items);
   }
 
   /**

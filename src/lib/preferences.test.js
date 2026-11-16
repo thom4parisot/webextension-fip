@@ -5,6 +5,7 @@ import Preferences from './preferences.js';
 
 /**
  * Minimal in-memory `browser.storage` double.
+ * As Firefox does, it reports every key which is set, even with an unchanged value.
  */
 function createStorage (items = {}) {
   const listeners = [];
@@ -16,13 +17,17 @@ function createStorage (items = {}) {
     local: {
       get: () => Promise.resolve({ ...items }),
       set: values => {
+        const changes = Object.fromEntries(Object.entries(values).map(([key, newValue]) => [key, { oldValue: items[key], newValue }]));
+
         Object.assign(items, values);
-        notify(Object.fromEntries(Object.entries(values).map(([key, newValue]) => [key, { newValue }])));
+        notify(changes);
         return Promise.resolve();
       },
       remove: key => {
+        const changes = { [key]: { oldValue: items[key] } };
+
         delete items[key];
-        notify({ [key]: {} });
+        notify(changes);
         return Promise.resolve();
       },
     },
@@ -122,5 +127,34 @@ describe('Preferences', function(){
 
     assert.equal(callback.mock.callCount(), 1);
     assert.equal(callback.mock.calls[0].result, "theme-jazz");
+  });
+
+  it('#onChange ignores a value set again, unchanged', async function(){
+    const other = new Preferences(storage, legacyStorage);
+    const callback = mock.fn();
+
+    await manager.ready();
+    await other.set("playback.station", "theme-jazz");
+    manager.onChange(["playback.station"], callback);
+    await other.set("playback.station", "theme-jazz");
+    await other.set("broadcasts", [{title: "Ladies"}]);
+    manager.onChange(["broadcasts"], callback);
+    await other.set("broadcasts", [{title: "Ladies"}]);
+
+    assert.equal(callback.mock.callCount(), 0);
+  });
+
+  it('#setAll persists several values as a single change', async function(){
+    const other = new Preferences(storage, legacyStorage);
+    const callback = mock.fn();
+
+    await manager.ready();
+    manager.onChange(["playback.station", "playback.quality"], callback);
+    await other.setAll({"playback.station": "theme-jazz", "playback.quality": "hifi"});
+
+    assert.equal(callback.mock.callCount(), 1);
+    assert.equal(other.get("playback.station"), "theme-jazz");
+    assert.equal(manager.get("playback.quality"), "hifi");
+    assert.equal(storage.items[manager.namespace + "playback.quality"], "hifi");
   });
 });
