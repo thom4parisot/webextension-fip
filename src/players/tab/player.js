@@ -23,7 +23,7 @@ export default function servePlayer (preferences) {
     stop: () => radio.stop(),
     // switches the stream without stopping: playing again would need another tap
     reload: () => {
-      if (radio.state !== states.STOPPED) {
+      if ([states.PLAYING, states.BUFFERING].includes(radio.state)) {
         radio.playbackObject.src = radio.playbackUrl;
         radio.playAudio();
       }
