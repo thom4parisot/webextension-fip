@@ -1,9 +1,8 @@
-import {fetch as request} from 'whatwg-fetch';
 import stations from '../stations.json';
 
 export {stations};
 
-const getJSON = url => request(url, {
+const getJSON = url => fetch(url, {
   method: 'GET',
   mode: 'cors',
   headers: {

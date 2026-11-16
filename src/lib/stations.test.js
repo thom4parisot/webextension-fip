@@ -1,12 +1,9 @@
-import {fetch as request} from 'whatwg-fetch';
 import {getStationBroadcasts, getStationFeed, withLiveResponse} from './stations.js';
 import fixtures from '../../resources/fixtures/livemeta.json';
 import liveFixtures from '../../resources/fixtures/live.json';
 
-jest.mock('whatwg-fetch');
-
 describe('getStationBroadcasts()', function(){
-  request.mockImplementationOnce(() => Promise.resolve({json: () => fixtures}));
+  const request = jest.spyOn(globalThis, 'fetch').mockImplementationOnce(() => Promise.resolve({json: () => fixtures}));
 
   test('bring back 5 tracks', () => {
     return getStationBroadcasts('fip-paris').then(broadcasts => {

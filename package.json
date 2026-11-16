@@ -76,7 +76,6 @@
     "angular": "^1.8.2",
     "blueimp-md5": "^2.19.0",
     "machina": "^4.0.2",
-    "webextension-polyfill": "^0.8.0",
-    "whatwg-fetch": "^3.6.2"
+    "webextension-polyfill": "^0.8.0"
   }
 }
