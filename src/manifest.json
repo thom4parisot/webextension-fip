@@ -4,6 +4,7 @@
   "description": "__MSG_extension_description__",
   "manifest_version": 3,
   "default_locale": "fr",
+  "minimum_chrome_version": "121",
   "browser_specific_settings": {
     "gecko": {
       "id": "{7037295b-6800-4f2c-a518-ed5f3dd41733}",
@@ -19,7 +20,9 @@
     }
   },
   "background": {
-    "page": "players/background/index.html"
+    "service_worker": "background/bundle.js",
+    "scripts": ["players/background/bundle.js"],
+    "type": "module"
   },
   "options_ui": {
     "page": "options/index.html",
@@ -28,11 +31,8 @@
   "permissions": [
     "alarms",
     "identity",
+    "offscreen",
     "storage"
-  ],
-  "host_permissions": [
-    "https://api.radiofrance.fr/livemeta/*",
-    "https://direct.fipradio.fr/*"
   ],
   "action": {
     "default_icon": {

@@ -7,30 +7,39 @@ jobs:
   package:
     runs-on: ubuntu-latest
     environment: Webstores
+    permissions:
+      contents: write
+      # build provenance attestations
+      id-token: write
+      attestations: write
+    env:
+      LAST_FM_SECRET: ${{ secrets.LAST_FM_SECRET }}
+      LAST_FM_KEY: ${{ secrets.LAST_FM_KEY }}
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v4
       with:
         node-version: '26'
 
     - run: npm clean-install-test
-      env:
-        LAST_FM_SECRET: ${{ secrets.LAST_FM_SECRET }}
-        LAST_FM_KEY: ${{ secrets.LAST_FM_KEY }}
 
     - name: Package the extension
       run: |
         mkdir -p dist
         npm run package
-      env:
-        LAST_FM_SECRET: ${{ secrets.LAST_FM_SECRET }}
-        LAST_FM_KEY: ${{ secrets.LAST_FM_KEY }}
 
+    # verify with `gh attestation verify <zip> --repo thom4parisot/webextension-fip`
+    - name: Attest the packages provenance (if tagged)
+      if: ${{ github.ref_type == 'tag' }}
+      uses: actions/attest-build-provenance@v2
+      with:
+        subject-path: dist/*.zip
+
+    # Chrome, Firefox and Firefox for Android package, plus the source code for AMO reviewers
     - name: Create release (if tagged)
       if: ${{ github.ref_type == 'tag' }}
-      run: |
-        hub release create -a "dist/webextension-fip-${VERSION}.zip" -m "${VERSION}" ${VERSION}
+      run: gh release create "$VERSION" dist/*.zip --title "$VERSION" --generate-notes
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         VERSION: ${{ github.ref_name }}

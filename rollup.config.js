@@ -26,6 +26,14 @@ const plugins = [
 
 export default [
   {
+    input: 'src/background/service-worker.js',
+    output: {
+      file: 'src/background/bundle.js',
+      format: 'esm',
+    },
+    plugins,
+  },
+  {
     input: 'src/players/background/index.js',
     output: {
       file: 'src/players/background/bundle.js',
@@ -45,6 +53,14 @@ export default [
     input: 'src/options/app.js',
     output: {
       file: 'src/options/bundle.js',
+      format: 'esm',
+    },
+    plugins,
+  },
+  {
+    input: 'src/players/offscreen/index.js',
+    output: {
+      file: 'src/players/offscreen/bundle.js',
       format: 'esm',
     },
     plugins,

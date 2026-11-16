@@ -12,7 +12,7 @@
   "scripts": {
     "update-stations": "node scripts/update-stations.js",
     "prepackage": "npm run build",
-    "package": "cd src && ls manifest.json _locales/**/*.json players/background/bundle.js players/background/index.html now-playing/bundle.js now-playing/*.html now-playing/*.css options/bundle.js options/*.html resources/*.png resources/icons/css/*.css resources/icons/font/*.woff2 | zip -9 -@ ../dist/${npm_package_name}-v${npm_package_version}.zip",
+    "package": "web-ext build",
     "postpackage": "git archive --format=zip -o dist/${npm_package_name}-v${npm_package_version}-source.zip HEAD",
     "test": "PREFERENCES_NAMESPACE=test node --env-file-if-exists=.env --test 'src/**/*.test.js'",
     "lint": "eslint src",
@@ -51,7 +51,8 @@
     "eslint": "^9.39.5",
     "eslint-plugin-promise": "^7.3.0",
     "globals": "^17.14.0",
-    "rollup": "^4.68.4"
+    "rollup": "^4.68.4",
+    "web-ext": "^10.8.0"
   },
   "dependencies": {
     "angular": "^1.8.2",

@@ -60,9 +60,9 @@ export default class Background {
   static init(options) {
     const instance = new Background(options);
 
-    // listeners are registered right away, to catch the event which woke the background page up
-    instance.registerEvents();
+    // listeners are registered right away, to catch the event which woke the background up
     instance.ready = instance.preferences.ready().then(() => instance.bootstrap(options));
+    instance.registerEvents();
 
     return instance;
   }
@@ -82,7 +82,6 @@ export default class Background {
 
     this.lastfm = lastfm.init({ preferences });
     player.setUrl(getStationFeed(station, quality));
-    preferences.set('radio.state', player.state);
 
     this.setupChannelBadge();
     this.enableBroadcastUpdates();
@@ -97,7 +96,9 @@ export default class Background {
    */
   registerEvents() {
     // Listening to radio events and dispatch them through the app
-    this.player.onStateChange(state => this.dispatchRadioState(state));
+    this.player.onStateChange(state => {
+      this.ready.then(() => this.dispatchRadioState(state)).catch(debug);
+    });
 
     browser.runtime.onConnect.addListener(port => {
       port.onMessage.addListener(message => {

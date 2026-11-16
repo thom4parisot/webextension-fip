@@ -33,7 +33,9 @@ export default angular.module('ChromeService', [])
         const port = browser.runtime.connect();
         port.postMessage({ [channel]: data });
       },
-      getRedirectURL: browser.identity.getRedirectURL.bind(browser.identity),
+      // the `identity` API is missing on Firefox for Android
+      canAuthenticate: Boolean(browser.identity),
+      getRedirectURL: path => browser.identity.getRedirectURL(path),
       getUrl: path => browser.runtime.getURL(path),
     };
   });

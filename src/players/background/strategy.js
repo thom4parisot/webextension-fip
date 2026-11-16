@@ -26,12 +26,14 @@ export default class BackgroundStrategy {
     });
   }
 
-  get state () {
-    return this.radio.state;
-  }
-
-  onStateChange (callback) {
-    this.radio.onTransition(({ toState }) => callback(toState));
+  /**
+   * Calls `listener` with the current state, then on each state change.
+   *
+   * @param {Function} listener
+   */
+  onStateChange (listener) {
+    listener(this.radio.state);
+    this.radio.onTransition(({ toState }) => listener(toState));
   }
 
   play () {
