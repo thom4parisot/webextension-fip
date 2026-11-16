@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
-import { after, before, beforeEach, describe, it, mock } from 'node:test';
+import { after, afterEach, before, beforeEach, describe, it, mock } from 'node:test';
 
-import Radio, {states} from './radio.js';
+import Radio, {BUFFERING_TIMEOUT, states} from './radio.js';
 
 /**
  * Minimal <audio> double: events are dispatched by the tests.
@@ -27,7 +27,13 @@ describe('Radio', function(){
   });
 
   beforeEach(() => {
+    // the buffering timeout must not keep the tests running
+    mock.timers.enable({ apis: ['setTimeout'] });
     radio = new Radio({ url: 'https://icecast.radiofrance.fr/fip-midfi.mp3' });
+  });
+
+  afterEach(() => {
+    mock.timers.reset();
   });
 
   it('should provide a ready-to-be played radio object', () => {
@@ -52,12 +58,63 @@ describe('Radio', function(){
     assert.deepStrictEqual(radio.playbackObject.src, '');
   });
 
-  it('goes back to buffering when the network goes offline', () => {
+  it('waits for the network when it goes offline', () => {
     radio.play();
     radio.playbackObject.dispatchEvent(new Event('canplaythrough'));
     radio.handle('network.offline');
 
-    assert.deepStrictEqual(radio.state, states.BUFFERING);
+    assert.equal(radio.state, states.OFFLINE);
+  });
+
+  it('reconnects to the stream once the network is back', () => {
+    radio.play();
+    radio.handle('network.offline');
+    radio.playbackObject.src = '';
+    radio.handle('network.online');
+
+    assert.equal(radio.state, states.BUFFERING);
+    assert.equal(radio.playbackObject.src, 'https://icecast.radiofrance.fr/fip-midfi.mp3');
+  });
+
+  it('waits for the network after an error', () => {
+    radio.play();
+    radio.playbackObject.dispatchEvent(new Event('error'));
+    radio.handle('network.offline');
+
+    assert.equal(radio.state, states.OFFLINE);
+  });
+
+  it('waits for the network when played offline', (t) => {
+    Object.defineProperty(navigator, 'onLine', { value: false, configurable: true });
+    t.after(() => delete navigator.onLine);
+
+    radio.play();
+
+    assert.equal(radio.state, states.OFFLINE);
+  });
+
+  it('stops while waiting for the network', () => {
+    radio.play();
+    radio.handle('network.offline');
+    radio.stop();
+
+    assert.equal(radio.state, states.STOPPED);
+    assert.equal(radio.playbackObject.src, '');
+  });
+
+  it('is errored when the stream does not start in time', () => {
+    radio.play();
+    mock.timers.tick(BUFFERING_TIMEOUT);
+
+    assert.equal(radio.state, states.ERRORED);
+  });
+
+  it('does not time out once the stream plays', () => {
+    radio.play();
+    radio.playbackObject.dispatchEvent(new Event('canplaythrough'));
+    mock.timers.tick(BUFFERING_TIMEOUT);
+
+    assert.equal(radio.state, states.PLAYING);
   });
 
   it('can play again after an error', () => {

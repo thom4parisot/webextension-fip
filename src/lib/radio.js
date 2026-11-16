@@ -5,14 +5,20 @@ export const states = Object.freeze({
   STOPPED: 'STOPPED',
   PLAYING: 'PLAYING',
   BUFFERING: 'BUFFERING',
-  STALLED: 'STALLED',
   ERRORED: 'ERRORED',
+  OFFLINE: 'OFFLINE',
 });
 
 /**
  * <audio> events forwarded to the state machine, as `audio.<type>` inputs.
  */
 const AUDIO_EVENTS = ['error', 'stalled', 'canplaythrough'];
+
+/**
+ * A stream which does not start in time is considered unreachable: it can be played again.
+ * It covers connections which stop responding without going offline (captive portal, weak signal).
+ */
+export const BUFFERING_TIMEOUT = 15 * 1000;
 
 /**
  * Radio playback, driven by a finite state machine.
@@ -36,25 +42,36 @@ export default class Radio {
           },
           "audio.error": states.ERRORED,
           "audio.stalled": states.BUFFERING,
-          "network.offline": states.BUFFERING
+          "network.offline": states.OFFLINE
         },
         [states.STOPPED]: {
           play: () => {
+            if (navigator.onLine === false) {
+              return states.OFFLINE;
+            }
+
             this.playAudio();
 
             return states.BUFFERING;
           }
         },
         [states.BUFFERING]: {
+          _onEnter: () => {
+            this.bufferingTimer = setTimeout(() => this.handle('audio.timeout'), BUFFERING_TIMEOUT);
+          },
+          _onExit: () => {
+            clearTimeout(this.bufferingTimer);
+          },
           stop: () => {
             this.playbackObject.pause();
 
             return states.STOPPED;
           },
           "audio.error": states.ERRORED,
+          "audio.timeout": states.ERRORED,
           "audio.canplaythrough": states.PLAYING,
           "audio.stalled": states.BUFFERING,
-          "network.offline": states.BUFFERING
+          "network.offline": states.OFFLINE
         },
         [states.ERRORED]: {
           play: () => {
@@ -63,7 +80,20 @@ export default class Radio {
             return states.BUFFERING;
           },
           "stop": states.STOPPED,
-          "network.offline": states.STOPPED
+          "network.offline": states.OFFLINE
+        },
+        // remembers the radio was on, to resume once the network is back
+        [states.OFFLINE]: {
+          _onEnter: () => {
+            this.playbackObject.pause();
+          },
+          play: () => this.resume(),
+          "network.online": () => this.resume(),
+          stop: () => {
+            this.playbackObject.src = '';
+
+            return states.STOPPED;
+          }
         }
       }
     });
@@ -130,6 +160,18 @@ export default class Radio {
    */
   toggle () {
     this.state !== states.STOPPED ? this.stop() : this.play();
+  }
+
+  /**
+   * Reconnects to the stream: the previous connection is likely broken.
+   *
+   * @returns {String} next state
+   */
+  resume () {
+    this.preparePlaybackObject();
+    this.playAudio();
+
+    return states.BUFFERING;
   }
 
   /**

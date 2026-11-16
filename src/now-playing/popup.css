@@ -174,9 +174,19 @@ header {
     content: "\e801";
   }
 
-  #playback-button.PLAYING::before{
+  #playback-button.PLAYING::before,
+  #playback-button.OFFLINE::before{
     content: "\e802";
   }
+
+  #playback-button.OFFLINE{
+    opacity: .5;
+  }
+
+.network-status{
+  font-size: .85em;
+  margin: var(--gutter-width) 0 0;
+}
 
   #playback-button.BUFFERING::before{
     animation: playback-spin 2s infinite linear;

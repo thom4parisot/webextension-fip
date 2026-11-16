@@ -32,7 +32,7 @@ export default class BackgroundStrategy {
   constructor () {
     this.radio = new Radio({ url: '' });
 
-    this.onStateChange(state => this.keepAlive([states.PLAYING, states.BUFFERING].includes(state)));
+    this.onStateChange(state => this.keepAlive([states.PLAYING, states.BUFFERING, states.OFFLINE].includes(state)));
 
     ['online', 'offline'].forEach(type => {
       window.addEventListener(type, () => this.radio.handle(`network.${type}`));

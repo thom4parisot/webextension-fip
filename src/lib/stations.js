@@ -2,10 +2,16 @@ import stations from '../stations.json' with { type: 'json' };
 
 export {stations};
 
+/**
+ * Gives up on requests which do not answer, so a broken connection does not leave them pending.
+ */
+const REQUEST_TIMEOUT = 10 * 1000;
+
 const getJSON = url => fetch(url, {
   headers: {
     'Accept': 'application/json',
-  }
+  },
+  signal: AbortSignal.timeout(REQUEST_TIMEOUT),
 })
 .then(res => {
   if (!res.ok) {

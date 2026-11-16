@@ -19,6 +19,7 @@
     <option value="1">
   </datalist>
   <button type="button" id="playback-button" class="icon-state" ng-click="toggle()" ng-class="status" tabindex="0"></button>
+  <p class="network-status" role="status" ng-show="status === 'OFFLINE'">{{'offline' | i18n}}</p>
 </header>
 
 <main ng-cloak>

@@ -32,6 +32,10 @@ const BADGE_STATES = {
   [states.ERRORED]: {
     text: '!',
     color: '#c00',
+  },
+  [states.OFFLINE]: {
+    text: '×',
+    color: '#888',
   }
 };
 
