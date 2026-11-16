@@ -7,6 +7,14 @@ Vous pouvez suivre les bugs ou l'implémentation des fonctionnalités à cette a
 
 # Quoi de neuf ?
 
+## Prochaine version
+
+- la radio continue de jouer une fois la fenêtre fermée
+- Manifest V3 : Firefox 140 minimum
+- nouvelles webradios : FIP Sacré français ! et FIP Cultes
+- le bouton de lecture indique le chargement du flux
+- les préférences sont conservées, déplacées dans le stockage de l'extension
+
 ## Version 1.6.0
 
 - ajustement automatique au mode d'affichage de l'utilisateur·ice (dark mode) ([#97](https://github.com/thom4parisot/webextension-fip/issues/97))

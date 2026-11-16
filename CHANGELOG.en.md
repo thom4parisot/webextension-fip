@@ -7,6 +7,14 @@ Issues and features roadmap are tracked on this page:
 
 # Quoi de neuf ?
 
+## Next version
+
+- the radio keeps playing once the popup is closed
+- Manifest V3: Firefox 140 or later is required
+- new webradios: FIP Sacré français ! and FIP Cultes
+- the playback button shows when the stream is loading
+- preferences are kept, moved to the extension storage
+
 ## Version 1.6.0
 
 - follow color scheme user preference (light and dark mode) ([#97](https://github.com/thom4parisot/webextension-fip/issues/97))
