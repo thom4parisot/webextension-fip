@@ -76,6 +76,10 @@ export default class ScrobblingController {
     if ('scrobbling.unlove' in message) {
       this.lovedTracks.unlove(message['scrobbling.unlove']);
     }
+
+    if ('scrobbling.refresh' in message) {
+      this.lovedTracks.refresh(message['scrobbling.refresh']);
+    }
   }
 
   handleAuthResponse(url) {

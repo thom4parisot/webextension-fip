@@ -157,6 +157,7 @@ describe('LovedTracks', function(){
       client.isLoved.mock.mockImplementationOnce(() => new Promise(resolve => answer = resolve));
 
       const lookup = lovedTracks.lookup([LADIES]);
+      await null; // Last.fm is being asked
       await lovedTracks.unlove(LADIES);
       answer(true);
       await lookup;
@@ -165,4 +166,26 @@ describe('LovedTracks', function(){
     });
   });
 
+  describe('#refresh', () => {
+    it('should ask Last.fm again about a cached track', async () => {
+      client.isLoved.mock.mockImplementationOnce(() => Promise.resolve(false));
+      await lovedTracks.lookup([CAROUSEL]);
+
+      await lovedTracks.refresh(CAROUSEL);
+
+      assert.equal(client.isLoved.mock.callCount(), 2);
+      assert.partialDeepStrictEqual(lovedTracks.states['vulfpeck|carousel'], { loved: true, confirmed: true });
+    });
+
+    it('should keep a pending action', async () => {
+      client.isConfigured = () => false;
+      await lovedTracks.unlove(CAROUSEL);
+      client.isConfigured = () => true;
+
+      await lovedTracks.refresh(CAROUSEL);
+
+      assert.equal(client.isLoved.mock.callCount(), 0);
+      assert.partialDeepStrictEqual(lovedTracks.states['vulfpeck|carousel'], { loved: false, confirmed: undefined });
+    });
+  });
 });

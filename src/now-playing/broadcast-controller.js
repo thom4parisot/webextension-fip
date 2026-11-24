@@ -34,6 +34,17 @@ export default function BroadcastController($scope, chrome, preferences, $timeou
     $scope.$apply(() => $scope.loved = preferences.get('scrobbling.loved', {}));
   });
 
+  // the displayed track may have been loved elsewhere, such as on Last.fm
+  // watched by key: the broadcasts list is replaced every 30 seconds
+  $scope.$watch(() => trackKey($scope.broadcasts[$scope.current_index] ?? {}), () => {
+    const broadcast = $scope.broadcasts[$scope.current_index];
+
+    if ($scope.canLove && broadcast?.authors) {
+      const { authors, interpreters, title } = broadcast;
+      chrome.notify('scrobbling.refresh', { authors, interpreters, title });
+    }
+  });
+
   $scope.isLoved = broadcast => Boolean($scope.loved[trackKey(broadcast)]?.loved);
 
   // optimistic update: the background sends it to Last.fm, then updates `scrobbling.loved`

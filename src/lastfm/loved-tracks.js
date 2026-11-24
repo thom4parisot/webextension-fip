@@ -86,19 +86,35 @@ export default class LovedTracks {
    * @returns {Promise}
    */
   lookup (steps) {
-    const username = this.preferences.get('lastfm.username');
+    return steps
+      .filter(step => !this.isKnown(step))
+      .reduce((previous, step) => previous.then(() => this.ask(step)), Promise.resolve());
+  }
 
-    if (!this.client.isConfigured() || !username) {
+  /**
+   * Asks Last.fm again about a track, even when cached: it may have been loved elsewhere.
+   * Pending actions are kept as they are.
+   *
+   * @param {Step} step
+   * @returns {Promise}
+   */
+  refresh (step) {
+    return this.ask(step);
+  }
+
+  ask (step) {
+    const username = this.preferences.get('lastfm.username');
+    const before = this.states[trackKey(step)];
+
+    if (!this.client.isConfigured() || !username || !step.authors || (before && isPending(before))) {
       return Promise.resolve();
     }
 
-    return steps
-      .filter(step => step.authors && !this.isKnown(step))
-      .reduce((previous, step) => previous
-        .then(() => this.client.isLoved({ artist: artistOf(step), track: step.title, username }))
-        .then(loved => this.remember(step, loved))
-        // a track unknown to Last.fm cannot be loved: no need to ask again before the TTL
-        .catch(error => error instanceof LastfmError ? this.remember(step, false) : debug(error)), Promise.resolve());
+    return this.client.isLoved({ artist: artistOf(step), track: step.title, username })
+      // a track unknown to Last.fm cannot be loved: no need to ask again before the TTL
+      .catch(error => error instanceof LastfmError ? false : Promise.reject(error))
+      .then(loved => this.remember(step, loved, before))
+      .catch(debug);
   }
 
   /**
@@ -106,10 +122,14 @@ export default class LovedTracks {
    *
    * @param {Step} step
    * @param {Boolean} loved State told by Last.fm
+   * @param {LoveState=} before State when Last.fm was asked, if any
    */
-  remember (step, loved) {
-    if (!this.isKnown(step)) {
-      this.saveState(trackKey(step), { artist: artistOf(step), track: step.title, loved, confirmed: loved });
+  remember (step, loved, before) {
+    const key = trackKey(step);
+    const state = this.states[key];
+
+    if (state?.loved === before?.loved && state?.confirmed === before?.confirmed) {
+      this.saveState(key, { artist: artistOf(step), track: step.title, loved, confirmed: loved });
     }
   }
 
