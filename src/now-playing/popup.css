@@ -69,26 +69,33 @@ h2{
 /**
  * Track title, and its love button on the first line
  */
-.title{
+.title:has(.love){
   display: flex;
   align-items: start;
   gap: calc(var(--gutter-width) / 2);
 }
 
-.title a{
-  flex: 1;
-  overflow-wrap: anywhere;
-}
-
+/* same size and colours as the previous/next buttons (1.3em of the 1.25em title) */
 .love{
   flex-shrink: 0;
+  margin-left: auto;
   padding: 0;
   border: 0;
   background: none;
   color: var(--foreground-color);
-  font: inherit;
-  line-height: inherit;
+  font-size: 1.04em;
+  line-height: 1;
   cursor: pointer;
+}
+
+.love:hover,
+.love:focus{
+  color: var(--text-color);
+}
+
+/* the outline stays for keyboard users */
+.love:focus:not(:focus-visible){
+  outline: none;
 }
 
 .love::before{
