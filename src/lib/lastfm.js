@@ -13,6 +13,8 @@ const LAST_FM_API_METHODS = {
   "track.scrobble": "POST",
   "track.updateNowPlaying": "POST",
   "track.love": "POST",
+  "track.unlove": "POST",
+  "track.getInfo": "GET",
   "auth.getSession": "GET"
 };
 
@@ -34,6 +36,27 @@ function generateSignature(params, secret = LAST_FM_SECRET) {
   }, '');
 
   return md5(signature + secret);
+}
+
+/**
+ * A track as known to scrobbling services.
+ *
+ * @typedef {Object} ScrobblingTrack
+ * @property {String} artist
+ * @property {String} track Track title
+ */
+
+/**
+ * Request refused by Last.fm, as opposed to a network failure.
+ *
+ * @see https://www.last.fm/api/errorcodes
+ */
+export class LastfmError extends Error {
+  constructor({ error, message }) {
+    super(message);
+    this.name = 'LastfmError';
+    this.code = error;
+  }
 }
 
 export default class LastfmAPI {
@@ -86,7 +109,14 @@ export default class LastfmAPI {
         };
         return fetch(`${this.api_url}?${method === 'GET' ? params : ''}`, options);
       })
-      .then((response) => response.json());
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.error) {
+          throw new LastfmError(response);
+        }
+
+        return response;
+      });
   }
 
   /**
@@ -108,7 +138,7 @@ export default class LastfmAPI {
    * Track the listening of a song.
    *
    * @see http://www.last.fm/api/show/track.updateNowPlaying
-   * @param {{artist: String, track: String}} params
+   * @param {ScrobblingTrack & {when: Number=}} params
    */
   scrobble(params) {
     const data = {
@@ -126,7 +156,7 @@ export default class LastfmAPI {
    * Update the "Now Playing" status.
    *
    * @see http://www.last.fm/api/show/track.updateNowPlaying
-   * @param {{artist: String, track: String}} params
+   * @param {ScrobblingTrack} params
    * @param {Function=} done Success callback
    */
   nowPlaying(params) {
@@ -137,5 +167,37 @@ export default class LastfmAPI {
     };
 
     return this.sendRequest(data);
+  }
+
+  /**
+   * Add a track to the user loved tracks.
+   *
+   * @see https://www.last.fm/api/show/track.love
+   * @param {ScrobblingTrack} params
+   */
+  love({ artist, track }) {
+    return this.sendRequest({ method: 'track.love', artist, track });
+  }
+
+  /**
+   * Remove a track from the user loved tracks.
+   *
+   * @see https://www.last.fm/api/show/track.unlove
+   * @param {ScrobblingTrack} params
+   */
+  unlove({ artist, track }) {
+    return this.sendRequest({ method: 'track.unlove', artist, track });
+  }
+
+  /**
+   * Tell if a user loves a track.
+   *
+   * @see https://www.last.fm/api/show/track.getInfo
+   * @param {ScrobblingTrack & {username: String}} params
+   * @returns {Promise.<Boolean>}
+   */
+  isLoved({ artist, track, username }) {
+    return this.sendRequest({ method: 'track.getInfo', artist, track, username })
+      .then(response => response.track.userloved === '1');
   }
 }

@@ -66,6 +66,39 @@ h2{
   margin: 0 0 var(--gutter-width);
 }
 
+/**
+ * Track title, and its love button on the first line
+ */
+.title{
+  display: flex;
+  align-items: start;
+  gap: calc(var(--gutter-width) / 2);
+}
+
+.title a{
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+
+.love{
+  flex-shrink: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--foreground-color);
+  font: inherit;
+  line-height: inherit;
+  cursor: pointer;
+}
+
+.love::before{
+  content: '♡';
+}
+
+.love[aria-pressed="true"]::before{
+  content: '♥';
+}
+
 
 /**
  * Popup Header

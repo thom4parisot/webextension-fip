@@ -35,6 +35,7 @@
       <article class="panel" id="content">
         <h2 class="title" ng-show="broadcast.title && broadcast.authors">
           <a ng-href="https://www.last.fm/search/tracks?q={{[(broadcast | artist), broadcast.album, broadcast.title] | searchQuery}}" target="_blank">{{broadcast.title}}</a>
+          <button type="button" class="love" ng-if="canLove" ng-click="toggleLove(broadcast)" aria-pressed="{{isLoved(broadcast)}}" title="{{(isLoved(broadcast) ? 'unlove_track' : 'love_track') | i18n}}" aria-label="{{(isLoved(broadcast) ? 'unlove_track' : 'love_track') | i18n}}"></button>
         </h2>
 
         <h2 class="title" ng-show="!broadcast.authors">{{broadcast.title || ('no_information' | i18n)}}</h2>

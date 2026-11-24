@@ -23,6 +23,7 @@ export default function ScrobblingController($scope, chrome, preferences){
     preferences.del("lastfm.scrobbling");
     preferences.del("lastfm.username");
     preferences.del("lastfm.token");
+    preferences.del("scrobbling.loved");
     $scope.lastfmUsername = null;
   };
 

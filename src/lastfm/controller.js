@@ -1,6 +1,7 @@
 import {states} from '../lib/radio.js';
 import Steps, {artistOf} from '../lib/steps.js';
 import LastfmAPI from '../lib/lastfm.js';
+import LovedTracks from './loved-tracks.js';
 
 export default class ScrobblingController {
   constructor ({ preferences }) {
@@ -8,6 +9,7 @@ export default class ScrobblingController {
     this.preferences = preferences;
 
     this.client = new LastfmAPI(preferences.get('lastfm.token'));
+    this.lovedTracks = new LovedTracks({ preferences, client: this.client });
 
     // stops scrobbling as soon as the user disconnects from the options page
     preferences.onChange(['lastfm.token'], () => {
@@ -48,6 +50,31 @@ export default class ScrobblingController {
 
     if (current && current.title !== this.previousBroadcast.title) {
       this.previousBroadcast = current;
+    }
+  }
+
+  /**
+   * Retries the pending loved tracks, then fills the cache with the broadcast ones.
+   *
+   * @param {Array.<Step>} steps
+   * @returns {Promise}
+   */
+  updateLovedTracks(steps) {
+    return this.lovedTracks.flush().then(() => this.lovedTracks.lookup(steps));
+  }
+
+  /**
+   * Handles the loved tracks messages sent by the popup.
+   *
+   * @param {Object} message
+   */
+  handleMessage(message) {
+    if ('scrobbling.love' in message) {
+      this.lovedTracks.love(message['scrobbling.love']);
+    }
+
+    if ('scrobbling.unlove' in message) {
+      this.lovedTracks.unlove(message['scrobbling.unlove']);
     }
   }
 

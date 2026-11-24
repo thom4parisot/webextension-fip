@@ -81,5 +81,11 @@
   },
   "disconnect": {
     "message": "Disconnect"
+  },
+  "love_track": {
+    "message": "Add to favourites"
+  },
+  "unlove_track": {
+    "message": "Remove from favourites"
   }
 }

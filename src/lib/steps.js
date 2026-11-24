@@ -47,3 +47,13 @@ export function isAfter (timelineItem, date = new Date()) {
 export function artistOf ({ interpreters, authors }) {
   return interpreters?.[0] || authors;
 }
+
+/**
+ * Identifies a track, whenever it is broadcast.
+ *
+ * @param {{interpreters: Array.<String>=, authors: String, title: String}} timelineItem
+ * @returns {String}
+ */
+export function trackKey (timelineItem) {
+  return `${artistOf(timelineItem)}|${timelineItem.title}`.toLowerCase();
+}

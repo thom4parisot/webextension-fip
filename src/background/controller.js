@@ -135,6 +135,7 @@ export default class Background {
   handleMessage(message) {
     this.radioStateHandler(message);
     this.handleLastfmAuth(message);
+    this.lastfm.handleMessage(message);
   }
 
   /**
@@ -155,6 +156,7 @@ export default class Background {
       .then(steps => {
         this.dispatchBroadcasts(steps);
         this.lastfm.scrobble(steps);
+        this.lastfm.updateLovedTracks(steps);
 
         return steps;
       })
