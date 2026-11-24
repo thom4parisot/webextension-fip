@@ -1,5 +1,5 @@
 import {states} from '../lib/radio.js';
-import Steps from '../lib/steps.js';
+import Steps, {artistOf} from '../lib/steps.js';
 import LastfmAPI from '../lib/lastfm.js';
 
 export default class ScrobblingController {
@@ -66,7 +66,7 @@ export default class ScrobblingController {
 
     if (step && step.authors && step.title !== previous.title && step.authors !== previous.authors) {
       this.client.nowPlaying({
-        artist: step.authors,
+        artist: artistOf(step),
         track: step.title
       });
     }
@@ -81,7 +81,7 @@ export default class ScrobblingController {
 
     if (step && previous.authors && step.title !== previous.title && step.authors !== previous.authors) {
       this.client.scrobble({
-        artist: previous.authors,
+        artist: artistOf(previous),
         track: previous.title,
         when: Date.now() - 120 // let's pretend we listened to it 2 minutes ago
       });

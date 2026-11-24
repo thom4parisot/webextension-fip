@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 
-import Steps from './steps.js';
+import Steps, {artistOf} from './steps.js';
 import {withLivemetaResponse} from './stations.js';
 import fixtures from '../../resources/fixtures/livemeta.json' with { type: 'json' };
 
@@ -48,6 +48,16 @@ describe('Steps', function(){
       const step = Steps.getCurrent(data);
 
       assert.deepStrictEqual(step.title, 'Carousel');
+    });
+  });
+
+  describe('artistOf', () => {
+    it('should prefer the highlighted artist to every credit', () => {
+      const authors = 'Vincent Taeger & Le Jazz Kamasutra & Vincent Taeger & Le Jazz Kamasutra & Ludovic Bruni';
+
+      assert.equal(artistOf({ authors, interpreters: ['Vincent Taeger & Le Jazz Kamasutra'] }), 'Vincent Taeger & Le Jazz Kamasutra');
+      assert.equal(artistOf({ authors: 'Lee Fields' }), 'Lee Fields');
+      assert.equal(artistOf({ authors: 'Lee Fields', interpreters: [] }), 'Lee Fields');
     });
   });
 });

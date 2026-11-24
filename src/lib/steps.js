@@ -36,3 +36,14 @@ export function isCurrent (timelineItem, date = new Date()) {
 export function isAfter (timelineItem, date = new Date()) {
   return new Date(timelineItem.start_time).getTime() > date.getTime();
 }
+
+/**
+ * The artist shown in the popup, and sent to scrobbling.
+ * `authors` lists every credit, sometimes twice: Last.fm does not know such an artist.
+ *
+ * @param {{interpreters: Array.<String>=, authors: String}} timelineItem
+ * @returns {String}
+ */
+export function artistOf ({ interpreters, authors }) {
+  return interpreters?.[0] || authors;
+}
