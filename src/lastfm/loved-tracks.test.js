@@ -97,6 +97,25 @@ describe('LovedTracks', function(){
       assert.partialDeepStrictEqual(lovedTracks.states['vulfpeck|carousel'], { loved: true, confirmed: true });
     });
 
+    it('should remember a track unknown to Last.fm as not loved', async () => {
+      client.isLoved.mock.mockImplementationOnce(() => Promise.reject(new LastfmError({ error: 6, message: 'Track not found' })));
+
+      await lovedTracks.lookup([CAROUSEL]);
+      await lovedTracks.lookup([CAROUSEL]);
+
+      assert.equal(client.isLoved.mock.callCount(), 1);
+      assert.partialDeepStrictEqual(lovedTracks.states['vulfpeck|carousel'], { loved: false, confirmed: false });
+    });
+
+    it('should ask again after a network failure', async () => {
+      client.isLoved.mock.mockImplementationOnce(() => Promise.reject(new TypeError('fetch failed')));
+
+      await lovedTracks.lookup([CAROUSEL]);
+      await lovedTracks.lookup([CAROUSEL]);
+
+      assert.equal(client.isLoved.mock.callCount(), 2);
+    });
+
     it('should ask again once a state is older than a week', async (t) => {
       t.mock.timers.enable({ apis: ['Date'], now: 0 });
       await lovedTracks.lookup([CAROUSEL]);

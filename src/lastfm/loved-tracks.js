@@ -97,7 +97,8 @@ export default class LovedTracks {
       .reduce((previous, step) => previous
         .then(() => this.client.isLoved({ artist: artistOf(step), track: step.title, username }))
         .then(loved => this.remember(step, loved))
-        .catch(debug), Promise.resolve());
+        // a track unknown to Last.fm cannot be loved: no need to ask again before the TTL
+        .catch(error => error instanceof LastfmError ? this.remember(step, false) : debug(error)), Promise.resolve());
   }
 
   /**
