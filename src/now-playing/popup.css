@@ -162,23 +162,8 @@ header {
 }
 
 .volume-range {
-  margin-right: 2px;
-}
-.volume-range:before {
-  font-family: fontello;
   color: var(--border-color);
-}
-.volume-range.level-off:before  {
-  content: "\e805";
-}
-.volume-range.level-low:before  {
-  content: "\e804";
-}
-.volume-range.level-regular:before  {
-  content: "\e803";
-}
-.volume-range.level-high:before  {
-  content: "\e800";
+  margin-right: 2px;
 }
 
 #playback-button{
@@ -200,23 +185,9 @@ header {
     outline: none;
   }
 
-  /* same square box for every state: glyphs have different widths, and the spinner rotates around its centre */
-  #playback-button:before{
+  #playback-button .icon{
+    display: block;
     font-size: 2em;
-    height: 1em;
-    line-height: 1em;
-    margin: 0;
-    width: 1em;
-  }
-
-  #playback-button.STOPPED::before,
-  #playback-button.ERRORED::before{
-    content: "\e801";
-  }
-
-  #playback-button.PLAYING::before,
-  #playback-button.OFFLINE::before{
-    content: "\e802";
   }
 
   #playback-button.OFFLINE{
@@ -228,13 +199,12 @@ header {
   margin: var(--gutter-width) 0 0;
 }
 
-  #playback-button.BUFFERING::before{
+  #playback-button.BUFFERING .icon{
     animation: playback-spin 2s infinite linear;
-    content: "\e806";
   }
 
   @media (prefers-reduced-motion: reduce) {
-    #playback-button.BUFFERING::before{
+    #playback-button.BUFFERING .icon{
       animation: none;
     }
   }
@@ -377,12 +347,10 @@ article{
 }
   .inline-list > li {
     display: inline;
-  }
-  .inline-list [class*="icon-"]::before {
-    padding-right: 5px;
-  }
-  .inline-list [class*="icon-"] {
     margin-right: 1em;
+  }
+  .inline-list .icon {
+    margin-right: 5px;
   }
 .metadata{
   display: flex;
@@ -391,9 +359,9 @@ article{
   margin: 0;
   padding: 0;
 }
-  .metadata [class*="icon-"]:before {
+  .metadata .icon {
     color: var(--text-icon-color);
-    margin-left: 0;
+    margin-right: .3em;
   }
   .metadata > li{
     flex: 1 1 100%;
@@ -471,13 +439,19 @@ article{
   background-image: url('../resources/fip.png');
 }
 
-.icon-deactivated::before {
-  color: #777;
-  text-decoration: none !important;
+/* SVG symbols from `resources/icons.svg`, sized and coloured like the text around them */
+.icon{
+  fill: currentColor;
+  height: 1em;
+  vertical-align: -.125em;
+  width: 1em;
 }
-.icon-activated::before {
+
+.icon-deactivated {
+  color: #777;
+}
+.icon-activated {
   color: #090;
-  text-decoration: none !important;
 }
 
 /**

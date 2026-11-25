@@ -5,12 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{'extension_name' | i18n}}</title>
   <link rel="stylesheet" href="popup.css"/>
-  <link rel="stylesheet" href="../resources/icons/css/fontello.css"/>
 </head>
 <body ng-controller="BroadcastController" aria-live>
 
 <header ng-controller="RadioController" ng-cloak>
-  <span class="volume-range" aria-hidden ng-class="{'level-off': volume === 0, 'level-low': volume > 0 && volume < 0.3, 'level-regular': volume >= 0.3 && volume < 0.7, 'level-high': volume >= 0.7}"></span>
+  <svg class="icon volume-range" aria-hidden="true"><use ng-attr-href="../resources/icons.svg#{{volumeIcon()}}"/></svg>
   <input type="range" id="volume-range" step="0.1" min="0" max="1" list="tickmarks" ng-model="volume" tabindex="0">
   <datalist id="tickmarks">
     <option value="0">
@@ -19,7 +18,9 @@
     <option value="0.75">
     <option value="1">
   </datalist>
-  <button type="button" id="playback-button" class="icon-state" ng-click="toggle()" ng-class="status" tabindex="0"></button>
+  <button type="button" id="playback-button" ng-click="toggle()" ng-class="status" tabindex="0">
+    <svg class="icon" aria-hidden="true"><use ng-attr-href="../resources/icons.svg#{{playbackIcon()}}"/></svg>
+  </button>
   <p class="network-status" role="status" ng-show="status === 'OFFLINE'">{{'offline' | i18n}}</p>
 </header>
 
@@ -41,23 +42,25 @@
         <h2 class="title" ng-show="!broadcast.authors">{{broadcast.title || ('no_information' | i18n)}}</h2>
 
         <ul class="metadata">
-          <li class="album-title icon-cd" ng-show="broadcast.album">
+          <li class="album-title" ng-show="broadcast.album">
+            <svg class="icon" aria-hidden="true"><use href="../resources/icons.svg#disc-3"/></svg>
             <a ng-href="https://www.last.fm/search/albums?q={{[(broadcast | artist), broadcast.album] | searchQuery}}" target="_blank">{{broadcast.album}}</a>
           </li>
-          <li class="artist icon-user" ng-show="broadcast.interpreters">
+          <li class="artist" ng-show="broadcast.interpreters">
+            <svg class="icon" aria-hidden="true"><use href="../resources/icons.svg#user"/></svg>
             <ul>
               <li ng-repeat="performer in broadcast.interpreters"><a ng-href="https://www.last.fm/search/artists?q={{performer | uriComponent}}" target="_blank">{{performer}}</a></li>
             </ul>
           </li>
-          <li class="album-date icon-calendar" ng-show="broadcast.album && broadcast.year">
+          <li class="album-date" ng-show="broadcast.album && broadcast.year">
+            <svg class="icon" aria-hidden="true"><use href="../resources/icons.svg#calendar"/></svg>
             <date>{{broadcast.year}}</date>
           </li>
-          <li class="external-links" ng-show="broadcast.external_links.amazon || broadcast.external_links.itunes || broadcast.external_links.spotify || broadcast.external_links.youtube">
+          <li class="external-links" ng-show="broadcast.external_links.itunes || broadcast.external_links.spotify || broadcast.external_links.youtube">
             <ul class="inline-list">
-              <li ng-show="broadcast.external_links.amazon" class="icon-amazon"><a ng-href="{{broadcast.external_links.amazon.link}}" target="_blank">Amazon Music</a></li>
-              <li ng-show="broadcast.external_links.itunes" class="icon-itunes"><a ng-href="{{broadcast.external_links.itunes.link}}" target="_blank">iTunes</a></li>
-              <li ng-show="broadcast.external_links.spotify" class="icon-spotify"><a ng-href="{{broadcast.external_links.spotify.link}}" target="_blank">Spotify</a></li>
-              <li ng-show="broadcast.external_links.youtube" class="icon-youtube"><a ng-href="{{broadcast.external_links.youtube.link}}" target="_blank">YouTube</a></li>
+              <li ng-show="broadcast.external_links.itunes"><svg class="icon" aria-hidden="true"><use href="../resources/icons.svg#applemusic"/></svg><a ng-href="{{broadcast.external_links.itunes.link}}" target="_blank">Apple Music</a></li>
+              <li ng-show="broadcast.external_links.spotify"><svg class="icon" aria-hidden="true"><use href="../resources/icons.svg#spotify"/></svg><a ng-href="{{broadcast.external_links.spotify.link}}" target="_blank">Spotify</a></li>
+              <li ng-show="broadcast.external_links.youtube"><svg class="icon" aria-hidden="true"><use href="../resources/icons.svg#youtube"/></svg><a ng-href="{{broadcast.external_links.youtube.link}}" target="_blank">YouTube</a></li>
             </ul>
           </li>
         </ul>
@@ -69,14 +72,14 @@
     <ul>
       <li>
         <button ng-click="previous()" ng-disabled="current_index === 0">
-          <span class="icon-left-circled"></span>
+          <svg class="icon" aria-hidden="true"><use href="../resources/icons.svg#circle-arrow-left"/></svg>
           <span class="label">Previous</span>
         </button>
       </li>
       <li>
         <button ng-click="next()" ng-disabled="current_index === broadcasts.length-1">
           <span class="label">Next</span>
-          <span class="icon-right-circled"></span>
+          <svg class="icon" aria-hidden="true"><use href="../resources/icons.svg#circle-arrow-right"/></svg>
         </button>
       </li>
     </ul>
@@ -95,7 +98,7 @@
         </select>
       </li>
       <li>
-        <span class="icon-lastfm" aria-label="Last.fm Status" ng-class="{'icon-activated': lastfm_enabled, 'icon-deactivated': !lastfm_enabled}"></span>
+        <svg class="icon" role="img" aria-label="Last.fm Status" ng-class="{'icon-activated': lastfm_enabled, 'icon-deactivated': !lastfm_enabled}"><use href="../resources/icons.svg#lastdotfm"/></svg>
         <a href="#settings">{{ 'change_settings' | i18n }}</a>
       </li>
     </ul>
