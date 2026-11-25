@@ -34,18 +34,19 @@
 
       <article class="panel" id="content">
         <h2 class="title" ng-show="broadcast.title && broadcast.authors">
-          <a ng-href="https://www.last.fm/search/tracks?q={{broadcast.title}}+{{broadcast.authors}}" target="_blank">{{broadcast.title}}</a>
+          <a ng-href="https://www.last.fm/search/tracks?q={{[(broadcast | artist), broadcast.album, broadcast.title] | searchQuery}}" target="_blank">{{broadcast.title}}</a>
+          <button type="button" class="love" ng-if="canLove" ng-click="toggleLove(broadcast)" aria-pressed="{{isLoved(broadcast)}}" title="{{(isLoved(broadcast) ? 'unlove_track' : 'love_track') | i18n}}" aria-label="{{(isLoved(broadcast) ? 'unlove_track' : 'love_track') | i18n}}"></button>
         </h2>
 
         <h2 class="title" ng-show="!broadcast.authors">{{broadcast.title || ('no_information' | i18n)}}</h2>
 
         <ul class="metadata">
           <li class="album-title icon-cd" ng-show="broadcast.album">
-            <a ng-href="https://www.last.fm/search/albums?q={{broadcast.album}}+{{broadcast.authors}}" target="_blank">{{broadcast.album}}</a>
+            <a ng-href="https://www.last.fm/search/albums?q={{[(broadcast | artist), broadcast.album] | searchQuery}}" target="_blank">{{broadcast.album}}</a>
           </li>
           <li class="artist icon-user" ng-show="broadcast.interpreters">
             <ul>
-              <li ng-repeat="performer in broadcast.interpreters"><a ng-href="https://www.last.fm/search/artists?q={{performer}}" target="_blank">{{performer}}</a></li>
+              <li ng-repeat="performer in broadcast.interpreters"><a ng-href="https://www.last.fm/search/artists?q={{performer | uriComponent}}" target="_blank">{{performer}}</a></li>
             </ul>
           </li>
           <li class="album-date icon-calendar" ng-show="broadcast.album && broadcast.year">

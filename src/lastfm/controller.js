@@ -1,6 +1,9 @@
 import {states} from '../lib/radio.js';
-import Steps from '../lib/steps.js';
+import Steps, {artistOf} from '../lib/steps.js';
 import LastfmAPI from '../lib/lastfm.js';
+import LovedTracks from './loved-tracks.js';
+
+/** @typedef {import('../lib/stations.js').Step} Step */
 
 export default class ScrobblingController {
   constructor ({ preferences }) {
@@ -8,6 +11,7 @@ export default class ScrobblingController {
     this.preferences = preferences;
 
     this.client = new LastfmAPI(preferences.get('lastfm.token'));
+    this.lovedTracks = new LovedTracks({ preferences, client: this.client });
 
     // stops scrobbling as soon as the user disconnects from the options page
     preferences.onChange(['lastfm.token'], () => {
@@ -51,6 +55,35 @@ export default class ScrobblingController {
     }
   }
 
+  /**
+   * Retries the pending loved tracks, then fills the cache with the broadcast ones.
+   *
+   * @param {Array.<Step>} steps
+   * @returns {Promise}
+   */
+  updateLovedTracks(steps) {
+    return this.lovedTracks.flush().then(() => this.lovedTracks.lookup(steps));
+  }
+
+  /**
+   * Handles the loved tracks messages sent by the popup.
+   *
+   * @param {Object} message
+   */
+  handleMessage(message) {
+    if ('scrobbling.love' in message) {
+      this.lovedTracks.love(message['scrobbling.love']);
+    }
+
+    if ('scrobbling.unlove' in message) {
+      this.lovedTracks.unlove(message['scrobbling.unlove']);
+    }
+
+    if ('scrobbling.refresh' in message) {
+      this.lovedTracks.refresh(message['scrobbling.refresh']);
+    }
+  }
+
   handleAuthResponse(url) {
     url.replace(/token=([^&]+)/, (m, token) => {
       this.updateUserInfos(token);
@@ -66,7 +99,7 @@ export default class ScrobblingController {
 
     if (step && step.authors && step.title !== previous.title && step.authors !== previous.authors) {
       this.client.nowPlaying({
-        artist: step.authors,
+        artist: artistOf(step),
         track: step.title
       });
     }
@@ -81,7 +114,7 @@ export default class ScrobblingController {
 
     if (step && previous.authors && step.title !== previous.title && step.authors !== previous.authors) {
       this.client.scrobble({
-        artist: previous.authors,
+        artist: artistOf(previous),
         track: previous.title,
         when: Date.now() - 120 // let's pretend we listened to it 2 minutes ago
       });

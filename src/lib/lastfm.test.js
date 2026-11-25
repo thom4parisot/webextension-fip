@@ -66,4 +66,61 @@ describe('Last.fm', function(){
       sk: 'dummy token',
     });
   });
+
+  it('should love a tune', async (t) => {
+    const getRequest = mockRequest(t);
+
+    await new lastFm('dummy token').love({ artist: song.authors, track: song.title });
+
+    assert.equal(getRequest().method, 'POST');
+    assert.partialDeepStrictEqual(getRequest().params, {
+      method: 'track.love',
+      artist: 'Lee Fields',
+      track: 'Ladies',
+      sk: 'dummy token',
+    });
+  });
+
+  it('should unlove a tune', async (t) => {
+    const getRequest = mockRequest(t);
+
+    await new lastFm('dummy token').unlove({ artist: song.authors, track: song.title });
+
+    assert.equal(getRequest().method, 'POST');
+    assert.partialDeepStrictEqual(getRequest().params, {
+      method: 'track.unlove',
+      artist: 'Lee Fields',
+      track: 'Ladies',
+      sk: 'dummy token',
+    });
+  });
+
+  it('should tell if a user loves a tune', async (t) => {
+    const request = t.mock.method(globalThis, 'fetch', () => Promise.resolve({
+      json: () => ({ track: { userloved: '1' } }),
+    }));
+
+    const loved = await new lastFm('dummy token').isLoved({ artist: song.authors, track: song.title, username: 'jane' });
+    const [url, options] = request.mock.calls[0].arguments;
+
+    assert.equal(loved, true);
+    assert.equal(options.method, 'GET');
+    assert.partialDeepStrictEqual(Object.fromEntries(new URL(url).searchParams), {
+      method: 'track.getInfo',
+      artist: 'Lee Fields',
+      track: 'Ladies',
+      username: 'jane',
+    });
+  });
+
+  it('should reject a request refused by Last.fm', async (t) => {
+    t.mock.method(globalThis, 'fetch', () => Promise.resolve({
+      json: () => ({ error: 9, message: 'Invalid session key' }),
+    }));
+
+    await assert.rejects(new lastFm('dummy token').love({ artist: song.authors, track: song.title }), {
+      name: 'LastfmError',
+      code: 9,
+    });
+  });
 });

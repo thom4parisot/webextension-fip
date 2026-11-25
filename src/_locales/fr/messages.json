@@ -78,5 +78,11 @@
   },
   "disconnect": {
     "message": "Déconnecter"
+  },
+  "love_track": {
+    "message": "Ajouter aux favoris"
+  },
+  "unlove_track": {
+    "message": "Retirer des favoris"
   }
 }

@@ -3,6 +3,8 @@ import browser from 'webextension-polyfill';
 import debug from '../../lib/debug.js';
 import {states} from '../../lib/radio.js';
 
+/** @typedef {import('../background/strategy.js').PlayerStrategy} PlayerStrategy */
+
 const PAGE_URL = browser.runtime.getURL('now-playing/index.html');
 
 /**

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 
-import Steps from './steps.js';
+import Steps, {artistOf, trackKey} from './steps.js';
 import {withLivemetaResponse} from './stations.js';
 import fixtures from '../../resources/fixtures/livemeta.json' with { type: 'json' };
 
@@ -50,4 +50,26 @@ describe('Steps', function(){
       assert.deepStrictEqual(step.title, 'Carousel');
     });
   });
+
+  describe('artistOf', () => {
+    it('should prefer the highlighted artist to every credit', () => {
+      const authors = 'Vincent Taeger & Le Jazz Kamasutra & Vincent Taeger & Le Jazz Kamasutra & Ludovic Bruni';
+
+      assert.equal(artistOf({ authors, interpreters: ['Vincent Taeger & Le Jazz Kamasutra'] }), 'Vincent Taeger & Le Jazz Kamasutra');
+      assert.equal(artistOf({ authors: 'Lee Fields' }), 'Lee Fields');
+      assert.equal(artistOf({ authors: 'Lee Fields', interpreters: [] }), 'Lee Fields');
+    });
+  });
+
+  describe('trackKey', () => {
+    it('should identify a track regardless of its broadcast time and case', () => {
+      const [first] = Steps.getAll(data);
+
+      assert.equal(trackKey(first), 'lee fields|ladies');
+      assert.equal(trackKey({ ...first, start_time: 0 }), trackKey(first));
+      assert.equal(trackKey({ authors: 'LEE FIELDS', title: 'Ladies' }), trackKey(first));
+      assert.equal(trackKey({ authors: 'Vincent Taeger & Le Jazz Kamasutra & Ludovic Bruni', interpreters: ['Vincent Taeger & Le Jazz Kamasutra'], title: '5th' }), 'vincent taeger & le jazz kamasutra|5th');
+    });
+  });
 });
+

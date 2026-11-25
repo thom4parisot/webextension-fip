@@ -1,5 +1,5 @@
 import angular from 'angular';
-import {isBefore, isCurrent, isAfter} from '../steps.js';
+import {artistOf, isBefore, isCurrent, isAfter} from '../steps.js';
 
 const STATUSES = {
   previous: isBefore,
@@ -12,6 +12,9 @@ const toMinutes = milliseconds => {
 };
 
 export default angular.module('StepsFilters', [])
+  .filter('artist', function(){
+    return artistOf;
+  })
   .filter('status', function(){
     return step => {
       let status = '';

@@ -4,6 +4,8 @@ import debug from '../../lib/debug.js';
 import Radio, {states} from '../../lib/radio.js';
 import Steps from '../../lib/steps.js';
 
+/** @typedef {import('../../lib/preferences.js').default} Preferences */
+
 /**
  * Plays the stream in the now-playing tab (Android), on behalf of the background page.
  * A tap on its playback button allows the browser to play audio, in this tab only.
