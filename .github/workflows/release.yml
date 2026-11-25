@@ -52,9 +52,18 @@ jobs:
       with:
         subject-path: dist/*.zip
 
+    # the `## Version X.Y.Z` section of the French changelog, required to release
+    - name: Extract the release notes
+      run: |
+        awk -v heading="## Version ${VERSION#v}" '$0 == heading { found = 1; next } found && /^## / { exit } found' CHANGELOG.fr.md > "$RUNNER_TEMP/notes.md"
+        grep -q '[^[:space:]]' "$RUNNER_TEMP/notes.md" || { echo "::error::No '## Version ${VERSION#v}' section in CHANGELOG.fr.md"; exit 1; }
+      env:
+        VERSION: ${{ github.ref_name }}
+
     # Chrome, Firefox and Firefox for Android package, plus the source code for AMO reviewers
+    # the changelog section comes first, then the notes generated from the merged pull requests
     - name: Create release
-      run: gh release create "$VERSION" dist/*.zip --title "$VERSION" --generate-notes
+      run: gh release create "$VERSION" dist/*.zip --title "$VERSION" --notes-file "$RUNNER_TEMP/notes.md" --generate-notes
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         VERSION: ${{ github.ref_name }}
