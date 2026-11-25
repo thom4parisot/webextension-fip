@@ -1,6 +1,8 @@
 import debug from '../../lib/debug.js';
 import {states} from '../../lib/radio.js';
 
+/** @typedef {import('../background/strategy.js').PlayerStrategy} PlayerStrategy */
+
 const DOCUMENT_URL = 'players/offscreen/index.html';
 
 /**

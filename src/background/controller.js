@@ -6,6 +6,9 @@ import Steps from '../lib/steps.js';
 import Preferences from '../lib/preferences.js';
 import {getStationBroadcasts, getStationFeed} from '../lib/stations.js';
 
+/** @typedef {import('../lib/stations.js').Step} Step */
+/** @typedef {import('../players/background/strategy.js').PlayerStrategy} PlayerStrategy */
+
 const LAST_FM_KEY = process.env.LAST_FM_KEY;
 
 
@@ -44,7 +47,7 @@ const BADGE_STATES = {
  *
  * @constructor
  * @param {Object} options
- * @param {typeof ScrobblingController} options.lastfm
+ * @param {typeof import('../lastfm/controller.js').default} options.lastfm
  * @param {PlayerStrategy} options.player Plays the audio stream, depending on the browser capabilities
  */
 export default class Background {
@@ -196,7 +199,7 @@ export default class Background {
   /**
    * Dispatch some broadcasts to the whole app.
    *
-   * @param {Array.<Broadcast>} broadcasts
+   * @param {Array.<Step>} broadcasts
    */
   dispatchBroadcasts(broadcasts) {
     const bus = browser.runtime.connect();

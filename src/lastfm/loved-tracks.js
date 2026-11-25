@@ -3,6 +3,9 @@ import { LastfmError } from '../lib/lastfm.js';
 import { artistOf, trackKey } from '../lib/steps.js';
 
 /** @typedef {import('../lib/lastfm.js').ScrobblingTrack} ScrobblingTrack */
+/** @typedef {import('../lib/stations.js').Step} Step */
+/** @typedef {import('../lib/preferences.js').default} Preferences */
+/** @typedef {import('../lib/lastfm.js').default} LastfmAPI */
 
 /**
  * Whether the user loves a track.

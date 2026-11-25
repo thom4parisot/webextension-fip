@@ -3,6 +3,8 @@ import Steps, {artistOf} from '../lib/steps.js';
 import LastfmAPI from '../lib/lastfm.js';
 import LovedTracks from './loved-tracks.js';
 
+/** @typedef {import('../lib/stations.js').Step} Step */
+
 export default class ScrobblingController {
   constructor ({ preferences }) {
     this.previousBroadcast = {};

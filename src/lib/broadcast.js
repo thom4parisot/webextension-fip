@@ -1,3 +1,5 @@
+/** @typedef {import('./stations.js').Step} Step */
+
 /**
  * Service Uri config.
  * Enables to monkey patch for testing purpose.

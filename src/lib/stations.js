@@ -3,6 +3,23 @@ import stations from '../stations.json' with { type: 'json' };
 export {stations};
 
 /**
+ * A track broadcast on a station.
+ * Stations without history only provide the fields of the live player.
+ *
+ * @typedef {Object} Step
+ * @property {String} title
+ * @property {String} authors Every credit, sometimes twice: see `artistOf()`
+ * @property {Number} start_time In milliseconds
+ * @property {Number} end_time In milliseconds
+ * @property {String} cover Image URL
+ * @property {Object.<String, {link: String}>} external_links By service: `itunes`, `youtube`
+ * @property {String=} album Stations with history only
+ * @property {String=} label Stations with history only
+ * @property {Number=} year Stations with history only
+ * @property {Array.<String>=} interpreters Highlighted artists; stations with history only
+ */
+
+/**
  * Gives up on requests which do not answer, so a broken connection does not leave them pending.
  */
 const REQUEST_TIMEOUT = 10 * 1000;
@@ -26,7 +43,7 @@ const getJSON = url => fetch(url, {
  * Stations without `history` only provide the track currently played.
  *
  * @param {String} station Station key, as found in `stations.json`
- * @returns {Promise.<Array.<Object>>}
+ * @returns {Promise.<Array.<Step>>}
  */
 export function getStationBroadcasts (station) {
   const {stationId, history} = getStation(station);
@@ -40,7 +57,7 @@ export function getStationBroadcasts (station) {
  * Converts livemeta songs into steps. Times are in milliseconds.
  *
  * @param {Object} response
- * @returns {Array.<Object>}
+ * @returns {Array.<Step>}
  */
 export function withLivemetaResponse({steps}) {
   return Object.values(steps)
@@ -67,7 +84,7 @@ export function withLivemetaResponse({steps}) {
  * Items without `startTime` are the station placeholder, not a track.
  *
  * @param {Object} response
- * @returns {Array.<Object>}
+ * @returns {Array.<Step>}
  */
 export function withLiveResponse({prev, now}) {
   return [...prev, now]
