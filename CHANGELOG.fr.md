@@ -7,6 +7,14 @@ Vous pouvez suivre les bugs ou l'implémentation des fonctionnalités à cette a
 
 # Quoi de neuf ?
 
+## Version 1.9.0
+
+- Ajoute / retire un favori sur last.fm
+- Harmonisation des icônes
+- Android : Correction des bugs de lecture
+- Android : affichage de la piste / jaquette sur l'écran de verrouillage
+- Documentation du processus de déploiement d'une version
+
 ## Version 1.8.0
 
 - Manifest V3 : Firefox 140 et Chrome 121 minimum

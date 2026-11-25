@@ -7,6 +7,14 @@ Issues and features roadmap are tracked on this page:
 
 # What's New?
 
+## Version 1.9.0
+
+- Love / unlove tracks on Last.fm
+- Consistent icons
+- Android: fix playback bugs
+- Android: show track and cover art on the lock screen
+- Document the release deployment process
+
 ## Version 1.8.0
 
 - Manifest V3: Firefox 140+ and Chrome 121+ are required
